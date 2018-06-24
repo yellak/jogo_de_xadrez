@@ -197,5 +197,12 @@ int GetValue(char piece){
 		Saída: Essa função retorna, por parâmetro, o tabuleiro sem a peça e com seu peso modificado.
 */
 void RemovePiece(TBoard *board, int line, int column){
+	/* Get value of the piece in the position. */
+	int value = GetValue(WhatPiece(board, line, column));
+
+	/* Subtrair o peso atual pelo valor obtido. */
+	board->Weight = board->Weight - value;
+
+	/* Definir posição como vazia. */
 	board->Board[line][column] = BLANK;
 }
