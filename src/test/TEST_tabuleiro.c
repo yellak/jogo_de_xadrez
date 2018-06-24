@@ -219,6 +219,27 @@ TEST(Test_Remove_Piece, Verify_Remotion){
 	EXPECT_EQ(2, board.Weight);
 }
 
+/* Teste para verificar se a função de remoção para entradas inválidas. 
+   Procedimentos:
+   -Chamar a função para um tabuleiro nulo.
+   -Chamar a função para valores fora de alcance.
+   Resultados:
+   -É esperado que a função retorne sem falha de segmentação.
+*/
+TEST(Test_Remove_Piece, Verify_Invalid_Entries){
+	/*Testar tabuleiro nulo. */
+	TBoard *nul = NULL;
+	RemovePiece(nul, 0, 0);
+
+	/* Testar out of range*/
+	TBoard board;
+	StartStandardBoard(&board);
+	TBoard clone = board;
+	RemovePiece(&board, 8, 8);
+	RemovePiece(&board, -1, -1);
+	EXPECT_EQ(clone.Weight, board.Weight);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
