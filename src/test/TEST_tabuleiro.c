@@ -147,7 +147,7 @@ TEST(Test_What_Piece_in_Position, Verify_Out_of_Range){
 	EXPECT_EQ(OUT_OF_RANGE, WhatPiece(&board, -1, -1));
 }
 
-/* Teste para verificar a funçãoque retorna o valor de uma peça para todas as peças possíveis.
+/* Teste para verificar a função que retorna o valor de uma peça para todas as peças possíveis.
    Procedimentos:
    -Criar variável para o tabuleiro e chamar a função de iniciar tabuleiro padrão.
    -Chamar a função para posições do tabuleiro que correspondem a peças diferentes.
@@ -178,6 +178,18 @@ TEST(Test_Get_Value_of_Piece, Verify_Every_Piece){
 	EXPECT_EQ(-200, GetValue(WhatPiece(&board, 0, 4)));
 	/* Testar espaço vazio. */
 	EXPECT_EQ(0, GetValue(WhatPiece(&board, 5, 5)));
+}
+
+/* Teste para verificar a funçãoque retorna o valor de uma peça para peças não existentes.
+   Procedimentos:
+   -Chamar a função para OUT_OF_RANGE;
+   -Chamar a função para o caractere *;
+   Resultados:
+   -É esperado que a função retorne 0 em todos esses casos.
+*/
+TEST(Test_Get_Value_of_Piece, Verify_Non_Pieces){
+	EXPECT_EQ(0, GetValue(OUT_OF_RANGE));
+	EXPECT_EQ(0, GetValue('*'));
 }
 
 int main(int argc, char **argv){
