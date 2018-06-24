@@ -132,7 +132,7 @@ TEST(Test_What_Piece_in_Position, Verify_Standard_Boards){
    -Criar variável nula para o tabuleiro;
    -Chamar a função para a variável nula;
    -Chamar função que inicializa um tabuleiro vazio para variavel nao-nula;
-   -Chamar a função para a coordenada (8,8).
+   -Chamar a função para as coordenada (8,8) e (-1,-1).
    -É esperado que a função retorne o indicador de fora dos limites para os dois casos.
 */
 TEST(Test_What_Piece_in_Position, Verify_Out_of_Range){
@@ -142,6 +142,7 @@ TEST(Test_What_Piece_in_Position, Verify_Out_of_Range){
 	TBoard board;
 	StartStandardBoard(&board);
 	EXPECT_EQ(OUT_OF_RANGE, WhatPiece(&board, 8, 8));
+	EXPECT_EQ(OUT_OF_RANGE, WhatPiece(&board, -1, -1));
 }
 
 int main(int argc, char **argv){

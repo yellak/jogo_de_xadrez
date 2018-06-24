@@ -108,5 +108,15 @@ int StartStandardBoard(TBoard *board){
 		Saída: Essa função retorna o caractere correspondente da posição analisada.
 */
 char WhatPiece(TBoard *board, int line, int column){
+	/* Veriificar tabuleiro. */
+	if(board == NULL){
+		return OUT_OF_RANGE;
+	}
+
+	/* Verificar x e y. */
+	if(line<0 || line>7 || column<0 || column>7){
+		return OUT_OF_RANGE;
+	}
+	
 	return board->Board[line][column];
 }
