@@ -116,3 +116,75 @@ void DrawAxis(WINDOW* yaxis, WINDOW* xaxis){
 		waddch(xaxis, 'a' + j);
 	}
 }
+
+/* 
+   Função: CreateMenu
+         Objetivo:
+             Desenhar o menu e apresentar as opções de jogo ao usuário
+
+         Parâmetros:
+             menuwin -  Janela responsável pela criação do menu 
+		 
+		 Saída: Essa função retorna a opção do jogo que o usuário deseja jogar
+		 		1 = PVP
+		 		2 = PVE
+		 		3 = SAIR
+
+*/
+int CreateMenu(WINDOW* menuwin){
+
+	int yMax,xMax;
+
+	//Pegando o tamanho do terminal
+	getmaxyx(stdscr, yMax, xMax);
+
+	//Inicializando a janela
+	menuwin = newwin(6, xMax - 12, yMax-8, 5);
+	box(menuwin, 0, 0);
+	refresh();
+	wrefresh(menuwin);
+
+	//Função para ativas os comandos das setinhas
+	keypad(menuwin, true);
+
+	char* modos[4] = {"Escolha o Modo de Jogo:","JogadorXJogador","JogadorXComputador","Sair"};
+
+	int choice = 0;
+	int highlight = 1;
+
+	//Não avança até o usuário apertar "enter"
+	while(choice != 10){
+		for(int i = 0; i < 4; i++){
+
+			/* Destacando a string que o usuário está em cima */
+			if(i == highlight){
+				wattron(menuwin, A_REVERSE);
+			}
+
+			mvwprintw(menuwin, i + 1, 1, modos[i]);
+			wattroff(menuwin, A_REVERSE);
+			wrefresh(menuwin);
+			
+		}
+		choice = wgetch(menuwin);
+		switch(choice){
+
+			case KEY_UP: //Seta pra cima
+				highlight--;
+				if (highlight == 0) highlight = 1; /* Condição para não passar do topo */
+			break;
+
+			case KEY_DOWN: //Seta pra cima
+				highlight++;
+				if (highlight == 4) highlight = 3; /* Condição para não passar do fundo */
+			break;
+
+			default:
+			break;
+		}
+	}
+	
+	delwin(menuwin);
+
+	return highlight;
+}
