@@ -97,6 +97,19 @@ TEST(Test_Verify_Standard_Board, Verify_NULL_Variables){
 	ASSERT_EQ(1, StartStandardBoard(board));
 }
 
+/* Teste para verificar a validade da função que veifica qual peça está em determinda posição para um tabuleiro vazio.
+   Procedimentos:
+   -Criar variável para o tabuleiro;
+   -Chamar função que inicializa um tabuleiro vazio;
+   -Chamar a função para uma posição do tabuleiro.
+   Resultados:
+   -É esperado que a função retorne o indicador para espaço vazio.
+*/
+TEST(Test_What_Piece_in_Position, Verify_Empty_Boards){
+	TBoard board;
+	StartEmptyBoard(&board);
+	EXPECT_EQ(BLANK, WhatPiece(&board, 2, 0));
+}
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);

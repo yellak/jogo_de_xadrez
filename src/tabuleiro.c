@@ -93,3 +93,20 @@ int StartStandardBoard(TBoard *board){
 
 	return 0;
 }
+
+/* Função: WhatPiece
+		Objetivo: Verificar qual peça se encontra na posição (x,y) do tabuleiro.
+
+		Parametros:
+			board - Ponteiro para a estrutura da árvore.
+					Não deve ser nulo
+			line - Inteiro representando a linha x da posição (x,y) a ser verificada.
+				   Deve ser um valor entre 0 e 7.
+			column - Inteiro representando a coluna y da posição (x,y) a ser verificada.
+				     Deve ser um valor entre 0 e 7.
+
+		Saída: Essa função retorna o caractere correspondente da posição analisada.
+*/
+char WhatPiece(TBoard *board, int line, int column){
+	return board->Board[line][column];
+}
