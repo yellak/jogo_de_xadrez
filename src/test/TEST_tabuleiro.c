@@ -111,6 +111,22 @@ TEST(Test_What_Piece_in_Position, Verify_Empty_Boards){
 	EXPECT_EQ(BLANK, WhatPiece(&board, 2, 0));
 }
 
+/* Teste para verificar a validade da função que veifica qual peça está em determinda posição para um tabuleiro padrão.
+   Procedimentos:
+   -Criar variável para o tabuleiro;
+   -Chamar função que inicializa um tabuleiro padrão;
+   -Chamar a função para as posições (0,0), (6,1) e (7,4) do tabuleiro.
+   Resultados:
+   -É esperado que a função retorne os indicadores, respectivamente, de torre negra, peão branco e rei branco.
+*/
+TEST(Test_What_Piece_in_Position, Verify_Standard_Boards){
+	TBoard board;
+	StartStandardBoard(&board);
+	EXPECT_EQ(B_TOWER, WhatPiece(&board, 0, 0));
+	EXPECT_EQ(W_PAWN, WhatPiece(&board, 6, 1));
+	EXPECT_EQ(W_KING, WhatPiece(&board, 7, 4));
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
