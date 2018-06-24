@@ -1,14 +1,12 @@
-#include <stdio.h>
 #include "../include/interface.h"
 
 /* Tamanho do tabuleiro */
-const int YLIMIT = 8;
 const int XLIMIT = 8;
+const int YLIMIT = 8;
 
 /* Coordenadas para o início do tabuleiro */
 const int BOARDY = 2;
 const int BOARDX = 2;
-
 
 /*
   Função: Desenhar o tabuleiro
