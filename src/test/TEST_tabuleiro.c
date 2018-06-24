@@ -217,6 +217,10 @@ TEST(Test_Remove_Piece, Verify_Remotion){
 	RemovePiece(&board, 7, 1);
 	EXPECT_EQ(BLANK, WhatPiece(&board, 7, 1));
 	EXPECT_EQ(2, board.Weight);
+
+	RemovePiece(&board, 5, 5);
+	EXPECT_EQ(BLANK, WhatPiece(&board, 5, 5));
+	EXPECT_EQ(2, board.Weight);
 }
 
 /* Teste para verificar se a função de remoção para entradas inválidas. 
