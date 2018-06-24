@@ -7,4 +7,6 @@ void DrawBoard(WINDOW* boardwin);
 
 void DrawAxis(WINDOW* yaxis, WINDOW* xaxis);
 
+int CreateMenu(WINDOW* menuwin)
+
 #endif

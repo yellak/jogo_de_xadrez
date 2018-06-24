@@ -1,0 +1,3 @@
+22/06 | 5 Horas | Projetar                                  | Decisão do formato das estruturas utilizadas
+24/06 | 2 Horas | Estudar Aulas e Laboratórios relacionados | Estudando sobre a biblioteca ncurses
+24/06 | 1 Hora  | Codificar Módulo                          | Criando a função de iniciar o menu inicial
