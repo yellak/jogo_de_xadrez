@@ -1,0 +1,10 @@
+Data  |Horas Trabalhadas |Tipo Tarefa                                  |Descrição da Tarefa Realizada 
+22/06 |5 horas           |Projetar                                     |Definição do projeto e especificação dos módulos.
+24/06 |4 horas           |estudar aulas e laboratórios relacionados    |Estudo dos links disponibilizados para auxiliar a implementação.
+      |                  |                                             |
+      |                  |                                             |
+      |                  |                                             |
+      |                  |                                             |
+      |                  |                                             |
+      |                  |                                             |
+      |                  |                                             |
