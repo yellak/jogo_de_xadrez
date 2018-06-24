@@ -11,9 +11,9 @@
    	-Todas as posições devem estar vazias para passar no teste;
    	-O peso ponderado do tabuleiro deve ser 0.
  */
-TEST(TEST_tabuleiro, Verify_Empty_Board){
+TEST(Test_Verify_Empty_Board, Verify_Funcionality){
 	TBoard board;
-	StartEmptyBoard(board);
+	StartEmptyBoard(&board);
 
 	int i, j;
 	for(i=0; i < 8; i++){
@@ -22,6 +22,17 @@ TEST(TEST_tabuleiro, Verify_Empty_Board){
 		}
 	}
 	EXPECT_EQ(0, board.Weight);
+}
+
+/* Teste para verificar a validade da função para casos em que o ponteiro é nulo.
+   Procedimento:
+   	-Chamar função para uma variável nula.
+   Resultados:
+   	-É esperado que a função retorne o valor de eroo '1'.
+*/
+TEST(Test_Verify_Empty_Board, Verify_NULL_Variables){
+	TBoard *board = NULL;
+	ASSERT_EQ(1, StartEmptyBoard(board));
 }
 
 int main(int argc, char **argv){
