@@ -48,6 +48,11 @@ int StartEmptyBoard(TBoard *board){
 			   -As outras posições são vazias.
 */
 int StartStandardBoard(TBoard *board){
+	/* Testar entrada. */
+	if(board == NULL){
+		return 1;
+	}
+
 	int i,j; /* Variaveis auxiliares. */
 
 	/* Definir peso do tabuleiro como 0.*/
