@@ -7,11 +7,18 @@
 
 		Parametros:
 			board - Ponteiro para a estrutura da árvore.
+					Não deve ser nulo
 
-		Saída: Essa função retorna, por parâmetro, um tabuleiro vazio.
+		Saída: Essa função retorna, por parâmetro, um tabuleiro vazio e um inteiro para informar o funcionamento da função
+			   (0 caso funcione e 1 caso contrário).
 */
-void StartEmptyBoard(TBoard *board){
-	int i, j; /*Variaveis auxiliare.*/
+int StartEmptyBoard(TBoard *board){
+	/*Verificar entrada. */
+	if(board == NULL){
+		return 1;
+	}
+
+	int i, j; /*Variaveis auxiliares.*/
 
 	/* Definir peso do tabuleiro como 0.*/
 	board->Weight = 0;
@@ -22,4 +29,5 @@ void StartEmptyBoard(TBoard *board){
 			board->Board[i][j] = BLANK;
 		}
 	}
+	return 0;
 }

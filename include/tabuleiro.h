@@ -34,8 +34,8 @@ typedef struct board{
 		\brief Inicializa um tabuleiro sem nenhuma peça em todas as posições.
 
 		\param board Ponteiro para um tabuleiro
-		\return Por parâmetro, retorna o tabuleiro vazio.
+		\return Por parâmetro, retorna o tabuleiro vazio e um inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
 */
-void StartEmptyBoard(TBoard *board);
+int StartEmptyBoard(TBoard *board);
 
 #endif
