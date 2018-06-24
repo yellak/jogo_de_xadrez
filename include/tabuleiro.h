@@ -14,11 +14,20 @@ const char B_TOWER = 'T';
 const char B_BISHOP = 'B';
 const char B_HORSE = 'H';
 const char B_PAWN = 'P';
+const char OUT_OF_RANGE = '~';
 
+/* Definição da estrutura do tabuleiro. */
+/*! \struct TBoard
+		\brief Estrutura do tabuleiro.
+
+		Estrutura que armazena os elementos necessário para definir um tabuleiro.
+*/
 typedef struct board{
-	char Board[8][8];
-	int Weight;
+	char Board[8][8]; /*!< Matriz de caracteres que representa o tabuleiro. */
+	int Weight; /*!< Inteiro que armazena o peso ponderado do tabuleiro. */
 }TBoard;
+
+/* Funções: */
 
 
 #endif
