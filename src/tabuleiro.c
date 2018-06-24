@@ -117,6 +117,68 @@ char WhatPiece(TBoard *board, int line, int column){
 	if(line<0 || line>7 || column<0 || column>7){
 		return OUT_OF_RANGE;
 	}
-	
+
 	return board->Board[line][column];
+}
+
+/* Função: GetValue
+		Objetivo: Verificar o valor de uma determinada peça.
+
+		Parametros:
+			piece - Peça a ser verificada, seguindo as constantes definidas.
+
+		Saída: Essa função retorna um valor inteiro correspondente da peça, verificados a seguir:
+				Os valores, em módulo, para as peças são:
+				Peões - 1;
+				Cavalos e Bispos - 3;
+				Torres - 5;
+				Rainhas - 9;
+				Reis - 200;
+				Espaço em branco - 0;
+				Sendo que as peças pretas assumem valores negativos e as brancas, positivos.
+*/
+int GetValue(char piece){
+	if(piece == W_PAWN){
+		return 1;
+	}
+
+	else if(piece == B_PAWN){
+		return -1;
+	}
+
+	else if(piece == W_BISHOP || piece == W_HORSE){
+		return 3;
+	}
+
+	else if(piece == B_BISHOP || piece == B_HORSE){
+		return -3;
+	}
+
+	else if(piece == W_TOWER){
+		return 5;
+	}
+
+	else if(piece == B_TOWER){
+		return -5;
+	}
+
+	else if(piece == W_QUEEN){
+		return 9;
+	}
+
+	else if(piece == B_QUEEN){
+		return -9;
+	}
+
+	else if(piece == W_KING){
+		return 200;
+	}
+
+	else if(piece == B_KING){
+		return -200;
+	}
+
+	else{
+		return 0;
+	}
 }

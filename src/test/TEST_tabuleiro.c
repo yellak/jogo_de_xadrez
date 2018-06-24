@@ -139,10 +139,45 @@ TEST(Test_What_Piece_in_Position, Verify_Out_of_Range){
 	/*Testar tabuleiro nulo. */
 	TBoard *nul = NULL;
 	EXPECT_EQ(OUT_OF_RANGE, WhatPiece(nul, 0, 0));
+
+	/* Testar out of range*/
 	TBoard board;
 	StartStandardBoard(&board);
 	EXPECT_EQ(OUT_OF_RANGE, WhatPiece(&board, 8, 8));
 	EXPECT_EQ(OUT_OF_RANGE, WhatPiece(&board, -1, -1));
+}
+
+/* Teste para verificar a funçãoque retorna o valor de uma peça para todas as peças possíveis.
+   Procedimentos:
+   -Criar variável para o tabuleiro e chamar a função de iniciar tabuleiro padrão.
+   -Chamar a função para posições do tabuleiro que correspondem a peças diferentes.
+   Resultados:
+   -É esperado que a função retorne os valores padrões de peças de xadrez para cada peça (especificado nos comentário da tabuleiro.c e tabuleiro.h) e zero para espaços vazios.
+*/
+TEST(Test_Get_Value_of_Piece, Verify_Every_Piece){
+	TBoard board;
+	StartStandardBoard(&board);
+
+	/* Testar Peões */
+	EXPECT_EQ(1, GetValue(WhatPiece(&board, 6, 0)));
+	EXPECT_EQ(-1, GetValue(WhatPiece(&board, 1, 0)));
+	/* Testar Cavalos. */
+	EXPECT_EQ(3, GetValue(WhatPiece(&board, 7, 1)));
+	EXPECT_EQ(-3, GetValue(WhatPiece(&board, 0, 1)));
+	/* Testar Bispos. */
+	EXPECT_EQ(3, GetValue(WhatPiece(&board, 7, 2)));
+	EXPECT_EQ(-3, GetValue(WhatPiece(&board, 0, 2)));
+	/* Testar Torres. */
+	EXPECT_EQ(5, GetValue(WhatPiece(&board, 7, 0)));
+	EXPECT_EQ(-5, GetValue(WhatPiece(&board, 0, 0)));
+	/* Testar Rainhas. */
+	EXPECT_EQ(9, GetValue(WhatPiece(&board, 7, 3)));
+	EXPECT_EQ(-9, GetValue(WhatPiece(&board, 0, 3)));
+	/* Testar Reis. */
+	EXPECT_EQ(200, GetValue(WhatPiece(&board, 7, 4)));
+	EXPECT_EQ(-200, GetValue(WhatPiece(&board, 0, 4)));
+	/* Testar espaço vazio. */
+	EXPECT_EQ(0, GetValue(WhatPiece(&board, 5, 5)));
 }
 
 int main(int argc, char **argv){

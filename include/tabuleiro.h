@@ -41,9 +41,10 @@ int StartEmptyBoard(TBoard *board);
 /* Inicializar tabuleiro padrão. */
 /*! \fn void StartStandardBoard(TBoard *board)
 		\brief Inicializa um tabuleiro com as peças na posição padrão de um jogo de xadrez.
-			   Peças pretas correspondem a parte "de cima" do tabuleiro (posições de (0.0) a (1,7)).
-			   Peças brancas correspondem a parte de "baixo" do tabuleiro (posiçẽos de (6,0) a (7,7)).
-			   As outras posições são vazias.
+			   
+	    Peças pretas correspondem a parte "de cima" do tabuleiro (posições de (0.0) a (1,7)).
+		Peças brancas correspondem a parte de "baixo" do tabuleiro (posiçẽos de (6,0) a (7,7)).
+		As outras posições são vazias.
 
 		\param board Ponteiro para um tabuleiro.
 		\return Por parâmetro, retorna o tabuleiro com as peças em posições padrões e um inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
@@ -58,8 +59,26 @@ int StartStandardBoard(TBoard *board);
 		\param board Ponteiro para um tabuleiro.
 		\param line Inteiro indicando a linha x da posição (x,y) a ser verificada. Deve ser um número de 0 a 7.
 		\param column Inteiro indicando a coluna y da posição (x,y) a ser verificada. Deve ser um número de 0 a 7.
-		\return Retorna o caractere correspondente da peça na posição (x,y).
+		\return Retorna o caractere correspondente da peça na posição (x,y) ou OUT_OF_RANGE para posições não existentes.
 */
 char WhatPiece(TBoard *board, int line, int column);
+
+/* Verifcar o valor de uma peça dada. */
+/*! \fn int GetValue(char piece)
+		\brief Verifica o valor de uma peça dada ou espaço vazio.
+		 
+		Os valores, em módulo, para as peças são:
+		Peões - 1;
+		Cavalos e Bispos - 3;
+		Torres - 5;
+		Rainhas - 9;
+		Reis - 200;
+		Espaço em branco - 0;
+		Sendo que as peças pretas assumem valores negativos e as brancas, positivos.
+		
+		\param piece É um caractere representado por alguma das constantes de peças definidas.
+		\return Retorna o valor da peça requisitada ou 0 para peças inválidas.
+*/
+int GetValue(char piece);
 
 #endif
