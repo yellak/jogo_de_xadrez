@@ -27,7 +27,15 @@ typedef struct board{
 	int Weight; /*!< Inteiro que armazena o peso ponderado do tabuleiro. */
 }TBoard;
 
-/* Funções: */
+/* Funções para manipulação do tabuleiro: */
 
+/* Inicializar tabuleiro vazio. */
+/*! \fn void StartEmptyBoard(TBoard *board)
+		\brief Inicializa um tabuleiro sem nenhuma peça em todas as posições.
+
+		\param board Ponteiro para um tabuleiro
+		\return Por parâmetro, retorna o tabuleiro vazio.
+*/
+void StartEmptyBoard(TBoard *board);
 
 #endif
