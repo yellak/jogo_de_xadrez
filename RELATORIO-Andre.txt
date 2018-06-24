@@ -1,0 +1,2 @@
+Data  |Horas Trabalhadas |Tipo Tarefa         |Descrição da Tarefa Realizada 
+22/06 |5 horas           |Reunião com o grupo |Definição do projeto e especificação dos módulos

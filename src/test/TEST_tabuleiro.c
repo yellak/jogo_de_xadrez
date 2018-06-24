@@ -86,6 +86,18 @@ TEST(Test_Verify_Standard_Board, Verify_If_Correct_Positions){
 	EXPECT_EQ(0, board.Weight);
 }
 
+/* Teste para verificar a validade da função para casos em que o ponteiro é nulo.
+   Procedimento:
+   	-Chamar função para uma variável nula.
+   Resultados:
+   	-É esperado que a função retorne o valor de erro '1'.
+*/
+TEST(Test_Verify_Standard_Board, Verify_NULL_Variables){
+	TBoard *board = NULL;
+	ASSERT_EQ(1, StartStandardBoard(board));
+}
+
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
