@@ -38,4 +38,16 @@ typedef struct board{
 */
 int StartEmptyBoard(TBoard *board);
 
+/* Inicializar tabuleiro padrão. */
+/*! \fn void StartStandardBoard(TBoard *board)
+		\brief Inicializa um tabuleiro com as peças na posição padrão de um jogo de xadrez.
+			   Peças pretas correspondem a parte "de cima" do tabuleiro (posições de (0.0) a (1,7)).
+			   Peças brancas correspondem a parte de "baixo" do tabuleiro (posiçẽos de (6,0) a (7,7)).
+			   As outras posições são vazias.
+
+		\param board Ponteiro para um tabuleiro
+		\return Por parâmetro, retorna o tabuleiro com as peças em posições padrões e um inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
+*/
+int StartStandardBoard(TBoard *board);
+
 #endif
