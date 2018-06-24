@@ -182,3 +182,20 @@ int GetValue(char piece){
 		return 0;
 	}
 }
+
+/* Função: RemovePiece
+		Objetivo: Remover uma peça da coordenada (x,y) do tabuleiro.
+
+		Parametros:
+			board - Ponteiro para a estrutura da árvore.
+					Não deve ser nulo
+			line - Inteiro representando a linha x da posição (x,y) da peça a ser removida.
+				   Deve ser um valor entre 0 e 7.
+			column - Inteiro representando a coluna y da posição (x,y) da peça a ser removida.
+				     Deve ser um valor entre 0 e 7.
+
+		Saída: Essa função retorna, por parâmetro, o tabuleiro sem a peça e com seu peso modificado.
+*/
+void RemovePiece(TBoard *board, int line, int column){
+	board->Board[line][column] = BLANK;
+}

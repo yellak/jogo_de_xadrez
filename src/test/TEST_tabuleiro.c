@@ -192,6 +192,33 @@ TEST(Test_Get_Value_of_Piece, Verify_Non_Pieces){
 	EXPECT_EQ(0, GetValue('*'));
 }
 
+/* Teste para verificar se a função de remoção remove uma peça que está no tabuleiro.
+   Procedimentos:
+   -Iniciar um tabuleiro padrão;
+   -Remover a peça da posição (0,0);
+   -Verificar se o espaço após a remoção;
+   -Verificar se o peso do tabuleiro; 
+   -Remover a peça da posição (7,1);
+   -Verificar o espaço após a remoção;
+   -Verificar o peso do tabuleiro.
+   Resultados:
+   -O espaços removidos devem ficar como BLANK;
+   -O peso, depois da primeira remoção, deve ficar +5;
+   -O peso, depois da segunda remoção, deve ficar +2;
+*/
+TEST(Test_Remove_Piece, Verify_Remotion){
+	TBoard board;
+	StartStandardBoard(&board);
+
+	RemovePiece(&board, 0, 0);
+	EXPECT_EQ(BLANK, WhatPiece(&board, 0, 0));
+	EXPECT_EQ(5, board.Weight);
+
+	RemovePiece(&board, 7, 1);
+	EXPECT_EQ(BLANK, WhatPiece(&board, 7, 1));
+	EXPECT_EQ(2, board.Weight);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

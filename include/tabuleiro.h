@@ -81,4 +81,15 @@ char WhatPiece(TBoard *board, int line, int column);
 */
 int GetValue(char piece);
 
+/* Verifcar o valor de uma peça dada. */
+/*! \fn void RemovePiece(TBoard *board, int line, int column)
+		\brief Remove uma peça de uma posição e modifica o peso do tabuleiro
+		
+		\param board Ponteiro para um tabuleiro.
+		\param line Inteiro indicando a linha x da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
+		\param column Inteiro indicando a coluna y da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
+		\return Retorna, por parâmetro, o tabuleiro sem a peça e com seu peso modificado.
+*/
+void RemovePiece(TBoard *board, int line, int column);
+
 #endif
