@@ -232,8 +232,8 @@ TEST(Test_Remove_Piece, Verify_Remotion){
 */
 TEST(Test_Remove_Piece, Verify_Invalid_Entries){
 	/*Testar tabuleiro nulo. */
-	TBoard *nul = NULL;
-	RemovePiece(nul, 0, 0);
+	TBoard *null = NULL;
+	RemovePiece(null, 0, 0);
 
 	/* Testar out of range*/
 	TBoard board;
@@ -244,13 +244,44 @@ TEST(Test_Remove_Piece, Verify_Invalid_Entries){
 	EXPECT_EQ(clone.Weight, board.Weight);
 }
 
+/* Teste para verificar a função de inserção para entradas inválidas.
+	Procedimentos:
+	-Chamar a função para valores fora de alcance.
+	-Chamar a função para uma peça inválida.
+	Resultados:
+	-É esperado que a função retorne um inteiro -1 indicando falha.
+*/
 TEST(Test_Insert_Piece, Verify_Invalid_Entries){
-	TBoard *nul = NULL;
-	char piece = 'K';
+	TBoard *null = NULL;
+	char piece = B_KING;
 	/*Testar posição invalida*/
 	int x = 12, y = 14;
 
-	EXPECT_EQ(-1, InsertPiece(nul, piece, x, y));
+	EXPECT_EQ(-1, InsertPiece(null, piece, x, y));
+
+	/* Testar peça invalida */
+	x = 5;
+	y = 2;
+	piece = 'Z'; 
+	EXPECT_EQ(-1, InsertPiece(null, piece, x, y));
+}
+
+/* Teste para verificar se a função de inserção insere uma peça corretamente.
+	Procedimentos:
+	-Chamar a função para peça, tabuleiro e posição válidos.
+	Resultados:
+	-É esperado que a função retorne um inteiro 0 indicando sucesso.
+	-É esperado que a peça esteja na posição desejada no tabuleiro.
+*/
+
+TEST(Test_Insert_Piece, Verify_Correct_Insertion){
+	TBoard board;
+	char piece = B_KING;
+	int x = 2, y = 2;
+
+	/* Testar peça inserida corretamente */
+	EXPECT_EQ(0, InsertPiece(&board, piece, x, y));
+	EXPECT_EQ(GetValue(B_KING), GetValue(board.Board[x][y]));
 }
 
 int main(int argc, char **argv){

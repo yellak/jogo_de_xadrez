@@ -93,7 +93,15 @@ int GetValue(char piece);
 void RemovePiece(TBoard *board, int line, int column);
 
 /*Insere uma nova peça no tabuleiro.*/
+/*! \fn void RemovePiece(TBoard *board, int line, int column)
+		\brief Insereuma peça válida no tabuleiro
 
+		\param board Pontereiro para um tabuleiro.
+		\param piece É um caractere representado por alguma das constantes de peças definidas.
+		\param line Inteiro indicando a linha x da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
+		\param column Inteiro indicando a coluna y da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
+		\return Retorna, um inteiro indicando a falha ou sucesso da operação.
+*/
 int InsertPiece(TBoard *board, char piece, int line, int column);
 
 #endif
