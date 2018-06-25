@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "tabuleiro.h"
+#include "../include/tabuleiro.h"
 
 /* Função: StartEmptyBoard
 		Objetivo: Iniciar um tabuleiro vazio em todas as suas posições.
@@ -213,4 +213,8 @@ void RemovePiece(TBoard *board, int line, int column){
 
 	/* Definir posição como vazia. */
 	board->Board[line][column] = BLANK;
+}
+
+int InsertPiece(TBoard *board, char peace, int line, int column){
+
 }

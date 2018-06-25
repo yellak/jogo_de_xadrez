@@ -92,4 +92,8 @@ int GetValue(char piece);
 */
 void RemovePiece(TBoard *board, int line, int column);
 
+/*Insere uma nova peça no tabuleiro.*/
+
+int InsertPiece(TBoard *board, char piece, int line, int column);
+
 #endif

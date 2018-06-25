@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "tabuleiro.h"
+#include "../include/tabuleiro.h"
 
 /* Teste para verificar a validade da função que inicia um tabuleiro vazio
    Procedimento:
@@ -242,6 +242,15 @@ TEST(Test_Remove_Piece, Verify_Invalid_Entries){
 	RemovePiece(&board, 8, 8);
 	RemovePiece(&board, -1, -1);
 	EXPECT_EQ(clone.Weight, board.Weight);
+}
+
+TEST(Test_Insert_Piece, Verify_Invalid_Entries){
+	TBoard *nul = NULL;
+	char piece = 'K';
+	/*Testar posição invalida*/
+	int x = 12, y = 14;
+
+	EXPECT_EQ(-1, InsertPiece(nul, piece, x, y));
 }
 
 int main(int argc, char **argv){
