@@ -252,17 +252,22 @@ TEST(Test_Remove_Piece, Verify_Invalid_Entries){
 	-É esperado que a função retorne um inteiro -1 indicando falha.
 */
 TEST(Test_Insert_Piece, Verify_Invalid_Entries){
-	TBoard *null = NULL;
+	TBoard board;
 	char piece = B_KING;
-	/*Testar posição invalida*/
+	/* Testar posição invalida */
 	int x = 12, y = 14;
 
-	EXPECT_EQ(-1, InsertPiece(null, piece, x, y));
+	EXPECT_EQ(-1, InsertPiece(&board, piece, x, y));
 
 	/* Testar peça invalida */
 	x = 5;
 	y = 2;
 	piece = 'Z'; 
+	EXPECT_EQ(-1, InsertPiece(&board, piece, x, y));
+
+	/* Testar tabuleiro nulo */
+	TBoard *null = NULL;
+	piece = B_KING;
 	EXPECT_EQ(-1, InsertPiece(null, piece, x, y));
 }
 
