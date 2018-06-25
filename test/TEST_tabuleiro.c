@@ -248,6 +248,7 @@ TEST(Test_Remove_Piece, Verify_Invalid_Entries){
 	Procedimentos:
 	-Chamar a função para valores fora de alcance.
 	-Chamar a função para uma peça inválida.
+	-Chamar a função para tabuleiro nulo.
 	Resultados:
 	-É esperado que a função retorne um inteiro -1 indicando falha.
 */
