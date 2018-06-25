@@ -216,5 +216,12 @@ void RemovePiece(TBoard *board, int line, int column){
 }
 
 int InsertPiece(TBoard *board, char peace, int line, int column){
-
+	/* Verificar x e y. */
+	if(line<0 || line>7 || column<0 || column>7){
+		return -1;
+	}
+	/* Verificar se a peça é válida */
+	if(GetValue(peace) == 0){
+		return -1;
+	}
 }
