@@ -221,7 +221,11 @@ int InsertPiece(TBoard *board, char peace, int line, int column){
 		return -1;
 	}
 	/* Verificar se a peça é válida */
-	if(GetValue(peace) == 0){
+	else if(GetValue(peace) == 0){
 		return -1;
 	}
+	
+	board->Board[line][column] = peace;
+	
+	return 0;
 }
