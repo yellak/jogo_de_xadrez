@@ -1,0 +1,21 @@
+#######################################################
+Data: 22/06
+
+Horas trabalhadas: 5 horas
+
+Tipo de tarefa: Reunião
+
+Desrição:
+Definição da estrutura do projeto e especificação dos
+módulos
+######################################################
+Data: 24/07
+
+Horas trabalhadas: 3 horas
+
+Tipo de tarefa: Interface gráfica
+
+Descrição:
+Criando o tabuleiro do jogo, não foi algo
+muito complexo, apenas algumas funções básicas
+#####################################################
