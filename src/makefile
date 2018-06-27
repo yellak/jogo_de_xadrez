@@ -7,10 +7,10 @@ CURSESFLAGS = -lncurses
 GTESTFLAGS = -lgtest -lpthread
 
 # Dependências do módulo principal
-_MAINOBJ = interface.o main.o
+_MAINOBJ = interface.o main.o tabuleiro.o
 MAINOBJ = $(patsubst %, $(ODIR)/%, $(_MAINOBJ))
 
-_MAINDEPS = interface.h
+_MAINDEPS = interface.h tabuleiro.h
 MAINDEPS = $(patsubst %, $(IDIR)/%, $(_MAINDEPS))
 
 # Dependências do módulo tabuleiro e seu módulo de testes

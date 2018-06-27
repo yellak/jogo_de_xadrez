@@ -8,6 +8,25 @@ const int YLIMIT = 8;
 const int BOARDY = 2;
 const int BOARDX = 2;
 
+/* Variáveis usadas para diferenciar entre o tabuleiro mostrado ao usuário e o
+   que está armazenado na memória */
+const int YOFFSET = 1;
+const int XOFFSET = 4;
+
+
+void InitBoard(WINDOW* boardwin, TBoard* board){
+	int line, column;
+	for(line = 0; line < YLIMIT; line++){
+		for(column = 0; column < XLIMIT; column++){
+			wmove(boardwin, line + YOFFSET * (1 + line), (XOFFSET * column) + 2);
+			
+			if(board->Board[line][column] != '\\'){
+				waddch(boardwin, board->Board[line][column]);
+			}
+		}
+	}
+} /* InitBoard */
+
 /*
   Função: Desenhar o tabuleiro
         Objetivo:

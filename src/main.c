@@ -1,4 +1,5 @@
 #include "../include/interface.h"
+//#include "../include/tabuleiro.h"
 
 /* Tamanho do tabuleiro */
 const int YLIMIT = 8;
@@ -14,6 +15,7 @@ int main()
 	WINDOW* boardwin;
 	WINDOW* yaxis;
 	WINDOW* xaxis;
+	TBoard* board = AlocateBoard();
  
 	initscr();
 	raw();
@@ -26,17 +28,27 @@ int main()
 	clear();
 
 	if(gamemode < 3){
+		/* Criando janelas necessárias para o jogo */
 		boardwin = newwin(YLIMIT*2 + 1, XLIMIT*4 + 1, BOARDY, BOARDX);
 		yaxis = newwin(YLIMIT*2 + 1, 2, BOARDY, 0);
 		xaxis = newwin(2, XLIMIT*4 + 1, BOARDX + YLIMIT*2 + 1, BOARDX);
 		refresh();
-	  
+
+		/* Inicializando as janelas criadas a pouco */
 		DrawBoard(boardwin);
 		DrawAxis(yaxis, xaxis);
 		wrefresh(boardwin);
 		wrefresh(yaxis);
 		wrefresh(xaxis);
-	  
+
+		/* Inicializando o tabuleiro básico */
+		StartEmptyBoard(board);
+		StartStandardBoard(board);
+
+		/* Mostrando o tabuleiro básico na interface gráfica */
+		InitBoard(boardwin, board);
+		wrefresh(boardwin);
+		
 		getch();
 		delwin(boardwin);
 	}
