@@ -1,5 +1,5 @@
 #include "../include/interface.h"
-//#include "../include/tabuleiro.h"
+#include "stdlib.h"
 
 /* Tamanho do tabuleiro */
 const int YLIMIT = 8;
@@ -20,6 +20,15 @@ int main()
 	initscr();
 	raw();
 	noecho();
+
+	if(has_colors() == FALSE)
+		{
+			endwin();
+			printf("Your terminal does not support color\n");
+			exit(1);
+		}
+
+	start_color();
 
 	/* Criando a janela do menu e oferecendo as opções ao usuário*/
 	/* Retorna o modo de jogo(1 = PVP, 2 = PVE, 3 = SAIR) */
