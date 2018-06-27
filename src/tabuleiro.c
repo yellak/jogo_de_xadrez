@@ -2,6 +2,21 @@
 #include <stdlib.h>
 #include "../include/tabuleiro.h"
 
+
+/*
+  Função: Alocar novo tabuleiro
+        Objetivo:
+            (...)
+
+        Parâmetros:
+            (...)
+*/
+TBoard* AlocateBoard(void){
+	TBoard* new_board = (TBoard*) malloc(sizeof(TBoard));
+	new_board->Weight = 0;
+	return new_board;
+}
+
 /* Função: StartEmptyBoard
 		Objetivo: Iniciar um tabuleiro vazio em todas as suas posições.
 

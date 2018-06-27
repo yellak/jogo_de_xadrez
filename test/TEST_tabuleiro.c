@@ -294,3 +294,11 @@ int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }
+
+TEST(Test_alocate, Alocate_new_board){
+	TBoard* test_board = NULL;
+	test_board = AlocateBoard();
+
+	EXPECT_EQ(NULL, !test_board);
+	EXPECT_EQ(0, test_board->Weight);
+}
