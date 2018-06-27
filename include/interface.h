@@ -2,6 +2,9 @@
 #define _GUI_INTERFACE_
 
 #include <ncurses.h>
+#include "../include/tabuleiro.h"
+
+void InitBoard(WINDOW* boardwin, TBoard* board);
 
 void DrawBoard(WINDOW* boardwin);
 
