@@ -47,76 +47,41 @@ void InitBoard(WINDOW* boardwin, TBoard* board){
                        alocada antes de ser passada como parâmetro desta função
 */
 void DrawBoard(WINDOW* boardwin){
-	int y, x;
+	
 	mvaddstr(0, 20, "Um jogo de xadrez");
-
-	move(BOARDY, BOARDX); /* Movendo para a posição onde deve começar o quadro */
-	waddch(boardwin, ACS_ULCORNER); /* Colocando o canto superior esquerdo */
-
-	for(y = 0; y < YLIMIT - 1; y++) /* Percorrendo a primeira linha */
-		{
-			/* Linhas horizontais superiores */
-			waddch(boardwin, ACS_HLINE);
-			waddch(boardwin, ACS_HLINE);
-			waddch(boardwin, ACS_HLINE);
-			waddch(boardwin, ACS_TTEE);
+	wborder(boardwin, ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
+		
+	//Colocando linhas verticais e horizontias
+	for(int i = 0; i < 7; i++){
+		mvwvline(boardwin, 1, 4*i + 4, 0, 2*YLIMIT - 1);
+		mvwhline(boardwin, i*2 + 2, 1, 0, 4*XLIMIT - 1);
+	}
+	
+	//Coloca as cruzes na intersecção entre linhas verticais e horizontais
+	for(int i = 0; i < 7; i++){
+		for(int j = 0; j< 7; j++){
+			mvwaddch(boardwin, 2*i + 2, 4*j + 4, ACS_PLUS);
 		}
-	/* Últimas linhas horizontais e canto superior direito */
-	waddch(boardwin, ACS_HLINE);
-	waddch(boardwin, ACS_HLINE);
-	waddch(boardwin, ACS_HLINE);
-	waddch(boardwin, ACS_URCORNER);
+	}
 
-	for (x = 1; x < YLIMIT; x++) /* Percorrendo cada linha */
-		{
-			move(BOARDY + x * 2 - 1, BOARDX);
-			waddch(boardwin, ACS_VLINE); /* Paredes verticais */
-			for (y = 0; y < XLIMIT; y++)
-				{
-					/* Partes em branco no meio */
-					waddch(boardwin, ' ');
-					waddch(boardwin, ' ');
-					waddch(boardwin, ' ');
-					waddch(boardwin, ACS_VLINE);
-				}
-			move(BOARDY + x * 2, BOARDX);
-			waddch(boardwin, ACS_LTEE);
-			for (y = 0; y < XLIMIT - 1; y++)
-				{
-					waddch(boardwin, ACS_HLINE);
-					waddch(boardwin, ACS_HLINE);
-					waddch(boardwin, ACS_HLINE);
-					waddch(boardwin, ACS_PLUS);
-				}
-			waddch(boardwin, ACS_HLINE);
-			waddch(boardwin, ACS_HLINE);
-			waddch(boardwin, ACS_HLINE);
-			waddch(boardwin, ACS_RTEE);
-		}
+	//Inserindo dentes para a direita e para a esquerda nas extremidades do tabuleiro
+	for(int i = 0; i < 7; i++){
+		//direita
+		mvwaddch(boardwin, 2*i + 2, 0, ACS_LTEE);
 
-	move(BOARDY + x * 2 - 1, BOARDX);
-	waddch(boardwin, ACS_VLINE);
-	for (y = 0; y < XLIMIT; y++)
-		{
-			waddch(boardwin, ' ');
-			waddch(boardwin, ' ');
-			waddch(boardwin, ' ');
-			waddch(boardwin, ACS_VLINE);
-		}
+		//esquerda
+		mvwaddch(boardwin, 2*i + 2, 32, ACS_RTEE);			
+	}
 
-	move(BOARDY + x * 2, BOARDX);
-	waddch(boardwin, ACS_LLCORNER);
-	for (y = 0; y < XLIMIT - 1; y++)
-		{
-			waddch(boardwin, ACS_HLINE);
-			waddch(boardwin, ACS_HLINE);
-			waddch(boardwin, ACS_HLINE);
-			waddch(boardwin, ACS_BTEE);
-		}
-	waddch(boardwin, ACS_HLINE);
-	waddch(boardwin, ACS_HLINE);
-	waddch(boardwin, ACS_HLINE);
-	waddch(boardwin, ACS_LRCORNER);
+	//Inserindo dentes para a cima e para baixo nas extremidades do tabuleiro
+	for(int i = 0; i < 7; i++){
+		//cima
+		mvwaddch(boardwin, 16, 4*i + 4, ACS_BTEE);
+
+		//baixo
+		mvwaddch(boardwin, 0, 4*i + 4, ACS_TTEE);
+	}
+	
 } /* DrawBoard */
 
 /* 
