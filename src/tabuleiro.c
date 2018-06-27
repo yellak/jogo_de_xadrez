@@ -6,10 +6,14 @@
 /*
   Função: Alocar novo tabuleiro
         Objetivo:
-            (...)
+            Alocar espaço na memória para um tabuleiro
 
         Parâmetros:
-            (...)
+            A função não possui parâmetros
+
+        Retorno:
+            A função retorna um elemento tabuleiro inicializado com peso zerado
+            e diferente de nulo
 */
 TBoard* AlocateBoard(void){
 	TBoard* new_board = (TBoard*) malloc(sizeof(TBoard));

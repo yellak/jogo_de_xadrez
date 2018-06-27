@@ -20,6 +20,7 @@ int main()
 	initscr();
 	raw();
 	noecho();
+	curs_set(0);
 
 	if(has_colors() == FALSE)
 		{

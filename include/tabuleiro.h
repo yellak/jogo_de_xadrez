@@ -29,10 +29,17 @@ typedef struct board{
 
 /* Funções para manipulação do tabuleiro: */
 
+/* Alocar espaço para tabuleiro */
+/*! \fn TBoard* AlocateBoard(void)
+        \brief Aloca espaço em memória para um elemento de tabuleiro
+
+        \return Um elemento de tabuleiro diferente de nulo alocado dinamicamente
+                inicializado com peso zerado
+*/
 TBoard* AlocateBoard(void);
 
 /* Inicializar tabuleiro vazio. */
-/*! \fn void StartEmptyBoard(TBoard *board)
+/*! \fn int StartEmptyBoard(TBoard *board)
 		\brief Inicializa um tabuleiro sem nenhuma peça em todas as posições.
 
 		\param board Ponteiro para um tabuleiro.

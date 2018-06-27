@@ -10,15 +10,25 @@ const int BOARDX = 2;
 
 /* Variáveis usadas para diferenciar entre o tabuleiro mostrado ao usuário e o
    que está armazenado na memória */
-const int YOFFSET = 1;
+const int YOFFSET = 2;
 const int XOFFSET = 4;
 
+/* 
+   Função: Inicializar o tabuleiro
+         Objetivo:
+             Inicializar graficamente um tabuleiro já pronto
 
+         Parâmetros:
+            boardwin - Ponteiro para a janela onde está o tabuleiro
+
+            board    - Struct do tabuleiro onde está o tabuleiro em si que será
+                       mostrado na interface
+*/
 void InitBoard(WINDOW* boardwin, TBoard* board){
 	int line, column;
 	for(line = 0; line < YLIMIT; line++){
 		for(column = 0; column < XLIMIT; column++){
-			wmove(boardwin, line + YOFFSET * (1 + line), (XOFFSET * column) + 2);
+			wmove(boardwin, (line * YOFFSET) + 1, (XOFFSET * column) + 2);
 			
 			if(board->Board[line][column] != '\\'){
 				waddch(boardwin, board->Board[line][column]);
@@ -40,27 +50,30 @@ void DrawBoard(WINDOW* boardwin){
 	int y, x;
 	mvaddstr(0, 20, "Um jogo de xadrez");
 
-	move(BOARDY, BOARDX);
-	waddch(boardwin, ACS_ULCORNER);
+	move(BOARDY, BOARDX); /* Movendo para a posição onde deve começar o quadro */
+	waddch(boardwin, ACS_ULCORNER); /* Colocando o canto superior esquerdo */
 
-	for(y = 0; y < YLIMIT - 1; y++)
+	for(y = 0; y < YLIMIT - 1; y++) /* Percorrendo a primeira linha */
 		{
+			/* Linhas horizontais superiores */
 			waddch(boardwin, ACS_HLINE);
 			waddch(boardwin, ACS_HLINE);
 			waddch(boardwin, ACS_HLINE);
 			waddch(boardwin, ACS_TTEE);
 		}
+	/* Últimas linhas horizontais e canto superior direito */
 	waddch(boardwin, ACS_HLINE);
 	waddch(boardwin, ACS_HLINE);
 	waddch(boardwin, ACS_HLINE);
 	waddch(boardwin, ACS_URCORNER);
 
-	for (x = 1; x < YLIMIT; x++)
+	for (x = 1; x < YLIMIT; x++) /* Percorrendo cada linha */
 		{
 			move(BOARDY + x * 2 - 1, BOARDX);
-			waddch(boardwin, ACS_VLINE);
+			waddch(boardwin, ACS_VLINE); /* Paredes verticais */
 			for (y = 0; y < XLIMIT; y++)
 				{
+					/* Partes em branco no meio */
 					waddch(boardwin, ' ');
 					waddch(boardwin, ' ');
 					waddch(boardwin, ' ');
@@ -104,7 +117,7 @@ void DrawBoard(WINDOW* boardwin){
 	waddch(boardwin, ACS_HLINE);
 	waddch(boardwin, ACS_HLINE);
 	waddch(boardwin, ACS_LRCORNER);
-}
+} /* DrawBoard */
 
 /* 
    Função: Desenhar eixos coordernados (DrawAxis)
