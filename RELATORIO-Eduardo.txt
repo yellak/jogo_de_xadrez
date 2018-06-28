@@ -4,6 +4,6 @@ Tópico: Projetar
 Resumo = Discussão com o grupo sobre o aspecto geral do trabalho, como estruturas e módulos.
 
 Dia 28/06
-Tempo: 3 horas
-Tópico: Incrementar módulo do tabuleiro e corrigir erros gramaticais nos comentários
+Tempo: 3.5 horas
+Tópico: Incrementar módulo do tabuleiro e corrigir erros gramaticais nos comentários.
 Resumo = Começar função que contabilizará os movimentos possíveis e arrumar erros acidentais em todo o projeto.
