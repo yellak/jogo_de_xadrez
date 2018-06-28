@@ -5,12 +5,11 @@
 const int YLIMIT = 8;
 const int XLIMIT = 8;
 
-/* Incício do tabuleiro */
+/* Início do tabuleiro */
 const int BOARDX = 2;
 const int BOARDY = 2;
 
-int main()
-{
+int main(){
 	WINDOW* menuwin;
 	WINDOW* boardwin;
 	WINDOW* yaxis;

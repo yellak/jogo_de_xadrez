@@ -290,6 +290,21 @@ TEST(Test_Insert_Piece, Verify_Correct_Insertion){
 	EXPECT_EQ(GetValue(B_KING), GetValue(board.Board[x][y]));
 }
 
+// TEST(Test_ListDeletion, Verify_Correct_Frees){
+// 	TBoard board;
+// 	ListOfMoves* list = AnalyzePossibleMovementsBlack(&board);
+// 	EXPECT_EQ(0, DeleteMoveList(list));
+// }
+
+// TEST(Test_CreateListOfMoves, Verify_Correct_Creation){
+// 	TBoard board;
+// 	char piece = B_KING;
+// 	int x = 2, y = 2;
+// 	InsertPiece(&board, piece, x, y);
+// 	ListOfMoves* list = AnalyzePossibleMovementsBlack(&board);
+// }
+
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
@@ -302,3 +317,4 @@ TEST(Test_alocate, Alocate_new_board){
 	EXPECT_EQ(NULL, !test_board);
 	EXPECT_EQ(0, test_board->Weight);
 }
+

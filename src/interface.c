@@ -182,4 +182,4 @@ int CreateMenu(WINDOW* menuwin){
 	delwin(menuwin);
 
 	return highlight;
-}
+} /* CreateMenu */

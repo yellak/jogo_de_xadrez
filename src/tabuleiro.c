@@ -6,14 +6,14 @@
 /*
   Função: Alocar novo tabuleiro
         Objetivo:
-            Alocar espaço na memória para um tabuleiro
+            Alocar espaço na memória para um tabuleiro.
 
         Parâmetros:
-            A função não possui parâmetros
+            A função não possui parâmetros.
 
         Retorno:
             A função retorna um elemento tabuleiro inicializado com peso zerado
-            e diferente de nulo
+            e diferente de nulo.
 */
 TBoard* AlocateBoard(void){
 	TBoard* new_board = (TBoard*) malloc(sizeof(TBoard));
@@ -25,7 +25,7 @@ TBoard* AlocateBoard(void){
 		Objetivo: Iniciar um tabuleiro vazio em todas as suas posições.
 
 		Parametros:
-			board - Ponteiro para a estrutura da árvore.
+			board - Ponteiro para a estrutura do tabuleiro.
 					Não deve ser nulo
 
 		Saída: Essa função retorna, por parâmetro, um tabuleiro vazio e um inteiro para informar o funcionamento da função
@@ -56,7 +56,7 @@ int StartEmptyBoard(TBoard *board){
 		Objetivo: Iniciar um tabuleiro com as peças em posições padrões do xadrez.
 
 		Parametros:
-			board - Ponteiro para a estrutura da árvore.
+			board - Ponteiro para a estrutura do tabuleiro.
 					Não deve ser nulo
 
 		Saída: Essa função retorna, por parâmetro, um tabuleiro com as peças em posições padrão e um inteiro para informar o funcionamento da função
@@ -117,7 +117,7 @@ int StartStandardBoard(TBoard *board){
 		Objetivo: Verificar qual peça se encontra na posição (x,y) do tabuleiro.
 
 		Parametros:
-			board - Ponteiro para a estrutura da árvore.
+			board - Ponteiro para a estrutura do tabuleiro.
 					Não deve ser nulo
 			line - Inteiro representando a linha x da posição (x,y) a ser verificada.
 				   Deve ser um valor entre 0 e 7.
@@ -206,7 +206,7 @@ int GetValue(char piece){
 		Objetivo: Remover uma peça da coordenada (x,y) do tabuleiro.
 
 		Parametros:
-			board - Ponteiro para a estrutura da árvore.
+			board - Ponteiro para a estrutura do tabuleiro.
 					Não deve ser nulo
 			line - Inteiro representando a linha x da posição (x,y) da peça a ser removida.
 				   Deve ser um valor entre 0 e 7.
@@ -234,13 +234,13 @@ void RemovePiece(TBoard *board, int line, int column){
 	board->Board[line][column] = BLANK;
 }
 
-int InsertPiece(TBoard *board, char peace, int line, int column){
+int InsertPiece(TBoard *board, char piece, int line, int column){
 	/* Verificar x e y. */
 	if(line<0 || line>7 || column<0 || column>7){
 		return -1;
 	}
 	/* Verificar se a peça é válida */
-	if(GetValue(peace) == 0){
+	if(GetValue(piece) == 0){
 		return -1;
 	}
 	/* Verifcar tabuleiro */
@@ -248,7 +248,207 @@ int InsertPiece(TBoard *board, char peace, int line, int column){
 		return -1;
 	}
 	
-	board->Board[line][column] = peace;
+	board->Board[line][column] = piece;
 
 	return 0;
+}
+
+
+/* Função: DeleteMoveList
+		Objetivo: Liberar toda a memória da lista de movimentos.
+
+		Parametros:
+			list - Ponteiro para a estrutura da lista.
+					Não deve ser nulo
+
+		Saída: Retorna um inteiro indicando a falha ou sucesso da operação.
+*/
+int DeleteMoveList(ListOfMoves* list){
+	free(list->Plays);
+	if(!list->Plays){
+		free(list);
+		if(!list){
+			return 0;
+		}else{
+			return -1;
+		}
+	}else{
+		return -1;
+	}
+}
+
+/* Função: AnalyzePossibleMovementsBlack
+		Objetivo: Conseguir armazenar todas as possíveis jogadas para as peças pretas a partir de um tabuleiro.
+
+		Parametros:
+			board - Ponteiro para a estrutura da tabuleiro.
+					Não deve ser nulo nem vazio
+
+		Saída: Essa função retorna um arrays que contém os movimentos possíveis para com as peças pretas.
+*/
+ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
+	int i, j, size = 1;
+	ListOfMoves* AllMoves = (ListOfMoves*) malloc(sizeof(ListOfMoves));
+	AllMoves->Plays = (Move*) malloc(size*sizeof(Move));
+
+	/* Percorrendo o tabuleiro. */
+	for(i=0; i < 8;i++){
+		for(j=0; j < 8;j++){
+			/* Casos para o peão black. */
+			if(board->Board[i][j] == B_PAWN){
+				/* Caso andar 2 estando na posição inicial. */
+				if(i == 6 && board->Board[i - 2][j] == BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 2;
+					AllMoves->Plays[size - 1].destiny[1] = j;
+				}
+				/* Caso andar 1 estando na posição inicial. */
+				if(i == 6 && board->Board[i - 1][j] == BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 1;
+					AllMoves->Plays[size - 1].destiny[1] = j;
+				}
+				/* Caso de eliminar peça sendo um peão na diagonal superior direita. */
+				if(board->Board[i - 1][j + 1] != BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 1;
+					AllMoves->Plays[size - 1].destiny[1] = j + 1;
+				}
+				/* Caso de eliminar peça sendo um peão na diagonal superior esquerda. */
+				if(board->Board[i - 1][j - 1] != BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 1;
+					AllMoves->Plays[size - 1].destiny[1] = j - 1;
+				}
+				/* Caso de eliminar peça sendo um peão na diagonal inferior esquerda. */
+				if(board->Board[i + 1][j - 1] != BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 1;
+					AllMoves->Plays[size - 1].destiny[1] = j - 1;
+				}
+				/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
+				if(board->Board[i + 1][j + 1] != BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 1;
+					AllMoves->Plays[size - 1].destiny[1] = j + 1;
+				}
+				/* Caso de andar 1 normalmente/ eliminar peça sendo um peão de frente. */
+				if(board->Board[i - 1][j] == BLANK || board->Board[i - 1][j] != BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 1;
+					AllMoves->Plays[size - 1].destiny[1] = j;
+				}
+			}
+		}
+	}
+	return AllMoves;
+}
+
+/* Função: AnalyzePossibleMovementsWhite
+		Objetivo: Conseguir armazenar todas as possíveis jogadas para as peças brancas a partir de um tabuleiro.
+
+		Parametros:
+			board - Ponteiro para a estrutura da tabuleiro.
+					Não deve ser nulo nem vazio
+
+		Saída: Essa função retorna um arrays que contém os movimentos possíveis para com as peças brancas.
+*/
+ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
+	int i, j, size = 1;
+	ListOfMoves* AllMoves = (ListOfMoves*) malloc(sizeof(ListOfMoves));
+	AllMoves->Plays = (Move*) malloc(size*sizeof(Move));
+
+	/* Percorrendo o tabuleiro. */
+	for(i=0; i < 8;i++){
+		for(j=0; j < 8;j++){
+			/* Casos para o peão white. */
+			if(board->Board[i][j] == W_PAWN){
+				/* Caso andar 2 estando na posição inicial. */
+				if(i == 6 && board->Board[i + 2][j] == BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 2;
+					AllMoves->Plays[size - 1].destiny[1] = j;
+				}
+				/* Caso andar 1 estando na posição inicial. */
+				if(i == 6 && board->Board[i + 1][j] == BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 1;
+					AllMoves->Plays[size - 1].destiny[1] = j;
+				}
+				/* Caso de eliminar peça sendo um peão na diagonal superior direita. */
+				if(board->Board[i - 1][j + 1] != BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 1;
+					AllMoves->Plays[size - 1].destiny[1] = j + 1;
+				}
+				/* Caso de eliminar peça sendo um peão na diagonal superior esquerda. */
+				if(board->Board[i - 1][j - 1] != BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 1;
+					AllMoves->Plays[size - 1].destiny[1] = j - 1;
+				}
+				/* Caso de eliminar peça sendo um peão na diagonal inferior esquerda. */
+				if(board->Board[i + 1][j - 1] != BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 1;
+					AllMoves->Plays[size - 1].destiny[1] = j - 1;
+				}
+				/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
+				if(board->Board[i + 1][j + 1] != BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 1;
+					AllMoves->Plays[size - 1].destiny[1] = j + 1;
+				}
+				/* Caso de andar 1 normalmente/ eliminar peça sendo um peão de frente. */
+				if(board->Board[i + 1][j] == BLANK || board->Board[i + 1][j] != BLANK){
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 1;
+					AllMoves->Plays[size - 1].destiny[1] = j;
+				}
+			}
+		}
+	}
+	return AllMoves;
 }

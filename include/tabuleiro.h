@@ -27,6 +27,27 @@ typedef struct board{
 	int Weight; /*!< Inteiro que armazena o peso ponderado do tabuleiro. */
 }TBoard;
 
+/* Definição da estrutura que irá armazenar uma jogada possível a partir de um tabuleiro */
+/*! \struct Move
+		\brief Estrutura que irá caracterizar a jogada.
+
+		Estrutura que armazena uma maneira de interpretar uma jogada.
+*/
+typedef struct Move{
+	int origin[2]; /*!< Array que armazena as coordenadas de origem do movimento. */
+	int destiny[2]; /*!< Array que armazena as coordenadas de destino do movimento. */
+}Move;
+
+/* Definição da estrutura que irá armazenar as jogadas possíveis a partir de um tabuleiro. */
+/*! \struct ListOfMoves
+		\brief Estrutura representará todas as possíveis jogadas de um tabuleiro.
+
+		Array do tipo Move que é importante para a análise das jogadas.
+*/
+typedef struct ListOfMoves{
+	Move *Plays; /*!< Array que armazena todas as jogadas possíveis com base em um tabuleiro. */
+}ListOfMoves;
+
 /* Funções para manipulação do tabuleiro: */
 
 /* Alocar espaço para tabuleiro */
@@ -34,7 +55,7 @@ typedef struct board{
         \brief Aloca espaço em memória para um elemento de tabuleiro
 
         \return Um elemento de tabuleiro diferente de nulo alocado dinamicamente
-                inicializado com peso zerado
+                inicializado com peso igual a zero
 */
 TBoard* AlocateBoard(void);
 
@@ -61,7 +82,7 @@ int StartEmptyBoard(TBoard *board);
 int StartStandardBoard(TBoard *board);
 
 
-/* Verifcar qual peça se encontra na posiçõ (x,y) do tabuleiro. */
+/* Verificar qual peça se encontra na posição (x,y) do tabuleiro. */
 /*! \fn char WhatPiece(TBoard *board, int line, int column)
 		\brief Verifica qual peça se encontra na posição dada.
 		
@@ -72,7 +93,7 @@ int StartStandardBoard(TBoard *board);
 */
 char WhatPiece(TBoard *board, int line, int column);
 
-/* Verifcar o valor de uma peça dada. */
+/* Verificar o valor de uma peça dada. */
 /*! \fn int GetValue(char piece)
 		\brief Verifica o valor de uma peça dada ou espaço vazio.
 		 
@@ -90,9 +111,9 @@ char WhatPiece(TBoard *board, int line, int column);
 */
 int GetValue(char piece);
 
-/* Verifcar o valor de uma peça dada. */
+/* Remover do tabuleiro uma peça dada. */
 /*! \fn void RemovePiece(TBoard *board, int line, int column)
-		\brief Remove uma peça de uma posição e modifica o peso do tabuleiro
+		\brief Remove uma peça de uma posição e modifica o peso do tabuleiro.
 		
 		\param board Ponteiro para um tabuleiro.
 		\param line Inteiro indicando a linha x da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
@@ -103,7 +124,7 @@ void RemovePiece(TBoard *board, int line, int column);
 
 /*Insere uma nova peça no tabuleiro.*/
 /*! \fn void RemovePiece(TBoard *board, int line, int column)
-		\brief Insereuma peça válida no tabuleiro
+		\brief Insere uma peça válida no tabuleiro.
 
 		\param board Pontereiro para um tabuleiro.
 		\param piece É um caractere representado por alguma das constantes de peças definidas.
@@ -112,5 +133,32 @@ void RemovePiece(TBoard *board, int line, int column);
 		\return Retorna, um inteiro indicando a falha ou sucesso da operação.
 */
 int InsertPiece(TBoard *board, char piece, int line, int column);
+
+/*Analisa os movimentos possíveis em um tabuleiro em relação as peças pretas.*/
+/*! \fn ListOfMoves AnalyzePossibleMovementsBlack(TBoard *board)
+		\brief Armazena movimentos possíveis para cada peça preta.
+
+		\param board Ponteiro para um tabuleiro.
+		\return Retorna uma lista com os movimentos possíveis de acordo com as peças pretas.
+*/
+ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board);
+
+/*Analisa os movimentos possíveis em um tabuleiro em relação as peças brancas.*/
+/*! \fn ListOfMoves AnalyzePossibleMovementsWhite(TBoard *board)
+		\brief Armazena movimentos possíveis para cada peça branca.
+
+		\param board Ponteiro para um tabuleiro.
+		\return Retorna uma lista com os movimentos possíveis de acordo com as peças brancas.
+*/
+ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board);
+
+/*Libera memória dedicada a lista dos movimentos possíveis.*/
+/*! \fn int DeleteMoveList(ListOfMoves* list)
+		\brief Libera memória utilizada por uma lista.
+
+		\param list uma lista de movimentos.
+		\return Retorna um inteiro indicando a falha ou sucesso da operação.
+*/
+int DeleteMoveList(ListOfMoves* list);
 
 #endif
