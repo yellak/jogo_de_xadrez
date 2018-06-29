@@ -45,6 +45,7 @@ typedef struct Move{
 		Array do tipo Move que é importante para a análise das jogadas.
 */
 typedef struct ListOfMoves{
+	int howmany; /*!< Inteiro que guarda quantas jogadas são possíveis de serem feitas. */
 	Move *Plays; /*!< Array que armazena todas as jogadas possíveis com base em um tabuleiro. */
 }ListOfMoves;
 
