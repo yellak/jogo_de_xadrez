@@ -56,3 +56,5 @@ src/*#
 src/obj/*.o
 src/main
 src/test_tabuleiro
+
+include/gtest

@@ -19,3 +19,15 @@ Descrição:
 Criando o tabuleiro do jogo, não foi algo
 muito complexo, apenas algumas funções básicas
 #####################################################
+Data: 27/07
+
+Horas trabalhadas: 2 horas e meia
+
+Tipo de tarefa: Interface gráfica
+
+Descrição:
+Adcionada uma função que carrega um tabuleiro na
+interface gráfica.
+Adicionada função que aloca espaço na memória para
+um elemento de tabuleiro. Adicionados os seus testes.
+Inicilizado modo colorido no jogo.
