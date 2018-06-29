@@ -63,5 +63,15 @@ int main(){
 	}
 	endwin();
 
+	// TBoard* board = AlocateBoard();
+	// StartEmptyBoard(board);
+	// board->Board[0][0] = B_HORSE;
+	// ListOfMoves* list = AnalyzePossibleMovementsBlack(board);
+	// for(int i = 1; i < list->howmany + 1; i++){
+	// 	printf("%d %d\n", list->Plays[i].origin[0], list->Plays[i].origin[1]);
+	// 	printf("%d %d\n", list->Plays[i].destiny[0], list->Plays[i].destiny[1]);
+	// 	printf("\n");
+	// }
+
 	return 0;
 }
