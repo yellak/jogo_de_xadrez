@@ -310,7 +310,7 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 			/* Casos para o peão black. */
 			if(board->Board[i][j] == B_PAWN){
 				/* Caso andar 2 estando na posição inicial. */
-				if(i == 6 && board->Board[i - 2][j] == BLANK){
+				if((i == 6 && board->Board[i - 2][j] == BLANK) && i - 2 >= 0){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -320,7 +320,7 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j;
 				}
 				/* Caso andar 1 estando na posição inicial/ andar normalmente. */
-				if((i == 6 && board->Board[i - 1][j] == BLANK) || board->Board[i - 1][j] == BLANK){
+				if(((i == 6 && board->Board[i - 1][j] == BLANK) || board->Board[i - 1][j] == BLANK) && i - 1 >= 0){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -330,7 +330,7 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j;
 				}
 				/* Caso de eliminar peça sendo um peão na diagonal superior direita. */
-				if(board->Board[i - 1][j + 1] != BLANK){
+				if(board->Board[i - 1][j + 1] != BLANK && i - 1 >=0 && j + 1 <= 7){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -340,7 +340,7 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j + 1;
 				}
 				/* Caso de eliminar peça sendo um peão na diagonal superior esquerda. */
-				if(board->Board[i - 1][j - 1] != BLANK){
+				if(board->Board[i - 1][j - 1] != BLANK && i - 1 >= 0 && j - 1 >= 0){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -350,7 +350,7 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j - 1;
 				}
 				/* Caso de eliminar peça sendo um peão na diagonal inferior esquerda. */
-				if(board->Board[i + 1][j - 1] != BLANK){
+				if(board->Board[i + 1][j - 1] != BLANK && i + 1 <= 7 && j - 1 >= 0){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -360,7 +360,7 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j - 1;
 				}
 				/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
-				if(board->Board[i + 1][j + 1] != BLANK){
+				if(board->Board[i + 1][j + 1] != BLANK && i + 1 <= 7 && j + 1 <= 7){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -370,7 +370,7 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j + 1;
 				}
 				/* Caso de andar 1 normalmente/ eliminar peça sendo um peão de frente. */
-				if(board->Board[i - 1][j] != BLANK){
+				if(board->Board[i - 1][j] != BLANK && i - 1 >= 0){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -412,7 +412,7 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 			/* Casos para o peão white. */
 			if(board->Board[i][j] == W_PAWN){
 				/* Caso andar 2 estando na posição inicial. */
-				if(i == 6 && board->Board[i + 2][j] == BLANK){
+				if((i == 6 && board->Board[i + 2][j] == BLANK) && i + 2 <= 7){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -422,7 +422,7 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j;
 				}
 				/* Caso andar 1 estando na posição inicial/ andar normalmente. */
-				if((i == 6 && board->Board[i + 1][j] == BLANK) || board->Board[i + 1][j] == BLANK){
+				if(((i == 6 && board->Board[i + 1][j] == BLANK) || board->Board[i + 1][j] == BLANK) && i + 1 <= 7){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -432,7 +432,7 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j;
 				}
 				/* Caso de eliminar peça sendo um peão na diagonal superior direita. */
-				if(board->Board[i - 1][j + 1] != BLANK){
+				if(board->Board[i - 1][j + 1] != BLANK && i - 1 >= 0 && j + 1 <= 7){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -442,7 +442,7 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j + 1;
 				}
 				/* Caso de eliminar peça sendo um peão na diagonal superior esquerda. */
-				if(board->Board[i - 1][j - 1] != BLANK){
+				if(board->Board[i - 1][j - 1] != BLANK && i - 1 >= 0 && j - 1 >= 0){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -452,7 +452,7 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j - 1;
 				}
 				/* Caso de eliminar peça sendo um peão na diagonal inferior esquerda. */
-				if(board->Board[i + 1][j - 1] != BLANK){
+				if(board->Board[i + 1][j - 1] != BLANK && i + 1 <= 7 && j - 1 >= 0){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -462,7 +462,7 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j - 1;
 				}
 				/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
-				if(board->Board[i + 1][j + 1] != BLANK){
+				if(board->Board[i + 1][j + 1] != BLANK && i + 1 <= 7 && j + 1 <= 7){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
@@ -472,7 +472,7 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[1] = j + 1;
 				}
 				/* Caso de andar 1 normalmente/ eliminar peça sendo um peão de frente. */
-				if(board->Board[i + 1][j] != BLANK){
+				if(board->Board[i + 1][j] != BLANK && i + 1 <= 7){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
