@@ -369,7 +369,7 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[0] = i + 1;
 					AllMoves->Plays[size - 1].destiny[1] = j + 1;
 				}
-				/* Caso de andar 1 normalmente/ eliminar peça sendo um peão de frente. */
+				/* Caso de eliminar peça sendo um peão de frente. */
 				if(board->Board[i - 1][j] != BLANK && i - 1 >= 0){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
@@ -378,6 +378,81 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 					AllMoves->Plays[size - 1].origin[1] = j;
 					AllMoves->Plays[size - 1].destiny[0] = i - 1;
 					AllMoves->Plays[size - 1].destiny[1] = j;
+				}
+			}
+			/* Casos para o cavalo black. Todos os Ls possíveis foram representados. */
+			else if(board->Board[i][j] == B_HORSE){
+				if(i - 1 >= 0 && j - 2 >= 0){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 1;
+					AllMoves->Plays[size - 1].destiny[1] = j - 2;
+				}
+				if(i - 2 >= 0 && j - 1 >= 0){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 2;
+					AllMoves->Plays[size - 1].destiny[1] = j - 1;
+				}
+				if(i - 2 >= 0 && j + 1 <= 7){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 2;
+					AllMoves->Plays[size - 1].destiny[1] = j + 1;
+				}
+				if(i - 1 >= 0 && j + 2 <= 7){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 1;
+					AllMoves->Plays[size - 1].destiny[1] = j + 2;
+				}
+				if(i + 1 <= 7 && j - 2 >= 0){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 1;
+					AllMoves->Plays[size - 1].destiny[1] = j - 2;
+				}
+				if(i + 2 <= 7 && j - 1 >= 0){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 2;
+					AllMoves->Plays[size - 1].destiny[1] = j - 1;
+				}
+				if(i + 2 <= 7 && j + 1 <= 7){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 2;
+					AllMoves->Plays[size - 1].destiny[1] = j + 1;
+				}
+				if(i + 1 <= 7 && j + 2 <= 7){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 1;
+					AllMoves->Plays[size - 1].destiny[1] = j + 2;
 				}
 			}
 		}
@@ -471,7 +546,7 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 					AllMoves->Plays[size - 1].destiny[0] = i + 1;
 					AllMoves->Plays[size - 1].destiny[1] = j + 1;
 				}
-				/* Caso de andar 1 normalmente/ eliminar peça sendo um peão de frente. */
+				/* Caso de eliminar peça sendo um peão de frente. */
 				if(board->Board[i + 1][j] != BLANK && i + 1 <= 7){
 					AllMoves->howmany = AllMoves->howmany + 1;
 					size++;
@@ -480,6 +555,81 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 					AllMoves->Plays[size - 1].origin[1] = j;
 					AllMoves->Plays[size - 1].destiny[0] = i + 1;
 					AllMoves->Plays[size - 1].destiny[1] = j;
+				}
+			}
+			/* Casos para o cavalo branco. Todos os Ls possíveis foram representados. */
+			else if(board->Board[i][j] == B_HORSE){
+				if(i - 1 >= 0 && j - 2 >= 0){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 1;
+					AllMoves->Plays[size - 1].destiny[1] = j - 2;
+				}
+				if(i - 2 >= 0 && j - 1 >= 0){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 2;
+					AllMoves->Plays[size - 1].destiny[1] = j - 1;
+				}
+				if(i - 2 >= 0 && j + 1 <= 7){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 2;
+					AllMoves->Plays[size - 1].destiny[1] = j + 1;
+				}
+				if(i - 1 >= 0 && j + 2 <= 7){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i - 1;
+					AllMoves->Plays[size - 1].destiny[1] = j + 2;
+				}
+				if(i + 1 <= 7 && j - 2 >= 0){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 1;
+					AllMoves->Plays[size - 1].destiny[1] = j - 2;
+				}
+				if(i + 2 <= 7 && j - 1 >= 0){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 2;
+					AllMoves->Plays[size - 1].destiny[1] = j - 1;
+				}
+				if(i + 2 <= 7 && j + 1 <= 7){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 2;
+					AllMoves->Plays[size - 1].destiny[1] = j + 1;
+				}
+				if(i + 1 <= 7 && j + 2 <= 7){
+					AllMoves->howmany = AllMoves->howmany + 1;
+					size++;
+					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
+					AllMoves->Plays[size - 1].origin[0] = i;
+					AllMoves->Plays[size - 1].origin[1] = j;
+					AllMoves->Plays[size - 1].destiny[0] = i + 1;
+					AllMoves->Plays[size - 1].destiny[1] = j + 2;
 				}
 			}
 		}
