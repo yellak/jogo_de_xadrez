@@ -9,6 +9,6 @@ Tópico: Incrementar módulo do tabuleiro e corrigir erros gramaticais nos comen
 Resumo = Começar função que contabilizará os movimentos possíveis e arrumar erros acidentais em todo o projeto.
 
 Dia 29/06
-Tempo: 1.5 horas
-Tópico: Corrigir problemas do dia anterior + aperfeiçoar o que ja havia.
+Tempo: 2 horas
+Tópico: Corrigir problemas do dia anterior + aperfeiçoar o que ja havia + peão e cavalo adicionados.
 Resumo = Finalizados testes com as funções criadas no dia anterior e algumas estruturas sofreram alteração.
