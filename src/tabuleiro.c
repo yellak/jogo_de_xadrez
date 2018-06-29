@@ -264,16 +264,22 @@ int InsertPiece(TBoard *board, char piece, int line, int column){
 		Saída: Retorna um inteiro indicando a falha ou sucesso da operação.
 */
 int DeleteMoveList(ListOfMoves* list){
-	free(list->Plays);
-	if(!list->Plays){
-		free(list);
-		if(!list){
-			return 0;
+	if(list == NULL){
+		return -1;
+	}else{
+		free(list->Plays);
+		list->Plays = NULL;
+		if(list->Plays == NULL){
+			free(list);
+			list = NULL;
+			if(list == NULL){
+				return 0;
+			}else{
+				return -1;
+			}
 		}else{
 			return -1;
 		}
-	}else{
-		return -1;
 	}
 }
 
@@ -287,6 +293,12 @@ int DeleteMoveList(ListOfMoves* list){
 		Saída: Essa função retorna um arrays que contém os movimentos possíveis para com as peças pretas.
 */
 ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
+
+	/* Verificando se o tabuleiro é nulo */
+	if(board == NULL){
+		return NULL;
+	}
+
 	int i, j, size = 1;
 	ListOfMoves* AllMoves = (ListOfMoves*) malloc(sizeof(ListOfMoves));
 	AllMoves->Plays = (Move*) malloc(size*sizeof(Move));
@@ -375,6 +387,12 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 		Saída: Essa função retorna um arrays que contém os movimentos possíveis para com as peças brancas.
 */
 ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
+
+	/* Verificando se o tabuleiro é nulo */
+	if(board == NULL){
+		return NULL;
+	}
+
 	int i, j, size = 1;
 	ListOfMoves* AllMoves = (ListOfMoves*) malloc(sizeof(ListOfMoves));
 	AllMoves->Plays = (Move*) malloc(size*sizeof(Move));

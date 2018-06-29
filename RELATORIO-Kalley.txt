@@ -26,7 +26,7 @@ Horas trabalhadas: 2 horas e meia
 Tipo de tarefa: Interface gráfica
 
 Descrição:
-Adcionada uma função que carrega um tabuleiro na
+Adicionada uma função que carrega um tabuleiro na
 interface gráfica.
 Adicionada função que aloca espaço na memória para
 um elemento de tabuleiro. Adicionados os seus testes.

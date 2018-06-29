@@ -7,3 +7,8 @@ Dia 28/06
 Tempo: 3.5 horas
 Tópico: Incrementar módulo do tabuleiro e corrigir erros gramaticais nos comentários.
 Resumo = Começar função que contabilizará os movimentos possíveis e arrumar erros acidentais em todo o projeto.
+
+Dia 29/06
+Tempo: 3.5 horas
+Tópico: Corrigir problemas do dia anterior.
+Resumo = Finalizados testes com as funções criadas no dia anterior.
