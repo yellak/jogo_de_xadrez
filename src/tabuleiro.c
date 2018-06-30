@@ -269,6 +269,8 @@ int ValidBoard(TBoard *board){
 	}
 
 	int i, j;
+
+	/* Iniciar Contadores. */
 	int W_King = 0;
 	int B_King = 0;
 	int W_Pawn = 0;
@@ -282,6 +284,7 @@ int ValidBoard(TBoard *board){
 	int W_Tower = 0;
 	int B_Tower = 0;
 
+	/* Contar quantidades de cada tipo de peças no tabuleiro. */
 	for(i=0; i < 8; i++){
 		for(j=0; j < 8; j++){
 			if(board->Board[i][j] == W_KING)
@@ -314,6 +317,7 @@ int ValidBoard(TBoard *board){
 	int sum_white = 0;
 	int sum_black = 0;
 
+	/* Somar quantidades de peças brancas extras. */
 	if(W_Queen != 0){
 		sum_white = sum_white + W_Queen-1;
 	}
@@ -336,6 +340,7 @@ int ValidBoard(TBoard *board){
 			sum_white = sum_white + W_Tower-2;
 	}
 
+	/* Somar quantidades de peças pretas extras. */
 	if(B_Queen != 0){
 		sum_black = sum_black + B_Queen-1;
 	}
@@ -358,12 +363,15 @@ int ValidBoard(TBoard *board){
 			sum_black = sum_black + B_Tower-2;
 	}
 
+	/* Retornar 0 caso quantidade de cada rei for diferente de 1. */
 	if(W_King != 1 || B_King != 1)
 		return 0;
 	
+	/* Retornar 0 caso tenha mais de 8 peões de cada cor. */
 	if(W_Pawn > 8 || B_Pawn > 8)
 		return 0;
 
+	/* Retornar 0 caso quantidade de peças extras de cada cor superar 8 menos peões. */
 	if(sum_white > 8-W_Pawn || sum_black > 8-B_Pawn)
 		return 0;
 
