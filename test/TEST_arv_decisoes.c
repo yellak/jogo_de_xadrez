@@ -118,13 +118,13 @@ TEST(Test_AddChildNode, Verify_Insertion_Failure){
    	-O nó deve ter sido liberado
  */
 TEST(Test_FreeTreeNodes, Verify_Free_OneNode){
-	NodeTree * node
+	NodeTree * node;
 	TBoard board;
 	Move play;
 	int n_child = 1;
 
 	/* Alocação do nó pai e do filho*/
-	node = AlocateNodeTree(n_child, &boardfather, &playfather);
+	node = AlocateNodeTree(n_child, &board, &play);
 
 	/* Testar se a adição do filho foi um fracasso */
 	EXPECT_EQ(NULL, FreeTreeNodes(node));

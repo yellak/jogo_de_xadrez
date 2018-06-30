@@ -93,5 +93,5 @@ int AddChildNode(NodeTree* father, NodeTree* child, int position){
             Ponteiro nulo do tipo NodeTree
 */
 NodeTree* FreeTreeNodes(NodeTree* node){
-	return tree;
+	return node;
 }
