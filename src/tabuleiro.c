@@ -253,7 +253,21 @@ int InsertPiece(TBoard *board, char piece, int line, int column){
 	return 0;
 }
 
+/* Função: ValidBoard
+		Objetivo: Verificar se um tabuleiro é válido ou não para jogar.
+
+		Parametros:
+			board - Ponteiro para a estrutura do tabuleiro.
+					Não deve ser nulo
+
+		Saída: Essa função retorna, por parâmetro, o tabuleiro sem a peça e com seu peso modificado.
+*/
 int ValidBoard(TBoard *board){
+	/* Veriificar tabuleiro. */
+	if(board == NULL){
+		return -1;
+	}
+
 	int i, j;
 	int W_King = 0;
 	int B_King = 0;

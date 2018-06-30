@@ -565,6 +565,16 @@ TEST(Test_Valid_Board, Verify_Pawns){
 	EXPECT_EQ(0, ValidBoard(&board));
 }
 
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros nulos.
+   Procedimentos:
+   -Chamar a função para um tabuleiro nulo.
+   Resultados:
+   -Espera-se que a função retorne o valor -1.
+*/
+TEST(Test_Valid_Board, Verify_NULL){
+	EXPECT_EQ(-1, ValidBoard(NULL));
+}
+
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
