@@ -506,7 +506,7 @@ TEST(Test_Valid_Board, Verify_Bishops){
    Resultados:
    -É esperado que a função retorne 1, para a primeira chamada e 0 para as outras duas.
 */
-TEST(Test_Valid_Board, Verify_Bishops){
+TEST(Test_Valid_Board, Verify_Towers){
 	TBoard board;
 	StartEmptyBoard(&board);
 
