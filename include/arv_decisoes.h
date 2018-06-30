@@ -59,6 +59,14 @@ NodeTree* AlocateNodeTree(int n_child, TBoard* board, Move* play);
 */
 int AddChildNode(NodeTree* father, NodeTree* child, int position);
 
+/* Libera um nó e todos os seus filhos */
+/*! \fn int FreeTreeNodes(Node* tree)
+        \brief Libera um nó e todos os seus filhos
 
+		\param node Ponteiro para o nó que se deseja liberar
+
+        \return Um ponteiro nulo do tipo NodeTree
+*/
+NodeTree* FreeTreeNodes(NodeTree* node);
 
 #endif

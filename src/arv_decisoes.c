@@ -42,6 +42,9 @@ NodeTree* AlocateNodeTree(int n_child, TBoard* board, Move* play){
 
 	/* Alocação de "n_child" filhos para o nó */
 	node->child = (NodeTree**)malloc(n_child*sizeof(NodeTree*));
+	for(int i = 0; i < n_child; i++){
+		node->child[i] = NULL;
+	}
 	return node;	
 
 }
@@ -76,4 +79,19 @@ int AddChildNode(NodeTree* father, NodeTree* child, int position){
 	
 	father->child[position] = child;
 	return 1;
+}
+
+/*
+  Função: Liberar um nó e todos os seus filhos
+        Objetivo:
+            Liberar um nó e todos os seus filhos
+
+        Parâmetros:
+            node - Nó que será liberado
+            
+        Retorno:
+            Ponteiro nulo do tipo NodeTree
+*/
+NodeTree* FreeTreeNodes(NodeTree* node){
+	return tree;
 }

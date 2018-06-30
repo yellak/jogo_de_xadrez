@@ -16,6 +16,7 @@ TEST(Test_AlocateTree, Verify_Alocation_Tree){
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, tree != NULL);
+	free(tree);
 } 
 
 /* Teste para verificar a validade da função que aloca um nó de uma árvore
@@ -54,8 +55,8 @@ TEST(Test_AlocateNodeTree, Verify_Alocation_Node){
    	-Alocar duas jogadas;
    	-Inicializar variável com número de filhos
    	-Chamar função que aloca o nó para o pai e para o filho;
-   	-Verificar se a a asição foi bem sucedida
-   	-Verificar se o "child" é o i-ésimo filho de "father" 
+   	-Verificar se a adição foi bem sucedida;
+   	-Verificar se o "child" é o i-ésimo filho de "father" ;
    Resultados:
    	-O nó "child" deve ser filho de "father"
  */
@@ -77,7 +78,7 @@ TEST(Test_AddChildNode, Verify_Insertion_Sucess){
 	EXPECT_EQ(father->child[position], child);
 }
 
-/* Teste para verificar a inserção de um filho foi bem sucedida quando tentamos
+/* Teste para verificar a inserção de um filho foi um fracasso quando tentamos
    acessar uma posição maior que o número de filhos
    Procedimento:
    	-Criar Variável para os nós;
@@ -86,12 +87,11 @@ TEST(Test_AddChildNode, Verify_Insertion_Sucess){
    	-Inicializar variável com número de filhos
    	-Inicializar variável position com um valor acima do aceitável
    	-Chamar função que aloca o nó para o pai e para o filho;
-   	-Verificar se a a asição foi bem sucedida
-   	-Verificar se o "child" é o i-ésimo filho de "father" 
+   	-Verificar se a adição fracassou (retorno 0).
    Resultados:
    	-A inserção do novo filho deve ser um fracasso
  */
-TEST(Test_AddChildNode, Verify_Insertion_Failure	){
+TEST(Test_AddChildNode, Verify_Insertion_Failure){
 	NodeTree * father, *child;
 	TBoard boardfather, boardchild;
 	Move playfather, playchild;
@@ -104,6 +104,30 @@ TEST(Test_AddChildNode, Verify_Insertion_Failure	){
 
 	/* Testar se a adição do filho foi um fracasso */
 	EXPECT_EQ(0, AddChildNode(father, child, position));
+}
+
+/* Teste para verificar a inserção de um filho foi um fracasso quando tentamos
+   acessar uma posição maior que o número de filhos
+   Procedimento:
+   	-Criar Variável para os nós;
+   	-Incializar o tabuleiro e a jogada;
+   	-Inicializar variável com número de filhos;
+   	-Chamar função que libera um nó;
+   	-Verificar se houve liberação de nó.
+   Resultados:
+   	-O nó deve ter sido liberado
+ */
+TEST(Test_FreeTreeNodes, Verify_Free_OneNode){
+	NodeTree * node
+	TBoard board;
+	Move play;
+	int n_child = 1;
+
+	/* Alocação do nó pai e do filho*/
+	node = AlocateNodeTree(n_child, &boardfather, &playfather);
+
+	/* Testar se a adição do filho foi um fracasso */
+	EXPECT_EQ(NULL, FreeTreeNodes(node));
 }
 
 int main(int argc, char **argv){
