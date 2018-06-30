@@ -93,5 +93,17 @@ int AddChildNode(NodeTree* father, NodeTree* child, int position){
             Ponteiro nulo do tipo NodeTree
 */
 NodeTree* FreeTreeNodes(NodeTree* node){
-	return node;
+	
+	/* Caso o nó enviado seja nulo, retorna-se nulo */
+	if(node == NULL){
+		return NULL;
+	}
+
+	/* Libera-se cada um dos filhos do nó */
+	for(int i = 0; i < node->n_child; i++){
+		FreeTreeNodes(node->child[0]);
+	}
+
+	free(node);
+	return NULL;
 }
