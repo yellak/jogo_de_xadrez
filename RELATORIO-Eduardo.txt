@@ -12,3 +12,8 @@ Dia 29/06
 Tempo: 2 horas
 Tópico: Corrigir problemas do dia anterior + aperfeiçoar o que ja havia + peão e cavalo adicionados.
 Resumo = Finalizados testes com as funções criadas no dia anterior e algumas estruturas sofreram alteração.
+
+Dia 30/06
+Tempo: 1 hora
+Tópico: Tentar aperfeiçoar a função de movimentos
+Resumo = Tentou-se melhorar ainda mais a função de movimentos possíveis. Infelizmente, não se obteve sucesso.
