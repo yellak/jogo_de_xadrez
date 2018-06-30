@@ -27,7 +27,14 @@ LOGOBJ = $(patsubst %, $(ODIR)/%, $(_LOGOBJ))
 _LOGDEPS = tabuleiro.h logica.h
 LOGDEPS = $(patsubst %, $(IDIR)/%, $(_LOGDEPS))
 
-all: main test_tabuleiro test_logica
+# Dependências do módulo arv_decisoes e seu módulo de testes
+_ARVOBJ = arv_decisoes.o logica.o TEST_arv_decisoes.o tabuleiro.o
+ARVOBJ = $(patsubst %, $(ODIR)/%, $(_ARVOBJ))
+
+_ARVDEPS = tabuleiro.h logica.h arv_decisoes.h
+ARVDEPS = $(patsubst %, $(IDIR)/%, $(_ARVDEPS))
+
+all: main test_tabuleiro test_logica test_arvore
 
 # Compila os módulos principais
 $(ODIR)/%.o: %.c
@@ -44,6 +51,9 @@ test_tabuleiro: $(TABOBJ) $(TABDEPS)
 	$(CC) -g -o $@ $^ $(GTESTFLAGS)
 
 test_logica: $(LOGOBJ) $(LOGDEPS)
+	$(CC) -g -o $@ $^ $(GTESTFLAGS)
+
+test_arvore: $(ARVOBJ) $(ARVDEPS)
 	$(CC) -g -o $@ $^ $(GTESTFLAGS)
 
 .PHONY: clean
