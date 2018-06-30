@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "logica.h"
+#include "../include/logica.h"
 
 /* Função: DeleteMoveList
 		Objetivo: Liberar toda a memória da lista de movimentos.
