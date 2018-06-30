@@ -18,7 +18,7 @@ int verify_syntax_move(char chess_move[])
 {
 	int i;
 	char piece;
-	char movement[6];
+	char movement[6]; /* Parte onde está a origem e o destino */
 	if(strlen(chess_move) == 6)	/* A peça foi especificada */
 		{
 			/* Peça que está sendo movimentada */
@@ -38,7 +38,7 @@ int verify_syntax_move(char chess_move[])
 				} /* Q */
 			} /* K */
 
-			/* Copiando a parte do movimento em si da notação */
+			/* Copiando a parte da origem-destino da notação */
 			for(i = 1; i < 6; i++){
 				movement[i - 1] = chess_move[i];
 			}
@@ -75,6 +75,16 @@ int verify_syntax_move(char chess_move[])
 			}
 		} /* else if( ... == 3) */
 
+	else if(strlen(chess_move) == 7)
+		{
+			if(strcmp(chess_move, "1/2-1/2") == 0){ /* Jogo deu empate */
+				return true;
+			}
+			else{
+				return false;
+			}
+		} /* else if( ... == 7) */
+
 	/* Verificando a notação da ação */
 	if(movement[2] != '-'){ /* Movimento padrão */
 		if(movement[2] != 'x'){	/* Captura */
@@ -87,6 +97,26 @@ int verify_syntax_move(char chess_move[])
 			} /* = */
 		} /* x */
 	} /* - */
+
+	/* Primeiro caractere não é uma letra válida */
+	if((movement[0] < 'a') || (movement[0] > 'h')){
+		return false;
+	}
+
+	/* Segundo caractere não é um número válido */
+	if((movement[1] < '1') || (movement[1] > '8')){
+		return false;
+	}
+
+	/* Quarto caractere não é uma letra válida */
+	if((movement[3] < 'a') || (movement[3] > 'h')){
+		return false;
+	}
+
+	/* Quinto caractere não é um número válido */
+	if((movement[4] < '1') || (movement[4] > '8')){
+		return false;
+	}
 
 	return true;
 }
