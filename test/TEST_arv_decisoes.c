@@ -47,7 +47,7 @@ TEST(Test_AlocateNodeTree, Verify_Alocation_Node){
 	EXPECT_EQ(n_child, node->n_child);
 } 
 
-/* Teste para verificar a validade da função que aloca um nó de uma árvore
+/* Teste para verificar se a inserção de um filho foi bem sucedida
    Procedimento:
    	-Criar Variável para os nós;
    	-Alocar dois tabuleiros;
@@ -75,6 +75,35 @@ TEST(Test_AddChildNode, Verify_Insertion_Sucess){
 	
 	/* Teste se o filho "0" do pai é igual a "child" */
 	EXPECT_EQ(father->child[position], child);
+}
+
+/* Teste para verificar a inserção de um filho foi bem sucedida quando tentamos
+   acessar uma posição maior que o número de filhos
+   Procedimento:
+   	-Criar Variável para os nós;
+   	-Alocar dois tabuleiros;
+   	-Alocar duas jogadas;
+   	-Inicializar variável com número de filhos
+   	-Inicializar variável position com um valor acima do aceitável
+   	-Chamar função que aloca o nó para o pai e para o filho;
+   	-Verificar se a a asição foi bem sucedida
+   	-Verificar se o "child" é o i-ésimo filho de "father" 
+   Resultados:
+   	-A inserção do novo filho deve ser um fracasso
+ */
+TEST(Test_AddChildNode, Verify_Insertion_Failure	){
+	NodeTree * father, *child;
+	TBoard boardfather, boardchild;
+	Move playfather, playchild;
+	int n_child = 1, position = 5;
+
+	/* Alocação do nó pai e do filho*/
+	father = AlocateNodeTree(n_child, &boardfather, &playfather);
+	child = AlocateNodeTree(n_child, &boardfather, &playfather);
+
+
+	/* Testar se a adição do filho foi um fracasso */
+	EXPECT_EQ(0, AddChildNode(father, child, position));
 }
 
 int main(int argc, char **argv){
