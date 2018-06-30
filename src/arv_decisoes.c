@@ -40,6 +40,6 @@ NodeTree* AlocateNodeTree(int n_child){
 
 	/* Alocação de "n_child" filhos para o nó */
 	node->child = (NodeTree**)malloc(n_child*sizeof(NodeTree*));
-	return node;
+	return node;	
 
 }
