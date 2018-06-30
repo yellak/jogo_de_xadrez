@@ -234,6 +234,22 @@ void RemovePiece(TBoard *board, int line, int column){
 	board->Board[line][column] = BLANK;
 }
 
+/* Função: InsertPiece
+		Objetivo: inserir uma peça na coordenada (x,y) do tabuleiro.
+
+		Parametros:
+			board - Ponteiro para a estrutura do tabuleiro.
+					Não deve ser nulo
+			line - Inteiro representando a linha x da posição (x,y) da peça a ser removida.
+				   Deve ser um valor entre 0 e 7.
+			column - Inteiro representando a coluna y da posição (x,y) da peça a ser removida.
+				     Deve ser um valor entre 0 e 7.
+			piece - Peça a ser inserida.
+					Deve ser uma das peças existentes.
+
+		Saída: Essa função retorna, por parâmetro, o tabuleiro coma a nova peça e com seu peso modificado.
+		       Retorna também um inteiro indicando seu funcionamento, sendo -1 para falhas e 0 para correto funcionamento.
+*/
 int InsertPiece(TBoard *board, char piece, int line, int column){
 	/* Verificar x e y. */
 	if(line<0 || line>7 || column<0 || column>7){
@@ -379,6 +395,19 @@ int ValidBoard(TBoard *board){
 	return 1;
 }
 
-/*int ChangePiece(TBoard *board, int line, int column, char piece){
+int ChangePiece(TBoard *board, char piece, int line, int column){
+	/* Verificar x e y. */
+	if(line<0 || line>7 || column<0 || column>7){
+		return -1;
+	}
+	/* Verificar se a peça é válida */
+	if(GetValue(piece) == 0){
+		return -1;
+	}
+	/* Verifcar tabuleiro */
+	if(board == NULL){
+		return -1;
+	}
 
-}*/
+	return 0;
+}

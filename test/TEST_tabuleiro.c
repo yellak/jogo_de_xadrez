@@ -637,6 +637,34 @@ TEST(Test_Valid_Board, Verify_Equivalance){
 	EXPECT_EQ(1, ValidBoard(&board));
 }
 
+/* Teste para verificar a função que muda a peça em uma posição.
+	Procedimentos:
+	-Chamar a função para valores fora de alcance.
+	-Chamar a função para uma peça inválida.
+	-Chamar a função para tabuleiro nulo.
+	Resultados:
+	-É esperado que a função retorne um inteiro -1 indicando falha.
+*/
+TEST(Test_Change_Piece, Verify_Invalid_Entries){
+	TBoard board;
+	char piece = B_KING;
+	/* Testar posição invalida */
+	int x = 12, y = 14;
+
+	EXPECT_EQ(-1, ChangePiece(&board, piece, x, y));
+
+	/* Testar peça invalida */
+	x = 5;
+	y = 2;
+	piece = 'Z'; 
+	EXPECT_EQ(-1, ChangePiece(&board, piece, x, y));
+
+	/* Testar tabuleiro nulo */
+	TBoard *null = NULL;
+	piece = B_KING;
+	EXPECT_EQ(-1, ChangePiece(null, piece, x, y));
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

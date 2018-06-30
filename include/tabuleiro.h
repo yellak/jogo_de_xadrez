@@ -122,4 +122,16 @@ int InsertPiece(TBoard *board, char piece, int line, int column);
 */
 int ValidBoard(TBoard *board);
 
+/* Mudar a peça em uma posição. */
+/*! \fn int ChangePiece(TBoard *board, char piece, int line, int column)
+		\brief Muda a peça em uma posição por outra.
+		
+		\param board Ponteiro para um tabuleiro.
+		\param piece É um caractere representado por alguma das constantes de peças definidas.
+		\param line Inteiro indicando a linha x da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
+		\param column Inteiro indicando a coluna y da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
+		\return Retorna 0 para caso seja válido ou -1, caso contrário. Por parâmetro, retorna o tabuleiro modificado.
+*/
+int ChangePiece(TBoard *board, char piece, int line, int column);
+
 #endif
