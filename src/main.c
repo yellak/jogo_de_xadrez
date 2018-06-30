@@ -1,14 +1,6 @@
 #include "../include/interface.h"
 #include "stdlib.h"
 
-/* Tamanho do tabuleiro */
-const int YLIMIT = 8;
-const int XLIMIT = 8;
-
-/* Início do tabuleiro */
-const int BOARDX = 2;
-const int BOARDY = 2;
-
 int main(){
 	WINDOW* menuwin;
 	WINDOW* boardwin;
