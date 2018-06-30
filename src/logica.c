@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../include/logica.h"
 
+int verify_algebric_move(char chess_move[]){
+	return false;
+}
+
 Move* algebric_translate(char chess_move[]){
-	return NULL;
+	Move* result = (Move*) malloc(sizeof(Move));
+	return result;
 }
 
 /* Função: DeleteMoveList

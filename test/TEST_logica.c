@@ -1,5 +1,4 @@
 #include "gtest/gtest.h"
-#include <string.h>
 #include "../include/tabuleiro.h"
 #include "../include/logica.h"
 
@@ -54,12 +53,21 @@ TEST(Test_ListDeletion, Verify_Correct_FreesWithNonNullList){
 	EXPECT_EQ(0, DeleteMoveList(list));
 }
 
-TEST(Test_ChessMove_translation, Normal_movement)
+TEST(Algebric_verification, Named_movement)
+{
+	char named_test_move[7];
+
+	/* String inválida */
+	strcpy(named_test_move, "Pe2-e4");
+	EXPECT_EQ(false, verify_algebric_move(named_test_move));
+}
+
+TEST(ChessMove_translation, Normal_movement)
 {
 	char named_test_move[7];
 	char test_move[6];
 	Move* expect_move = (Move*) malloc(sizeof(Move));
-	Move* result = (Move*) malloc(sizeof(Move));
+	Move* result;
 
 	/* Cavalo da b1 para a3 */
 	strcpy(named_test_move, "Nb1-a3");
@@ -82,6 +90,9 @@ TEST(Test_ChessMove_translation, Normal_movement)
 			EXPECT_EQ(expect_move->destiny[0], result->destiny[0]);
 			EXPECT_EQ(expect_move->destiny[1], result->destiny[1]);
 		}
+
+	free(expect_move);
+	free(result);
 }
 
 int main(int argc, char **argv){
