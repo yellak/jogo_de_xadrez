@@ -290,6 +290,20 @@ TEST(Test_Insert_Piece, Verify_Correct_Insertion){
 	EXPECT_EQ(GetValue(B_KING), GetValue(board.Board[x][y]));
 }
 
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros padrões.
+   Procedimentos:
+   -Criar um tabuleiro padrão;
+   -Chamar a função para esse tabuleiro.
+   Resultados:
+   -É esperado que a função retorne um inteiro 1 indicando a corretude do tabuleiro. 
+*/
+TEST(Test_Valid_Board, Verify_Standard){
+	TBoard board;
+	StartStandardBoard(&board);
+	
+	ValidBoard(&board);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

@@ -252,3 +252,7 @@ int InsertPiece(TBoard *board, char piece, int line, int column){
 
 	return 0;
 }
+
+int ValidBoard(TBoard *board){
+	return 1;
+}

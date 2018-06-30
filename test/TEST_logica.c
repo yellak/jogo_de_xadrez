@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../include/tabuleiro.h"
-#include "../inlcude/logica.h"
+#include "../include/logica.h"
 
 /* Teste para verificar se a função de criação da lista de movimentos funciona corretamente com um tabuleiro nulo.
 	Procedimentos:

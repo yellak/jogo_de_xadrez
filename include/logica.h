@@ -1,7 +1,7 @@
 #ifndef LOGICA_H_
 #define LOGICA_H_
 
-#include "tabuleiro.h"
+#include "../include/tabuleiro.h"
 
 /* Definição da estrutura que irá armazenar uma jogada possível a partir de um tabuleiro */
 /*! \struct Move

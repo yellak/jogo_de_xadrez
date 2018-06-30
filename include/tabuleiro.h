@@ -113,4 +113,13 @@ void RemovePiece(TBoard *board, int line, int column);
 */
 int InsertPiece(TBoard *board, char piece, int line, int column);
 
+/* Verificar se um tabuleiro é válido. */
+/*! \fn int ValidBoard(TBoard *board)
+		\brief Verifica se um tabuleiro é válido para ser jogado ou não.
+		
+		\param board Ponteiro para um tabuleiro.
+		\return Retorna 1 para caso seja válido ou 0, caso contrário.
+*/
+int ValidBoard(TBoard *board);
+
 #endif
