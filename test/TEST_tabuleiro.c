@@ -686,6 +686,26 @@ TEST(Test_Change_Piece, Verify_Valid_Entries){
 	EXPECT_EQ(-4, board.Weight);
 }
 
+/* Teste para verificar a função que muda a peça em uma posição para entradas inválidas.
+	Procedimentos:
+	-Chamar a função para valores fora de alcance.
+	-Chamar a função para tabuleiro nulo.
+	Resultados:
+	-É esperado que a função retorne um inteiro -1 indicando falha.
+*/
+TEST(Test_Move_Piece, Verify_Invalid_Entries){
+	TBoard board;
+	char piece = B_KING;
+	/* Testar posição invalida */
+
+	EXPECT_EQ(-1, MovePiece(&board, 12, 13, 0, 0));
+	EXPECT_EQ(-1, MovePiece(&board, 0, 0, 9, 14));
+
+	/* Testar tabuleiro nulo */
+	TBoard *null = NULL;
+	EXPECT_EQ(-1, MovePiece(null, 0, 0, 1, 1));
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

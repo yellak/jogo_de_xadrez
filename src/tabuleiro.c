@@ -395,6 +395,22 @@ int ValidBoard(TBoard *board){
 	return 1;
 }
 
+/* Função: ChangePiece
+		Objetivo: Modificar uma peça na coordenada (x,y) do tabuleiro.
+
+		Parametros:
+			board - Ponteiro para a estrutura do tabuleiro.
+					Não deve ser nulo
+			line - Inteiro representando a linha x da posição (x,y) da peça a ser removida.
+				   Deve ser um valor entre 0 e 7.
+			column - Inteiro representando a coluna y da posição (x,y) da peça a ser removida.
+				     Deve ser um valor entre 0 e 7.
+			piece - Peça a ser inserida.
+					Deve ser uma das peças existentes.
+
+		Saída: Essa função retorna, por parâmetro, o tabuleiro coma a nova peça e com seu peso modificado.
+		       Retorna também um inteiro indicando seu funcionamento, sendo -1 para falhas e 0 para correto funcionamento.
+*/
 int ChangePiece(TBoard *board, char piece, int line, int column){
 	/* Verificar x e y. */
 	if(line<0 || line>7 || column<0 || column>7){
@@ -413,6 +429,23 @@ int ChangePiece(TBoard *board, char piece, int line, int column){
 	RemovePiece(board, line, column);
 	/* Inserir nova peça. */
 	InsertPiece(board, piece, line, column);
-	
+
+	return 0;
+}
+
+int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, int dest_column){
+	/* Verificar x e y. */
+	if(origin_line<0 || origin_line>7 || origin_column<0 || origin_column>7){
+		return -1;
+	}
+	if(dest_line<0 || dest_line>7 || dest_column<0 || dest_column>7){
+		return -1;
+	}
+
+	/* Verifcar tabuleiro */
+	if(board == NULL){
+		return -1;
+	}
+
 	return 0;
 }
