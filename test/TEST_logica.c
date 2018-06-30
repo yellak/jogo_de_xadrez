@@ -60,13 +60,15 @@ TEST(Test_ListDeletion, Verify_Correct_FreesWithNonNullList){
    - Verificar sintaxe para notações válidas e inválidas para tipo de peça
      fornecida 
    - Verifica sintaxe para notações válidadas e inválidas para o tipo de
-     movimento fornecido 
+     movimento fornecido
+   - Verificar validade para casos com letras
+   - Verificar validade para casos com números
 
    Resultados:
    - Esperamos valores true caso a notação esteja correta e false caso esteja
      errada
 */
-TEST(Algebric_verification, Named_movement)
+TEST(Algebraic_verification, Named_movement)
 {
 	char named_test_move[7];
 
@@ -75,17 +77,41 @@ TEST(Algebric_verification, Named_movement)
 	EXPECT_EQ(false, verify_syntax_move(named_test_move));
 
 	/* Notação válida para tipo de peça */
-	strcpy(named_test_move, "Re2-e4");
+	strcpy(named_test_move, "Be2-e4");
 	EXPECT_EQ(true, verify_syntax_move(named_test_move));
 
 	/* Notação inválida para tipo de movimento */
-	strcpy(named_test_move, "Ra1%a5");
+	strcpy(named_test_move, "Qa1%a5");
 	EXPECT_EQ(false, verify_syntax_move(named_test_move));
 
 	/* Notação válida para tipo de movimento */
-	strcpy(named_test_move, "Ra1-a5");
+	strcpy(named_test_move, "Ba1-a5");
 	EXPECT_EQ(true, verify_syntax_move(named_test_move));
-}
+
+	/* Notação inválida para letras */
+	strcpy(named_test_move, "RZ5-e4");
+	EXPECT_EQ(false, verify_syntax_move(named_test_move));
+
+	/* Notação inválida para letras */
+	strcpy(named_test_move, "Ne5-S4");
+	EXPECT_EQ(false, verify_syntax_move(named_test_move));
+
+	/* Notação inválida para letras */
+	strcpy(named_test_move, "PE5-E4");
+	EXPECT_EQ(false, verify_syntax_move(named_test_move));
+
+	/* Notação inválida para números */
+	strcpy(named_test_move, "Ke9-e0");
+	EXPECT_EQ(false, verify_syntax_move(named_test_move));
+
+	/* Notação inválida para números */
+	strcpy(named_test_move, "Ke4-e9");
+	EXPECT_EQ(false, verify_syntax_move(named_test_move));
+
+	/* Notação inválida para números */
+	strcpy(named_test_move, "Ke9-e9");
+	EXPECT_EQ(false, verify_syntax_move(named_test_move));
+} /* Named_movement */
 
 /* Teste para verificar a sintaxe da string fornecida pelo usuário no caso dele
    fornecer um roque, ou no caso de verificar quem é o vencedor
@@ -97,7 +123,7 @@ TEST(Algebric_verification, Named_movement)
    Resultados:
    - true para quando a notação está correta e false para quando a notação está
      errada */
-TEST(Algebric_verification, Castling_or_winner)
+TEST(Algebraic_verification, Castling_or_winner)
 {
 	char cas_or_winner[4];
 	
@@ -116,10 +142,10 @@ TEST(Algebric_verification, Castling_or_winner)
 	/* Notação inválida para roque ou vencedor */
 	strcpy(cas_or_winner, "1-1");
 	EXPECT_EQ(false, verify_syntax_move(cas_or_winner));
-}
+} /* Castling_or_winner */
 
 /* Teste para verificar a sintaxe dada para roque pelo lado da rainha */
-TEST(Algebric_verification, Queenside_castling)
+TEST(Algebraic_verification, Queenside_castling)
 {
 	char movement[6];
 
@@ -130,7 +156,84 @@ TEST(Algebric_verification, Queenside_castling)
 	/* Notação inválida para roque pelo lado da rainha */
 	strcpy(movement, "0-1-0");
 	EXPECT_EQ(false, verify_syntax_move(movement));
-}
+} /* Queenside_castling */
+
+/* Teste pra verificar a sintaxe para notação de empate */
+TEST(Algebraic_verification, Draw)
+{
+	char movement[8];
+
+	/* Notação válida para um empate */
+	strcpy(movement, "1/2-1/2");
+	EXPECT_EQ(true, verify_syntax_move(movement));
+
+	/* Notação inválida para empate */
+	strcpy(movement, "1-1-1-1");
+	EXPECT_EQ(false, verify_syntax_move(movement));
+} /* Draw */
+
+/* Teste para verificar a validade da função de verificar sintaxe para casos em
+   que a peça não é fornecida na notação
+ 
+   Procedimentos:
+   - Verificar a validade para casos válidos e não válidos para o tipo de
+     movimento
+   - Verificar a validade para casos válidos e não válidos para letras na
+     notação
+   - Verificar a validade para casos válidos e não válidos para números na
+     notação
+
+   Resultados:
+   - Espera-se resultados positivos quando a notação é válida e negativos
+     quando a notação não é válida */
+TEST(Algebraic_verification, Unnamed_movement)
+{
+	char movement[6];
+
+	/* Notação válida para tipo de movimento */
+	strcpy(movement, "b1-c3");
+	EXPECT_EQ(true, verify_syntax_move(movement));
+
+	/* Notação válida para tipo de movimento */
+	strcpy(movement, "b1xc3");
+	EXPECT_EQ(true, verify_syntax_move(movement));
+
+	/* Notação inválida para tipo de movimento */
+	strcpy(movement, "b1%c3");
+	EXPECT_EQ(false, verify_syntax_move(movement));
+
+	/* Notação inválida para tipo de movimento */
+	strcpy(movement, "b1pc3");
+	EXPECT_EQ(false, verify_syntax_move(movement));
+
+	/* Notação válida para letras no movimento */
+	strcpy(movement, "c3-e5");
+	EXPECT_EQ(true, verify_syntax_move(movement));
+
+	/* Notação inválida para letras no movimento */
+	strcpy(movement, "i2-e7");
+	EXPECT_EQ(false, verify_syntax_move(movement));
+
+	/* Notação inválida para letras no movimento */
+	strcpy(movement, "h3-j5");
+	EXPECT_EQ(false, verify_syntax_move(movement));
+
+	/* Notação inválida para letras no movimento */
+	strcpy(movement, "i1-j4");
+	EXPECT_EQ(false, verify_syntax_move(movement));
+
+	/* Notação inválida para números no movimento */
+	strcpy(movement, "d4-f9");
+	EXPECT_EQ(false, verify_syntax_move(movement));
+
+	/* Notação inválida para números no movimento */
+	strcpy(movement, "a9-c4");
+	EXPECT_EQ(false, verify_syntax_move(movement));
+
+	/* Notação inválida para números no movimento */
+	strcpy(movement, "a9-c9");
+	EXPECT_EQ(false, verify_syntax_move(movement));
+} /* Unnamed_movement */
 
 /* 
  * TEST(ChessMove_translation, Normal_movement)
