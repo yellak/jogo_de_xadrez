@@ -260,7 +260,7 @@ int InsertPiece(TBoard *board, char piece, int line, int column){
 			board - Ponteiro para a estrutura do tabuleiro.
 					Não deve ser nulo
 
-		Saída: Essa função retorna, por parâmetro, o tabuleiro sem a peça e com seu peso modificado.
+		Saída: Essa função retorna 1, cao o tabuleiro seja válido, 0, caso seja inválido ou -1, caso o ponteiro do tabuleiro seja nulo.
 */
 int ValidBoard(TBoard *board){
 	/* Veriificar tabuleiro. */

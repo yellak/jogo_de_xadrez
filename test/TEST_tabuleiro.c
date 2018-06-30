@@ -575,6 +575,65 @@ TEST(Test_Valid_Board, Verify_NULL){
 	EXPECT_EQ(-1, ValidBoard(NULL));
 }
 
+/* Teste para verificar a relação entre o número de peões e outras peças na função que verifica se um tabuleiro é válido.
+   Procedimentos:
+   -Criar um tabuleiro padrão;
+   -Adicionar uma rainha e chamar a função;
+   -Remover um peão e chamar a função;
+   -Adicionar uma torre e chamar a função;
+   -Remover um peão e chamar a função;
+   -Adicionar um cavalo e chamar a função;
+   -Remover um peão e chamar a função;
+   -Adicionar um bispo e chamar a função;
+   -Remover um peão e chamar a função.
+
+   Resultados:
+   -Espera-se que, os procedimentos (2, 4, 6, 8) retornem 0 e o restante, 1.
+*/
+TEST(Test_Valid_Board, Verify_Equivalance){
+	TBoard board;
+	StartStandardBoard(&board);
+
+	InsertPiece(&board, W_QUEEN , 4, 0);
+	EXPECT_EQ(0, ValidBoard(&board));
+	RemovePiece(&board, 6, 0);
+	EXPECT_EQ(1, ValidBoard(&board));
+
+	InsertPiece(&board, B_QUEEN , 5, 0);
+	EXPECT_EQ(0, ValidBoard(&board));
+	RemovePiece(&board, 1, 0);
+	EXPECT_EQ(1, ValidBoard(&board));
+
+	InsertPiece(&board, W_TOWER , 4, 1);
+	EXPECT_EQ(0, ValidBoard(&board));
+	RemovePiece(&board, 6, 1);
+	EXPECT_EQ(1, ValidBoard(&board));
+
+	InsertPiece(&board, B_TOWER , 5, 1);
+	EXPECT_EQ(0, ValidBoard(&board));
+	RemovePiece(&board, 1, 1);
+	EXPECT_EQ(1, ValidBoard(&board));
+
+	InsertPiece(&board, W_HORSE , 4, 2);
+	EXPECT_EQ(0, ValidBoard(&board));
+	RemovePiece(&board, 6, 2);
+	EXPECT_EQ(1, ValidBoard(&board));
+
+	InsertPiece(&board, B_HORSE , 5, 2);
+	EXPECT_EQ(0, ValidBoard(&board));
+	RemovePiece(&board, 1, 2);
+	EXPECT_EQ(1, ValidBoard(&board));
+
+	InsertPiece(&board, W_BISHOP , 4, 3);
+	EXPECT_EQ(0, ValidBoard(&board));
+	RemovePiece(&board, 6, 3);
+	EXPECT_EQ(1, ValidBoard(&board));
+
+	InsertPiece(&board, B_BISHOP , 5, 3);
+	EXPECT_EQ(0, ValidBoard(&board));
+	RemovePiece(&board, 1, 3);
+	EXPECT_EQ(1, ValidBoard(&board));
+}
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
