@@ -2,4 +2,5 @@
 24/06 | 2 Horas | Estudar Aulas e Laboratórios relacionados | Estudando sobre a biblioteca ncurses
 24/06 | 1 Hora  | Codificar Módulo                          | Criando a função de iniciar o menu inicial
 27/06 | 1 Hora  | Revisar Código do Módulo                  | Função que cria a interface do tabuleiro refatorada e comentada
-29/06 | 3 Horas | Codificar Módulo                          | Criando funções de alocar uma árvore e um nó de árvore nó módulo arv_decisoes 
+29/06 | 3 Horas | Codificar e Testar Módulo                 | Criando funções de alocar uma árvore e um nó de árvore no módulo arv_decisoes 
+30/06 | 3 Horas | Codificar e Testar Módulo		    | Criando e testando funções de liberar uma árvore e adicionar um novo nó
