@@ -53,12 +53,27 @@ NodeTree* AlocateNodeTree(int n_child, TBoard* board, Move* play){
 
         Parâmetros:
             father - Nó que receberá o novo filho
+            	   - Não pode ser nulo
             child - Nó que se tornará filho de "father"
             position - Posição do filho no vetor de filhos do pai
+            		 - Não pode ser maior que o número de filhos de pai
 
         Retorno:
-            1 caso a inserção seja um sucesso e 0 caso seja um fracasso
+            1 caso a inserção seja um sucesso
+            0 caso seja um fracasso
 */
 int AddChildNode(NodeTree* father, NodeTree* child, int position){
-	return 0;
+
+	/* Assertiva para assegurar a validade de "father" */
+	if(father == NULL){
+		return 0;
+	}
+
+	/* Assertiva para assegurar que não seja possível acessar um filho maior que o número de filhos */
+	if(position > father->n_child - 1){
+		return 0;
+	}
+	
+	father->child[position] = child;
+	return 1;
 }

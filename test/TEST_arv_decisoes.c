@@ -63,7 +63,7 @@ TEST(Test_AddChildNode, Verify_Insertion_Sucess){
 	NodeTree * father, *child;
 	TBoard boardfather, boardchild;
 	Move playfather, playchild;
-	int n_child = 1, position = 1;
+	int n_child = 1, position = 0;
 
 	/* Alocação do nó pai e do filho*/
 	father = AlocateNodeTree(n_child, &boardfather, &playfather);
@@ -71,10 +71,10 @@ TEST(Test_AddChildNode, Verify_Insertion_Sucess){
 
 
 	/* Testar se a adição do filho foi bem sucedida */
-	EXPECT_EQ(1, AddChildNode(father, child, 1));
+	EXPECT_EQ(1, AddChildNode(father, child, position));
 	
 	/* Teste se o filho "0" do pai é igual a "child" */
-	EXPECT_EQ(father->child[0], child);
+	EXPECT_EQ(father->child[position], child);
 }
 
 int main(int argc, char **argv){
