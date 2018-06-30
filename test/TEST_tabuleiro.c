@@ -729,6 +729,29 @@ TEST(Test_Move_Piece, Test_Empty_Space){
 	EXPECT_EQ(0, board.Weight);
 }
 
+/* Teste para verificar a função que muda a peça em uma posição indo para uma posição cheia.
+	Procedimentos:
+	-Criar tabuleiro padrão;
+	-Mover o peão na posição (6,1) para a posição (1,1);
+	Resultados:
+	-É esperado que a função retorne um inteiro 0 indicando o sucesso da operação;
+	-É esperado que a posição (6,1) esteja vazia;
+	-É esperado que a peça na posição (4,1)  seja um peão branco.
+	-É esperado que o peso do tabuleiro seja modificado para 1.
+
+*/
+TEST(Test_Move_Piece, Test_Full_Space){
+	TBoard board;
+	StartStandardBoard(&board);
+
+	EXPECT_EQ(0, MovePiece(&board, 6, 1, 1, 1));
+
+	EXPECT_EQ(GetValue(BLANK), GetValue(board.Board[6][1]));
+	EXPECT_EQ(GetValue(W_PAWN), GetValue(board.Board[1][1]));
+
+	EXPECT_EQ(1, board.Weight);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
