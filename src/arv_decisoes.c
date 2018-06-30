@@ -26,6 +26,7 @@ Tree* AlocateTree(void){
 
         Parâmetros:
             n_child - número de filhos que o nó terá
+            		- Não pode ter um valor menor ou igual a 0 pois gera problemas na alocação
             board - Tabuleiro atual 
             play - Movimento que originou a configuração atual do tabuleiro
 
@@ -33,6 +34,12 @@ Tree* AlocateTree(void){
             A função retorna um nó de uma árvore alocado e  diferente de nulo
 */
 NodeTree* AlocateNodeTree(int n_child, TBoard* board, Move* play){
+
+	/* Uma árvore não pode ter menos que um filho */
+	if(n_child <= 0){
+		return NULL;
+	}
+
 	NodeTree* node = (NodeTree*)malloc(sizeof(NodeTree));
 
 	/* Alocação das componentes de um nó de árvore */
@@ -101,9 +108,10 @@ NodeTree* FreeTreeNodes(NodeTree* node){
 
 	/* Libera-se cada um dos filhos do nó */
 	for(int i = 0; i < node->n_child; i++){
-		FreeTreeNodes(node->child[0]);
+		node->child[i] = FreeTreeNodes(node->child[i]);
 	}
 
+	free(node->child);
 	free(node);
 	return NULL;
 }

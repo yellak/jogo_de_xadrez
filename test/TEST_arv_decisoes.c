@@ -46,6 +46,7 @@ TEST(Test_AlocateNodeTree, Verify_Alocation_Node){
 	EXPECT_EQ(1, node->board != NULL);
 	EXPECT_EQ(1, node->play != NULL);
 	EXPECT_EQ(n_child, node->n_child);
+	FreeTreeNodes(node);
 } 
 
 /* Teste para verificar se a inserção de um filho foi bem sucedida
@@ -64,11 +65,11 @@ TEST(Test_AddChildNode, Verify_Insertion_Sucess){
 	NodeTree * father, *child;
 	TBoard boardfather, boardchild;
 	Move playfather, playchild;
-	int n_child = 1, position = 0;
+	int n_childfather = 1, n_childchild = 5, position = 0;
 
 	/* Alocação do nó pai e do filho*/
-	father = AlocateNodeTree(n_child, &boardfather, &playfather);
-	child = AlocateNodeTree(n_child, &boardfather, &playfather);
+	father = AlocateNodeTree(n_childfather, &boardfather, &playfather);
+	child = AlocateNodeTree(n_childchild, &boardfather, &playfather);
 
 
 	/* Testar se a adição do filho foi bem sucedida */
@@ -76,6 +77,8 @@ TEST(Test_AddChildNode, Verify_Insertion_Sucess){
 	
 	/* Teste se o filho "0" do pai é igual a "child" */
 	EXPECT_EQ(father->child[position], child);
+	
+	FreeTreeNodes(father);
 }
 
 /* Teste para verificar a inserção de um filho foi um fracasso quando tentamos
@@ -104,12 +107,16 @@ TEST(Test_AddChildNode, Verify_Insertion_Failure){
 
 	/* Testar se a adição do filho foi um fracasso */
 	EXPECT_EQ(0, AddChildNode(father, child, position));
+
+	FreeTreeNodes(father);	
+
+	free(child->child);
+	free(child);
 }
 
-/* Teste para verificar a inserção de um filho foi um fracasso quando tentamos
-   acessar uma posição maior que o número de filhos
+/* Teste para verificar se um nó foi liberado
    Procedimento:
-   	-Criar Variável para os nós;
+   	-Criar Variável para o nó;
    	-Incializar o tabuleiro e a jogada;
    	-Inicializar variável com número de filhos;
    	-Chamar função que libera um nó;
@@ -123,11 +130,37 @@ TEST(Test_FreeTreeNodes, Verify_Free_OneNode){
 	Move play;
 	int n_child = 1;
 
-	/* Alocação do nó pai e do filho*/
 	node = AlocateNodeTree(n_child, &board, &play);
 
-	/* Testar se a adição do filho foi um fracasso */
+	/* Testar se a liberação deu certo */
 	EXPECT_EQ(NULL, FreeTreeNodes(node));
+
+}
+
+/* Teste para verificar se a liberação de um nó com filho está funcionando
+   Procedimento:
+   	-Criar Variável para os nós;
+   	-Incializar os tabuleiros e as jogadas;
+   	-Inicializar variável com número de filhos;
+   	-Alocar o nó pai e o nó filho;
+   	-Verificar se o nó pai foi liberado
+   Resultados:
+   	-O nó e seu filho devem ter sido liberados
+ */
+TEST(Test_FreeTreeNodes, Verify_Free_NodewithChild){
+	NodeTree * nodefather, *nodechild;
+	TBoard boardfather, boardchild;
+	Move playfather, playchild;
+	int n_child = 1;
+
+	/* Alocação do nó pai e do filho*/
+	nodefather = AlocateNodeTree(n_child, &boardfather, &playfather);
+	nodechild = AlocateNodeTree(n_child, &boardchild, &playchild);
+
+	AddChildNode(nodefather, nodechild, 0);
+
+	/* Testar se o nó pai seu filho foram liberados */
+	EXPECT_EQ(NULL, FreeTreeNodes(nodefather));
 }
 
 int main(int argc, char **argv){
