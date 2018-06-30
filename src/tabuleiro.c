@@ -254,5 +254,21 @@ int InsertPiece(TBoard *board, char piece, int line, int column){
 }
 
 int ValidBoard(TBoard *board){
-	return 1;
+	int i, j;
+	int W_King = 0;
+	int B_King = 0;
+
+	for(i=0; i < 8; i++){
+		for(j=0; j < 8; j++){
+			if(board->Board[i][j] == W_KING)
+				W_King++;
+			else if(board->Board[i][j] == B_KING)
+				B_King++;
+		}
+	}
+	
+	if(W_King != 1 || B_King != 1)
+		return 0;
+	else
+		return 1;
 }

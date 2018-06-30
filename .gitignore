@@ -56,5 +56,7 @@ src/*#
 src/obj/*.o
 src/main
 src/test_tabuleiro
+src/test_logica
+src/test_arvore
 
 include/gtest
