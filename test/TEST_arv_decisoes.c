@@ -34,11 +34,11 @@ TEST(Test_AlocateTree, Verify_Alocation_Tree){
  */
 TEST(Test_AlocateNodeTree, Verify_Alocation_Node){
 	NodeTree * node;
-	TBoard* board = AlocateBoard();
-	Move* play = (Move*) malloc (sizeof(play));
+	TBoard board;
+	Move play;
 	int n_child = 1;
 
-	node = AlocateNodeTree(n_child, board, play);
+	node = AlocateNodeTree(n_child, &board, &play);
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, node != NULL);
@@ -46,6 +46,36 @@ TEST(Test_AlocateNodeTree, Verify_Alocation_Node){
 	EXPECT_EQ(1, node->play != NULL);
 	EXPECT_EQ(n_child, node->n_child);
 } 
+
+/* Teste para verificar a validade da função que aloca um nó de uma árvore
+   Procedimento:
+   	-Criar Variável para os nós;
+   	-Alocar dois tabuleiros;
+   	-Alocar duas jogadas;
+   	-Inicializar variável com número de filhos
+   	-Chamar função que aloca o nó para o pai e para o filho;
+   	-Verificar se a a asição foi bem sucedida
+   	-Verificar se o "child" é o i-ésimo filho de "father" 
+   Resultados:
+   	-O nó "child" deve ser filho de "father"
+ */
+TEST(Test_AddChildNode, Verify_Insertion_Sucess){
+	NodeTree * father, *child;
+	TBoard boardfather, boardchild;
+	Move playfather, playchild;
+	int n_child = 1, position = 1;
+
+	/* Alocação do nó pai e do filho*/
+	father = AlocateNodeTree(n_child, &boardfather, &playfather);
+	child = AlocateNodeTree(n_child, &boardfather, &playfather);
+
+
+	/* Testar se a adição do filho foi bem sucedida */
+	EXPECT_EQ(1, AddChildNode(father, child, 1));
+	
+	/* Teste se o filho "0" do pai é igual a "child" */
+	EXPECT_EQ(father->child[0], child);
+}
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);

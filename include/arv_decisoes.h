@@ -41,10 +41,24 @@ Tree* AlocateTree(void);
 
 		\param n_child Inteiro contendo o número de filhos do nó
 		\param board Ponteiro para o tipo Tboard que armazena a configuração do tabuleiro
-		\param pay Ponteiro para o tipo Move que armazena a jogada que originou a configuração do tabuleiro
+		\param play Ponteiro para o tipo Move que armazena a jogada que originou a configuração do tabuleiro
 
         \return Um nó inicializado e diferente de nulo
 */
 NodeTree* AlocateNodeTree(int n_child, TBoard* board, Move* play);
+
+/* Insere um nó como filho de outro */
+/*! \fn int AddChildNode(NodeTree* father, NodeTree* child, int position)
+        \brief Insere um nó como filho de outro nó
+
+		\param father Ponteiro para o tipo NodeTree que armazena o nó pai
+		\param child Ponteiro para o tipo NodeTree que armazena o novo filho de "father"
+		\param positition Inteiro que armazena qual é o número do novo filho no vetor de filhos
+
+        \return Um inteiro indicando 0 será a inserção foi um fracasso ou 1 se foi um sucesso 
+*/
+int AddChildNode(NodeTree* father, NodeTree* child, int position);
+
+
 
 #endif

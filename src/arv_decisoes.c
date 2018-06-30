@@ -45,3 +45,20 @@ NodeTree* AlocateNodeTree(int n_child, TBoard* board, Move* play){
 	return node;	
 
 }
+
+/*
+  Função: Inserir um nó como o i-ésimo filho de outro nó
+        Objetivo:
+            Inserir um nó como filho de outro
+
+        Parâmetros:
+            father - Nó que receberá o novo filho
+            child - Nó que se tornará filho de "father"
+            position - Posição do filho no vetor de filhos do pai
+
+        Retorno:
+            1 caso a inserção seja um sucesso e 0 caso seja um fracasso
+*/
+int AddChildNode(NodeTree* father, NodeTree* child, int position){
+	return 0;
+}
