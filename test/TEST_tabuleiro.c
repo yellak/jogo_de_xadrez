@@ -282,12 +282,14 @@ TEST(Test_Insert_Piece, Verify_Invalid_Entries){
 
 TEST(Test_Insert_Piece, Verify_Correct_Insertion){
 	TBoard board;
+	StartEmptyBoard(&board);
 	char piece = B_KING;
 	int x = 2, y = 2;
 
 	/* Testar peça inserida corretamente */
 	EXPECT_EQ(0, InsertPiece(&board, piece, x, y));
 	EXPECT_EQ(GetValue(B_KING), GetValue(board.Board[x][y]));
+	EXPECT_EQ(-200, board.Weight);
 }
 
 /* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros padrões.

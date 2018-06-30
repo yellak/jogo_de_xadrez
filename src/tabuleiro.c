@@ -249,6 +249,7 @@ int InsertPiece(TBoard *board, char piece, int line, int column){
 	}
 	
 	board->Board[line][column] = piece;
+	board->Weight = board->Weight + GetValue(piece);
 
 	return 0;
 }
@@ -377,3 +378,7 @@ int ValidBoard(TBoard *board){
 
 	return 1;
 }
+
+/*int ChangePiece(TBoard *board, int line, int column, char piece){
+
+}*/
