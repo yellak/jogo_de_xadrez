@@ -1,3 +1,4 @@
 Data  |Horas Trabalhadas |Tipo Tarefa         |Descrição da Tarefa Realizada 
 22/06 |5 horas           |Reunião com o grupo |Definição do projeto e especificação dos módulos.
 23/06 |7 horas           |Módulo tabuleiro    |Definição da estrutura do tabuleiro e criação das funções de iniciar tabuleior vazio e padrão, que retorna qual peça está na posição, função que retorna o valor de uma peça e a de remover uma peça do tabuleiro.
+29/06 |3 horas           |Módulo tabuleiro    |Criação da função de verificar se um tabuleiro é válido e seus testes.
