@@ -545,6 +545,27 @@ TEST(Test_Valid_Board, Verify_Towers){
 	EXPECT_EQ(0, ValidBoard(&board));
 }
 
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais 8 peões.
+   Procedimentos:
+   -Criar um tabuleiro padrão;
+   -Adicionar um peão branco e chamar a função;
+   -Remover o peão adicionado, colocar um preto e chamar a função.
+   Resultados:
+   -É esperado que a função retorne um inteiro 0 para as duas chamadas, indicando a invalidez do tabuleiro.
+*/
+TEST(Test_Valid_Board, Verify_Pawns){
+	TBoard board;
+	StartStandardBoard(&board);
+
+	InsertPiece(&board, B_PAWN , 4, 4);
+	EXPECT_EQ(0, ValidBoard(&board));
+
+	RemovePiece(&board, 4, 4);
+	InsertPiece(&board, W_PAWN , 4, 4);
+	EXPECT_EQ(0, ValidBoard(&board));
+}
+
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
