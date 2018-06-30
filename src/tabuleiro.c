@@ -290,6 +290,10 @@ int ValidBoard(TBoard *board){
 				W_Tower++;
 			else if(board->Board[i][j] == B_TOWER)
 				B_Tower++;
+			else if(board->Board[i][j] == W_PAWN)
+				W_Pawn++;
+			else if(board->Board[i][j] == B_PAWN)
+				B_Pawn++;
 		}
 	}
 
@@ -343,6 +347,9 @@ int ValidBoard(TBoard *board){
 	if(W_King != 1 || B_King != 1)
 		return 0;
 	
+	if(W_Pawn > 8 || B_Pawn > 8)
+		return 0;
+
 	if(sum_white > 8-W_Pawn || sum_black > 8-B_Pawn)
 		return 0;
 
