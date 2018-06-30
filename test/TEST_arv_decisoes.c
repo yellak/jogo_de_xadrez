@@ -10,12 +10,21 @@
    	-A árvore alocada deve ser diferente de nula
  */
 
-TEST(Test_AlocateTree, Verify_Alocation){
+TEST(Test_AlocateTree, Verify_Alocation_Tree){
 	Tree * tree;
 	tree = AlocateTree();
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, tree != NULL);
+} 
+
+
+TEST(Test_AlocateNodeTree, Verify_Alocation_Node){
+	NodeTree * node;
+	node = AlocateNodeTree(4);
+
+	/* Testar a alocação */
+	EXPECT_EQ(1, node != NULL);
 } 
 
 int main(int argc, char **argv){

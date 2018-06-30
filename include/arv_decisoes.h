@@ -27,6 +27,22 @@ typedef struct Tree{
 	NodeTree* root; /*!< Ponteiro para uma variável do tipo ponteiro que representa a raiz da árvore */
 }Tree;
 
+/* Alocar espaço para a árvore */
+/*! \fn Tree* AlocateTree(void)
+        \brief Aloca espaço em memória para uma árvore
+
+        \return Uma árvore inicializada e diferente de nulo
+*/
 Tree* AlocateTree(void);
+
+/* Alocar espaço para o nó de uma árvore */
+/*! \fn NodeTree* AlocateNodeTree(void)
+        \brief Aloca espaço em memória para o nó de uma árvore
+
+		\param n_child Inteiro contendo o número de filhos do nó
+
+        \return Um nó inicializado e diferente de nulo
+*/
+NodeTree* AlocateNodeTree(int n_child);
 
 #endif
