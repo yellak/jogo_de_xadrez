@@ -257,6 +257,8 @@ int ValidBoard(TBoard *board){
 	int i, j;
 	int W_King = 0;
 	int B_King = 0;
+	int W_Pawn = 0;
+	int B_Pawn = 0;
 	int W_Queen = 0;
 	int B_Queen = 0;
 	int W_Horse = 0;
@@ -279,13 +281,39 @@ int ValidBoard(TBoard *board){
 		}
 	}
 
+	int sum_white = 0;
+	int sum_black = 0;
+
+	if(W_Queen != 0){
+		sum_white = sum_white + W_Queen-1;
+	}
+	if(W_Horse != 0){
+		if(W_Horse == 1)
+			sum_white = sum_white + W_Horse-1;
+		else
+			sum_white = sum_white + W_Horse-2;
+	}
+
+	if(B_Queen != 0){
+		sum_black = sum_black + B_Queen-1;
+	}
+	if(B_Horse != 0){
+		if(B_Horse == 1)
+			sum_black = sum_black + B_Horse-1;
+		else
+			sum_black = sum_black + B_Horse-2;
+	}
+
 	if(W_King != 1 || B_King != 1)
 		return 0;
 	
-	if(W_Queen > 9 || B_Queen > 9)
+	if(sum_white > 8-W_Pawn || sum_black > 8-B_Pawn)
 		return 0;
 
-	if(W_Horse > 10 || B_Horse > 10)
+	if(W_Queen > 9-W_Pawn || B_Queen > 9-B_Pawn)
+		return 0;
+
+	if(W_Horse > 10-W_Pawn || B_Horse > 10-B_Pawn)
 		return 0;
 
 	return 1;
