@@ -447,5 +447,14 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
 		return -1;
 	}
 
+	/* Salvar peça na posição de origem. */
+	char piece = board->Board[origin_line][origin_column];
+
+	/* Remover peça atual na posição de origem. */
+	RemovePiece(board, origin_line, origin_column);
+
+	/* Mudar peça na posição final. */
+	ChangePiece(board, piece, dest_line, dest_column);
+
 	return 0;
 }

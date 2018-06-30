@@ -717,7 +717,7 @@ TEST(Test_Move_Piece, Verify_Invalid_Entries){
 	-É esperado que o peso do tabuleiro não seja modificado.
 
 */
-TEST(Test_Move_Piece, Verify_Invalid_Entries){
+TEST(Test_Move_Piece, Test_Empty_Space){
 	TBoard board;
 	StartStandardBoard(&board);
 
