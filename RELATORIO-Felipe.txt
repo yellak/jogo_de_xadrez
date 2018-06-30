@@ -1,3 +1,5 @@
 22/06 | 5 Horas | Projetar                                  | Decisão do formato das estruturas utilizadas
 24/06 | 2 Horas | Estudar Aulas e Laboratórios relacionados | Estudando sobre a biblioteca ncurses
 24/06 | 1 Hora  | Codificar Módulo                          | Criando a função de iniciar o menu inicial
+27/06 | 1 Hora  | Revisar Código do Módulo                  | Função que cria a interface do tabuleiro refatorada e comentada
+29/06 | 3 Horas | Codificar Módulo                          | Criando funções de alocar uma árvore e um nó de árvore nó módulo arv_decisoes 
