@@ -21,21 +21,30 @@ TEST(Test_AlocateTree, Verify_Alocation_Tree){
 /* Teste para verificar a validade da função que aloca um nó de uma árvore
    Procedimento:
    	-Criar Variável para o nó;
+   	-Alocar um tabuleiro;
+   	-Alocar uma jogada;
+   	-Inicializar variável com número de filhos
    	-Chamar função que aloca o nó;
    	-Verificar se o nó retornado pela função é não nulo;
    	-Verificar se o componente "board" do nó é não nulo;
-   	-Verificar se o componente "n_child" do nó é igual ao esperado(4);
+   	-Verificar se o componente "play" do nó é não nulo;
+   	-Verificar se o componente "n_child" do nó é igual ao esperado;
    Resultados:
    	-Todas as variáveis devem estar alocadas corretamente
  */
 TEST(Test_AlocateNodeTree, Verify_Alocation_Node){
 	NodeTree * node;
-	node = AlocateNodeTree(4);
+	TBoard* board = AlocateBoard();
+	Move* play = (Move*) malloc (sizeof(play));
+	int n_child = 1;
+
+	node = AlocateNodeTree(n_child, board, play);
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, node != NULL);
 	EXPECT_EQ(1, node->board != NULL);
-	EXPECT_EQ(4, node->n_child);
+	EXPECT_EQ(1, node->play != NULL);
+	EXPECT_EQ(n_child, node->n_child);
 } 
 
 int main(int argc, char **argv){
