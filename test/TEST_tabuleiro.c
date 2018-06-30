@@ -301,7 +301,30 @@ TEST(Test_Valid_Board, Verify_Standard){
 	TBoard board;
 	StartStandardBoard(&board);
 	
-	ValidBoard(&board);
+	EXPECT_EQ(1, ValidBoard(&board));
+}
+
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros vazios e só com um rei.
+   Procedimentos:
+   -Criar um tabuleiro vazio;
+   -Chamar a função para esse tabuleiro.
+   -Adicionar um rei preto e chamar a função novamente;
+   -Remover o rei, adicionar um branco e chamar a função novamente.
+   Resultados:
+   -É esperado que a função retorne um inteiro 0, indicando a invalidez do tabuleiro.
+*/
+TEST(Test_Valid_Board, Verify_Empty_and_One_King){
+	TBoard board;
+	StartEmptyBoard(&board);
+	
+	EXPECT_EQ(0, ValidBoard(&board));
+
+	InsertPiece(&board, B_KING , 0, 0);
+	EXPECT_EQ(0, ValidBoard(&board));
+
+	RemovePiece(&board, 0, 0);
+	InsertPiece(&board, W_KING , 0, 0);
+	EXPECT_EQ(0, ValidBoard(&board));
 }
 
 int main(int argc, char **argv){
