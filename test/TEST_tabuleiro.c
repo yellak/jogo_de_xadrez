@@ -327,6 +327,26 @@ TEST(Test_Valid_Board, Verify_Empty_and_One_King){
 	EXPECT_EQ(0, ValidBoard(&board));
 }
 
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais de um rei de uma cor.
+   Procedimentos:
+   -Criar um tabuleiro padrão;
+   -Adicionar um rei branco e chamar a função;
+   -Remover o rei adicionado, colocar um preto e chamar a função.
+   Resultados:
+   -É esperado que a função retorne um inteiro 0, indicando a invalidez do tabuleiro.
+*/
+TEST(Test_Valid_Board, Verify_Two_Kings){
+	TBoard board;
+	StartStandardBoard(&board);
+
+	InsertPiece(&board, B_KING , 4, 4);
+	EXPECT_EQ(0, ValidBoard(&board));
+
+	RemovePiece(&board, 4, 4);
+	InsertPiece(&board, W_KING , 4, 4);
+	EXPECT_EQ(0, ValidBoard(&board));
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
