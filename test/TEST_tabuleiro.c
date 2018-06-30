@@ -495,6 +495,56 @@ TEST(Test_Valid_Board, Verify_Bishops){
 	EXPECT_EQ(0, ValidBoard(&board));
 }
 
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais de 10 torres e nenhum peão.
+   Procedimentos:
+   -Criar um tabuleiro vazio;
+   -Adicionar os dois reis de cada cor;
+   -Adicionar 10 torres de cada cor;
+   -Chamar a função;
+   -Adicionar uma torre branca e chamar a função;
+   -Remover a última torre adicionada, adicionar uma preta e chamar a função.
+   Resultados:
+   -É esperado que a função retorne 1, para a primeira chamada e 0 para as outras duas.
+*/
+TEST(Test_Valid_Board, Verify_Bishops){
+	TBoard board;
+	StartEmptyBoard(&board);
+
+	InsertPiece(&board, B_KING , 0, 0);
+	InsertPiece(&board, W_KING , 7, 7);
+
+	InsertPiece(&board, W_TOWER , 7, 6);
+	InsertPiece(&board, W_TOWER , 7, 5);
+	InsertPiece(&board, W_TOWER , 7, 4);
+	InsertPiece(&board, W_TOWER , 7, 3);
+	InsertPiece(&board, W_TOWER , 7, 2);
+	InsertPiece(&board, W_TOWER , 7, 1);
+	InsertPiece(&board, W_TOWER , 7, 0);
+	InsertPiece(&board, W_TOWER , 6, 7);
+	InsertPiece(&board, W_TOWER , 6, 6);
+	InsertPiece(&board, W_TOWER , 5, 3);
+
+	InsertPiece(&board, B_TOWER , 5, 4);
+	InsertPiece(&board, B_TOWER , 5, 5);
+	InsertPiece(&board, B_TOWER , 5, 6);
+	InsertPiece(&board, B_TOWER , 5, 7);
+	InsertPiece(&board, B_TOWER , 6, 0);
+	InsertPiece(&board, B_TOWER , 6, 1);
+	InsertPiece(&board, B_TOWER , 6, 2);
+	InsertPiece(&board, B_TOWER , 6, 3);
+	InsertPiece(&board, B_TOWER , 6, 4);
+	InsertPiece(&board, B_TOWER , 6, 5);
+
+	EXPECT_EQ(1, ValidBoard(&board));
+
+	InsertPiece(&board, W_TOWER , 4, 4);
+	EXPECT_EQ(0, ValidBoard(&board));
+
+	RemovePiece(&board, 4, 4);
+	InsertPiece(&board, B_TOWER , 4, 4);
+	EXPECT_EQ(0, ValidBoard(&board));
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

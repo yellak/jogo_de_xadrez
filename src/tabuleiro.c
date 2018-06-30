@@ -328,11 +328,5 @@ int ValidBoard(TBoard *board){
 	if(sum_white > 8-W_Pawn || sum_black > 8-B_Pawn)
 		return 0;
 
-	if(W_Queen > 9-W_Pawn || B_Queen > 9-B_Pawn)
-		return 0;
-
-	if(W_Horse > 10-W_Pawn || B_Horse > 10-B_Pawn)
-		return 0;
-
 	return 1;
 }
