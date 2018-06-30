@@ -706,6 +706,29 @@ TEST(Test_Move_Piece, Verify_Invalid_Entries){
 	EXPECT_EQ(-1, MovePiece(null, 0, 0, 1, 1));
 }
 
+/* Teste para verificar a função que muda a peça em uma posição indo para uma posição vazia.
+	Procedimentos:
+	-Criar tabuleiro padrão;
+	-Mover o peão na posição (6,1) para a posição (4,1);
+	Resultados:
+	-É esperado que a função retorne um inteiro 0 indicando o sucesso da operação;
+	-É esperado que a posição (6,1) esteja vazia;
+	-É esperado que a peça na posição (4,1)  seja um peão.
+	-É esperado que o peso do tabuleiro não seja modificado.
+
+*/
+TEST(Test_Move_Piece, Verify_Invalid_Entries){
+	TBoard board;
+	StartStandardBoard(&board);
+
+	EXPECT_EQ(0, MovePiece(&board, 6, 1, 4, 1));
+
+	EXPECT_EQ(GetValue(BLANK), GetValue(board.Board[6][1]));
+	EXPECT_EQ(GetValue(W_PAWN), GetValue(board.Board[4][1]));
+
+	EXPECT_EQ(0, board.Weight);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
