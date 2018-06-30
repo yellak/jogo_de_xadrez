@@ -257,6 +257,10 @@ int ValidBoard(TBoard *board){
 	int i, j;
 	int W_King = 0;
 	int B_King = 0;
+	int W_Queen = 0;
+	int B_Queen = 0;
+	int W_Horse = 0;
+	int B_Horse = 0;
 
 	for(i=0; i < 8; i++){
 		for(j=0; j < 8; j++){
@@ -264,11 +268,25 @@ int ValidBoard(TBoard *board){
 				W_King++;
 			else if(board->Board[i][j] == B_KING)
 				B_King++;
+			else if(board->Board[i][j] == W_QUEEN)
+				W_Queen++;
+			else if(board->Board[i][j] == B_QUEEN)
+				B_Queen++;
+			else if(board->Board[i][j] == W_HORSE)
+				W_Horse++;
+			else if(board->Board[i][j] == B_HORSE)
+				B_Horse++;
 		}
 	}
-	
+
 	if(W_King != 1 || B_King != 1)
 		return 0;
-	else
-		return 1;
+	
+	if(W_Queen > 9 || B_Queen > 9)
+		return 0;
+
+	if(W_Horse > 10 || B_Horse > 10)
+		return 0;
+
+	return 1;
 }

@@ -388,10 +388,61 @@ TEST(Test_Valid_Board, Verify_Queens){
 	EXPECT_EQ(1, ValidBoard(&board));
 
 	InsertPiece(&board, W_QUEEN , 4, 4);
+	printf("%c\n", board.Board[4][4]);
 	EXPECT_EQ(0, ValidBoard(&board));
 
 	RemovePiece(&board, 4, 4);
 	InsertPiece(&board, B_QUEEN , 4, 4);
+	EXPECT_EQ(0, ValidBoard(&board));
+}
+
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais de 10 cavalos.
+   Procedimentos:
+   -Criar um tabuleiro vazio;
+   -Adicionar os dois reis de cada cor;
+   -Adicionar 10 cavalos de cada cor;
+   -Chamar a função;
+   -Adicionar um cavalo branco e chamar a função;
+   -Remover o último cavalo adicionado, adicionar um preto e chamar a função.
+   Resultados:
+   -É esperado que a função retorne 1, para a primeira chamada e 0 para as outras duas.
+*/
+TEST(Test_Valid_Board, Verify_Horses){
+	TBoard board;
+	StartEmptyBoard(&board);
+
+	InsertPiece(&board, B_KING , 0, 0);
+	InsertPiece(&board, W_KING , 7, 7);
+
+	InsertPiece(&board, W_HORSE , 7, 6);
+	InsertPiece(&board, W_HORSE , 7, 5);
+	InsertPiece(&board, W_HORSE , 7, 4);
+	InsertPiece(&board, W_HORSE , 7, 3);
+	InsertPiece(&board, W_HORSE , 7, 2);
+	InsertPiece(&board, W_HORSE , 7, 1);
+	InsertPiece(&board, W_HORSE , 7, 0);
+	InsertPiece(&board, W_HORSE , 6, 7);
+	InsertPiece(&board, W_HORSE , 6, 6);
+	InsertPiece(&board, W_HORSE , 5, 3);
+
+	InsertPiece(&board, B_HORSE , 5, 4);
+	InsertPiece(&board, B_HORSE , 5, 5);
+	InsertPiece(&board, B_HORSE , 5, 6);
+	InsertPiece(&board, B_HORSE , 5, 7);
+	InsertPiece(&board, B_HORSE , 6, 0);
+	InsertPiece(&board, B_HORSE , 6, 1);
+	InsertPiece(&board, B_HORSE , 6, 2);
+	InsertPiece(&board, B_HORSE , 6, 3);
+	InsertPiece(&board, B_HORSE , 6, 4);
+	InsertPiece(&board, B_HORSE , 6, 5);
+
+	EXPECT_EQ(1, ValidBoard(&board));
+
+	InsertPiece(&board, W_HORSE , 4, 4);
+	EXPECT_EQ(0, ValidBoard(&board));
+
+	RemovePiece(&board, 4, 4);
+	InsertPiece(&board, B_HORSE , 4, 4);
 	EXPECT_EQ(0, ValidBoard(&board));
 }
 
