@@ -3,20 +3,33 @@
 #include <string.h>
 #include "../include/logica.h"
 
-int verify_algebric_move(char chess_move[]){
+/* Função: Verificar sintaxe do movimento (verify_syntax_move)
+        Objetivo:
+            Verificar se a sintaxe de uma jogada está correta
+        
+        Parâmetros:
+            chess_move - string fornecida pelo usuário na hora do movimento
+     
+        Retorno:
+            true  - caso a sintaxe esteja correta
+            false - caso a sintaxe esteja errada
+*/
+int verify_syntax_move(char chess_move[])
+{
 	int i;
 	char piece;
 	char movement[6];
-	if(strlen(chess_move) == 6)
+	if(strlen(chess_move) == 6)	/* A peça foi especificada */
 		{
 			/* Peça que está sendo movimentada */
 			piece = chess_move[0];
-			if(piece != 'K'){
-				if(piece != 'Q'){
-					if(piece != 'R'){
-						if(piece != 'B'){
-							if(piece != 'N'){
-								if(piece != 'P'){
+			/* Verificando se não foi colocada nenhuma peça não permitida */
+			if(piece != 'K'){	/* rei */
+				if(piece != 'Q'){ /* rainha */
+					if(piece != 'R'){ /* torre */
+						if(piece != 'B'){ /* bispo */
+							if(piece != 'N'){ /* cavalo */
+								if(piece != 'P'){ /* peão */
 									return false;
 								} /* P */
 							} /* N */
@@ -29,7 +42,51 @@ int verify_algebric_move(char chess_move[]){
 			for(i = 1; i < 6; i++){
 				movement[i - 1] = chess_move[i];
 			}
-	}		
+		} /* if( ... == 6) */
+	
+	else if(strlen(chess_move) == 5) /* A peça não foi especificada */
+		{
+			if(strcmp(chess_move, "0-0-0") == 0){ /* Roque pelo lado da rainha */
+				return true;
+			}
+			else{
+				/* Copiando a string diretamante já que a peça não é especificada */
+				strcpy(movement, chess_move);
+			}
+		} /* else if( ... == 5) */
+	
+	else if(strlen(chess_move) == 3)
+		{
+			if(strcmp(chess_move, "0-0") != 0){ /* Roque pelo lado do rei */
+				if(strcmp(chess_move, "1-0") != 0){ /* Branca venceu */
+					if(strcmp(chess_move, "0-1") != 0){ /* Preto venceu */
+						return false;
+					}
+					else{
+						return true; /* Preto venceu */
+					}
+				}
+				else{
+					return true; /* Branca venceu */
+				}
+			}
+			else{
+				return true; /* Roque pelo lado do rei */
+			}
+		} /* else if( ... == 3) */
+
+	/* Verificando a notação da ação */
+	if(movement[2] != '-'){ /* Movimento padrão */
+		if(movement[2] != 'x'){	/* Captura */
+			if(movement[2] != '='){ /* Promoção de um peão */
+				if(movement[2] != '+'){ /* Rei em cheque */
+					if(movement[2] != '#'){ /* Cheque-mate */
+						return false;
+					} /* # */
+				}	  /* + */
+			} /* = */
+		} /* x */
+	} /* - */
 
 	return true;
 }

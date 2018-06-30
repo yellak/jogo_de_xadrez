@@ -56,6 +56,6 @@ int DeleteMoveList(ListOfMoves* list);
 
 Move* algebric_translate(char chess_move[]);
 
-int verify_algebric_move(char chess_move[]);
+int verify_syntax_move(char chess_move[]);
 
 #endif
