@@ -637,7 +637,7 @@ TEST(Test_Valid_Board, Verify_Equivalance){
 	EXPECT_EQ(1, ValidBoard(&board));
 }
 
-/* Teste para verificar a função que muda a peça em uma posição.
+/* Teste para verificar a função que muda a peça em uma posição para entradas inválidas.
 	Procedimentos:
 	-Chamar a função para valores fora de alcance.
 	-Chamar a função para uma peça inválida.
@@ -663,6 +663,27 @@ TEST(Test_Change_Piece, Verify_Invalid_Entries){
 	TBoard *null = NULL;
 	piece = B_KING;
 	EXPECT_EQ(-1, ChangePiece(null, piece, x, y));
+}
+
+/* Teste para verificar a função que muda a peça em uma posição.
+	Procedimentos:
+	-Criar tabuleiro padrão;
+	-Mudar o peão na posição (1,1) por um cavalo preto.
+	Resultados:
+	-É esperado que a função retorne um inteiro 0 indicando o sucesso da operação;
+	-É esperado que a peça na posição (1,1) corresponda a um cavalo;
+	-É esperado que o peso do tabuleiro seja modificado para -4.
+*/
+TEST(Test_Change_Piece, Verify_Valid_Entries){
+	TBoard board;
+	StartStandardBoard(&board);
+	char piece = B_HORSE;
+	int x = 1, y = 1;
+
+	/* Testar peça inserida corretamente */
+	EXPECT_EQ(0, ChangePiece(&board, piece, x, y));
+	EXPECT_EQ(GetValue(piece), GetValue(board.Board[x][y]));
+	EXPECT_EQ(-4, board.Weight);
 }
 
 int main(int argc, char **argv){
