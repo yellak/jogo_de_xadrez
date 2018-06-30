@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include "../include/logica.h"
 
+Move* algebric_translate(char chess_move[]){
+	return NULL;
+}
+
 /* Função: DeleteMoveList
 		Objetivo: Liberar toda a memória da lista de movimentos.
 

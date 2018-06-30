@@ -54,4 +54,6 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board);
 */
 int DeleteMoveList(ListOfMoves* list);
 
+Move* algebric_translate(char chess_move[]);
+
 #endif
