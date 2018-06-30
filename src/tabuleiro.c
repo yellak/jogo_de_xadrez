@@ -240,9 +240,9 @@ void RemovePiece(TBoard *board, int line, int column){
 		Parametros:
 			board - Ponteiro para a estrutura do tabuleiro.
 					Não deve ser nulo
-			line - Inteiro representando a linha x da posição (x,y) da peça a ser removida.
+			line - Inteiro representando a linha x da posição (x,y) da peça a ser inserida.
 				   Deve ser um valor entre 0 e 7.
-			column - Inteiro representando a coluna y da posição (x,y) da peça a ser removida.
+			column - Inteiro representando a coluna y da posição (x,y) da peça a ser inserida.
 				     Deve ser um valor entre 0 e 7.
 			piece - Peça a ser inserida.
 					Deve ser uma das peças existentes.
@@ -401,9 +401,9 @@ int ValidBoard(TBoard *board){
 		Parametros:
 			board - Ponteiro para a estrutura do tabuleiro.
 					Não deve ser nulo
-			line - Inteiro representando a linha x da posição (x,y) da peça a ser removida.
+			line - Inteiro representando a linha x da posição (x,y) da peça a ser modificada.
 				   Deve ser um valor entre 0 e 7.
-			column - Inteiro representando a coluna y da posição (x,y) da peça a ser removida.
+			column - Inteiro representando a coluna y da posição (x,y) da peça a ser modificada.
 				     Deve ser um valor entre 0 e 7.
 			piece - Peça a ser inserida.
 					Deve ser uma das peças existentes.
@@ -433,8 +433,26 @@ int ChangePiece(TBoard *board, char piece, int line, int column){
 	return 0;
 }
 
+/* Função: MovePiece
+		Objetivo: Mover uma peça da coordenada (xo,yo) do tabuleiro para a (x,y).
+
+		Parametros:
+			board - Ponteiro para a estrutura do tabuleiro.
+					Não deve ser nulo
+			origin_line - Inteiro representando a linha xo da posição (xo,yo) da peça a ser movida.
+				   Deve ser um valor entre 0 e 7.
+			origin_column - Inteiro representando a coluna yo da posição (xo,yo) da peça a ser movida.
+				     Deve ser um valor entre 0 e 7.
+			dest_line - Inteiro representando a linha x da posição (x,y) da peça a ser movida.
+				   Deve ser um valor entre 0 e 7.
+			dest_column - Inteiro representando a coluna y da posição (x,y) da peça a ser movida.
+				     Deve ser um valor entre 0 e 7.
+
+		Saída: Essa função retorna, por parâmetro, o tabuleiro com a peça movida de lugar.
+		       Retorna também um inteiro indicando seu funcionamento, sendo -1 para falhas e 0 para correto funcionamento.
+*/
 int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, int dest_column){
-	/* Verificar x e y. */
+	/* Verificar x, y, xo e yo. */
 	if(origin_line<0 || origin_line>7 || origin_column<0 || origin_column>7){
 		return -1;
 	}

@@ -97,7 +97,7 @@ int GetValue(char piece);
 		\param board Ponteiro para um tabuleiro.
 		\param line Inteiro indicando a linha x da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
 		\param column Inteiro indicando a coluna y da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
-		\return Retorna, por parâmetro, o tabuleiro sem a peça e com seu peso modificado.
+		\return Retorna, por parâmetro, o tabuleiro sem a peça e com seu peso modificado e um inteiro indicando seu funcionamento.
 */
 void RemovePiece(TBoard *board, int line, int column);
 
@@ -107,9 +107,9 @@ void RemovePiece(TBoard *board, int line, int column);
 
 		\param board Pontereiro para um tabuleiro.
 		\param piece É um caractere representado por alguma das constantes de peças definidas.
-		\param line Inteiro indicando a linha x da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
-		\param column Inteiro indicando a coluna y da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
-		\return Retorna, um inteiro indicando a falha ou sucesso da operação.
+		\param line Inteiro indicando a linha x da posição (x,y) da peça a ser inserida. Deve ser um número de 0 a 7.
+		\param column Inteiro indicando a coluna y da posição (x,y) da peça a ser inserida. Deve ser um número de 0 a 7.
+		\return Retorna um inteiro indicando a falha ou sucesso da operação.
 */
 int InsertPiece(TBoard *board, char piece, int line, int column);
 
@@ -128,12 +128,23 @@ int ValidBoard(TBoard *board);
 		
 		\param board Ponteiro para um tabuleiro.
 		\param piece É um caractere representado por alguma das constantes de peças definidas.
-		\param line Inteiro indicando a linha x da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
-		\param column Inteiro indicando a coluna y da posição (x,y) da peça a ser removida. Deve ser um número de 0 a 7.
+		\param line Inteiro indicando a linha x da posição (x,y) da peça a ser modificada. Deve ser um número de 0 a 7.
+		\param column Inteiro indicando a coluna y da posição (x,y) da peça a ser modificada. Deve ser um número de 0 a 7.
 		\return Retorna 0 para caso seja válido ou -1, caso contrário. Por parâmetro, retorna o tabuleiro modificado.
 */
 int ChangePiece(TBoard *board, char piece, int line, int column);
 
+/* Mover a peça para outra posição. */
+/*! \fn int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, int dest_column)
+		\brief Move a peça na posição (xo,yo) para a posição (x,y).
+		
+		\param board Ponteiro para um tabuleiro.
+		\param origin_line Inteiro indicando a linha xo da posição (xo,yo) da peça a ser movida. Deve ser um número de 0 a 7.
+		\param origin_column Inteiro indicando a coluna yo da posição (xo,yo) da peça a ser movida. Deve ser um número de 0 a 7.
+		\param dest_line Inteiro indicando a linha x da posição (x,y) da peça a ser movida. Deve ser um número de 0 a 7.
+		\param dest_column Inteiro indicando a coluna y da posição (x,y) da peça a ser movida. Deve ser um número de 0 a 7.
+		\return Retorna 0 para caso seja válido ou -1, caso contrário. Por parâmetro, retorna o tabuleiro modificado.
+*/
 int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, int dest_column);
 
 #endif
