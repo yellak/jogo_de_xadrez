@@ -347,7 +347,7 @@ TEST(Test_Valid_Board, Verify_Two_Kings){
 	EXPECT_EQ(0, ValidBoard(&board));
 }
 
-/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais de 9 rainhas.
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais de 9 rainhas e 0 peoes.
    Procedimentos:
    -Criar um tabuleiro vazio;
    -Adicionar os dois reis de cada cor;
@@ -388,7 +388,6 @@ TEST(Test_Valid_Board, Verify_Queens){
 	EXPECT_EQ(1, ValidBoard(&board));
 
 	InsertPiece(&board, W_QUEEN , 4, 4);
-	printf("%c\n", board.Board[4][4]);
 	EXPECT_EQ(0, ValidBoard(&board));
 
 	RemovePiece(&board, 4, 4);
@@ -396,7 +395,7 @@ TEST(Test_Valid_Board, Verify_Queens){
 	EXPECT_EQ(0, ValidBoard(&board));
 }
 
-/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais de 10 cavalos.
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais de 10 cavalos e nenhum peão.
    Procedimentos:
    -Criar um tabuleiro vazio;
    -Adicionar os dois reis de cada cor;
@@ -443,6 +442,56 @@ TEST(Test_Valid_Board, Verify_Horses){
 
 	RemovePiece(&board, 4, 4);
 	InsertPiece(&board, B_HORSE , 4, 4);
+	EXPECT_EQ(0, ValidBoard(&board));
+}
+
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais de 10 bispos e nenhum peão.
+   Procedimentos:
+   -Criar um tabuleiro vazio;
+   -Adicionar os dois reis de cada cor;
+   -Adicionar 10 bispos de cada cor;
+   -Chamar a função;
+   -Adicionar um bispo branco e chamar a função;
+   -Remover o último bispo adicionado, adicionar um preto e chamar a função.
+   Resultados:
+   -É esperado que a função retorne 1, para a primeira chamada e 0 para as outras duas.
+*/
+TEST(Test_Valid_Board, Verify_Bishops){
+	TBoard board;
+	StartEmptyBoard(&board);
+
+	InsertPiece(&board, B_KING , 0, 0);
+	InsertPiece(&board, W_KING , 7, 7);
+
+	InsertPiece(&board, W_BISHOP , 7, 6);
+	InsertPiece(&board, W_BISHOP , 7, 5);
+	InsertPiece(&board, W_BISHOP , 7, 4);
+	InsertPiece(&board, W_BISHOP , 7, 3);
+	InsertPiece(&board, W_BISHOP , 7, 2);
+	InsertPiece(&board, W_BISHOP , 7, 1);
+	InsertPiece(&board, W_BISHOP , 7, 0);
+	InsertPiece(&board, W_BISHOP , 6, 7);
+	InsertPiece(&board, W_BISHOP , 6, 6);
+	InsertPiece(&board, W_BISHOP , 5, 3);
+
+	InsertPiece(&board, B_BISHOP , 5, 4);
+	InsertPiece(&board, B_BISHOP , 5, 5);
+	InsertPiece(&board, B_BISHOP , 5, 6);
+	InsertPiece(&board, B_BISHOP , 5, 7);
+	InsertPiece(&board, B_BISHOP , 6, 0);
+	InsertPiece(&board, B_BISHOP , 6, 1);
+	InsertPiece(&board, B_BISHOP , 6, 2);
+	InsertPiece(&board, B_BISHOP , 6, 3);
+	InsertPiece(&board, B_BISHOP , 6, 4);
+	InsertPiece(&board, B_BISHOP , 6, 5);
+
+	EXPECT_EQ(1, ValidBoard(&board));
+
+	InsertPiece(&board, W_BISHOP , 4, 4);
+	EXPECT_EQ(0, ValidBoard(&board));
+
+	RemovePiece(&board, 4, 4);
+	InsertPiece(&board, B_BISHOP , 4, 4);
 	EXPECT_EQ(0, ValidBoard(&board));
 }
 
