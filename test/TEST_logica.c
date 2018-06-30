@@ -58,8 +58,12 @@ TEST(Algebric_verification, Named_movement)
 	char named_test_move[7];
 
 	/* String inválida */
-	strcpy(named_test_move, "Pe2-e4");
+	strcpy(named_test_move, "Le2-e4");
 	EXPECT_EQ(false, verify_algebric_move(named_test_move));
+
+	/* String válida */
+	strcpy(named_test_move, "Re2-e4");
+	EXPECT_EQ(true, verify_algebric_move(named_test_move));
 }
 
 TEST(ChessMove_translation, Normal_movement)

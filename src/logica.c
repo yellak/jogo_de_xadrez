@@ -4,7 +4,34 @@
 #include "../include/logica.h"
 
 int verify_algebric_move(char chess_move[]){
-	return false;
+	int i;
+	char piece;
+	char movement[6];
+	if(strlen(chess_move) == 6)
+		{
+			/* Peça que está sendo movimentada */
+			piece = chess_move[0];
+			if(piece != 'K'){
+				if(piece != 'Q'){
+					if(piece != 'R'){
+						if(piece != 'B'){
+							if(piece != 'N'){
+								if(piece != 'P'){
+									return false;
+								} /* P */
+							} /* N */
+						} /* B */
+					} /* R */
+				} /* Q */
+			} /* K */
+
+			/* Copiando a parte do movimento em si da notação */
+			for(i = 1; i < 6; i++){
+				movement[i - 1] = chess_move[i];
+			}
+	}		
+
+	return true;
 }
 
 Move* algebric_translate(char chess_move[]){
