@@ -18,3 +18,18 @@ Tree* AlocateTree(void){
 	return tree;
 }
 
+
+/*
+  Função: Alocar um nó de uma árvore
+        Objetivo:
+            Alocar dinâmicamente um nó de uma árvore
+
+        Parâmetros:
+            A função não possui parâmetros.
+
+        Retorno:
+            A função retorna um nó de uma árvore alocado e  diferente de nulo
+*/
+NodeTree* AlocateNodeTree(void){
+	return NULL;
+}
