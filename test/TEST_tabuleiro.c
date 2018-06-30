@@ -678,7 +678,7 @@ TEST(Test_Change_Piece, Verify_Valid_Entries){
 	TBoard board;
 	StartStandardBoard(&board);
 	char piece = B_HORSE;
-	int x = 1, y = 1;
+	int x = 6, y = 1;
 
 	/* Testar peça inserida corretamente */
 	EXPECT_EQ(0, ChangePiece(&board, piece, x, y));

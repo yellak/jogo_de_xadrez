@@ -409,5 +409,10 @@ int ChangePiece(TBoard *board, char piece, int line, int column){
 		return -1;
 	}
 
+	/* Remover peça atual na posição. */
+	RemovePiece(board, line, column);
+	/* Inserir nova peça. */
+	InsertPiece(board, piece, line, column);
+	
 	return 0;
 }
