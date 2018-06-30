@@ -40,9 +40,11 @@ Tree* AlocateTree(void);
         \brief Aloca espaço em memória para o nó de uma árvore
 
 		\param n_child Inteiro contendo o número de filhos do nó
+		\param board Ponteiro para o tipo Tboard que armazena a configuração do tabuleiro
+		\param pay Ponteiro para o tipo Move que armazena a jogada que originou a configuração do tabuleiro
 
         \return Um nó inicializado e diferente de nulo
 */
-NodeTree* AlocateNodeTree(int n_child);
+NodeTree* AlocateNodeTree(int n_child, TBoard* board, Move* play);
 
 #endif
