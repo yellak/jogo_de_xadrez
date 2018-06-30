@@ -121,8 +121,43 @@ int verify_syntax_move(char chess_move[])
 	return true;
 }
 
-Move* algebric_translate(char chess_move[]){
+Move* algebraic_translate(char chess_move[]){
 	Move* result = (Move*) malloc(sizeof(Move));
+	char movement[6];
+	int i;
+
+	/* Verificando se a sintaxe é válida */
+	if(verify_syntax_move(chess_move) == true)
+		{
+			/* Verficando se a peça foi especificada */
+			if(strlen(chess_move) == 6){
+				for(i = 1; i < 6; i++)
+					{
+						movement[i - 1] = chess_move[i];
+					}
+			}
+			/* Verificando se a peça não foi especificada */
+			else if(strlen(chess_move) == 5){
+				strcpy(movement, chess_move);
+			}
+			/* A notação é inválida */
+			else{
+				return NULL;
+			}
+
+			/* Traduzindo para as letras */
+			result->origin[1] = movement[0] - 'a';
+			result->destiny[1] = movement[3] - 'a';
+
+			/* Traduzindo para os números */
+			result->origin[0] = '8' - movement[1];
+			result->destiny[0] = '8' - movement[4];
+		}
+	else
+		{
+			return NULL;
+		}
+	
 	return result;
 }
 

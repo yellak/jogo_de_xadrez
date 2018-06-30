@@ -235,40 +235,217 @@ TEST(Algebraic_verification, Unnamed_movement)
 	EXPECT_EQ(false, verify_syntax_move(movement));
 } /* Unnamed_movement */
 
-/* 
- * TEST(ChessMove_translation, Normal_movement)
- * {
- * 	char named_test_move[7];
- * 	char test_move[6];
- * 	Move* expect_move = (Move*) malloc(sizeof(Move));
- * 	Move* result;
- * 
- * 	/\* Cavalo da b1 para a3 *\/
- * 	strcpy(named_test_move, "Nb1-a3");
- * 	
- * 	/\* Movimento esperado *\/
- * 	expect_move->origin[0] = 7;
- * 	expect_move->origin[1] = 1;
- * 	expect_move->destiny[0] = 5;
- * 	expect_move->destiny[1] = 0;
- * 
- * 	/\* Chamando a função que retornará o movimento obtido *\/
- * 	result = algebric_translate(named_test_move);
- * 	
- * 	/\* Realizando os testes *\/
- * 	EXPECT_EQ(NULL, !result);
- * 	if(result != NULL)
- * 		{
- * 			EXPECT_EQ(expect_move->origin[0], result->origin[0]);
- * 			EXPECT_EQ(expect_move->origin[1], result->origin[1]);
- * 			EXPECT_EQ(expect_move->destiny[0], result->destiny[0]);
- * 			EXPECT_EQ(expect_move->destiny[1], result->destiny[1]);
- * 		}
- * 
- * 	free(expect_move);
- * 	free(result);
- * }
- */
+/* Teste para verificar a validade da função de traduzir um movimento a partir
+   da notação algébrica
+
+   Procedimentos:
+   - Verificar para movimentos em diagonal
+   - Para movimentos de cavalo
+   - Movimentos retos
+
+   Resultados:
+   - Espera-se que a tradução das linhas e colunas estejam corretas */
+TEST(Algebraic_translation, Named_movement)
+{
+	char named_test_move[7];
+	Move* expect_move = (Move*) malloc(sizeof(Move));
+	Move* result;
+
+	/* Cavalo da b1 para a3 */
+	strcpy(named_test_move, "Nb1-a3");
+
+	/* Sistema de coordenadas da matriz: (y,x) */
+	
+	/* Movimento esperado: (7,1) para (5,0) */
+	expect_move->origin[0] = 7;
+	expect_move->origin[1] = 1;
+	expect_move->destiny[0] = 5;
+	expect_move->destiny[1] = 0;
+
+	/* Chamando a função que retornará o movimento obtido */
+	result = algebraic_translate(named_test_move);
+	
+	/* Realizando os testes */
+	EXPECT_EQ(NULL, !result);
+	if(result != NULL)
+		{
+			EXPECT_EQ(expect_move->origin[0], result->origin[0]);
+			EXPECT_EQ(expect_move->origin[1], result->origin[1]);
+			EXPECT_EQ(expect_move->destiny[0], result->destiny[0]);
+			EXPECT_EQ(expect_move->destiny[1], result->destiny[1]);
+		}
+	/* Liberando para este movimento */
+	free(result);
+
+	/*_______________________________________________________________________*/
+	
+	/* Torre da d7 para d3 */
+	strcpy(named_test_move, "Rd7-d3");
+
+	/* Movimento esperado: (1,3) para (5,3) */
+	expect_move->origin[0] = 1;
+	expect_move->origin[1] = 3;
+	expect_move->destiny[0] = 5;
+	expect_move->destiny[1] = 3;
+
+	/* Chamando a função que retornará o movimento obtido */
+	result = algebraic_translate(named_test_move);
+
+	/* Realizando os testes */
+	EXPECT_EQ(NULL, !result);
+	if(result != NULL)
+		{
+			EXPECT_EQ(expect_move->origin[0], result->origin[0]);
+			EXPECT_EQ(expect_move->origin[1], result->origin[1]);
+			EXPECT_EQ(expect_move->destiny[0], result->destiny[0]);
+			EXPECT_EQ(expect_move->destiny[1], result->destiny[1]);
+		}
+	/* Liberando para este movimento */
+	free(result);
+
+	/*_______________________________________________________________________*/
+
+	/* Torre da b5 para g5 */
+	strcpy(named_test_move, "Rb5-g5");
+
+	/* Movimento esperado: (3,1) para (3,6) */
+	expect_move->origin[0] = 3;
+	expect_move->origin[1] = 1;
+	expect_move->destiny[0] = 3;
+	expect_move->destiny[1] = 6;
+
+	/* Chamando a função que retornará o movimento obtido */
+	result = algebraic_translate(named_test_move);
+
+	/* Realizando os testes */
+	EXPECT_EQ(NULL, !result);
+	if(result != NULL)
+		{
+			EXPECT_EQ(expect_move->origin[0], result->origin[0]);
+			EXPECT_EQ(expect_move->origin[1], result->origin[1]);
+			EXPECT_EQ(expect_move->destiny[0], result->destiny[0]);
+			EXPECT_EQ(expect_move->destiny[1], result->destiny[1]);
+		}
+	/* Liberando para este movimento */
+	free(result);
+
+	/*_______________________________________________________________________*/
+
+	/* Bispo da b3 para f7 */
+	strcpy(named_test_move, "Bb3-f7");
+
+	/* Movimento esperado: (5,1) para (1,5) */
+	expect_move->origin[0] = 5;
+	expect_move->origin[1] = 1;
+	expect_move->destiny[0] = 1;
+	expect_move->destiny[1] = 5;
+
+	/* Chamando a função que retornará o movimento obtido */
+	result = algebraic_translate(named_test_move);
+
+	/* Realizando os testes */
+	EXPECT_EQ(NULL, !result);
+	if(result != NULL)
+		{
+			EXPECT_EQ(expect_move->origin[0], result->origin[0]);
+			EXPECT_EQ(expect_move->origin[1], result->origin[1]);
+			EXPECT_EQ(expect_move->destiny[0], result->destiny[0]);
+			EXPECT_EQ(expect_move->destiny[1], result->destiny[1]);
+		}
+	/* Liberando para este movimento */
+	free(result);
+
+	free(expect_move);
+}
+
+/* Teste para verificar a validade da função que traduz os movimentos a partir
+   da notação algébrica, dessa vez para casos em que o nome da peça não é dado
+
+   Os procedimentos e resultados são os mesmos que os do teste anterior */
+TEST(Algebraic_translation, Unnamed_movement)
+{
+	char movement[6];
+	Move* expect_move = (Move*) malloc(sizeof(Move));
+	Move* result;
+	
+	/* g2 para c6 */
+	strcpy(movement, "g2-c6");
+
+	/* Movimento esperado: (2,2) para (6,6) */
+	expect_move->origin[0] = 6;
+	expect_move->origin[1] = 6;
+	expect_move->destiny[0] = 2;
+	expect_move->destiny[1] = 2;
+
+	/* Chamando a função que retornará o movimento obtido */
+	result = algebraic_translate(movement);
+
+	/* Realizando os testes */
+	EXPECT_EQ(NULL, !result);
+	if(result != NULL)
+		{
+			EXPECT_EQ(expect_move->origin[0], result->origin[0]);
+			EXPECT_EQ(expect_move->origin[1], result->origin[1]);
+			EXPECT_EQ(expect_move->destiny[0], result->destiny[0]);
+			EXPECT_EQ(expect_move->destiny[1], result->destiny[1]);
+		}
+	/* Liberando para este movimento */
+	free(result);
+
+	/*_______________________________________________________________________*/
+
+	/* d5 para e3 */
+	strcpy(movement, "e3-d5");
+
+	/* Movimento esperado: (5,4) para (3,3) */
+	expect_move->origin[0] = 5;
+	expect_move->origin[1] = 4;
+	expect_move->destiny[0] = 3;
+	expect_move->destiny[1] = 3;
+
+	/* Chamando a função que retornará o movimento obtido */
+	result = algebraic_translate(movement);
+
+	/* Realizando os testes */
+	EXPECT_EQ(NULL, !result);
+	if(result != NULL)
+		{
+			EXPECT_EQ(expect_move->origin[0], result->origin[0]);
+			EXPECT_EQ(expect_move->origin[1], result->origin[1]);
+			EXPECT_EQ(expect_move->destiny[0], result->destiny[0]);
+			EXPECT_EQ(expect_move->destiny[1], result->destiny[1]);
+		}
+	/* Liberando para este movimento */
+	free(result);
+
+	/*_______________________________________________________________________*/
+
+	/* f8 para f1 */
+	strcpy(movement, "f8-f1");
+
+	/* Movimento esperado: (7,5) para (0,5) */
+	expect_move->origin[0] = 0;
+	expect_move->origin[1] = 5;
+	expect_move->destiny[0] = 7;
+	expect_move->destiny[1] = 5;
+
+	/* Chamando a função que retornará o movimento obtido */
+	result = algebraic_translate(movement);
+
+	/* Realizando os testes */
+	EXPECT_EQ(NULL, !result);
+	if(result != NULL)
+		{
+			EXPECT_EQ(expect_move->origin[0], result->origin[0]);
+			EXPECT_EQ(expect_move->origin[1], result->origin[1]);
+			EXPECT_EQ(expect_move->destiny[0], result->destiny[0]);
+			EXPECT_EQ(expect_move->destiny[1], result->destiny[1]);
+		}
+	/* Liberando para este movimento */
+	free(result);
+
+	free(expect_move);
+}
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
