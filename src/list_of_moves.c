@@ -31,5 +31,11 @@ int InsertMove(ListOfMoves* list, Move* play){
 	if(list == NULL || play == NULL){
 		return -1;
 	}
-
+	else{
+		list->first = (NodeList*)malloc(sizeof(NodeList));
+		list->first->play = play;
+		list->first->next = NULL;
+		list->last = list->first;
+	}
+	return 0;
 }
