@@ -4,7 +4,7 @@
 
 
 /*
-  Função: Criar uma lista de movimentos vazia
+  Função: CreateListOfMoves
         Objetivo:
             Alocar espaço na memória para uma lista de movimentos.
 
@@ -25,6 +25,19 @@ ListOfMoves* CreateListOfMoves(void){
 	
 	return List;
 }
+/*
+	Função: InsertMove
+		Objetivo:
+			Alocar um nó e inserir um movimento na lista.
+		Parametros:
+			list - Ponteiro para uma lista de movimentos.
+				   Não deve ser nulo.
+			play - Ponteiro para um movimento.
+				   Não deve ser nulo.
+		Retorno:
+			Um inteiro indicando a falha ou sucesso da inserção.
+
+*/
 
 int InsertMove(ListOfMoves* list, Move* play){
 
@@ -39,4 +52,18 @@ int InsertMove(ListOfMoves* list, Move* play){
 		list->howmany ++;
 	}
 	return 0;
+}
+
+/* Função: DeleteListOfMoves
+		Objetivo: Liberar toda a memória da lista de movimentos.
+
+		Parametros:
+			list - Ponteiro para a estrutura da lista.
+					Não deve ser nulo
+
+		Saída: Retorna um inteiro indicando a falha ou sucesso da operação.
+*/
+
+int DeleteListOfMoves(ListOfMoves* list){
+	
 }
