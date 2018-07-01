@@ -3,6 +3,7 @@
 
 #include <ncurses.h>
 #include <stdlib.h>
+#include <string.h>
 #include "tabuleiro.h"
 #include "logica.h"
 
@@ -19,9 +20,6 @@ const int BOARDX = 2;
 const int YOFFSET = 2;
 const int XOFFSET = 4;
 
-/* Constante que indicará que o usuário escolheu terminar o jogo */
-const int EXITGAME = 3;
-
 /* Constantes para as mensagens */
 const int INVALID_SINTAX = 0;
 const int ARE_YOU_SURE   = 1;
@@ -29,8 +27,15 @@ const int CONTINUE_GAME  = 2;
 const int INVALID_MOVE   = 3;
 
 /* Constantes para modos de jogo */
-const int PVP = 1;
-const int PVE = 2;
+const int PVP      = 1;
+const int PVE      = 2;
+const int EXITGAME = 3;
+
+/* Constantes para opção da escolha do tabuleiro */
+const int STD_BOARD   = 1;
+const int SAVED_BOARD = 2;
+const int NEW_BOARD   = 3;
+const int EXIT_GAME   = 4;
 
 /* Inicia um tabuleiro graficamente */
 /*! \fn void InitBoard(WINDOW* boardwin, TBoard* board)
@@ -103,5 +108,7 @@ void init_msg_win(WINDOW* messages);
 void clear_message(WINDOW* messages);
 
 void print_message(WINDOW* messages, int msg);
+
+TBoard* MenuGetBoard();
 	
 #endif

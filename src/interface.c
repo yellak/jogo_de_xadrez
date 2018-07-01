@@ -119,21 +119,25 @@ void DrawAxis(WINDOW* yaxis, WINDOW* xaxis){
 */
 int CreateMenu(WINDOW* menuwin){
 
-	int yMax,xMax;
+	int yMax, xMax;
 
-	//Pegando o tamanho do terminal
+	/* Pegando o tamanho do terminal */
 	getmaxyx(stdscr, yMax, xMax);
 
-	//Inicializando a janela
+	/* Inicializando a janela */
 	menuwin = newwin(6, xMax - 12, yMax-8, 5);
 	box(menuwin, 0, 0);
 	refresh();
 	wrefresh(menuwin);
 
-	//Função para ativas os comandos das setinhas
+	/* Função para ativar os comandos das setinhas */
 	keypad(menuwin, true);
 
-	char* modos[4] = {"Escolha o Modo de Jogo:","JogadorXJogador","JogadorXComputador","Sair"};
+	char modos[4][xMax - 12];
+	strcpy(modos[0], "Escolha o Modo de Jogo:                                     ");
+	strcpy(modos[1], "Jogador vs Jogador                                          ");
+	strcpy(modos[2], "Jogador vs Computador                                       ");
+	strcpy(modos[3], "Sair do jogo                                                ");
 
 	int choice = 0;
 	int highlight = 1;
@@ -174,6 +178,114 @@ int CreateMenu(WINDOW* menuwin){
 
 	return highlight;
 } /* CreateMenu */
+
+/*
+ Função: Criar menu de escolha de tabuleiro
+       Objetivo:
+           Blah
+       
+       Saída:
+*/
+TBoard* MenuGetBoard()
+{
+	/* Indicarão o tamanho da tela */
+	int yMax, xMax;
+	/* Indicarão a escolha do usuário */
+	int choice = 0, highlight = 1;
+	/* Contador */
+	int i;
+	/* Janela onde será mostrado o menu de escolha do tabuleiro */
+	WINDOW* menu;
+	/* Tabuleiro que será retornado para o módulo principal */
+	TBoard* board = AlocateBoard();
+
+	/* Pegando o tamanho do terminal */
+	getmaxyx(stdscr, yMax, xMax);
+
+	/* Inicializando a janela */
+	menu = newwin(7, xMax - 12, yMax - 9, 5);
+	box(menu, 0, 0); /* Desenhando um quadro em volta da janela */
+	refresh();
+	wrefresh(menu);	/* Carregando a janela na tela */
+
+	/* Ativando teclas do teclados como setinhas por exemplo */
+	keypad(menu, true);
+
+	/* Variável com as opções do menu */
+	char opcoes[5][xMax - 12];
+	strcpy(opcoes[0], "Com qual tabuleiro você prefere jogar?");
+	strcpy(opcoes[1], "Tabuleiro padrão                                           ");
+	strcpy(opcoes[2], "Carregar tabuleiro salvo                                   ");
+	strcpy(opcoes[3], "Criar um tabuleiro do zero                                 ");
+	strcpy(opcoes[4], "Sair do jogo                                               ");
+
+	while(choice != 10)	/* Tecla ENTER */
+		{
+			for(i = 0; i < 5; i++)
+				{
+					if(i == highlight)
+						{
+							/* Ativando o highlight na opção atual */
+							wattron(menu, A_REVERSE);
+						}
+					/* Atulizando as opções */
+					mvwprintw(menu, i + 1, 1, opcoes[i]);
+					wattroff(menu, A_REVERSE);
+					wrefresh(menu);
+				}
+
+			/* Obtendo a tecla que o usuário apertou */
+			choice = wgetch(menu);
+			switch(choice)
+				{
+				case KEY_UP:	/* Seta para cima */
+					highlight--;
+					if(highlight == 0) /* Não é para destacar o título do menu */
+						{
+							highlight = 1;
+						}
+					break;
+
+				case KEY_DOWN:	/* Seta para baixo */
+					highlight++;
+					if(highlight == 5) /* Não é para passar o limite inferior */
+						{
+							highlight = 4;
+						}
+					break;
+
+				default:
+					break;
+				} /* switch(choice) */
+		} /* while(choice != 10 */
+
+	delwin(menu);
+
+	switch(highlight)
+		{
+		case STD_BOARD:
+			StartEmptyBoard(board);
+			StartStandardBoard(board);
+			break;
+
+		case SAVED_BOARD:
+			mvprintw(1, 1, "Ainda em processo de desenvolvimento");
+			refresh();
+			break;
+			
+		case NEW_BOARD:
+			mvprintw(1, 1, "Ainda em processo de desenvolvimento");
+			refresh();
+			break;
+
+		case EXIT_GAME:
+			free(board);
+			board = NULL;
+			break;
+		}
+	
+	return board;
+} /* MenuGetBoard() */
 
 /* 
    Função: Inicializar janela de ajuda com as teclas (write_keys_help)
