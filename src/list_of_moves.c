@@ -65,5 +65,7 @@ int InsertMove(ListOfMoves* list, Move* play){
 */
 
 int DeleteListOfMoves(ListOfMoves* list){
-	
+	if(list == NULL){
+		return -1;
+	}
 }
