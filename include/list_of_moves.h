@@ -17,6 +17,7 @@ typedef struct NodeList{
 	Move* play;
 	struct NodeList *next;
 }NodeList;
+
 /* Definição da estrutura que irá armazenar as jogadas possíveis a partir de um tabuleiro. */
 /*! \struct ListOfMoves
 		\brief Estrutura representará todas as possíveis jogadas de um tabuleiro.
@@ -47,7 +48,7 @@ ListOfMoves* CreateListOfMoves(void);
 		\param play Ponteiro para um movimento.
 		\return Retorna um inteiro indicando a falha ou sucesso da inserção.
 */
-int InsertMove(ListOfMoves* list, Move* play);
+int InsertMove(ListOfMoves* list, int originx, int originy, int destinyx, int destinyy);
 
 
 /*Libera memória dedicada a lista dos movimentos possíveis.*/
