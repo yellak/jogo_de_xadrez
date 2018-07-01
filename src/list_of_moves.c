@@ -44,13 +44,11 @@ int InsertMove(ListOfMoves* list, Move* play){
 	if(list == NULL || play == NULL){
 		return -1;
 	}
-	else{
-		list->first = (NodeList*)malloc(sizeof(NodeList));
-		list->first->play = play;
-		list->first->next = NULL;
-		list->last = list->first;
-		list->howmany ++;
-	}
+	list->first = (NodeList*)malloc(sizeof(NodeList));
+	list->first->play = play;
+	list->first->next = NULL;
+	list->last = list->first;
+	list->howmany ++;
 	return 0;
 }
 
@@ -65,7 +63,17 @@ int InsertMove(ListOfMoves* list, Move* play){
 */
 
 int DeleteListOfMoves(ListOfMoves* list){
+	NodeList* temp;
 	if(list == NULL){
 		return -1;
 	}
+	list->current = list->first;
+	while(list->current != NULL){
+		temp = list->current->next;
+		free(list->current);
+		list->current = temp;
+	}
+	free(list);
+
+	return 0;
 }
