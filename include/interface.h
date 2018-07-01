@@ -13,7 +13,7 @@ const int YLIMIT = 8;
 
 /* Coordenadas para o início do tabuleiro */
 const int BOARDY = 2;
-const int BOARDX = 2;
+const int BOARDX = 3;
 
 /* Variáveis usadas para diferenciar entre o tabuleiro mostrado ao usuário e o
    que está armazenado na memória */
@@ -36,6 +36,10 @@ const int STD_BOARD   = 1;
 const int SAVED_BOARD = 2;
 const int NEW_BOARD   = 3;
 const int EXIT_GAME   = 4;
+
+/* Constantes para os tipos de janelas de atalhos */
+const int GAMING   = 0;
+const int CREATING = 1;
 
 /* Inicia um tabuleiro graficamente */
 /*! \fn void InitBoard(WINDOW* boardwin, TBoard* board)
@@ -88,7 +92,7 @@ int CreateMenu(WINDOW* menuwin);
 		\param keywin A janela onde seram impressos os atalhos
 		\return Sem retorno
 */
-void write_keys_help(WINDOW* keywin);
+void write_keys_help(WINDOW* keywin, int wintype);
 
 /* Função para jogo PVP */
 /*! \fn void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)

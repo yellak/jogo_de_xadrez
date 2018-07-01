@@ -55,7 +55,7 @@ int main()
 	boardwin = newwin(YLIMIT*2 + 1, XLIMIT*4 + 1, BOARDY, BOARDX);
 	/* Janelas dos eixos coordenados */
 	yaxis = newwin(YLIMIT*2 + 1, 2, BOARDY, 0);
-	xaxis = newwin(2, XLIMIT*4 + 1, BOARDX + YLIMIT*2 + 1, BOARDX);
+	xaxis = newwin(2, XLIMIT*4 + 1, BOARDY + YLIMIT*2 + 1, BOARDX);
 	/* Janela da interface com o teclado do usuário */
 	keywin = newwin(4, 78, BOARDY + 2*YLIMIT + 2, 1);
 	/* Janela onde serão impressas as mensagens para o usuário */
@@ -71,7 +71,7 @@ int main()
 	wrefresh(xaxis);
 
 	/* Colocando as ajudas com as teclas */
-	write_keys_help(keywin);
+	write_keys_help(keywin, GAMING);
 
 	/* Mostrando o tabuleiro básico na interface gráfica */
 	InitBoard(boardwin, board);

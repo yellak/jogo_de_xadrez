@@ -90,13 +90,15 @@ void DrawBoard(WINDOW* boardwin){
 void DrawAxis(WINDOW* yaxis, WINDOW* xaxis){
 	int i, j;
 	char value[2];
-  
+
+	/* Desenhando eixo Y */
 	for(i = 1, j = 8; j >= 1; i += 2, j--){
 		sprintf(value, "%d", j);
-		wmove(yaxis, i, 0);
+		wmove(yaxis, i, 1);
 		waddch(yaxis, value[0]);
 	}
 
+	/* Desenhando eixo X */
 	for(i = 2, j = 0; i <= 32; i += 4, j++){
 		wmove(xaxis, 0, i);
 		waddch(xaxis, 'a' + j);
@@ -107,10 +109,25 @@ void HelpWinNewBoard(WINDOW* helpwin)
 {
 	box(helpwin, 0, 0);
 	/* Mostrando o título */
-	mvwprintw(helpwin, 1, 14, "Opções de peças");
+	mvwprintw(helpwin, 1, 11, "Opções de peças");
 
+	/* Mostrando as opções de peças pretas */
 	mvwprintw(helpwin, 3, 1, "K - Rei preto");
 	mvwprintw(helpwin, 4, 1, "Q - Rainha preta");
+	mvwprintw(helpwin, 5, 1, "R - Torre preta");
+	mvwprintw(helpwin, 6, 1, "B - Bispo preto");
+	mvwprintw(helpwin, 7, 1, "N - Cavalo preto");
+	mvwprintw(helpwin, 8, 1, "P - Peão preto");
+
+	/* Mostrando as opções de peças brancas */
+	mvwprintw(helpwin, 3, 18, "k - Rei branco");
+	mvwprintw(helpwin, 4, 18, "q - Rainha branca");
+	mvwprintw(helpwin, 5, 18, "r - Torre branca");
+	mvwprintw(helpwin, 6, 18, "b - Bispo branco");
+	mvwprintw(helpwin, 7, 18, "n - Cavalo branco");
+	mvwprintw(helpwin, 8, 19, "p - Peão branco");
+
+	/* Carregar as impressões acima */
 	wrefresh(helpwin);
 }
 
@@ -122,7 +139,7 @@ TBoard* CreateNewBoard(void)
 	/* Janelas do tabuleiro */
 	WINDOW* boardwin = newwin(YLIMIT*2 + 1, XLIMIT*4 + 1, BOARDY, BOARDX);
 	WINDOW* yaxis = newwin(YLIMIT*2 + 1, 2, BOARDY, 0);
-	WINDOW* xaxis = newwin(2, XLIMIT*4 + 1, BOARDX + YLIMIT*2 + 1, BOARDX);
+	WINDOW* xaxis = newwin(1, XLIMIT*4 + 1, BOARDY + YLIMIT*2 + 1, BOARDX);
 
 	/* Janela de ajuda */
 	WINDOW* helpwin = newwin(YLIMIT*2 - 3, 42, BOARDY, BOARDX + 4*XLIMIT + 3);
@@ -130,8 +147,13 @@ TBoard* CreateNewBoard(void)
 	/* Janela onde serão impressas as mensagens para o usuário */
 	WINDOW* messages = newwin(3, 42, BOARDY + 2*YLIMIT - 2, BOARDX + 4*XLIMIT + 3);
 
+	WINDOW* keywin = newwin(4, 78, BOARDY + 2*YLIMIT + 2, 1);
+
 	/* Carregando as janelas */
 	refresh();
+
+	/* Colocando a janela com atalhos */
+	write_keys_help(keywin, CREATING);
 
 	/* Desenhando um tabuleiro */
 	DrawBoard(boardwin);
@@ -346,16 +368,28 @@ TBoard* MenuGetBoard()
          Parâmetros:
              keywin - Janela responsável por mostrar o menu das chaves 
 */
-void write_keys_help(WINDOW* keywin)
+void write_keys_help(WINDOW* keywin, int wintype)
 {
 	int Y_position = BOARDY + 2*YLIMIT + 3;
 	int X_position = BOARDX;
+	
 	/* Criando uma caixa em volta da janela */
 	box(keywin, 0, 0);
-	/* Escrevvendo as ajudas de teclas */
-	mvwprintw(keywin, 1, 1, "s-Sair");
-	mvwprintw(keywin, 1, 9, "j-Jogada pela notação");
-	mvwprintw(keywin, 1, 37, "h-Ajuda");
+	
+	/* Escrevendo as ajudas de teclas */
+	if(wintype == GAMING)
+		{
+			mvwprintw(keywin, 1, 1, "q-Sair");
+			mvwprintw(keywin, 1, 9, "j-Jogada pela notação");
+			mvwprintw(keywin, 1, 37, "h-Ajuda");
+		}
+	else if(wintype == CREATING)
+		{
+			mvwprintw(keywin, 1, 1, "q-Sair");
+			mvwprintw(keywin, 1, 9, "a-Adicionar");
+			mvwprintw(keywin, 1, 24, "r-Remover");
+		}
+	
 	/* Carregando a janela no terminal */
 	wrefresh(keywin);
 }
@@ -527,7 +561,7 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 						}
 						
 				} /* Choide == j */
-			else if(choice == 's')
+			else if(choice == 'q')
 				{
 					clear_message(messages);
 					/* Colocando a mensagem de incerteza para o usuário */
