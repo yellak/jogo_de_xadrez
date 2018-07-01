@@ -142,6 +142,7 @@ Move* algebraic_translate(char chess_move[]){
 			}
 			/* A notação é inválida */
 			else{
+				free(result);
 				return NULL;
 			}
 
@@ -155,6 +156,7 @@ Move* algebraic_translate(char chess_move[]){
 		}
 	else
 		{
+			free(result);
 			return NULL;
 		}
 	
