@@ -36,14 +36,13 @@ ARVDEPS = $(patsubst %, $(IDIR)/%, $(_ARVDEPS))
 
 # Dependências do módulo list_of_moves e seu módulo de testes
 
-# _LSTOBJ = list_of_moves.o #TEST_list.o
-# LSTOBJ = $(patsubst %, $(ODIR)/%, $(_LSTOBJ))
+_LSTOBJ = list_of_moves.o TEST_list.o
+LSTOBJ = $(patsubst %, $(ODIR)/%, $(_LSTOBJ))
 
-# _LSTDEPS = list_of_moves.h
-# LSTDEPS = $(patsubst %, $(IDIR)/%, $(_LSTDEPS))
+_LSTDEPS = list_of_moves.h
+LSTDEPS = $(patsubst %, $(IDIR)/%, $(_LSTDEPS))
 
-all: main test_tabuleiro test_logica test_arvore 
-#test_list
+all: main test_tabuleiro test_logica test_arvore test_list
 
 # Compila os módulos principais
 $(ODIR)/%.o: %.c
