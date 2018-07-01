@@ -39,13 +39,16 @@ ListOfMoves* CreateListOfMoves(void){
 
 */
 
-int InsertMove(ListOfMoves* list, Move* play){
+int InsertMove(ListOfMoves* list, int originx, int originy, int destinyx, int destinyy){
 
-	if(list == NULL || play == NULL){
+	if(list == NULL){
 		return -1;
 	}
 	NodeList* novo = (NodeList*)malloc(sizeof(NodeList));
-	novo->play = play;
+	novo->play.origin[0] = originx;
+	novo->play.origin[1] = originy;
+	novo->play.destiny[0] = destinyx;
+	novo->play.destiny[1] = destinyy;
 	novo->next = NULL;
 	if(list->first == NULL){
 		list->first = novo;
