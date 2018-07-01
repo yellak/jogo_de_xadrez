@@ -197,6 +197,16 @@ void write_keys_help(WINDOW* keywin)
 	wrefresh(keywin);
 }
 
+/*
+ Função: Limpar a janela de interação com o usuário (clear_keywin)
+       Objetivo:
+           Limpar a parte onde o usuário digita coisas na janela de teclas 
+           e atalhos
+
+       Parâmetros:
+           keywin - a própria janela de teclas e atalhos que deverá ser
+		            diferente de nula
+*/
 void clear_keywin(WINDOW* keywin){
 	int i;
 	wmove(keywin, 2, 1);
@@ -206,11 +216,28 @@ void clear_keywin(WINDOW* keywin){
 	wrefresh(keywin);
 }
 
+/*
+  Função: Inicializa janela de mensagens (init_msg_win)
+        Objetivo:
+            Criar a borda para a janela de mensagens
+
+        Parâmetros:
+            messages - a própria janela de mensagens
+*/
 void init_msg_win(WINDOW* messages){
 	box(messages, 0, 0);
 	wrefresh(messages);
 }
 
+/*
+ Função: Limpar janela de mensagens (clear_message)
+       Objetivo:
+           Manter a janela de mensagens sempre de boa aparência
+
+       Parâmetros:
+           messages - janela onde serão colocadas as mensagens, precisa ser
+                      diferente de nula
+*/
 void clear_message(WINDOW* messages){
 	int i;
 	wmove(messages, 1, 1);
@@ -220,6 +247,17 @@ void clear_message(WINDOW* messages){
 	wrefresh(messages);
 }
 
+/*
+ Função: Imprimir mensagens (print_message)
+       Objetivo:
+           Manter o usuário atualizado quanto a situação atual do jogo
+
+       Parâmetros:
+           messages - janela onde serão mostradas as mensagens, precisa ser
+                      diferente de nula
+           msg      - inteiro que indica que mensagem deverá ser impressa na
+                      janela
+*/
 void print_message(WINDOW* messages, int msg)
 {
 	wmove(messages, 1, 1);
@@ -242,6 +280,22 @@ void print_message(WINDOW* messages, int msg)
 	wrefresh(messages);
 }
 
+/*
+  Função: Jogar modo PVP (play_pvp)
+        Objetivo:
+            É umas das funções mais importantes de todo o projeto, nela o
+            usuário poderá jogar contra outro jogador.
+            Seu principal objetivo é manter a relação entre usuário e o
+            programa
+
+        Parâmetros:
+           boardwin - janela onde está o Tabuleiro, de forma gráfica, precisa
+                      ser diferente de nulo
+           keywin   - janela onde estão as dicas de teclas e atalhos e onde é
+                      digitada a notação algébrica
+           messages - janela com as mensagens ao usuário
+           board    - tabuleiro guardado na memória (não gráfico)
+*/
 void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 {
 	/* Indica a escolha tomada pelo usuário */
@@ -299,8 +353,9 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 
 							if(boolean == 0) /* Jogada válida */
 								{
+									/* Recria o tabuleiro com as novas posições */
 									InitBoard(boardwin, board);
-									wrefresh(boardwin);
+									wrefresh(boardwin); /* Recarrega o tabuleiro */
 								}
 							else
 								{
@@ -321,11 +376,11 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 							if(choice == 's'){
 								finished = true; /* Fim de jogo */
 							}
-							else if(choice == 'n'){
+							else if(choice == 'n'){ /* Ele escolheu continuar */
 								clear_message(messages);
 								print_message(messages, CONTINUE_GAME);
 							}
 						}
 				} /* choice == 's' */
 		}  /* while(!finished) */
-}
+} /* Modo PVP */

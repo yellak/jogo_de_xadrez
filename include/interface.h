@@ -75,8 +75,25 @@ void DrawAxis(WINDOW* yaxis, WINDOW* xaxis);
 */
 int CreateMenu(WINDOW* menuwin);
 
+/* Escreve os atalhos disponíveis na janela de atalhos */
+/*! \fn void write_keys_help(WINDOW* keywin)
+        \brief Esta função irá escrever na interface os atalhos disponíveis
+               para uso na janela de teclas e atalhos
+
+		\param keywin A janela onde seram impressos os atalhos
+		\return Sem retorno
+*/
 void write_keys_help(WINDOW* keywin);
 
+/* Função para jogo PVP */
+/*! \fn void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
+        \brief Função responsável por todo o modo de jogo de humano vs humano
+
+        \param boardwin Janela onde está o tabuleiro gráfico do programa
+        \param keywin   Janela das teclas e atalhos disponíveis
+        \param messages Janela onde serão impressas as mensagens
+        \param board    Tabueleiro guaradado na memória de forma não gráfica
+*/
 void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board);
 
 void clear_keywin(WINDOW* keywin);
