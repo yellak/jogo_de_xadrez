@@ -14,7 +14,7 @@ typedef struct Move{
 }Move;
 
 typedef struct NodeList{
-	Move* play;
+	Move play;
 	struct NodeList *next;
 }NodeList;
 
