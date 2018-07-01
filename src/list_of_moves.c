@@ -27,5 +27,9 @@ ListOfMoves* CreateListOfMoves(void){
 }
 
 int InsertMove(ListOfMoves* list, Move* play){
-	
+
+	if(list == NULL || play == NULL){
+		return -1;
+	}
+
 }
