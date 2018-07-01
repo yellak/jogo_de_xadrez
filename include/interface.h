@@ -2,7 +2,9 @@
 #define _GUI_INTERFACE_
 
 #include <ncurses.h>
-#include "../include/tabuleiro.h"
+#include <stdlib.h>
+#include "tabuleiro.h"
+#include "logica.h"
 
 /* Tamanho do tabuleiro */
 const int XLIMIT = 8;
@@ -17,6 +19,18 @@ const int BOARDX = 2;
 const int YOFFSET = 2;
 const int XOFFSET = 4;
 
+/* Constante que indicará que o usuário escolheu terminar o jogo */
+const int EXITGAME = 3;
+
+/* Constantes para as mensagens */
+const int INVALID_SINTAX = 0;
+const int ARE_YOU_SURE   = 1;
+const int CONTINUE_GAME  = 2;
+const int INVALID_MOVE   = 3;
+
+/* Constantes para modos de jogo */
+const int PVP = 1;
+const int PVE = 2;
 
 /* Inicia um tabuleiro graficamente */
 /*! \fn void InitBoard(WINDOW* boardwin, TBoard* board)
@@ -61,4 +75,16 @@ void DrawAxis(WINDOW* yaxis, WINDOW* xaxis);
 */
 int CreateMenu(WINDOW* menuwin);
 
+void write_keys_help(WINDOW* keywin);
+
+void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board);
+
+void clear_keywin(WINDOW* keywin);
+
+void init_msg_win(WINDOW* messages);
+
+void clear_message(WINDOW* messages);
+
+void print_message(WINDOW* messages, int msg);
+	
 #endif
