@@ -4,5 +4,5 @@
 
 
 ListOfMoves* CreateListOfMoves(void){
-
+	return NULL;
 }
