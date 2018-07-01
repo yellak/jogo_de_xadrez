@@ -36,6 +36,7 @@ int InsertMove(ListOfMoves* list, Move* play){
 		list->first->play = play;
 		list->first->next = NULL;
 		list->last = list->first;
+		list->howmany ++;
 	}
 	return 0;
 }
