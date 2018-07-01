@@ -110,5 +110,9 @@ void clear_message(WINDOW* messages);
 void print_message(WINDOW* messages, int msg);
 
 TBoard* MenuGetBoard();
+
+TBoard* CreateNewBoard(void);
+
+void HelpWinNewBoard(WINDOW* helpwin);
 	
 #endif

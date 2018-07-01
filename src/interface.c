@@ -103,6 +103,56 @@ void DrawAxis(WINDOW* yaxis, WINDOW* xaxis){
 	}
 }
 
+void HelpWinNewBoard(WINDOW* helpwin)
+{
+	box(helpwin, 0, 0);
+	/* Mostrando o título */
+	mvwprintw(helpwin, 1, 14, "Opções de peças");
+
+	mvwprintw(helpwin, 3, 1, "K - Rei preto");
+	mvwprintw(helpwin, 4, 1, "Q - Rainha preta");
+	wrefresh(helpwin);
+}
+
+TBoard* CreateNewBoard(void)
+{
+	/* Tabuleiro que será retornado */
+	TBoard* board = AlocateBoard();
+
+	/* Janelas do tabuleiro */
+	WINDOW* boardwin = newwin(YLIMIT*2 + 1, XLIMIT*4 + 1, BOARDY, BOARDX);
+	WINDOW* yaxis = newwin(YLIMIT*2 + 1, 2, BOARDY, 0);
+	WINDOW* xaxis = newwin(2, XLIMIT*4 + 1, BOARDX + YLIMIT*2 + 1, BOARDX);
+
+	/* Janela de ajuda */
+	WINDOW* helpwin = newwin(YLIMIT*2 - 3, 42, BOARDY, BOARDX + 4*XLIMIT + 3);
+
+	/* Janela onde serão impressas as mensagens para o usuário */
+	WINDOW* messages = newwin(3, 42, BOARDY + 2*YLIMIT - 2, BOARDX + 4*XLIMIT + 3);
+
+	/* Carregando as janelas */
+	refresh();
+
+	/* Desenhando um tabuleiro */
+	DrawBoard(boardwin);
+	DrawAxis(yaxis, xaxis);
+	HelpWinNewBoard(helpwin);
+	init_msg_win(messages);
+	
+	/* Carregando o tabuleiro desenhado */
+	wrefresh(boardwin);
+	wrefresh(yaxis);
+	wrefresh(xaxis);
+
+	getch();
+
+	delwin(boardwin);
+	delwin(yaxis);
+	delwin(xaxis);
+
+	return board;
+}
+
 /* 
    Função: CreateMenu
          Objetivo:
@@ -197,7 +247,7 @@ TBoard* MenuGetBoard()
 	/* Janela onde será mostrado o menu de escolha do tabuleiro */
 	WINDOW* menu;
 	/* Tabuleiro que será retornado para o módulo principal */
-	TBoard* board = AlocateBoard();
+	TBoard* board;
 
 	/* Pegando o tamanho do terminal */
 	getmaxyx(stdscr, yMax, xMax);
@@ -264,6 +314,7 @@ TBoard* MenuGetBoard()
 	switch(highlight)
 		{
 		case STD_BOARD:
+			board = AlocateBoard();
 			StartEmptyBoard(board);
 			StartStandardBoard(board);
 			break;
@@ -274,8 +325,8 @@ TBoard* MenuGetBoard()
 			break;
 			
 		case NEW_BOARD:
-			mvprintw(1, 1, "Ainda em processo de desenvolvimento");
-			refresh();
+			clear();
+			board = CreateNewBoard();
 			break;
 
 		case EXIT_GAME:

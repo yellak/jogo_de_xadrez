@@ -58,7 +58,7 @@ int main()
 	xaxis = newwin(2, XLIMIT*4 + 1, BOARDX + YLIMIT*2 + 1, BOARDX);
 	/* Janela da interface com o teclado do usuário */
 	keywin = newwin(4, 78, BOARDY + 2*YLIMIT + 2, 1);
-	/* Janelas onde serão impressas as mensagens para o usuário */
+	/* Janela onde serão impressas as mensagens para o usuário */
 	messages = newwin(3, 42, BOARDY + 2*YLIMIT - 2, BOARDX + 4*XLIMIT + 3);
 	refresh();
 
