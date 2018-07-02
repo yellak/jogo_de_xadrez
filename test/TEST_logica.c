@@ -408,7 +408,9 @@ TEST(Test_TowerMovements, Verify_NULL_Variables){
 	EXPECT_EQ(NULL, TowerMovements(board, list_null, 1, 2));
 }
 
-TEST(Test_TowerMovements, Verify_Number_Correct_Movements){
+/* Verifica se armazena os movimentos corretamente em um tabuleiro vazio */
+
+TEST(Test_TowerMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
 	TBoard* board = AlocateBoard();
@@ -422,7 +424,39 @@ TEST(Test_TowerMovements, Verify_Number_Correct_Movements){
 	TowerMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(14, AllPlays2->howmany);
 
+	DeleteListOfMoves(AllPlays);
+	DeleteListOfMoves(AllPlays2);
+	free(board);
+}
 
+/* Verifica se captura apenas peças rivais */
+
+TEST(Test_TowerMovements, Verify_Movements_WhifePieces){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_TOWER;
+
+	
+	board->Board[5][4] = W_HORSE;
+	board->Board[3][4] = W_PAWN;
+	board->Board[4][5] = W_BISHOP;
+	board->Board[4][3] = W_TOWER;
+
+	TowerMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(0, AllPlays->howmany);
+
+	board->Board[5][4] = B_HORSE;
+	board->Board[3][4] = B_PAWN;
+	board->Board[4][5] = B_BISHOP;
+	board->Board[4][3] = B_TOWER;
+	TowerMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(4, AllPlays2->howmany);
+
+	free(board);
+	DeleteListOfMoves(AllPlays2);
+	DeleteListOfMoves(AllPlays);
 }
 
 

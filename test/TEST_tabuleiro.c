@@ -97,6 +97,17 @@ TEST(Test_Verify_Standard_Board, Verify_NULL_Variables){
 	ASSERT_EQ(1, StartStandardBoard(board));
 }
 
+/*                 */
+
+TEST(Test_Color_Piece, Verify_Correct_Color){
+	char peace = W_TOWER;
+	char peace2 = B_TOWER;
+
+	EXPECT_EQ(1, ColorPiece(W_TOWER));
+	EXPECT_EQ(0, ColorPiece(B_TOWER));
+	EXPECT_EQ(-1, ColorPiece(BLANK));
+}
+
 /* Teste para verificar a validade da função que veifica qual peça está em determinda posição para um tabuleiro vazio.
    Procedimentos:
    -Criar variável para o tabuleiro;
@@ -752,16 +763,93 @@ TEST(Test_Move_Piece, Test_Full_Space){
 	EXPECT_EQ(1, board.Weight);
 }
 
-int main(int argc, char **argv){
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
-}
+/* Teste para verificar a validez da função que aloca um novo tabuleiro
+    Procedimentos:
+    - Verificar se foi alocado um espaço de memória para o tabuleiro
+    - Verificar se o tabuleiro alocado possui peso zero
 
+    Resultados:
+    - Esper-se que a função responda corretamente para os procedimentos
+      acima
+ */
 TEST(Test_alocate, Alocate_new_board){
 	TBoard* test_board = NULL;
 	test_board = AlocateBoard();
 
 	EXPECT_EQ(NULL, !test_board);
 	EXPECT_EQ(0, test_board->Weight);
+
+	free(test_board);
 }
 
+/* Teste para a função de copiar dois tabuleiros
+    Procedimentos:
+    - Fazer comparações entre o esperado e o rececebido para um tabuleiro vazio
+
+    Resultados:
+    - Espera-se que todas as peças dos tabuleiros tenham sido copiadas de
+      maneira correta
+*/
+TEST(Copy_boards, CopyEmptyBoards){
+	int i, j;
+	TBoard* test_board = AlocateBoard();
+	TBoard* expect_board = AlocateBoard();
+
+	/* Inicializando um tabuleiro esperado vazio */
+	StartEmptyBoard(expect_board);
+
+	/* Copiando o tabuleiro criado */
+	copy_boards(test_board, expect_board);
+
+	/* Fazendo a comparação para cada peça no tabuleiro */
+	for(i = 0; i < 8; i++){
+		for(j = 0; j < 8; j++){
+			EXPECT_EQ(test_board->Board[i][j], expect_board->Board[i][j]);
+		}
+	}
+
+	/* Verificando a cópia dos pesos */
+	EXPECT_EQ(test_board->Weight, expect_board->Weight);
+
+	free(test_board);
+	free(expect_board);
+}
+
+/* Teste para a função de copiar um tabuleiro em outro
+   Procedimentos:
+   - São os mesmos do último teste para esta função, mas desta vez faremos as
+     verificações para um tabuleiro de base padrão
+
+   Resultados:
+   - Espera-se que a cópia tenha todas as peças nas mesmas posições que o
+     copiado
+ */
+TEST(Copy_boards, CopySTDBoard){
+	int i, j;
+	TBoard* test_board = AlocateBoard();
+	TBoard* expect_board = AlocateBoard();
+
+	/* Inicializando tabuleiro esperado */
+	StartEmptyBoard(expect_board);
+	StartStandardBoard(expect_board);
+
+	/* Chamando a função que será testada */
+	copy_boards(test_board, expect_board);
+	
+	/* Fazendo a comparação para cada peça no tabuleiro */
+	for(i = 0; i < 8; i++){
+		for(j = 0; j < 8; j++){
+			EXPECT_EQ(test_board->Board[i][j], expect_board->Board[i][j]);
+		}
+	}
+
+	EXPECT_EQ(test_board->Weight, expect_board->Weight);
+
+	free(test_board);
+	free(expect_board);
+}
+
+int main(int argc, char **argv){
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}
