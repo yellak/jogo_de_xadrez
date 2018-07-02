@@ -424,6 +424,9 @@ TEST(Test_TowerMovements, Verify_Movements_EmptyBoard){
 	TowerMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(14, AllPlays2->howmany);
 
+	DeleteListOfMoves(AllPlays);
+	DeleteListOfMoves(AllPlays2);
+	free(board);
 }
 
 /* Verifica se captura apenas peças rivais */
@@ -433,6 +436,9 @@ TEST(Test_TowerMovements, Verify_Movements_WhifePieces){
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
+	board->Board[4][4] = W_TOWER;
+
+	
 	board->Board[5][4] = W_HORSE;
 	board->Board[3][4] = W_PAWN;
 	board->Board[4][5] = W_BISHOP;
