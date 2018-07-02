@@ -60,4 +60,15 @@ int InsertMove(ListOfMoves* list, int originx, int originy, int destinyx, int de
 */
 int DeleteListOfMoves(ListOfMoves* list);
 
+/* Busca um movimento na lista de movimentos *de forma sequencial /
+/*! \fn int SearchListOfMoves(ListOFMoves* list, Move* move)
+		\brief Busca um movimento na lista de movimentos
+
+		\param list uma lista de movimentos.
+		\param move O movimento a ser procurado
+		\return Retorna um inteiro indicando a falha ou sucesso da operação.
+*/
+int SearchListOfMoves(ListOfMoves* list, Move* move);
+
+
 #endif
