@@ -249,7 +249,9 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 }
 
 ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, int originy){
-	
+	if(board == NULL || AllMoves == NULL){
+		return NULL;
+	}
 }
 
 
