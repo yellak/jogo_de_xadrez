@@ -207,7 +207,7 @@ int SavePGNFile(ListPastMoves* listmoves, char* file_name){
 	int n = 1;
 	
 	while(aux != NULL){
-		fprintf(fp,"%d-%s ",n, aux->move);
+		fprintf(fp,"%d %s ",n, aux->move);
 		n++;
 		aux = aux->next;
 	}
@@ -228,5 +228,20 @@ int SavePGNFile(ListPastMoves* listmoves, char* file_name){
 		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
 */
 int RecoverMoveListFromFile(ListPastMoves* listmoves, char* file_name){
-	return 1;
+	
+	FILE* fp = fopen(file_name, "r");
+	char* move = (char*)malloc(10*sizeof(char));
+	int n;
+
+	/* Loop q percorre todo o arquivo */
+	while(!feof(fp)){
+		fscanf(fp, "%d %s ",&n, move);
+		AddListPM(listmoves, move);
+	}
+
+	fclose(fp);
+	free(move);
+
+	return 0;
+
 }

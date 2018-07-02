@@ -276,6 +276,10 @@ TEST(Test_RecoverMoveListFromFile, Verify_Function){
 	ListPastMoves *list = StartListPM();
 
 	EXPECT_EQ(0, RecoverMoveListFromFile(list, nome_arq));
+	EXPECT_EQ(0, strcmp(list->head->next->move,"Nb1-c3"));
+	EXPECT_EQ(0, strcmp(list->head->next->next->move,"Pb1-c4"));
+	EXPECT_EQ(NULL, list->head->next->next->next);
+
 
 	FreeListPM(list);
 }
