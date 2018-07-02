@@ -592,6 +592,22 @@ TEST(Test_QueenMovements, Verify_Movements_WhifePieces){
 	DeleteListOfMoves(AllPlays);
 }
 
+TEST(Test_KingMovements, Verify_NULL_Variables){
+	TBoard* board_null = NULL;
+	TBoard* board = AlocateBoard();
+	ListOfMoves* list_null = NULL;
+	ListOfMoves* list = CreateListOfMoves();
+
+	/* Testa para o primeiro parametro nulo e o segundo não */
+	EXPECT_EQ(NULL, KingMovements(board_null, list, 1, 2));
+	/* Testa para o segundo parametro nulo e o primeiro não */
+	EXPECT_EQ(NULL, KingMovements(board, list_null, 1, 2));
+
+	DeleteListOfMoves(list);
+	free(board);
+}
+
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
