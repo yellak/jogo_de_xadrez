@@ -72,5 +72,15 @@ int FreeListPM(ListPastMoves* list);
 		\param arq_name Nome do arquivo
 		\return Inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
 */
-int SaveBoardFile(TBoard* board, char* arq_name);
+int SaveBoardFile(TBoard* board, char* file_name);
+
+/* Recuperar um tabuleiro a partir de um arquivo. */
+/*! \fn int RecoverBoardFromFile(Tboard* board, char* arq_name)
+		\brief Cria um tabuleiro a partir de um arquivo
+
+		\param board Tabuleiro que será recuperado
+		\param file_name Nome do arquivo contendo o tabuleiro salvo
+		\return Inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
+*/
+int RecoverBoardFromFile(TBoard* board, char* file_name);
 #endif

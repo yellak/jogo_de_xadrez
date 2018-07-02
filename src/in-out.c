@@ -127,14 +127,14 @@ int FreeListPM(ListPastMoves* list){
 
 		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
 */
-int SaveBoardFile(TBoard* board, char* arq_name){
+int SaveBoardFile(TBoard* board, char* file_name){
 	
 	/* Assertiva de entrada */
-	if(board == NULL || arq_name == NULL){
+	if(board == NULL || file_name == NULL){
 		return 1;
 	}
 
-	FILE* fp = fopen(arq_name,"w");
+	FILE* fp = fopen(file_name,"w");
 
 	for(int i = 0; i < 8; i++){
 		for(int j = 0; j	 < 8; j++){
@@ -145,4 +145,19 @@ int SaveBoardFile(TBoard* board, char* arq_name){
 
 	fclose(fp);
 	return 0;
+}
+
+/* Função: RecoverBoardFile
+		Objetivo: Recuperar um tabuleiro a partir de um arquivo
+
+		Parametros:
+			board    - Ponteiro para o tabuleiro que será recuperado
+					   Não pode ser nulo
+			arq_name - Ponteiro para a string com o nome do arquivo
+					   Não pode ser nula
+
+		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
+*/
+int RecoverBoardFromFile(TBoard* board, char* arq_name){
+	return 1;
 }
