@@ -34,4 +34,14 @@ typedef struct list_past_move{
 */
 ListPastMoves* StartListPM(void);
 
+/* Adicionar movimento na lista. */
+/*! \fn int AddListPM(ListPastMoves* list, char move[])
+		\brief Adiciona um movimento na lista de movimentos passados.
+
+		\param list Ponteiro para a lista.
+		\param move String com o movimeto na notação de xadrez.
+		\return Por parâmetro, retorna a lista com o novo elemento e um inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
+*/
+int AddListPM(ListPastMoves* list, char move[]);
+
 #endif
