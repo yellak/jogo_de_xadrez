@@ -489,6 +489,21 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
 	return 0;
 }
 
+/*
+ Função: Copiar dois tabuleiros (copy_boars)
+       Objetivo:
+           Copiar todas as parte de um tabuleiro origem para um tabuleiro cópia
+           destino. A função não possui retorno
+
+       Parâmetros:
+           copy  - É o tabuleiro que será a cópia do tabuleiro destino
+           board - É o tabuleiro que será copiado
+
+      Entrada:
+           Os dois tabuleiros já deverão ter sido alocados ou seja,
+           copy  != NULL
+           board != NULL
+*/
 void copy_boards(TBoard* copy, TBoard* board){
 	/* Contadores */
 	int i, j;
