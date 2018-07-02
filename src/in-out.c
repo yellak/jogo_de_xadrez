@@ -56,3 +56,20 @@ int AddListPM(ListPastMoves* list, char move[]){
 
 	return 0;
 }
+
+/* Função: RemoveLastListPM
+		Objetivo: Remover o último elemento da lista.
+
+		Parametros:
+			list - Ponteiro para a lista onde será adiiconado o movimento.
+				   Não pode se nulo
+
+		Saída: Por parâmetro, retorna a lista sem o último elemento e um inteiro indicando o funcionamento (0 funciona, 1 não funciona)
+*/
+int RemoveLastListPM(ListPastMoves* list){
+	/* Verificar entradas. */
+	if(list == NULL)
+		return 1;
+
+	return 0;
+}
