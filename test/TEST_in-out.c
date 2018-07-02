@@ -158,7 +158,7 @@ TEST(Test_Verify_Free_List, Verify_Function){
 	EXPECT_EQ(0, FreeListPM(list));
 }
 
-/* Teste para se o tabuleiro está sendo salvo no arquivo
+/* Teste para verificar se o tabuleiro está sendo salvo no arquivo
 	Procedimento:
    	-Inicializar nome do arquivo
    	-Inicializar o tabuleiro e criar um tabuleiro básico
@@ -174,7 +174,7 @@ TEST(Test_SaveBoardFile, Verify_Function){
 	EXPECT_EQ(0, SaveBoardFile(&board, nome_arq));
 }
 
-/* Teste para se a função retorna 1 caso a entrada seja inválida
+/* Teste para verificar se a função retorna 1 caso a entrada seja inválida
 	Procedimento:
    	-Inicializar nome do arquivo
    	-Inicializar o tabuleiro como nulo
@@ -189,11 +189,11 @@ TEST(Test_SaveBoardFile, Verify_InvalidValues){
 	EXPECT_EQ(1, SaveBoardFile(board, nome_arq));
 }
 
-/* Teste para verificar se a função retorna 1 caso a entrada seja inválida
+/* Teste para verificar se a função retorna recupera o tabuleiro do arquivo
 	Procedimento:
    	-Inicializar nome do arquivo
-   	-Inicializar o tabuleiro como nulo
-   	-Verificar se a função não salvou o arquivo
+   	-Inicializar o tabuleiro
+   	-Chamar a função para verificar se o tabuleiro está recuperado
    Resultados:
    	-A função deve retornar 0;
    	-O tabuleiro deve estar com suas componentes corretas

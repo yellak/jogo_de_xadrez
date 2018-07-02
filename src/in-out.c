@@ -201,6 +201,8 @@ int SavePGNFile(ListPastMoves* listmoves, char* file_name){
 	}
 
 	FILE* fp = fopen(file_name, "w");
+
+	/* Aux é inicializado como o primeiro nó da lista com um movimento*/
 	ListNode* aux = listmoves->head->next;
 
 	/* Contador de número de jogadas */
