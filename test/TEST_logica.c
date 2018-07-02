@@ -496,6 +496,33 @@ TEST(Test_BishopMovements, Verify_Movements_EmptyBoard){
 	free(board);
 }
 
+TEST(Test_BishopMovements, Verify_Movements_WhifePieces){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_BISHOP;
+	
+	board->Board[3][3] = W_HORSE;
+	board->Board[3][5] = W_PAWN;
+	board->Board[5][3] = W_PAWN;
+	board->Board[5][5] = W_TOWER;
+
+	BishopMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(0, AllPlays->howmany);
+
+	board->Board[3][3] = B_HORSE;
+	board->Board[3][5] = B_PAWN;
+	board->Board[5][3] = B_BISHOP;
+	board->Board[5][5] = B_TOWER;
+	BishopMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(4, AllPlays2->howmany);
+
+	free(board);
+	DeleteListOfMoves(AllPlays2);
+	DeleteListOfMoves(AllPlays);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
