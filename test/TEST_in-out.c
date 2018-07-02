@@ -69,11 +69,18 @@ TEST(Test_Verify_Add_Move, Verify_Function){
 /* Teste para verificar a função de remover o último item para entradas inválidas.
    Procedimento:
    	-Chamar função para uma lista nula;
+   	-Chamar função para lista vazia.
    Resultados:
    	-É esperado que a função retorne 1.
  */
 TEST(Test_Verify_Remove_Last, Verify_Invalid_Entries){
 	EXPECT_EQ(1, RemoveLastListPM(NULL));
+	
+	ListPastMoves *list = StartListPM();
+	EXPECT_EQ(1, RemoveLastListPM(list));
+
+	free(list->head);
+	free(list);
 }
 
 /* Teste para verificar a função de remover o último item para lista com 1 item
