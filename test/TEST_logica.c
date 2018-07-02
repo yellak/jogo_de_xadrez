@@ -396,6 +396,37 @@ TEST(Algebraic_translation, Unnamed_movement)
 	free(expect_move);
 }
 
+TEST(Test_TowerMovements, Verify_NULL_Variables){
+	TBoard* board_null = NULL;
+	TBoard* board = AlocateBoard();
+	ListOfMoves* list_null = NULL;
+	ListOfMoves* list = CreateListOfMoves();
+
+	/* Testa para o primeiro parametro nulo e o segundo não */
+	EXPECT_EQ(NULL, TowerMovements(board_null, list, 1, 2));
+	/* Testa para o segundo parametro nulo e o primeiro não */
+	EXPECT_EQ(NULL, TowerMovements(board, list_null, 1, 2));
+}
+
+TEST(Test_TowerMovements, Verify_Number_Correct_Movements){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_TOWER;
+
+	TowerMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(14, AllPlays->howmany);
+
+	board->Board[4][4] = B_TOWER;
+	TowerMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(14, AllPlays2->howmany);
+
+
+}
+
+
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

@@ -249,6 +249,39 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 	return AllMoves;
 }
 
+ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, int originy){
+	char peace;
+	int k;
+	if(board == NULL || AllMoves == NULL){
+		return NULL;
+	}
+
+	peace = WhatPiece(board, originx, originy);
+	for(k = 0; k<8; k++){
+		if(peace < BLANK){
+			if(originx + k <= 7 && board->Board[originx + k][originy] > BLANK);
+				InsertMove(AllMoves, originx, originy, originx + k, originy);
+			if(originx - k >= 0 && board->Board[originx - k][originy] > BLANK);
+				InsertMove(AllMoves, originx, originy, originx - k, originy);
+			if(originy + k <= 7 && board->Board[originx][originy + k] > BLANK);
+				InsertMove(AllMoves, originx, originy, originx, originy + k);
+			if(originy - k >= 0 && board->Board[originx][originy - k] > BLANK);
+				InsertMove(AllMoves, originx, originy, originx, originy - k);				
+		}
+		else if(peace > BLANK){
+			if(originx + k <= 7 && board->Board[originx + k][originy] < BLANK);
+				InsertMove(AllMoves, originx, originy, originx + k, originy);
+			if(originx - k >= 0 && board->Board[originx - k][originy] < BLANK);
+				InsertMove(AllMoves, originx, originy, originx - k, originy);
+			if(originy + k <= 7 && board->Board[originx][originy + k] < BLANK);
+				InsertMove(AllMoves, originx, originy, originx, originy + k);
+			if(originy - k >= 0 && board->Board[originx][originy - k] < BLANK);
+				InsertMove(AllMoves, originx, originy, originx, originy - k);			
+		}
+	}
+	return AllMoves;
+}
+
 /* Função: AnalyzePossibleMovementsBlack
 		Objetivo: Conseguir armazenar todas as possíveis jogadas para as peças pretas a partir de um tabuleiro.
 

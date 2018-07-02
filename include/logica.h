@@ -42,4 +42,6 @@ int verify_syntax_move(char chess_move[]);
          \return Um elemento de movimento com a origem e o destino do movimento */
 Move* algebraic_translate(char chess_move[]);
 
+ListOfMoves* TowerMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
+
 #endif

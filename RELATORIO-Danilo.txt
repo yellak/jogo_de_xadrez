@@ -6,6 +6,7 @@ Data  |Horas Trabalhadas |Tipo Tarefa                                  |Descriç
 30/06 |2 horas           |revisar código do módulo                     |Revisão do código do módulo tabuleiro
 30/06 |3 horas           |codificar módulo                             |Desenvolvimento de funções do módulo list_of_moves
 30/06 |3 horas           |redigir casos de teste                       |Desenvolvimento de testes para o módulo list_of_moves
-      |                  |                                             |
-      |                  |                                             |
-      |                  |                                             |
+01/07 |1.5 horas         |revisar código do módulo                     |Mudanças no módulo list_of_moves
+01/07 |1.5 horas         |revisar casos de teste                       |Mudanças nos testes do módulo list_of_moves
+01/07 |2 horas           |codificar módulo                             |Desenvolvimento de funções do módulo logica
+01/07 |2 horas           |Redigir casos de teste                       |Desenvolvimento de testes do módulo logica
