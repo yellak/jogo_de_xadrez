@@ -607,6 +607,24 @@ TEST(Test_KingMovements, Verify_NULL_Variables){
 	free(board);
 }
 
+TEST(Test_KingMovements, Verify_Movements_EmptyBoard){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_KING;
+
+	KingMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(8, AllPlays->howmany);
+
+	board->Board[4][4] = B_KING;
+	KingMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(8, AllPlays2->howmany);
+
+	DeleteListOfMoves(AllPlays);
+	DeleteListOfMoves(AllPlays2);
+	free(board);
+}
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
