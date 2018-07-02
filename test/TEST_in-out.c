@@ -221,6 +221,28 @@ TEST(Test_RecoverBoardFromFile, Verify_Invalidvalues){
 	EXPECT_EQ(1, RecoverBoardFromFile(board, nome_arq));
 }
 
+/* Teste para se o tabuleiro está sendo salvo no arquivo
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar o tabuleiro e criar um tabuleiro básico
+   	-Verificar se o tabuleiro foi salvo
+   Resultados:
+   	-A função deve retornar 0;
+ */
+TEST(Test_SavePGNFile, Verify_Function){
+	char nome_arq[10] = "game.pgn";
+	char move1[] = "Nb1-c3";
+	char move2[] = "Pb1-c4";
+	ListPastMoves *list = StartListPM();
+	AddListPM(list, move1);
+	AddListPM(list, move2);
+
+	EXPECT_EQ(0, SavePGNFile(list, nome_arq));
+
+	FreeListPM(list);
+}
+
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
