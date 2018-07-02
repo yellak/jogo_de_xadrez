@@ -126,8 +126,19 @@ TEST(Test_Verify_Remove_Last, Verify_Two_Itens){
 	EXPECT_TRUE(!strcmp(list->last->move, move1));
 	EXPECT_TRUE(list->last->next == NULL);
 
+	free(list->last);
 	free(list->head);
 	free(list);
+}
+
+/* Teste para verificar a função de liberar a lista para entradas inválidas.
+   Procedimento:
+   	-Chamar a função para ponteiro nulo.
+   Resultados:
+   	-É esperado que a função retorne 1.
+ */
+TEST(Test_Verify_Remove_Last, Verify_Invalid_Entries){
+	EXPECT_EQ(1, FreeListPM(NULL));
 }
 
 int main(int argc, char **argv){
