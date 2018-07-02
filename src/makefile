@@ -42,7 +42,15 @@ LSTOBJ = $(patsubst %, $(ODIR)/%, $(_LSTOBJ))
 _LSTDEPS = list_of_moves.h
 LSTDEPS = $(patsubst %, $(IDIR)/%, $(_LSTDEPS))
 
-all: main test_tabuleiro test_logica test_arvore test_list
+# Dependências do módulo in-out e seu módulo de testes
+
+_IOOBJ = in-out.o TEST_in-out.o
+IOOBJ = $(patsubst %, $(ODIR)/%, $(_LSTOBJ))
+
+_IODEPS = in-out.h
+IODEPS = $(patsubst %, $(IDIR)/%, $(_LSTDEPS))
+
+all: main test_tabuleiro test_logica test_arvore test_list test_io
 
 # Compila os módulos principais
 $(ODIR)/%.o: %.c
@@ -65,6 +73,9 @@ test_logica: $(LOGOBJ) $(LOGDEPS)
 	$(CC) -g -o $@ $^ $(GTESTFLAGS)
 
 test_arvore: $(ARVOBJ) $(ARVDEPS)
+	$(CC) -g -o $@ $^ $(GTESTFLAGS)
+
+test_io: $(IOOBJ) $(IODEPS)
 	$(CC) -g -o $@ $^ $(GTESTFLAGS)
 
 

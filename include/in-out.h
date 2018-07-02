@@ -1,6 +1,8 @@
 #ifndef IN_OUT_H_
 #define IN_OUT_H_
 
+#include <stdio.h>
+#include <stdlib.h>
 
 /* Definição do nó da lista que armazena os movimentos passados. */
 /*! \struct ListNode
@@ -24,5 +26,12 @@ typedef struct list_past_move{
 	ListNode *last; /*!< Ponteiro para o último elemento da lista. */
 }ListPastMoves;
 
+/* Alocar espaço para lista de movimentos passados */
+/*! \fn ListPastMoves* StartListPM(void)
+        \brief Aloca o espaço para a lista de movimentos passados e sua cabeça.
+
+        \return Lista com espaço e sua cabeca alocados e o elemento seguinte da cabeça como nulo. 
+*/
+ListPastMoves* StartListPM(void);
 
 #endif
