@@ -66,6 +66,16 @@ TEST(Test_Verify_Add_Move, Verify_Function){
 	free(list);
 }
 
+/* Teste para verificar a função de remover o último item para entradas inválidas.
+   Procedimento:
+   	-Chamar função para uma lista nula;
+   Resultados:
+   	-É esperado que a função retorne 1.
+ */
+TEST(Test_Verify_Remove_Last, Verify_Invalid_Entries){
+	EXPECT_EQ(1, RemoveLastListPM(NULL));
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

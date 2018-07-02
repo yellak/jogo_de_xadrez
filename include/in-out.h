@@ -45,4 +45,13 @@ ListPastMoves* StartListPM(void);
 */
 int AddListPM(ListPastMoves* list, char move[]);
 
+/* Adicionar movimento na lista. */
+/*! \fn int RemoveLastListPM(ListPastMoves* list)
+		\brief Remove o último elemento da lista.
+
+		\param list Ponteiro para a lista.
+		\return Por parâmetro, retorna a lista sem o último elemento e um inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
+*/
+int RemoveLastListPM(ListPastMoves* list);
+
 #endif
