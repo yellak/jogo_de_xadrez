@@ -104,6 +104,32 @@ TEST(Test_Verify_Remove_Last, Verify_One_Item){
 	free(list);
 }
 
+/* Teste para verificar a função de remover o último item para lista com 2 itens.
+	Procedimento:
+   	-Chamar a função de adicionar item duas vezes para uma lista criada;
+   	-Chamar a função de remover.
+   Resultados:
+   	-Função deve retornar 0;
+   	-O último elemento da lista deve apontar para segundo elemento da lista;
+   	-A string do segundo elemento deve ser a correta;
+   	-O último elemento deve apontar para NULL.
+ */
+TEST(Test_Verify_Remove_Last, Verify_Two_Itens){
+	char move1[] = "Nb1-c3";
+	char move2[] = "Pb1-c4";
+	ListPastMoves *list = StartListPM();
+	AddListPM(list, move1);
+	AddListPM(list, move2);
+
+	EXPECT_EQ(0, RemoveLastListPM(list));
+	EXPECT_EQ(list->head->next, list->last);
+	EXPECT_TRUE(!strcmp(list->last->move, move1));
+	EXPECT_TRUE(list->last->next == NULL);
+
+	free(list->head);
+	free(list);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
