@@ -195,5 +195,18 @@ int RecoverBoardFromFile(TBoard* board, char* file_name){
 		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
 */
 int SavePGNFile(ListPastMoves* listmoves, char* file_name){
-	return 1;
+	
+	
+	FILE* fp = fopen(file_name, "w");
+	ListNode* aux = listmoves->head->next;
+	/* Contador de número de jogadas */
+	int n = 1;
+	while(aux != NULL){
+		fprintf(fp,"%d-%s ",n, aux->move);
+		n++;
+		aux = aux->next;
+	}
+
+	fclose(fp);
+	return 0;
 }
