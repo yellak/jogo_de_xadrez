@@ -31,7 +31,7 @@ const int NOTBLACKSMOVE  = 6;
 const int NOTWHITESMOVE  = 7;
 
 /* Constantes para modos de jogo */
-const int PVP      = 1;
+const int PVP      = 1; /* Player vs Player */
 const int PVE      = 2;
 const int EXITGAME = 3;
 
@@ -113,22 +113,104 @@ void write_keys_help(WINDOW* keywin, int wintype);
 */
 void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board);
 
+/* Função para limpar a janelas de ajuda com atalhos */
+/*! \fn void clear_keywin(WINDOW* keywin)
+        \brief Limpa a área de comandos da janela de ajuda com atalhos
+
+         A área de comando desta janela é onde o usuário irá digitar o
+         movimento desejado, que é logo abaixo das informações de atalhos
+
+         \param keywin Janela de ajuda com atalhos */
 void clear_keywin(WINDOW* keywin);
 
+/* Função de inicializar a janela de mensagens */
+/*! \fn void init_msg_win(WINDOW* messages)
+        \brief Inicializa a janela de mensagens
+
+        \param messages Janelas de mensagens já alocada */
 void init_msg_win(WINDOW* messages);
 
+/* Função de limpar janela de mensagens */
+/*! \fn void clear_message(WINDOW* messages)
+
+        \brief Limpa janela de mensagens
+
+		Ela irá limpar a janela de mensagens mas não limpará o efeito box
+
+        \param messages Janela de mensagens */
 void clear_message(WINDOW* messages);
 
+/* Função que irá printar mensagens */
+/*! \fn void print_message(WINDOW* messages, int msg)
+        \brief Imprime mensagens na janela de mensagens
+
+        \param messages Janela de mensagens
+        \param msg      Inteiro que indica qual mensagem deverá aparecer na
+                        janela */
 void print_message(WINDOW* messages, int msg);
 
-TBoard* MenuGetBoard();
+/* Função de obter um tabuleiro */
+/*! \fn TBoard* MenuGetBoard(void)
+        \brief Abre o menu de escolha do tabuleiro
 
+		Esta função irá fazer outras chamadas internas de funções que poderão
+        inicilizar um novo ambiente de interação com o usuário
+
+        \return board Tabuleiro que poderá ter sido carregado de um arquivo,
+                criado pelo usuário ou inicializado de forma padrão
+*/
+TBoard* MenuGetBoard(void);
+
+/* Função de criar um novo tabuleiro */
+/*! \fn TBoard* CreateNewBoard(void)
+        \brief Função de criar um novo tabuleiro
+
+        Esta função irá abrir um novo ambiente de interação com o usuário onde
+        ele poderá criar um tabuleiro de sua preferência.
+
+        \return board Tabuleiro criado pelo usuário */
 TBoard* CreateNewBoard(void);
 
+/* Função de criar a janela de ajuda para criação de tabuleiro */
+/*! \fn void HelpWinNewBoard(WINDOW* helpwin)
+
+        \brief Inicializa a janela de ajuda para o menu de criação
+
+		Observe que esta função é chamada apenas para o menu de criação de
+        uma nova imagem.
+        Esta função irá colocar na janela de ajuda alguns resumos sobre as
+        peças que o usuário poderá colocar e a explicação de como colocar
+        uma nova peça.
+		Não possui retorno
+
+        \param helpwin Janela de ajuda */
 void HelpWinNewBoard(WINDOW* helpwin);
 
+/* Função de mudar a vez */
+/*! \fn int change_turn(int turn)
+        \brief Muda a vez da jogada
+
+         Ela vai mudar o turno da jogada, por exemplo se foi as pretas que
+         jogaram por último ela muda o turno para as brancas
+
+        \param turn Indica de quem era a última jogada
+
+        \return new_turn Indica de quem é a nova vez de jogar */
 int change_turn(int turn);
 
+/* Função de verificar a vez */
+/*! \fn int verify_turn(TBoard* board, Move* movement, int turn)
+        \brief Verifica se o jogador vai mexer a peça correta
+
+        Ela verifica se realmente é o turno da cor da peça que o usuário está
+        querendo movimentar
+
+        \param board    Tabuleiro atual do jogo
+        \param movement Movimento que o jogador quer fazer
+        \param turn     De quem é o turno atual do jogo
+
+        \return true  Se é o turno da cor da peça a ser mexida
+        \return false Se não é o turno da cor da peça a ser mexida */
 int verify_turn(TBoard* board, Move* movement, int turn);
 	
 #endif
