@@ -31,7 +31,7 @@ ListPastMoves* StartListPM(void){
 
 		Parametros:
 			list - Ponteiro para a lista onde será adiiconado o movimento.
-				   Não pode se nulo
+				   Não pode ser nulo
 			move - String com o movimento na notação do xadrez.
 				   Deve ser não-nulo e ter seu sétimo elemento com '\0'
 
@@ -61,8 +61,8 @@ int AddListPM(ListPastMoves* list, char move[]){
 		Objetivo: Remover o último elemento da lista.
 
 		Parametros:
-			list - Ponteiro para a lista onde será adiiconado o movimento.
-				   Não pode se nulo
+			list - Ponteiro para a lista onde será removido o último movimento.
+				   Não pode ser nulo
 
 		Saída: Por parâmetro, retorna a lista sem o último elemento e um inteiro indicando o funcionamento (0 funciona, 1 não funciona)
 */
@@ -83,6 +83,23 @@ int RemoveLastListPM(ListPastMoves* list){
 	free(list->last);
 	anterior->next = NULL;
 	list->last = anterior;
+
+	return 0;
+}
+
+/* Função: FreeListPM
+		Objetivo: Liberar a lista.
+
+		Parametros:
+			list - Ponteiro para a lista que será liberada.
+				   Não pode ser nulo
+
+		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
+*/
+int FreeListPM(ListPastMoves* list){
+	/* Verificar entrada. */
+	if(list == NULL)
+		return 1;
 
 	return 0;
 }

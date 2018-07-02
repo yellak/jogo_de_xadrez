@@ -137,7 +137,7 @@ TEST(Test_Verify_Remove_Last, Verify_Two_Itens){
    Resultados:
    	-É esperado que a função retorne 1.
  */
-TEST(Test_Verify_Remove_Last, Verify_Invalid_Entries){
+TEST(Test_Verify_Free, Verify_Invalid_Entries){
 	EXPECT_EQ(1, FreeListPM(NULL));
 }
 
