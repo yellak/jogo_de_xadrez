@@ -1,6 +1,8 @@
 #ifndef TABULEIRO_H_
 #define TABULEIRO_H_
 
+const int WHITE = 1;
+const int BLACK = 0;
 const char W_KING       = 'k';
 const char W_QUEEN      = 'q';
 const char W_TOWER      = 'r';
@@ -60,6 +62,8 @@ int StartEmptyBoard(TBoard *board);
 */
 int StartStandardBoard(TBoard *board);
 
+/*                    */
+int ColorPiece(char peace);
 
 /* Verificar qual peça se encontra na posição (x,y) do tabuleiro. */
 /*! \fn char WhatPiece(TBoard *board, int line, int column)

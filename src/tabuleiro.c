@@ -113,6 +113,9 @@ int StartStandardBoard(TBoard *board){
 	return 0;
 }
 
+int ColorPiece(char piece){
+
+}
 /* Função: WhatPiece
 		Objetivo: Verificar qual peça se encontra na posição (x,y) do tabuleiro.
 

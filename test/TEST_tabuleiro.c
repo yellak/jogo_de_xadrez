@@ -97,6 +97,16 @@ TEST(Test_Verify_Standard_Board, Verify_NULL_Variables){
 	ASSERT_EQ(1, StartStandardBoard(board));
 }
 
+/*                 */
+
+TEST(Test_Color_Piece, Verify_Correct_Color){
+	char peace = W_TOWER;
+	char peace2 = B_TOWER;
+
+	EXPECT_EQ(1, ColorPiece(W_TOWER));
+	EXPECT_EQ(0, ColorPiece(B_TOWER));
+}
+
 /* Teste para verificar a validade da função que veifica qual peça está em determinda posição para um tabuleiro vazio.
    Procedimentos:
    -Criar variável para o tabuleiro;

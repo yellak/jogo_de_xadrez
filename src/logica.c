@@ -250,14 +250,16 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 
 ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
-	int k;
+	int k, color;
 
 	if(board == NULL || AllMoves == NULL){
 		return NULL;
 	}
 	piece = WhatPiece(board, originx, originy);
+	color = ColorPiece(piece);
 	if(piece < BLANK){
 		k = 1;
+		
 		while(originx + k <= 7 && board->Board[originx + k][originy] >= BLANK){
 			InsertMove(AllMoves, originx, originy, originx + k, originy);
 			if(board->Board[originx + k][originy] > BLANK){
