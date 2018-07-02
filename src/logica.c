@@ -256,34 +256,48 @@ ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, i
 		return NULL;
 	}
 	peace = WhatPiece(board, originx, originy);
-	for(k = 1; k<8; k++){
-		if(peace < BLANK){
-			if(originx + k <= 7 && board->Board[originx + k][originy] >= BLANK){
-				InsertMove(AllMoves, originx, originy, originx + k, originy);
-			}
-			if(originx - k >= 0 && board->Board[originx - k][originy] >= BLANK){
-				InsertMove(AllMoves, originx, originy, originx - k, originy);
-			}
-			if(originy + k <= 7 && board->Board[originx][originy + k] >= BLANK){
-				InsertMove(AllMoves, originx, originy, originx, originy + k);
-			}
-			if(originy - k >= 0 && board->Board[originx][originy - k] >= BLANK){
-				InsertMove(AllMoves, originx, originy, originx, originy - k);				
-			}
+	if(peace < BLANK){
+		k = 1;
+		while(originx + k <= 7 && board->Board[originx + k][originy] >= BLANK){
+			InsertMove(AllMoves, originx, originy, originx + k, originy);
+			k++;
 		}
-		else if(peace > BLANK){
-			if(originx + k <= 7 && board->Board[originx + k][originy] <= BLANK){
-				InsertMove(AllMoves, originx, originy, originx + k, originy);
-			}
-			if(originx - k >= 0 && board->Board[originx - k][originy] <= BLANK){
-				InsertMove(AllMoves, originx, originy, originx - k, originy);
-			}
-			if(originy + k <= 7 && board->Board[originx][originy + k] <= BLANK){
-				InsertMove(AllMoves, originx, originy, originx, originy + k);
-			}
-			if(originy - k >= 0 && board->Board[originx][originy - k] <= BLANK){
-				InsertMove(AllMoves, originx, originy, originx, originy - k);			
-			}
+		k = 1;
+		while(originx - k >= 0 && board->Board[originx - k][originy] >= BLANK){
+			InsertMove(AllMoves, originx, originy, originx - k, originy);
+			k++;
+		}
+		k = 1;
+		while(originy + k <= 7 && board->Board[originx][originy + k] >= BLANK){
+			InsertMove(AllMoves, originx, originy, originx, originy + k);
+			k++;
+		}
+		k = 1;
+		while(originy - k >= 0 && board->Board[originx][originy - k] >= BLANK){
+			InsertMove(AllMoves, originx, originy, originx, originy - k);				
+			k++;
+		}
+	}
+	else if(peace > BLANK){
+		k = 1;
+		while(originx + k <= 7 && board->Board[originx + k][originy] <= BLANK){
+			InsertMove(AllMoves, originx, originy, originx + k, originy);
+			k++;
+		}
+		k = 1;
+		while(originx - k >= 0 && board->Board[originx - k][originy] <= BLANK){
+			InsertMove(AllMoves, originx, originy, originx - k, originy);
+			k++;
+		}
+		k = 1;
+		while(originy + k <= 7 && board->Board[originx][originy + k] <= BLANK){
+			InsertMove(AllMoves, originx, originy, originx, originy + k);
+			k++;
+		}
+		k = 1;
+		while(originy - k >= 0 && board->Board[originx][originy - k] <= BLANK){
+			InsertMove(AllMoves, originx, originy, originx, originy - k);			
+			k++;
 		}
 	}
 	return AllMoves;	

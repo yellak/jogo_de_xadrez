@@ -422,8 +422,8 @@ TEST(Test_TowerMovements, Verify_Number_Correct_Movements){
 	TowerMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(14, AllPlays2->howmany);
 
-
 }
+
 
 
 
