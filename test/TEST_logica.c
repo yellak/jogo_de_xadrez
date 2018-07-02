@@ -406,6 +406,9 @@ TEST(Test_TowerMovements, Verify_NULL_Variables){
 	EXPECT_EQ(NULL, TowerMovements(board_null, list, 1, 2));
 	/* Testa para o segundo parametro nulo e o primeiro não */
 	EXPECT_EQ(NULL, TowerMovements(board, list_null, 1, 2));
+
+	DeleteListOfMoves(list);
+	free(board);
 }
 
 /* Verifica se armazena os movimentos corretamente em um tabuleiro vazio */
@@ -469,8 +472,29 @@ TEST(Test_BishopMovements, Verify_NULL_Variables){
 	EXPECT_EQ(NULL, BishopMovements(board_null, list, 1, 2));
 	/* Testa para o segundo parametro nulo e o primeiro não */
 	EXPECT_EQ(NULL, BishopMovements(board, list_null, 1, 2));
+
+	DeleteListOfMoves(list);
+	free(board);
 }
 
+TEST(Test_BishopMovements, Verify_Movements_EmptyBoard){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_BISHOP;
+
+	BishopMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(13, AllPlays->howmany);
+
+	board->Board[4][4] = B_BISHOP;
+	BishopMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(13, AllPlays2->howmany);
+
+	DeleteListOfMoves(AllPlays);
+	DeleteListOfMoves(AllPlays2);
+	free(board);
+}
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
