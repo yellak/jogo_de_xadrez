@@ -174,6 +174,38 @@ TEST(Test_SaveBoardFile, Verify_Function){
 	EXPECT_EQ(0, SaveBoardFile(&board, nome_arq));
 }
 
+/* Teste para se a função retorna 1 caso a entrada seja inválida
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar o tabuleiro como nulo
+   	-Verificar se a função não salvou o arquivo
+   Resultados:
+   	-A função deve retornar 1;
+ */
+TEST(Test_SaveBoardFile, Verify_InvalidValues){
+	char nome_arq[10] = "board.txt";
+	TBoard* board = NULL;
+
+	EXPECT_EQ(1, SaveBoardFile(board, nome_arq));
+}
+
+/* Teste para se a função retorna 1 caso a entrada seja inválida
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar o tabuleiro como nulo
+   	-Verificar se a função não salvou o arquivo
+   Resultados:
+   	-A função deve retornar 1;
+ */
+TEST(Test_RecoverBoardFromFile, Verify_Function){
+	char nome_arq[10] = "board.txt";
+	TBoard board;
+
+	EXPECT_EQ(0, RecoverBoardFromFile(&board, nome_arq));
+	EXPECT_EQ('R', board.Board[0][0]);
+
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
