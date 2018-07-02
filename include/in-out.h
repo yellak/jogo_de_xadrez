@@ -94,4 +94,13 @@ int RecoverBoardFromFile(TBoard* board, char* file_name);
 */
 int SavePGNFile(ListPastMoves* listmoves, char* file_name);
 
+/* Recuperar uma lista de movimentos a partir de um arquivo. */
+/*! \fn int RecoverMoveListFromFile(ListPastMoves* listmoves, char* file_name)
+		\brief Recupera a lista de movimentos armazenada em um arquivo
+
+		\param listmoves Lista de movimentos que será recuperada
+		\param file_name Nome do arquivo contendo o tabuleiro salvo
+		\return Inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
+*/
+int RecoverMoveListFromFile(ListPastMoves* listmoves, char* file_name);
 #endif

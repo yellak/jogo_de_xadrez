@@ -215,3 +215,18 @@ int SavePGNFile(ListPastMoves* listmoves, char* file_name){
 	fclose(fp);
 	return 0;
 }
+
+/* Função: RecoverMoveListFromFile
+		Objetivo: Recupera a lista de movimentos a partir de um arquivo PGN
+
+		Parametros:
+			listmoves - Ponteiro para uma lista de movimentos que será recuperada
+					    Não pode ser nula
+			file_name - Ponteiro para a string com o nome do arquivo
+					    Não pode ser nula
+
+		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
+*/
+int RecoverMoveListFromFile(ListPastMoves* listmoves, char* file_name){
+	return 1;
+}

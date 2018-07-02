@@ -189,13 +189,14 @@ TEST(Test_SaveBoardFile, Verify_InvalidValues){
 	EXPECT_EQ(1, SaveBoardFile(board, nome_arq));
 }
 
-/* Teste para se a função retorna 1 caso a entrada seja inválida
+/* Teste para verificar se a função retorna 1 caso a entrada seja inválida
 	Procedimento:
    	-Inicializar nome do arquivo
    	-Inicializar o tabuleiro como nulo
    	-Verificar se a função não salvou o arquivo
    Resultados:
-   	-A função deve retornar 1;
+   	-A função deve retornar 0;
+   	-O tabuleiro deve estar com suas componentes corretas
  */
 TEST(Test_RecoverBoardFromFile, Verify_Function){
 	char nome_arq[10] = "board.txt";
@@ -206,7 +207,7 @@ TEST(Test_RecoverBoardFromFile, Verify_Function){
 	EXPECT_EQ('r', board.Board[7][7]);
 }
 
-/* Teste para se a função retorna 1 caso a entrada seja inválida
+/* Teste para verificar se a função retorna 1 caso a entrada seja inválida
 	Procedimento:
    	-Inicializar nome do arquivo
    	-Inicializar o tabuleiro como nulo
@@ -221,7 +222,7 @@ TEST(Test_RecoverBoardFromFile, Verify_Invalidvalues){
 	EXPECT_EQ(1, RecoverBoardFromFile(board, nome_arq));
 }
 
-/* Teste para se o tabuleiro está sendo salvo no arquivo
+/* Teste para verificar se a lista de movimentos está sendo salvo no arquivo
 	Procedimento:
    	-Inicializar nome do arquivo
    	-Inicializar a lista de movimentos
@@ -243,7 +244,7 @@ TEST(Test_SavePGNFile, Verify_Function){
 	FreeListPM(list);
 }
 
-/* Teste para se o tabuleiro está sendo salvo no arquivo
+/* Teste para verificar se a função retorna 1 em caso de entrada inválida
 	Procedimento:
    	-Inicializar nome do arquivo
    	-Inicializar a lista de movimentos como nula
@@ -259,6 +260,26 @@ TEST(Test_SavePGNFile, Verify_Invalidvalues){
 
 	FreeListPM(list);
 }
+
+/* Teste para verificar se a lista de movimentos está sendo recuperada do arquivo PGN
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar a lista de movimentos
+   	-Recuperar a lista de movimentos a partir do arquivo
+   	-Verificar se os componentes da lista estão certos
+   Resultados:
+   	-A função deve retornar 0;
+   	-A lista deve estar correta
+ */
+TEST(Test_RecoverMoveListFromFile, Verify_Function){
+	char nome_arq[10] = "game.pgn";
+	ListPastMoves *list = StartListPM();
+
+	EXPECT_EQ(0, RecoverMoveListFromFile(list, nome_arq));
+
+	FreeListPM(list);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
