@@ -87,7 +87,7 @@ TEST(Test_Verify_Remove_Last, Verify_Invalid_Entries){
 TEST(Test_Verify_Remove_Last, Verify_One_Item){
 	char move[] = "Nb1-c3";
 	ListPastMoves *list = StartListPM();
-	AddListPM(list, move1);
+	AddListPM(list, move);
 
 	EXPECT_EQ(0, RemoveLastListPM(list));
 	EXPECT_TRUE(list->head->next == NULL);

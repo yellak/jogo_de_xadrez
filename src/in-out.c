@@ -71,5 +71,16 @@ int RemoveLastListPM(ListPastMoves* list){
 	if(list == NULL)
 		return 1;
 
+	/* Achar elemento anterior. */
+	ListNode *anterior, *aux;
+	anterior = list->head;
+	for(aux = list->head->next; aux != list->last; aux = aux->next)
+		anterior = aux;
+
+	/* Organizar ponteiros e liberar no. */
+	free(list->last);
+	anterior->next = NULL;
+	list->last = anterior;
+
 	return 0;
 }
