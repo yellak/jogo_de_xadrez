@@ -44,10 +44,10 @@ LSTDEPS = $(patsubst %, $(IDIR)/%, $(_LSTDEPS))
 
 # Dependências do módulo in-out e seu módulo de testes
 
-_IOOBJ = in-out.o TEST_in-out.o
+_IOOBJ = in-out.o TEST_in-out.o tabuleiro.o
 IOOBJ = $(patsubst %, $(ODIR)/%, $(_IOOBJ))
 
-_IODEPS = in-out.h
+_IODEPS = in-out.h tabuleiro.h
 IODEPS = $(patsubst %, $(IDIR)/%, $(_IODEPS))
 
 all: main test_tabuleiro test_logica test_arvore test_list test_io

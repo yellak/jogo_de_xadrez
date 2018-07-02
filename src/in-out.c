@@ -116,3 +116,17 @@ int FreeListPM(ListPastMoves* list){
 
 	return 0;
 }
+/* Função: SaveBoardFile
+		Objetivo: Salvar a configuração de um tabuleiro em um arquivo
+
+		Parametros:
+			board    - Ponteiro para o tabuleiro que será salvo
+					   Não pode ser nulo
+			arq_name - Ponteiro para a string com o nome do arquivo
+					   Não pode ser nula
+
+		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
+*/
+int SaveBoardFile(TBoard* board, char* arq_name){
+	return 1;
+}

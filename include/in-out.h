@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../include/tabuleiro.h"
 
 /* Definição do nó da lista que armazena os movimentos passados. */
 /*! \struct ListNode
@@ -63,4 +64,13 @@ int RemoveLastListPM(ListPastMoves* list);
 */
 int FreeListPM(ListPastMoves* list);
 
+/* Salvar arquivo do tabuleiro. */
+/*! \fn int SaveBoardFile(Tboard* board, char* arq_name)
+		\brief Salva o tabuleiro em um arquivo
+
+		\param board Tabuleiro que será salvo em um arquivo
+		\param arq_name Nome do arquivo
+		\return Inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
+*/
+int SaveBoardFile(TBoard* board, char* arq_name);
 #endif

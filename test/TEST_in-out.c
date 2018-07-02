@@ -158,6 +158,22 @@ TEST(Test_Verify_Free_List, Verify_Function){
 	EXPECT_EQ(0, FreeListPM(list));
 }
 
+/* Teste para se o tabuleiro está sendo salvo no arquivo
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar o tabuleiro e criar um tabuleiro básico
+   	-Verificar se o tabuleiro foi salvo
+   Resultados:
+   	-A função deve retornar 0;
+ */
+TEST(Test_SaveBoardFile, Verify_Function){
+	char nome_arq[10] = "board.txt";
+	TBoard board;
+	StartStandardBoard(&board);
+
+	EXPECT_EQ(0, SaveBoardFile(&board, nome_arq));
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
