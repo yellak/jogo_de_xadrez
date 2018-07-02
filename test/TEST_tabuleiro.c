@@ -752,16 +752,45 @@ TEST(Test_Move_Piece, Test_Full_Space){
 	EXPECT_EQ(1, board.Weight);
 }
 
-int main(int argc, char **argv){
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
-}
+/* Teste para verificar a validez da função que aloca um novo tabuleiro
+    Procedimentos:
+    - Verificar se foi alocado um espaço de memória para o tabuleiro
+    - Verificar se o tabuleiro alocado possui peso zero
 
+    Resultados:
+    - Esper-se que a função responda corretamente para os procedimentos
+      acima
+ */
 TEST(Test_alocate, Alocate_new_board){
 	TBoard* test_board = NULL;
 	test_board = AlocateBoard();
 
 	EXPECT_EQ(NULL, !test_board);
 	EXPECT_EQ(0, test_board->Weight);
+
+	free(test_board);
 }
 
+TEST(Copy_boards, CopyEmptyBoards){
+	int i, j;
+	TBoard* test_board = AlocateBoard();
+	TBoard* expect_board = AlocateBoard();
+
+	/* Inicializando um tabuleiro esperado vazio */
+	StartEmptyBoard(expect_board);
+
+	/* Copiando o tabuleiro criado */
+	copy_boards(test_board, expect_board);
+
+	for(i = 0; i < 8; i++){
+		for(j = 0; j < 8; j++){
+			EXPECT_EQ(test_board->Board[i][j], expect_board->Board[i][j]);
+		}
+	}
+}
+	
+
+int main(int argc, char **argv){
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}
