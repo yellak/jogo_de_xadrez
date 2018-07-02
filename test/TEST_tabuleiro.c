@@ -105,6 +105,7 @@ TEST(Test_Color_Piece, Verify_Correct_Color){
 
 	EXPECT_EQ(1, ColorPiece(W_TOWER));
 	EXPECT_EQ(0, ColorPiece(B_TOWER));
+	EXPECT_EQ(-1, ColorPiece(BLANK));
 }
 
 /* Teste para verificar a validade da função que veifica qual peça está em determinda posição para um tabuleiro vazio.
