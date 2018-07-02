@@ -12,9 +12,14 @@
  */
 TEST(Test_Verify_Start_List, Verify_Funcionality){
 	ListPastMoves *list = StartListPM();
-	ASSERT_NE(NULL, list);
+	EXPECT_TRUE(list != NULL);
 
-	ASSERT_NE(NULL, list->head);
+	EXPECT_TRUE(list->head != NULL);
 	EXPECT_EQ(NULL, list->head->next);
 	EXPECT_EQ(list->head, list->last);
+}
+
+int main(int argc, char **argv){
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
 }
