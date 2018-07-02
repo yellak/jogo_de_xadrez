@@ -661,6 +661,31 @@ TEST(Test_KingMovements, Verify_Movements_WhifePieces){
 	DeleteListOfMoves(AllPlays);
 }
 
+/* Testa o adição do movimento de roque */
+TEST(Test_KingMovements, Verify_Addict_Roque_Movement){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][0] = W_KING;
+	board->Board[0][0] = W_TOWER;
+	board->Board[7][0] = W_TOWER;
+
+	KingMovements(board, AllPlays, 4, 0);
+	EXPECT_EQ(7, AllPlays->howmany);
+
+	board->Board[4][7] = B_KING;
+	board->Board[0][7] = B_TOWER;
+	board->Board[7][7] = B_TOWER;
+
+	KingMovements(board, AllPlays2, 4, 7);
+	EXPECT_EQ(7, AllPlays2->howmany);
+
+	free(board);
+	DeleteListOfMoves(AllPlays2);
+	DeleteListOfMoves(AllPlays);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
