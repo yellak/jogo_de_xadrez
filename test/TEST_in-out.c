@@ -76,6 +76,27 @@ TEST(Test_Verify_Remove_Last, Verify_Invalid_Entries){
 	EXPECT_EQ(1, RemoveLastListPM(NULL));
 }
 
+/* Teste para verificar a função de remover o último item para lista com 1 item
+	Procedimento:
+   	-Chamar função para lista criada.
+   Resultados:
+   	-Função deve retornar 0;
+   	-Cabeça deve apontar para NULL;
+   	-Último elemento da lista deve apontar para cabeça.
+ */
+TEST(Test_Verify_Remove_Last, Verify_One_Item){
+	char move[] = "Nb1-c3";
+	ListPastMoves *list = StartListPM();
+	AddListPM(list, move1);
+
+	EXPECT_EQ(0, RemoveLastListPM(list));
+	EXPECT_TRUE(list->head->next == NULL);
+	EXPECT_EQ(list->head, list->last);
+
+	free(list->head);
+	free(list);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
