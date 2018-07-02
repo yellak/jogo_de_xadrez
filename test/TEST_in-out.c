@@ -203,6 +203,7 @@ TEST(Test_RecoverBoardFromFile, Verify_Function){
 
 	EXPECT_EQ(0, RecoverBoardFromFile(&board, nome_arq));
 	EXPECT_EQ('R', board.Board[0][0]);
+	EXPECT_EQ('r', board.Board[7][7]);
 
 }
 
