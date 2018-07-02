@@ -1,5 +1,20 @@
 #include "../include/interface.h"
 
+/*
+ Função: Verificar o turno (verify_turn)
+       Objetivo:
+           Verificar se o turno atual do jogo é o turno da peça que deverá ser
+           movimentada
+
+       Parâmetros:
+           board    - Tabuleiro atual do jogo, deverá já está alocado
+           movement - Movimento a ser feito pelo jogador, já alocado
+           turn     - Turno atual do jogo
+
+      Saída:
+           true  - Se o turno é o da cor da peça a ser movimentada
+           false - Se não é o turn da cor da peça a ser movimentada
+*/
 int verify_turn(TBoard* board, Move* movement, int turn){
 	if(movement != NULL)
 		{
@@ -30,8 +45,19 @@ int verify_turn(TBoard* board, Move* movement, int turn){
 		{
 			return false;
 		}
-}
+} /* verify_turn() */
 
+/*
+ Função: Mudar a/o vez/turno (change_turn)
+       Objetivo:
+           Mudar de quem é o turno atual do jogo, por exemplo, se as pretas
+           acabaram de jogar agora o turno é das brancas
+
+       Parâmetros:
+           turn - Turno atual
+
+       Saída:
+          new_turn - O novo turno do jogo*/
 int change_turn(int turn){
 	if(turn == BLACKS_TURN){
 		return WHITES_TURN;
@@ -143,8 +169,16 @@ void DrawAxis(WINDOW* yaxis, WINDOW* xaxis){
 		wmove(xaxis, 0, i);
 		waddch(xaxis, 'a' + j);
 	}
-}
+} /* DrawAxis() */
 
+/*
+ Função: Inicializar a janela de ajuda
+       Objetivo:
+           Inicializar a janela de ajuda para o ambiente de criação de um novo
+           Tabuleiro. A função não possui retorno
+
+       Parâmetros:
+           helpwin - Janela onde será inicilizada a ajuda*/
 void HelpWinNewBoard(WINDOW* helpwin)
 {
 	box(helpwin, 0, 0);
@@ -169,8 +203,17 @@ void HelpWinNewBoard(WINDOW* helpwin)
 
 	/* Carregar as impressões acima */
 	wrefresh(helpwin);
-}
+} /* HelpWinNewBoard() */
 
+/* 
+ Função: Criar um novo tabuleiro (CreateNewBoard)
+       Objetivo:
+           Criar um novo Tabuleiro a partir de um ambiente de criação onde o
+           usuário poderá criar um novo Tabuleiro de sua preferência
+
+       Saída:
+           board - Tabuleiro criado pelo usuário
+*/
 TBoard* CreateNewBoard(void)
 {
 	/* Tabuleiro que será retornado */
@@ -213,7 +256,7 @@ TBoard* CreateNewBoard(void)
 	delwin(xaxis);
 
 	return board;
-}
+} /* CreateNewBoard() */
 
 /* 
    Função: CreateMenu
@@ -298,7 +341,7 @@ int CreateMenu(WINDOW* menuwin){
        
        Saída:
 */
-TBoard* MenuGetBoard()
+TBoard* MenuGetBoard(void)
 {
 	/* Indicarão o tamanho da tela */
 	int yMax, xMax;
@@ -430,7 +473,7 @@ void write_keys_help(WINDOW* keywin, int wintype)
 	
 	/* Carregando a janela no terminal */
 	wrefresh(keywin);
-}
+} /* write_keys_help() */
 
 /*
  Função: Limpar a janela de interação com o usuário (clear_keywin)
@@ -526,7 +569,7 @@ void print_message(WINDOW* messages, int msg)
 		}
 	
 	wrefresh(messages);
-}
+} /* print_message() */
 
 /*
   Função: Jogar modo PVP (play_pvp)

@@ -3,6 +3,8 @@
 
 const int WHITE = 1;
 const int BLACK = 0;
+
+/* Constantes para as peças do jogo */
 const char W_KING       = 'k';
 const char W_QUEEN      = 'q';
 const char W_TOWER      = 'r';
@@ -45,20 +47,25 @@ TBoard* AlocateBoard(void);
 		\brief Inicializa um tabuleiro sem nenhuma peça em todas as posições.
 
 		\param board Ponteiro para um tabuleiro.
-		\return Por parâmetro, retorna o tabuleiro vazio e um inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
+		\return Por parâmetro, retorna o tabuleiro vazio e um inteiro indicando
+                o funcionamento da função (0, caso funcione e 1 caso contrário).
 */
 int StartEmptyBoard(TBoard *board);
 
 /* Inicializar tabuleiro padrão. */
 /*! \fn void StartStandardBoard(TBoard *board)
-		\brief Inicializa um tabuleiro com as peças na posição padrão de um jogo de xadrez.
+		\brief Inicializa um tabuleiro com as peças na posição padrão de um
+               jogo de xadrez.
 			   
-	    Peças pretas correspondem a parte "de cima" do tabuleiro (posições de (0.0) a (1,7)).
-		Peças brancas correspondem a parte de "baixo" do tabuleiro (posiçẽos de (6,0) a (7,7)).
-		As outras posições são vazias.
+	    Peças pretas correspondem a parte "de cima" do tabuleiro (posições de
+        (0.0) a (1,7)). Peças brancas correspondem a parte de "baixo" do
+        tabuleiro (posiçẽos de (6,0) a (7,7)). As outras posições são vazias.
 
 		\param board Ponteiro para um tabuleiro.
-		\return Por parâmetro, retorna o tabuleiro com as peças em posições padrões e um inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
+
+		\return Por parâmetro, retorna o tabuleiro com as peças em posições
+                padrões e um inteiro indicando o funcionamento da função
+                (0, caso funcione e 1 caso contrário).
 */
 int StartStandardBoard(TBoard *board);
 
@@ -151,6 +158,14 @@ int ChangePiece(TBoard *board, char piece, int line, int column);
 */
 int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, int dest_column);
 
+/* Copiar dois tabuleiros */
+/*! \fn void copy_boards(TBoard* copy, TBoard* board)
+        \brief Copia todas as peças de um tabuleiro para outro e também os
+               pesos. A função não possui retorno
+
+        \param copy  Tabuleiro que será a cópia
+        \param board Tabuleiro que será copiado
+*/
 void copy_boards(TBoard* copy, TBoard* board);
 
 #endif

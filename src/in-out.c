@@ -116,14 +116,15 @@ int FreeListPM(ListPastMoves* list){
 
 	return 0;
 }
+
 /* Função: SaveBoardFile
 		Objetivo: Salvar a configuração de um tabuleiro em um arquivo
 
 		Parametros:
-			board    - Ponteiro para o tabuleiro que será salvo
-					   Não pode ser nulo
-			arq_name - Ponteiro para a string com o nome do arquivo
-					   Não pode ser nula
+			board     - Ponteiro para o tabuleiro que será salvo
+					    Não pode ser nulo
+			file_name - Ponteiro para a string com o nome do arquivo
+					    Não pode ser nula
 
 		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
 */
@@ -151,25 +152,100 @@ int SaveBoardFile(TBoard* board, char* file_name){
 		Objetivo: Recuperar um tabuleiro a partir de um arquivo
 
 		Parametros:
-			board    - Ponteiro para o tabuleiro que será recuperado
-					   Não pode ser nulo
-			arq_name - Ponteiro para a string com o nome do arquivo
-					   Não pode ser nula
+			board     - Ponteiro para o tabuleiro que será recuperado
+					    Não pode ser nulo
+			file_name - Ponteiro para a string com o nome do arquivo
+					    Não pode ser nula
 
 		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
 */
-int RecoverBoardFromFile(TBoard* board, char* arq_name){
-	FILE* fp = fopen(arq_name, "r");
+int RecoverBoardFromFile(TBoard* board, char* file_name){
+
+	/* Assertiva de entrada */
+	if(board == NULL || file_name == NULL){
+		return 1;
+	}	
+
+	FILE* fp = fopen(file_name, "r");
 	char c;
 
 	for(int i = 0; i < 8; i++){
 		for(int j = 0; j < 8; j++){
 			board->Board[i][i] = fgetc(fp);
+			/* c serve para pegar os espaços */
 			c = fgetc(fp);
 		}
+		/* c serve para pegar os /n */
 		c = fgetc(fp);
 	}
 
 	fclose(fp);
 	return 0;
+}
+
+/* Função: SavePGNFile
+		Objetivo: Salvar a configuração de um tabuleiro em um arquivo
+
+		Parametros:
+			listmoves - Ponteiro para uma lista de movimentos que será salva
+					    Não pode ser nulo
+			file_name - Ponteiro para a string com o nome do arquivo
+					    Não pode ser nula
+
+		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
+*/
+int SavePGNFile(ListPastMoves* listmoves, char* file_name){
+	
+	if(listmoves == NULL || file_name == NULL){
+		return 1;
+	}
+
+	FILE* fp = fopen(file_name, "w");
+	ListNode* aux = listmoves->head->next;
+
+	/* Contador de número de jogadas */
+	int n = 1;
+	
+	while(aux != NULL){
+		fprintf(fp,"%d %s ",n, aux->move);
+		n++;
+		aux = aux->next;
+	}
+
+	fclose(fp);
+	return 0;
+}
+
+/* Função: RecoverMoveListFromFile
+		Objetivo: Recupera a lista de movimentos a partir de um arquivo PGN
+
+		Parametros:
+			listmoves - Ponteiro para uma lista de movimentos que será recuperada
+					    Não pode ser nula
+			file_name - Ponteiro para a string com o nome do arquivo
+					    Não pode ser nula
+
+		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
+*/
+int RecoverMoveListFromFile(ListPastMoves* listmoves, char* file_name){
+	
+	if(listmoves == NULL || file_name == NULL){
+		return 1;
+	}
+
+	FILE* fp = fopen(file_name, "r");
+	char* move = (char*)malloc(10*sizeof(char));
+	int n;
+
+	/* Loop q percorre todo o arquivo */
+	while(!feof(fp)){
+		fscanf(fp, "%d %s ",&n, move);
+		AddListPM(listmoves, move);
+	}
+
+	fclose(fp);
+	free(move);
+
+	return 0;
+
 }

@@ -69,7 +69,7 @@ int FreeListPM(ListPastMoves* list);
 		\brief Salva o tabuleiro em um arquivo
 
 		\param board Tabuleiro que será salvo em um arquivo
-		\param arq_name Nome do arquivo
+		\param file_name Nome do arquivo
 		\return Inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
 */
 int SaveBoardFile(TBoard* board, char* file_name);
@@ -83,4 +83,24 @@ int SaveBoardFile(TBoard* board, char* file_name);
 		\return Inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
 */
 int RecoverBoardFromFile(TBoard* board, char* file_name);
+
+/* Salvar arquivo PGN. */
+/*! \fn int SavePGNFile(ListPastMoves* listmoves, char* file_name)
+		\brief Salva o tabuleiro em um arquivo
+
+		\param listmoves Ponteiro para uma lista de movimentos
+		\param file_name Nome do arquivo
+		\return Inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
+*/
+int SavePGNFile(ListPastMoves* listmoves, char* file_name);
+
+/* Recuperar uma lista de movimentos a partir de um arquivo. */
+/*! \fn int RecoverMoveListFromFile(ListPastMoves* listmoves, char* file_name)
+		\brief Recupera a lista de movimentos armazenada em um arquivo
+
+		\param listmoves Lista de movimentos que será recuperada
+		\param file_name Nome do arquivo contendo o tabuleiro salvo
+		\return Inteiro indicando o funcionamento da função (0, caso funcione e 1 caso contrário).
+*/
+int RecoverMoveListFromFile(ListPastMoves* listmoves, char* file_name);
 #endif
