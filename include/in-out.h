@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* Definição do nó da lista que armazena os movimentos passados. */
 /*! \struct ListNode

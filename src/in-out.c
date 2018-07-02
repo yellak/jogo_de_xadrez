@@ -38,12 +38,21 @@ ListPastMoves* StartListPM(void){
 		Saída: Por parâmetro, retorna a lista com o novo elemento e um inteiro indicando o funcionamento (0 funciona, 1 não funciona)
 */
 int AddListPM(ListPastMoves* list, char move[]){
-	if(list == NULL || move == NULL){
+	/* Verificar entradas. */
+	if(list == NULL || move == NULL)
 		return 1;
-	}
 
 	if(move[6] != '\0')
 		move[6] = '\0';
+
+	/* Alocar nó e copiar string. */
+	ListNode* Novo = (ListNode*) malloc(sizeof(ListNode));
+	strcpy(Novo->move, move);
+
+	/* Organizar ponteiros. */
+	list->last->next = Novo;
+	list->last = Novo;
+	list->last->next = NULL;
 
 	return 0;
 }

@@ -47,7 +47,7 @@ TEST(Test_Verify_Add_Move, Verify_Invalid_Entries){
    	-Último elemento da lista deve apontar para NULL;
    	-Segundo elemento deve apontar para o último.
  */
-TEST(Test_Verify_Add_Move, Verify_Invalid_Entries){
+TEST(Test_Verify_Add_Move, Verify_Function){
 	char move1[] = "Nb1-c3";
 	char move2[] = "Pb1-c4";
 	ListPastMoves *list = StartListPM();
@@ -55,10 +55,10 @@ TEST(Test_Verify_Add_Move, Verify_Invalid_Entries){
 	EXPECT_EQ(0, AddListPM(list, move1));
 	EXPECT_EQ(0, AddListPM(list, move2));
 
-	EXPECT_EQ(list->head->next->move, move1);
-	EXPECT_EQ(list->last->move, move2);
-	EXPECT_EQ(list->last, NULL);
-	EXPECT_EQ(list->head->next, list->last);
+	EXPECT_TRUE(!strcmp(list->head->next->move, move1));
+	EXPECT_TRUE(!strcmp(list->last->move, move2));
+	EXPECT_TRUE(list->last->next == NULL);
+	EXPECT_EQ(list->head->next->next, list->last);
 
 	free(list->last);
 	free(list->head->next);
