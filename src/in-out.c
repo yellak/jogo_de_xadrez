@@ -4,7 +4,7 @@
 		Objetivo: Iniciar uma lista de movimentos passados.
 
 		Parametros:
-			board - Não há parâmetros de entrada
+			Não há parâmetros de entrada.
 
 		Saída: Essa função retorna uma lista de movimentos passados vazia com a cabeça.
 */
@@ -24,4 +24,26 @@ ListPastMoves* StartListPM(void){
 	list->last = list->head;
 
 	return list;
+}
+
+/* Função: AddListPM
+		Objetivo: Adicionar um novo movimento na lista.
+
+		Parametros:
+			list - Ponteiro para a lista onde será adiiconado o movimento.
+				   Não pode se nulo
+			move - String com o movimento na notação do xadrez.
+				   Deve ser não-nulo e ter seu sétimo elemento com '\0'
+
+		Saída: Por parâmetro, retorna a lista com o novo elemento e um inteiro indicando o funcionamento (0 funciona, 1 não funciona)
+*/
+int AddListPM(ListPastMoves* list, char move[]){
+	if(list == NULL || move == NULL){
+		return 1;
+	}
+
+	if(move[6] != '\0')
+		move[6] = '\0';
+
+	return 0;
 }
