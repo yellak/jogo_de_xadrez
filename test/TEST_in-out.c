@@ -189,13 +189,14 @@ TEST(Test_SaveBoardFile, Verify_InvalidValues){
 	EXPECT_EQ(1, SaveBoardFile(board, nome_arq));
 }
 
-/* Teste para se a função retorna 1 caso a entrada seja inválida
+/* Teste para verificar se a função retorna 1 caso a entrada seja inválida
 	Procedimento:
    	-Inicializar nome do arquivo
    	-Inicializar o tabuleiro como nulo
    	-Verificar se a função não salvou o arquivo
    Resultados:
-   	-A função deve retornar 1;
+   	-A função deve retornar 0;
+   	-O tabuleiro deve estar com suas componentes corretas
  */
 TEST(Test_RecoverBoardFromFile, Verify_Function){
 	char nome_arq[10] = "board.txt";
@@ -204,7 +205,79 @@ TEST(Test_RecoverBoardFromFile, Verify_Function){
 	EXPECT_EQ(0, RecoverBoardFromFile(&board, nome_arq));
 	EXPECT_EQ('R', board.Board[0][0]);
 	EXPECT_EQ('r', board.Board[7][7]);
+}
 
+/* Teste para verificar se a função retorna 1 caso a entrada seja inválida
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar o tabuleiro como nulo
+   	-Verificar se a função não salvou o arquivo
+   Resultados:
+   	-A função deve retornar 1;
+ */
+TEST(Test_RecoverBoardFromFile, Verify_Invalidvalues){
+	char nome_arq[10] = "board.txt";
+	TBoard* board = NULL;
+
+	EXPECT_EQ(1, RecoverBoardFromFile(board, nome_arq));
+}
+
+/* Teste para verificar se a lista de movimentos está sendo salvo no arquivo
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar a lista de movimentos
+   	-Inserir movimentos na lista de movimentos
+   	-Verificar se a lista de movimentos foi salva
+   Resultados:
+   	-A função deve retornar 0;
+ */
+TEST(Test_SavePGNFile, Verify_Function){
+	char nome_arq[10] = "game.pgn";
+	char move1[] = "Nb1-c3";
+	char move2[] = "Pb1-c4";
+	ListPastMoves *list = StartListPM();
+	AddListPM(list, move1);
+	AddListPM(list, move2);
+
+	EXPECT_EQ(0, SavePGNFile(list, nome_arq));
+
+	FreeListPM(list);
+}
+
+/* Teste para verificar se a função retorna 1 em caso de entrada inválida
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar a lista de movimentos como nula
+   	-Verificar se a lista de movimentos não foi salva
+   Resultados:
+   	-A função deve retornar 1;
+ */
+TEST(Test_SavePGNFile, Verify_Invalidvalues){
+	char nome_arq[10] = "game.pgn";
+	ListPastMoves *list = NULL;
+
+	EXPECT_EQ(1, SavePGNFile(list, nome_arq));
+
+	FreeListPM(list);
+}
+
+/* Teste para verificar se a lista de movimentos está sendo recuperada do arquivo PGN
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar a lista de movimentos
+   	-Recuperar a lista de movimentos a partir do arquivo
+   	-Verificar se os componentes da lista estão certos
+   Resultados:
+   	-A função deve retornar 0;
+   	-A lista deve estar correta
+ */
+TEST(Test_RecoverMoveListFromFile, Verify_Function){
+	char nome_arq[10] = "game.pgn";
+	ListPastMoves *list = StartListPM();
+
+	EXPECT_EQ(0, RecoverMoveListFromFile(list, nome_arq));
+
+	FreeListPM(list);
 }
 
 int main(int argc, char **argv){
