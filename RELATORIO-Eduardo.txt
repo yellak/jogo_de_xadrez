@@ -17,3 +17,15 @@ Dia 30/06
 Tempo: 1 hora
 Tópico: Tentar aperfeiçoar a função de movimentos
 Resumo = Tentou-se melhorar ainda mais a função de movimentos possíveis. Infelizmente, não se obteve sucesso.
+
+Dia 01/07
+Tempo: 3 horas
+Tópico: Iniciar as adaptações para novo modelo de lista de movimentos/reunião com o grupo
+Resumo = Deu-se início a um aperfeiçoamento grande na manipulação da lista de movimentos possíveis. Na reunião aspectos mais gerais e finais do programa foram discutidos.
+
+Dia 02/07
+Tempo: 1.5 horas
+Tópico: Finalizar adaptações propostas no dia anterior
+Resumo = Finalizou-se a confecção das funções responsáveis pelos movimentos possíveis.
+
+

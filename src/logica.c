@@ -162,91 +162,147 @@ Move* algebraic_translate(char chess_move[]){
 	
 	return result;
 }
-/* Função: AnalyzePossibleMovementsWhite
-		Objetivo: Conseguir armazenar todas as possíveis jogadas para as peças brancas a partir de um tabuleiro.
 
-		Parametros:
-			board - Ponteiro para a estrutura da tabuleiro.
-					Não deve ser nulo nem vazio
+ListOfMoves* WhitePawnMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
+	int COLOR_POSITION;
 
-		Saída: Essa função retorna um arrays que contém os movimentos possíveis para com as peças brancas.
-*/
-ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
-
-	/* Verificando se o tabuleiro é nulo */
-	if(board == NULL){
+	if(board == NULL || AllMoves == NULL){
 		return NULL;
 	}
 
-	int i, j;
-	ListOfMoves* AllMoves = CreateListOfMoves();
-	AllMoves->howmany = 0;
-
-	/* Percorrendo o tabuleiro. */
-	for(i = 0; i < 8; i++){
-		for(j = 0; j < 8; j++){
-			/* Casos para o peão black. */
-			if(board->Board[i][j] == W_PAWN){
-				/* Caso andar 2 estando na posição inicial. */
-				if((i == 6 && board->Board[i - 2][j] == BLANK) && i - 2 >= 0){
-					InsertMove(AllMoves, i, j, i - 2, j);
-				}
-				/* Caso andar 1 estando na posição inicial/ andar normalmente. */
-				if(((i == 6 && board->Board[i - 1][j] == BLANK) || board->Board[i - 1][j] == BLANK) && i - 1 >= 0){
-					InsertMove(AllMoves, i, j, i - 1, j);
-				}
-				/* Caso de eliminar peça sendo um peão na diagonal superior direita. */
-				if(board->Board[i - 1][j + 1] < BLANK && i - 1 >=0 && j + 1 <= 7){
-					InsertMove(AllMoves, i, j, i - 1, j + 1);
-				}
-				/* Caso de eliminar peça sendo um peão na diagonal superior esquerda. */
-				if(board->Board[i - 1][j - 1] < BLANK && i - 1 >= 0 && j - 1 >= 0){
-					InsertMove(AllMoves, i, j, i - 1, j - 1);
-				}
-				/* Caso de eliminar peça sendo um peão na diagonal inferior esquerda. */
-				if(board->Board[i + 1][j - 1] < BLANK && i + 1 <= 7 && j - 1 >= 0){
-					InsertMove(AllMoves, i, j, i + 1, j - 1);
-				}
-				/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
-				if(board->Board[i + 1][j + 1] < BLANK && i + 1 <= 7 && j + 1 <= 7){
-					InsertMove(AllMoves, i, j, i + 1, j + 1);
-				}
-				/* Caso de eliminar peça sendo um peão de frente. */
-				if(board->Board[i - 1][j] < BLANK && i - 1 >= 0){
-					InsertMove(AllMoves, i, j, i - 1, j);
-				}
-			}
-			/* Casos para o cavalo black. Todos os Ls possíveis foram representados. */
-			else if(board->Board[i][j] == W_HORSE){
-				if(i - 1 >= 0 && j - 2 >= 0 && board->Board[i - 1][j - 2] <= BLANK){
-					InsertMove(AllMoves, i, j, i - 1, j - 2);
-				}
-				if(i - 2 >= 0 && j - 1 >= 0 && board->Board[i - 2][j - 1] <= BLANK){
-					InsertMove(AllMoves, i, j, i - 2, j - 1);
-				}
-				if(i - 2 >= 0 && j + 1 <= 7 && board->Board[i - 2][j + 1] <= BLANK){
-					InsertMove(AllMoves, i, j, i - 2, j + 1);
-				}
-				if(i - 1 >= 0 && j + 2 <= 7 && board->Board[i - 1][j + 2] <= BLANK){
-					InsertMove(AllMoves, i, j, i - 1, j + 2);
-				}
-				if(i + 1 <= 7 && j - 2 >= 0 && board->Board[i + 1][j - 2] <= BLANK){
-					InsertMove(AllMoves, i, j, i + 1, j - 2);
-				}
-				if(i + 2 <= 7 && j - 1 >= 0 && board->Board[i + 2][j - 1] <= BLANK){
-					InsertMove(AllMoves, i, j, i + 2, j - 1);
-				}
-				if(i + 2 <= 7 && j + 1 <= 7 && board->Board[i + 2][j + 1] <= BLANK){
-					InsertMove(AllMoves, i, j, i + 2, j + 1);
-				}
-				if(i + 1 <= 7 && j + 2 <= 7 && board->Board[i + 1][j + 2] <= BLANK){
-					InsertMove(AllMoves, i, j, i + 1, j + 2);
-				}
-			}
-		}
+	/* Caso andar 2 estando na posição inicial. */
+	COLOR_POSITION = ColorPiece(board->Board[originx - 2][originy]);
+	if(originx == 6 && COLOR_POSITION == -1 && originx - 2 >= 0){
+		InsertMove(AllMoves, originx, originx, originx - 2, originy);
+	}
+	/* Caso andar 1 estando na posição inicial/ andar normalmente. */
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy]);
+	if(((originx == 6 && COLOR_POSITION == -1) || COLOR_POSITION == -1) && originx - 1 >= 0){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy);
+	}
+	/* Caso de eliminar peça sendo um peão na diagonal superior direita. */
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy + 1]);
+	if(originx - 1 >= 0 && originy + 1 <= 7 && COLOR_POSITION == BLACK){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy + 1);
+	}
+	/* Caso de eliminar peça sendo um peão na diagonal superior esquerda. */
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy - 1]);
+	if(originx - 1 >= 0 && originy - 1 >= 0 && COLOR_POSITION == BLACK){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy - 1);
+	}
+	/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy + 1]);
+	if(originx + 1 <= 7 && originy + 1 <= 7 && COLOR_POSITION == BLACK){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy + 1);
+	}
+	/* Caso de eliminar peça sendo um peão na diagonal inferior esquerda. */
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy - 1]);
+	if(originx + 1 <= 7 && originy - 1 >= 0 && COLOR_POSITION == BLACK){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy - 1);
+	}
+	/* Caso de eliminar peça sendo um peão de frente. */
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy]);
+	if(originx - 1 >= 0 && COLOR_POSITION == BLACK){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy);
 	}
 	return AllMoves;
 }
+
+ListOfMoves* BlackPawnMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
+	int COLOR_POSITION;
+
+	if(board == NULL || AllMoves == NULL){
+		return NULL;
+	}
+
+	/* Caso andar 2 estando na posição inicial. */
+	COLOR_POSITION = ColorPiece(board->Board[originx + 2][originy]);
+	if(originx == 1 && COLOR_POSITION == -1 && originx + 2 <= 7){
+		InsertMove(AllMoves, originx, originx, originx + 2, originy);
+	}
+	/* Caso andar 1 estando na posição inicial/ andar normalmente. */
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy]);
+	if(((originx == 1 && COLOR_POSITION == -1) || COLOR_POSITION == -1) && originx + 1 <= 7){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy);
+	}
+	/* Caso de eliminar peça sendo um peão na diagonal superior direita. */
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy + 1]);
+	if(originx - 1 >= 0 && originy + 1 <= 7 && COLOR_POSITION == WHITE){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy + 1);
+	}
+	/* Caso de eliminar peça sendo um peão na diagonal superior esquerda. */
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy - 1]);
+	if(originx - 1 >= 0 && originy - 1 >= 0 && COLOR_POSITION == WHITE){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy - 1);
+	}
+	/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy + 1]);
+	if(originx + 1 <= 7 && originy + 1 <= 7 && COLOR_POSITION == WHITE){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy + 1);
+	}
+	/* Caso de eliminar peça sendo um peão na diagonal inferior esquerda. */
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy - 1]);
+	if(originx + 1 <= 7 && originy - 1 >= 0 && COLOR_POSITION == WHITE){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy - 1);
+	}
+	/* Caso de eliminar peça sendo um peão de frente. */
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy]);
+	if(originx + 1 <= 7 && COLOR_POSITION == WHITE){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy);
+	}
+	return AllMoves;
+}
+
+ListOfMoves* HorseMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
+	char piece;
+	int COLOR_PIECE, COLOR_POSITION;
+
+	if(board == NULL || AllMoves == NULL){
+		return NULL;
+	}
+
+	/* Determina a cor da peça */
+	piece = WhatPiece(board, originx, originy);
+	COLOR_PIECE = ColorPiece(piece);
+
+	/* Casos para o cavalo black. Todos os Ls possíveis foram representados. */
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy - 2]);
+	if(originx - 1 >= 0 && originy - 2 >= 0 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy - 2);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx - 2][originy - 1]);
+	if(originx - 2 >= 0 && originy - 1 >= 0 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx - 2, originy - 1);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx - 2][originy + 1]);
+	if(originx - 2 >= 0 && originy + 1 <= 7 &&  COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx - 2, originy + 1);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy + 2]);
+	if(originy - 1 >= 0 && originy + 2 <= 7 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy + 2);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy - 2]);
+	if(originx + 1 <= 7 && originy - 2 >= 0 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy - 2);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx + 2][originy - 1]);
+	if(originx + 2 <= 7 && originy - 1 >= 0 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx + 2, originy - 1);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx + 2][originy + 1]);
+	if(originx + 2 <= 7 && originy + 1 <= 7 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx + 2, originy + 1);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy + 2]);
+	if(originx + 1 <= 7 && originy + 2 <= 7 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy + 2);
+	}
+
+	return AllMoves;
+}
+
+
 
 ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
@@ -538,29 +594,53 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 	if(originx - 1 >= 0 && originy + 1 <= 7 && COLOR_POSITION != COLOR_PIECE){
 		InsertMove(AllMoves, originx, originy, originx - 1, originy + 1);
 	}
-	/* Roque para peças brancas */
-	if(COLOR_PIECE == WHITE && originy == 4 && originx == 0){ 
-		/* Roque pequeno */
-		if(WhatPiece(board, 0, 7) == W_TOWER && board->Board[0][5] == BLANK && board->Board[0][6] == BLANK){
-			InsertMove(AllMoves, originx, originy, 6, 0);
-		}
-		/* Roque grande */	
-		if(WhatPiece(board, 0, 0) == W_TOWER && board->Board[0][1] == BLANK && board->Board[0][2] == BLANK && board->Board[0][3] == BLANK){
-			InsertMove(AllMoves, originx, originy, 2, 0);
-		}
-	}	
-	/* Roque para peças pretas */
-	if(COLOR_PIECE == BLACK && originy == 4 && originx == 7){
-		/* Roque pequeno */
-		if(WhatPiece(board, 7, 7) == B_TOWER && board->Board[7][5] == BLANK && board->Board[7][6] == BLANK){
-			InsertMove(AllMoves, originx, originy, 6, 7);
-		}
-		/* Roque grande */
-		if(WhatPiece(board, 7, 0) == B_TOWER && board->Board[7][1] == BLANK && board->Board[7][2] == BLANK && board->Board[7][3] == BLANK){
-			InsertMove(AllMoves, originx, originy, 2, 7);
-		}	
+	return AllMoves;
+}
+
+
+/* Função: AnalyzePossibleMovementsWhite
+		Objetivo: Conseguir armazenar todas as possíveis jogadas para as peças brancas a partir de um tabuleiro.
+
+		Parametros:
+			board - Ponteiro para a estrutura da tabuleiro.
+					Não deve ser nulo nem vazio
+
+		Saída: Essa função retorna um arrays que contém os movimentos possíveis para com as peças brancas.
+*/
+ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
+
+	/* Verificando se o tabuleiro é nulo */
+	if(board == NULL){
+		return NULL;
 	}
 
+	int i, j;
+	ListOfMoves* AllMoves = CreateListOfMoves();
+	AllMoves->howmany = 0;
+
+	/* Percorrendo o tabuleiro. */
+	for(i = 0; i < 8; i++){
+		for(j = 0; j < 8; j++){
+			if(board->Board[i][j] == W_PAWN){
+				AllMoves = WhitePawnMovements(board, AllMoves, i, j);
+			}
+			else if(board->Board[i][j] == W_HORSE){
+				AllMoves = HorseMovements(board, AllMoves, i, j);
+			}
+			else if(board->Board[i][j] == W_KING){
+				AllMoves = KingMovements(board, AllMoves, i, j);
+			}
+			else if(board->Board[i][j] == W_QUEEN){
+				AllMoves = QueenMovements(board, AllMoves, i, j);
+			}
+			else if(board->Board[i][j] == W_TOWER){
+				AllMoves = TowerMovements(board, AllMoves, i, j);
+			}
+			else if(board->Board[i][j] == W_BISHOP){
+				AllMoves = BishopMovements(board, AllMoves, i, j);
+			}
+		}
+	}
 	return AllMoves;
 }
 
@@ -573,170 +653,39 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 
 		Saída: Essa função retorna um arrays que contém os movimentos possíveis para com as peças pretas.
 */
-// ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
+ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 
-// 	/* Verificando se o tabuleiro é nulo */
-// 	if(board == NULL){
-// 		return NULL;
-// 	}
+	/* Verificando se o tabuleiro é nulo */
+	if(board == NULL){
+		return NULL;
+	}
 
-// 	int i, j, size = 1;
-// 	ListOfMoves* AllMoves = (ListOfMoves*) malloc(sizeof(ListOfMoves));
-// 	AllMoves->Plays = (Move*) malloc(size*sizeof(Move));
-// 	AllMoves->howmany = 0;
+	int i, j;
+	ListOfMoves* AllMoves = CreateListOfMoves();
+	AllMoves->howmany = 0;
 
-// 	/* Percorrendo o tabuleiro. */
-// 	for(i=0; i < 8;i++){
-// 		for(j=0; j < 8;j++){
-// 			/* Casos para o peão white. */
-// 			if(board->Board[i][j] == B_PAWN){
-// 				/* Caso andar 2 estando na posição inicial. */
-// 				if((i == 1 && board->Board[i + 2][j] == BLANK) && i + 2 <= 7){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i + 2;
-// 					AllMoves->Plays[size - 1].destiny[1] = j;
-// 				}
-// 				/* Caso andar 1 estando na posição inicial/ andar normalmente. */
-// 				if(((i == 1 && board->Board[i + 1][j] == BLANK) || board->Board[i + 1][j] == BLANK) && i + 1 <= 7){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i + 1;
-// 					AllMoves->Plays[size - 1].destiny[1] = j;
-// 				}
-// 				/* Caso de eliminar peça sendo um peão na diagonal superior direita. */
-// 				if(board->Board[i - 1][j + 1] > BLANK && i - 1 >= 0 && j + 1 <= 7){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i - 1;
-// 					AllMoves->Plays[size - 1].destiny[1] = j + 1;
-// 				}
-// 				/* Caso de eliminar peça sendo um peão na diagonal superior esquerda. */
-// 				if(board->Board[i - 1][j - 1] > BLANK && i - 1 >= 0 && j - 1 >= 0){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i - 1;
-// 					AllMoves->Plays[size - 1].destiny[1] = j - 1;
-// 				}
-// 				/* Caso de eliminar peça sendo um peão na diagonal inferior esquerda. */
-// 				if(board->Board[i + 1][j - 1] > BLANK && i + 1 <= 7 && j - 1 >= 0){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i + 1;
-// 					AllMoves->Plays[size - 1].destiny[1] = j - 1;
-// 				}
-// 				/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
-// 				if(board->Board[i + 1][j + 1] > BLANK && i + 1 <= 7 && j + 1 <= 7){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i + 1;
-// 					AllMoves->Plays[size - 1].destiny[1] = j + 1;
-// 				}
-// 				/* Caso de eliminar peça sendo um peão de frente. */
-// 				if(board->Board[i + 1][j] > BLANK && i + 1 <= 7){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i + 1;
-// 					AllMoves->Plays[size - 1].destiny[1] = j;
-// 				}
-// 			}
-// 			/* Casos para o cavalo branco. Todos os Ls possíveis foram representados. */
-// 			else if(board->Board[i][j] == B_HORSE){
-// 				if(i - 1 >= 0 && j - 2 >= 0 && board->Board[i - 1][j - 2] >= BLANK){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i - 1;
-// 					AllMoves->Plays[size - 1].destiny[1] = j - 2;
-// 				}
-// 				if(i - 2 >= 0 && j - 1 >= 0 && board->Board[i - 2][j - 1] >= BLANK){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i - 2;
-// 					AllMoves->Plays[size - 1].destiny[1] = j - 1;
-// 				}
-// 				if(i - 2 >= 0 && j + 1 <= 7 && board->Board[i - 2][j + 1] >= BLANK){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i - 2;
-// 					AllMoves->Plays[size - 1].destiny[1] = j + 1;
-// 				}
-// 				if(i - 1 >= 0 && j + 2 <= 7 && board->Board[i - 1][j + 2] >= BLANK){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i - 1;
-// 					AllMoves->Plays[size - 1].destiny[1] = j + 2;
-// 				}
-// 				if(i + 1 <= 7 && j - 2 >= 0 && board->Board[i + 1][j - 2] >= BLANK){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i + 1;
-// 					AllMoves->Plays[size - 1].destiny[1] = j - 2;
-// 				}
-// 				if(i + 2 <= 7 && j - 1 >= 0 && board->Board[i + 2][j - 1] >= BLANK){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i + 2;
-// 					AllMoves->Plays[size - 1].destiny[1] = j - 1;
-// 				}
-// 				if(i + 2 <= 7 && j + 1 <= 7 && board->Board[i + 2][j + 1] >= BLANK){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i + 2;
-// 					AllMoves->Plays[size - 1].destiny[1] = j + 1;
-// 				}
-// 				if(i + 1 <= 7 && j + 2 <= 7 && board->Board[i + 1][j + 2] >= BLANK){
-// 					AllMoves->howmany = AllMoves->howmany + 1;
-// 					size++;
-// 					AllMoves->Plays = (Move*)realloc(AllMoves->Plays, size*sizeof(Move));
-// 					AllMoves->Plays[size - 1].origin[0] = i;
-// 					AllMoves->Plays[size - 1].origin[1] = j;
-// 					AllMoves->Plays[size - 1].destiny[0] = i + 1;
-// 					AllMoves->Plays[size - 1].destiny[1] = j + 2;
-// 				}
-// 			}
-// 		}
-// 	}
-// 	return AllMoves;
-// }
+	/* Percorrendo o tabuleiro. */
+	for(i = 0; i < 8; i++){
+		for(j = 0; j < 8; j++){
+			if(board->Board[i][j] == B_PAWN){
+				AllMoves = BlackPawnMovements(board, AllMoves, i, j);
+			}
+			else if(board->Board[i][j] == B_HORSE){
+				AllMoves = HorseMovements(board, AllMoves, i, j);
+			}
+			else if(board->Board[i][j] == B_KING){
+				AllMoves = KingMovements(board, AllMoves, i, j);
+			}
+			else if(board->Board[i][j] == B_QUEEN){
+				AllMoves = QueenMovements(board, AllMoves, i, j);
+			}
+			else if(board->Board[i][j] == B_TOWER){
+				AllMoves = TowerMovements(board, AllMoves, i, j);
+			}
+			else if(board->Board[i][j] == B_BISHOP){
+				AllMoves = BishopMovements(board, AllMoves, i, j);
+			}
+		}
+	}
+	return AllMoves;
+}

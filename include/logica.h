@@ -13,7 +13,7 @@
 		\param board Ponteiro para um tabuleiro.
 		\return Retorna uma lista com os movimentos possíveis de acordo com as peças pretas.
 */
-//ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board);
+ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board);
 
 /*Analisa os movimentos possíveis em um tabuleiro em relação as peças brancas.*/
 /*! \fn ListOfMoves AnalyzePossibleMovementsWhite(TBoard *board)
@@ -42,6 +42,10 @@ int verify_syntax_move(char chess_move[]);
          \return Um elemento de movimento com a origem e o destino do movimento */
 Move* algebraic_translate(char chess_move[]);
 
+ListOfMoves* BlackPawnMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
+
+ListOfMoves* WhitePawnMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
+
 ListOfMoves* TowerMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
 
 ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
@@ -49,6 +53,10 @@ ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, 
 ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
 
 ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
+
+ListOfMoves* HorseMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
+
+
 
 
 #endif
