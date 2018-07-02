@@ -44,4 +44,6 @@ Move* algebraic_translate(char chess_move[]);
 
 ListOfMoves* TowerMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
 
+ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
+
 #endif
