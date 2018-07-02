@@ -381,7 +381,22 @@ ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, 
 }
 
 ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
-	
+	char piece;
+	int k, COLOR_PIECE, COLOR_POSITION, OPPOSITE_COLOR;
+
+	if(board == NULL || AllMoves == NULL){
+		return NULL;
+	}
+	/* Determina a cor da peça e a oposta*/
+	piece = WhatPiece(board, originx, originy);
+	COLOR_PIECE = ColorPiece(piece);
+	if(COLOR_PIECE == BLACK){
+		OPPOSITE_COLOR = WHITE;
+	}
+	else{
+		OPPOSITE_COLOR = BLACK;
+	}
+
 }
 
 /* Função: AnalyzePossibleMovementsBlack
