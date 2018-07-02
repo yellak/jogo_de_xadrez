@@ -113,6 +113,18 @@ int StartStandardBoard(TBoard *board){
 	return 0;
 }
 
+/*                           */
+int ColorPiece(char piece){
+	if(piece < BLANK){
+		return BLACK;
+	}
+	else if(piece > BLANK){
+		return WHITE;
+	}
+	else{
+		return -1;
+	}
+}
 /* Função: WhatPiece
 		Objetivo: Verificar qual peça se encontra na posição (x,y) do tabuleiro.
 
