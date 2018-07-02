@@ -666,22 +666,25 @@ TEST(Test_KingMovements, Verify_Addict_Roque_Movement){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
 	TBoard* board = AlocateBoard();
+	TBoard* board2 = AlocateBoard();
 	StartEmptyBoard(board);
-	board->Board[4][0] = W_KING;
+	StartEmptyBoard(board2);
+	board->Board[0][4] = W_KING;
 	board->Board[0][0] = W_TOWER;
-	board->Board[7][0] = W_TOWER;
+	board->Board[0][7] = W_TOWER;
 
-	KingMovements(board, AllPlays, 4, 0);
+	KingMovements(board, AllPlays, 0, 4);
 	EXPECT_EQ(7, AllPlays->howmany);
 
-	board->Board[4][7] = B_KING;
-	board->Board[0][7] = B_TOWER;
-	board->Board[7][7] = B_TOWER;
+	board2->Board[7][4] = B_KING;
+	board2->Board[7][0] = B_TOWER;
+	board2->Board[7][7] = B_TOWER;
 
-	KingMovements(board, AllPlays2, 4, 7);
+	KingMovements(board2, AllPlays2, 7, 4);
 	EXPECT_EQ(7, AllPlays2->howmany);
 
 	free(board);
+	free(board2);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
 }
