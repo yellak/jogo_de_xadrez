@@ -494,7 +494,7 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 
 ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
-	int k, COLOR_PIECE, COLOR_POSITION;
+	int COLOR_PIECE, COLOR_POSITION;
 
 	if(board == NULL || AllMoves == NULL){
 		return NULL;
@@ -502,7 +502,45 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 	/* Determina a cor da peça */
 	piece = WhatPiece(board, originx, originy);
 	COLOR_PIECE = ColorPiece(piece);
+
+	/* Movimentos na horizontal e na vertical */
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy]);
+	if(originx + 1 <= 7 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx][originy + 1]);
+	if(originy + 1 <= 7 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx, originy + 1);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy]);
+	if(originx - 1 >= 0 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx][originy - 1]);
+	if(originy - 1 >= 0 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx, originy - 1);
+	}
+	
+	/* Movimentos na diagonal */
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy + 1]);
+	if(originx + 1 <= 7 && originy + 1 <= 7&& COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy + 1);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy - 1]);
+	if(originx - 1 >= 0 && originy - 1 >= 0 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy - 1);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy - 1]);
+	if(originx + 1 <= 7 && originy - 1 >= 0 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx + 1, originy - 1);
+	}
+	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy + 1]);
+	if(originx - 1 >= 0 && originy + 1 <= 7 && COLOR_POSITION != COLOR_PIECE){
+		InsertMove(AllMoves, originx, originy, originx - 1, originy + 1);
+	}
+	return AllMoves;
 }
+
 /* Função: AnalyzePossibleMovementsBlack
 		Objetivo: Conseguir armazenar todas as possíveis jogadas para as peças pretas a partir de um tabuleiro.
 
