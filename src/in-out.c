@@ -158,15 +158,23 @@ int SaveBoardFile(TBoard* board, char* file_name){
 
 		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
 */
-int RecoverBoardFromFile(TBoard* board, char* arq_name){
-	FILE* fp = fopen(arq_name, "r");
+int RecoverBoardFromFile(TBoard* board, char* file_name){
+
+	/* Assertiva de entrada */
+	if(board == NULL || file_name == NULL){
+		return 1;
+	}	
+
+	FILE* fp = fopen(file_name, "r");
 	char c;
 
 	for(int i = 0; i < 8; i++){
 		for(int j = 0; j < 8; j++){
 			board->Board[i][i] = fgetc(fp);
+			/* c serve para pegar os espaços */
 			c = fgetc(fp);
 		}
+		/* c serve para pegar os /n */
 		c = fgetc(fp);
 	}
 
