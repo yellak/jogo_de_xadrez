@@ -229,6 +229,10 @@ int SavePGNFile(ListPastMoves* listmoves, char* file_name){
 */
 int RecoverMoveListFromFile(ListPastMoves* listmoves, char* file_name){
 	
+	if(listmoves == NULL || file_name == NULL){
+		return 1;
+	}
+
 	FILE* fp = fopen(file_name, "r");
 	char* move = (char*)malloc(10*sizeof(char));
 	int n;

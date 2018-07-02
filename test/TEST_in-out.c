@@ -284,6 +284,22 @@ TEST(Test_RecoverMoveListFromFile, Verify_Function){
 	FreeListPM(list);
 }
 
+/* Teste para verificar se a lista de movimentos toma as devidas medidas quando as entradas sao inválidas
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar a lista de movimentos como nulo
+   	-Verificar se não houve recuperação da lista
+   Resultados:
+   	-A função deve retornar 1;
+ */
+TEST(Test_RecoverMoveListFromFile, Verify_Invalidvalues){
+	char nome_arq[10] = "game.pgn";
+	ListPastMoves *list = NULL;
+
+	EXPECT_EQ(1, RecoverMoveListFromFile(list, nome_arq));
+
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
