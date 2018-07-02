@@ -1,19 +1,19 @@
 #ifndef TABULEIRO_H_
 #define TABULEIRO_H_
 
-const char W_KING = 'k';
-const char W_QUEEN = 'q';
-const char W_TOWER = 'r';
-const char W_BISHOP = 'b';
-const char W_HORSE = 'n';
-const char W_PAWN = 'p';
-const char BLANK = '\\';
-const char B_KING = 'K';
-const char B_QUEEN = 'Q';
-const char B_TOWER = 'R';
-const char B_BISHOP = 'B';
-const char B_HORSE = 'N';
-const char B_PAWN = 'P';
+const char W_KING       = 'k';
+const char W_QUEEN      = 'q';
+const char W_TOWER      = 'r';
+const char W_BISHOP     = 'b';
+const char W_HORSE      = 'n';
+const char W_PAWN       = 'p';
+const char BLANK        = '\\';
+const char B_KING       = 'K';
+const char B_QUEEN      = 'Q';
+const char B_TOWER      = 'R';
+const char B_BISHOP     = 'B';
+const char B_HORSE      = 'N';
+const char B_PAWN       = 'P';
 const char OUT_OF_RANGE = '~';
 
 /* Definição da estrutura do tabuleiro. */

@@ -158,6 +158,55 @@ TEST(Test_Verify_Free_List, Verify_Function){
 	EXPECT_EQ(0, FreeListPM(list));
 }
 
+/* Teste para se o tabuleiro está sendo salvo no arquivo
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar o tabuleiro e criar um tabuleiro básico
+   	-Verificar se o tabuleiro foi salvo
+   Resultados:
+   	-A função deve retornar 0;
+ */
+TEST(Test_SaveBoardFile, Verify_Function){
+	char nome_arq[10] = "board.txt";
+	TBoard board;
+	StartStandardBoard(&board);
+
+	EXPECT_EQ(0, SaveBoardFile(&board, nome_arq));
+}
+
+/* Teste para se a função retorna 1 caso a entrada seja inválida
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar o tabuleiro como nulo
+   	-Verificar se a função não salvou o arquivo
+   Resultados:
+   	-A função deve retornar 1;
+ */
+TEST(Test_SaveBoardFile, Verify_InvalidValues){
+	char nome_arq[10] = "board.txt";
+	TBoard* board = NULL;
+
+	EXPECT_EQ(1, SaveBoardFile(board, nome_arq));
+}
+
+/* Teste para se a função retorna 1 caso a entrada seja inválida
+	Procedimento:
+   	-Inicializar nome do arquivo
+   	-Inicializar o tabuleiro como nulo
+   	-Verificar se a função não salvou o arquivo
+   Resultados:
+   	-A função deve retornar 1;
+ */
+TEST(Test_RecoverBoardFromFile, Verify_Function){
+	char nome_arq[10] = "board.txt";
+	TBoard board;
+
+	EXPECT_EQ(0, RecoverBoardFromFile(&board, nome_arq));
+	EXPECT_EQ('R', board.Board[0][0]);
+	EXPECT_EQ('r', board.Board[7][7]);
+
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
