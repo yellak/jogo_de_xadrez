@@ -101,5 +101,18 @@ int FreeListPM(ListPastMoves* list){
 	if(list == NULL)
 		return 1;
 
+	ListNode* aux = list->head;
+	ListNode* temp;
+
+	/* Liberar nós. */
+	while(aux != NULL){
+		temp = aux->next;
+		free(aux);
+		aux = temp;
+	}
+
+	/* Liberar lista. */
+	free(list);
+
 	return 0;
 }

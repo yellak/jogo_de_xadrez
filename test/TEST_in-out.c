@@ -137,8 +137,25 @@ TEST(Test_Verify_Remove_Last, Verify_Two_Itens){
    Resultados:
    	-É esperado que a função retorne 1.
  */
-TEST(Test_Verify_Free, Verify_Invalid_Entries){
+TEST(Test_Verify_Free_List, Verify_Invalid_Entries){
 	EXPECT_EQ(1, FreeListPM(NULL));
+}
+
+/* Teste para verificar a função de liberar a lista.
+	Procedimento:
+   	-Iniciar lista com dois itens;
+   	-Chamar função para liberar lista.
+   Resultados:
+   	-É esperado que a função retorne 0;
+ */
+TEST(Test_Verify_Free_List, Verify_Function){
+	char move1[] = "Nb1-c3";
+	char move2[] = "Pb1-c4";
+	ListPastMoves *list = StartListPM();
+	AddListPM(list, move1);
+	AddListPM(list, move2);
+
+	EXPECT_EQ(0, FreeListPM(list));
 }
 
 int main(int argc, char **argv){
