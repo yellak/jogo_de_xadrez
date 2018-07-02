@@ -5,4 +5,4 @@
 29/06 | 3 Horas | Codificar e Testar Módulo                 | Criando funções de alocar uma árvore e um nó de árvore no módulo arv_decisoes 
 30/06 | 3 Horas | Codificar e Testar Módulo		    | Criando e testando funções de liberar uma árvore e adicionar um novo nó
 01/07 | 2 Horas | Projetar                                  | Reunião com o grupo para tomar as últimas decisões a respeito do código
-02/07 | 4 Horas | Codificar e Testar Módulo	            | Criação de 4 funções do módulo de entrada e saída
+02/07 | 5 Horas | Codificar e Testar Módulo	            | Criação de 4 funções do módulo de entrada e saída e a função de busca na lista
