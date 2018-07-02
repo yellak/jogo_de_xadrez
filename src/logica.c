@@ -248,6 +248,11 @@ ListOfMoves* AnalyzePossibleMovementsWhite(TBoard *board){
 	return AllMoves;
 }
 
+ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, int originy){
+	
+}
+
+
 /* Função: AnalyzePossibleMovementsBlack
 		Objetivo: Conseguir armazenar todas as possíveis jogadas para as peças pretas a partir de um tabuleiro.
 
