@@ -476,3 +476,17 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
 
 	return 0;
 }
+
+void copy_boards(TBoard* copy, TBoard* board){
+	/* Contadores */
+	int i, j;
+
+	/* Copiando as peças dos dois tabuleiros */
+	for(i = 0; i < 8; i++){
+		for(j = 0; j < 8; j++){
+			copy->Board[i][j] = board->Board[i][j];
+		}
+	}
+
+	copy->Weight = board->Weight;
+}

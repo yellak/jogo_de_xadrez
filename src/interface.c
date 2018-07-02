@@ -1,5 +1,45 @@
 #include "../include/interface.h"
 
+int verify_turn(TBoard* board, Move* movement, int turn){
+	if(movement != NULL)
+		{
+			int y_pos = movement->origin[0];
+			int x_pos = movement->origin[1];
+			char piece = board->Board[y_pos][x_pos];
+
+			if(turn == WHITES_TURN) /* Vez das brancas */
+				{
+					if(piece > '\\'){	/* A peça é branca */
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+			else  /* Se for a vez das pretas */
+				{
+					if(piece < '\\'){	/* A peça é preta */
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+		}
+	else
+		{
+			return false;
+		}
+}
+
+int change_turn(int turn){
+	if(turn == BLACKS_TURN){
+		return WHITES_TURN;
+	}
+	else{
+		return BLACKS_TURN;
+	}
+}
 
 /* 
    Função: Inicializar o tabuleiro
@@ -291,6 +331,7 @@ TBoard* MenuGetBoard()
 	strcpy(opcoes[3], "Criar um tabuleiro do zero                                 ");
 	strcpy(opcoes[4], "Sair do jogo                                               ");
 
+	
 	while(choice != 10)	/* Tecla ENTER */
 		{
 			for(i = 0; i < 5; i++)
@@ -300,7 +341,7 @@ TBoard* MenuGetBoard()
 							/* Ativando o highlight na opção atual */
 							wattron(menu, A_REVERSE);
 						}
-					/* Atulizando as opções */
+					/* Atualizando as opções */
 					mvwprintw(menu, i + 1, 1, opcoes[i]);
 					wattroff(menu, A_REVERSE);
 					wrefresh(menu);
@@ -331,8 +372,6 @@ TBoard* MenuGetBoard()
 				} /* switch(choice) */
 		} /* while(choice != 10 */
 
-	delwin(menu);
-
 	switch(highlight)
 		{
 		case STD_BOARD:
@@ -342,8 +381,6 @@ TBoard* MenuGetBoard()
 			break;
 
 		case SAVED_BOARD:
-			mvprintw(1, 1, "Ainda em processo de desenvolvimento");
-			refresh();
 			break;
 			
 		case NEW_BOARD:
@@ -352,11 +389,11 @@ TBoard* MenuGetBoard()
 			break;
 
 		case EXIT_GAME:
-			free(board);
 			board = NULL;
 			break;
 		}
-	
+
+	delwin(menu);
 	return board;
 } /* MenuGetBoard() */
 
@@ -380,8 +417,9 @@ void write_keys_help(WINDOW* keywin, int wintype)
 	if(wintype == GAMING)
 		{
 			mvwprintw(keywin, 1, 1, "q-Sair");
-			mvwprintw(keywin, 1, 9, "j-Jogada pela notação");
+			mvwprintw(keywin, 1, 11, "j-Jogada pela notação");
 			mvwprintw(keywin, 1, 37, "h-Ajuda");
+			mvwprintw(keywin, 1, 48, "d-deletar jogada");
 		}
 	else if(wintype == CREATING)
 		{
@@ -457,6 +495,7 @@ void clear_message(WINDOW* messages){
 */
 void print_message(WINDOW* messages, int msg)
 {
+	clear_message(messages);
 	wmove(messages, 1, 1);
 	switch(msg)
 		{
@@ -471,6 +510,18 @@ void print_message(WINDOW* messages, int msg)
 			break;
 		case INVALID_MOVE:
 			wprintw(messages, "Movimento inválido");
+			break;
+		case WHITE_MOVE:
+			wprintw(messages, "Vez das brancas");
+			break;
+		case BLACK_MOVE:
+			wprintw(messages, "Vez das pretas");
+			break;
+		case NOTBLACKSMOVE:
+			wprintw(messages, "Não é a vez das pretas");
+			break;
+		case NOTWHITESMOVE:
+			wprintw(messages, "Não é a vez das brancas");
 			break;
 		}
 	
@@ -505,46 +556,59 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 	int boolean;
 	/* Movimento do jogador */
 	Move* movement = (Move*) malloc(sizeof(Move));
-
-	/* Variáveis para movimento
-       ol - origin line
-       oc - orig column
-       dl - destiny line
-       dc - destiny column */
+	/* Inteiro que indicará de quem é a vez de jogar */
+	int turn = WHITES_TURN;
+	/* Variáveis para movimento, elas não são intuitivas para que
+       haja uma economia de espaço mais a frente, elas também são melhor
+       apresentadas mais a frente */
 	int ol, oc, dl, dc;
+	/* Indica qual era o tabuleiro antigo */
+	TBoard* old_board = AlocateBoard();
+
+	copy_boards(old_board, board);
 
 
 	keypad(stdscr, TRUE);
 
 	while(!finished)
 		{
+			/* Pegar a tecla que o usuário digitar */
 			choice = getch();
+
+			/* Mostrando de quem é a vez de jogar */
+			if(turn == WHITES_TURN){
+				print_message(messages, WHITE_MOVE);
+			}
+			else{
+				print_message(messages, BLACK_MOVE);
+			}
 
 			if(choice == 'j') /* Tecla j */
 				{
+					/* Salvando tabuleiro anterior */
+					copy_boards(old_board, board);
+					
 					echo();	/* Deixar as teclas aparecerem na tela */
 					curs_set(1); /* Fazer o cursor aparecer */
 					wmove(keywin, 2, 1);
 					/* Obter a notação de movimento do usuário */
-					wgetstr(keywin, chess_move);
+					wgetstr(keywin, chess_move); /* Pegar a jogada */
 					clear_keywin(keywin);
 					curs_set(0); /* Tirar o cursor */
 					noecho(); /* Desabilitar teclas aparecerem na tela */
 
 					/* Traduzindo o notação para elemento de movimento */
 					movement = algebraic_translate(chess_move);
-					clear_message(messages);
-					/* Assertiva para o caso da sintaxe não ser válida */
-					if(movement == NULL)
+
+					if(verify_turn(board, movement, turn) == true)
 						{
-							print_message(messages, INVALID_SINTAX);
-						}
-					else  /* Movimento válido pela sintaxe */
-						{
-							ol = movement->origin[0];
-							oc = movement->origin[1];
-							dl = movement->destiny[0];
-							dc = movement->destiny[1];
+							/* Agora é a vez do próximo jogador */
+							turn = change_turn(turn);
+					
+							ol = movement->origin[0]; /* origin line */
+							oc = movement->origin[1]; /* origin column */
+							dl = movement->destiny[0]; /* destiny line */
+							dc = movement->destiny[1]; /* destiny column */
 							/* Realizando a jogada */
 							boolean = MovePiece(board, ol, oc, dl, dc);
 
@@ -558,12 +622,26 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 								{
 									print_message(messages, INVALID_MOVE);
 								}
-						}
+									
+							free(movement);
+						} /* if(verify_turn( ... )) */
+					else  /* Não é a vez da peça que o usuário tentou mexer */
+						{
+							if(movement == NULL){
+								print_message(messages, INVALID_SINTAX);
+							}
+							else if(turn == WHITES_TURN){
+								print_message(messages, NOTBLACKSMOVE);
+							}
+							else{
+								print_message(messages, NOTWHITESMOVE);
+							}
+						} /* Não é a vez da peça que o jogador escolheu */
 						
 				} /* Choide == j */
-			else if(choice == 'q')
+			
+			else if(choice == 'q') /* Sair do jogo */
 				{
-					clear_message(messages);
 					/* Colocando a mensagem de incerteza para o usuário */
 					print_message(messages, ARE_YOU_SURE);
 					choice = 'a';
@@ -574,10 +652,20 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 								finished = true; /* Fim de jogo */
 							}
 							else if(choice == 'n'){ /* Ele escolheu continuar */
-								clear_message(messages);
 								print_message(messages, CONTINUE_GAME);
 							}
 						}
-				} /* choice == 's' */
+				} /* choice == 'q' */
+
+			else if(choice == 'd') /* Escolheu deletar última jogada */
+				{
+					/* Copiando o tabuleiro antigo no novo */
+					copy_boards(board, old_board);
+					/* Mudando a vez de quem joga */
+					turn = change_turn(turn);
+					/* Refazendo o tabuleiro na interface */
+					InitBoard(boardwin, board);
+					wrefresh(boardwin);
+				}
 		}  /* while(!finished) */
 } /* Modo PVP */

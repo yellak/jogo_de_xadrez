@@ -25,6 +25,10 @@ const int INVALID_SINTAX = 0;
 const int ARE_YOU_SURE   = 1;
 const int CONTINUE_GAME  = 2;
 const int INVALID_MOVE   = 3;
+const int WHITE_MOVE     = 4;
+const int BLACK_MOVE     = 5;
+const int NOTBLACKSMOVE  = 6;
+const int NOTWHITESMOVE  = 7;
 
 /* Constantes para modos de jogo */
 const int PVP      = 1;
@@ -40,6 +44,10 @@ const int EXIT_GAME   = 4;
 /* Constantes para os tipos de janelas de atalhos */
 const int GAMING   = 0;
 const int CREATING = 1;
+
+/* Constantes que indicam de quem é a vez de jogar */
+const int BLACKS_TURN = 0;
+const int WHITES_TURN = 1;
 
 /* Inicia um tabuleiro graficamente */
 /*! \fn void InitBoard(WINDOW* boardwin, TBoard* board)
@@ -118,5 +126,9 @@ TBoard* MenuGetBoard();
 TBoard* CreateNewBoard(void);
 
 void HelpWinNewBoard(WINDOW* helpwin);
+
+int change_turn(int turn);
+
+int verify_turn(TBoard* board, Move* movement, int turn);
 	
 #endif

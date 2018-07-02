@@ -147,4 +147,6 @@ int ChangePiece(TBoard *board, char piece, int line, int column);
 */
 int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, int dest_column);
 
+void copy_boards(TBoard* copy, TBoard* board);
+
 #endif

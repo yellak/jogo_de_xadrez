@@ -26,11 +26,19 @@ int main()
 			exit(1);
 		}
 
+	/* Inicializando modo de cor do Ncurses */
 	start_color();
+
+	/* 
+	 * init_pair(1, COLOR_WHITE, COLOR_CYAN);
+	 * 
+	 * attron(COLOR_PAIR(1));
+	 * bkgd(COLOR_PAIR(1));
+	 */
 
 	/* Abrindo menu para escolha do tabuleiro desejado */
 	board = MenuGetBoard();
-	clear(); /* Limpando o terminal */
+	erase(); /* Limpando o terminal */
 
 	/* Condição do usuário ter escolhido para sair do jogo */
 	if(board == NULL)
@@ -42,7 +50,7 @@ int main()
 	/* Criando a janela do menu e oferecendo as opções ao usuário*/
 	/* Retorna o modo de jogo(1 = PVP, 2 = PVE, 3 = SAIR) */
 	int gamemode = CreateMenu(menuwin);
-	clear();
+	erase();
 
 	/* Usuário escolheu sair do jogo */
 	if(gamemode == 3)
