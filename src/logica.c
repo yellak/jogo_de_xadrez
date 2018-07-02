@@ -493,7 +493,15 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 }
 
 ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
+	char piece;
+	int k, COLOR_PIECE, COLOR_POSITION;
 
+	if(board == NULL || AllMoves == NULL){
+		return NULL;
+	}
+	/* Determina a cor da peça */
+	piece = WhatPiece(board, originx, originy);
+	COLOR_PIECE = ColorPiece(piece);
 }
 /* Função: AnalyzePossibleMovementsBlack
 		Objetivo: Conseguir armazenar todas as possíveis jogadas para as peças pretas a partir de um tabuleiro.
