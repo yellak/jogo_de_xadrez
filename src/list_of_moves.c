@@ -71,7 +71,6 @@ int InsertMove(ListOfMoves* list, int originx, int originy, int destinyx, int de
 
 		Saída: Retorna um inteiro indicando a falha ou sucesso da operação.
 */
-
 int DeleteListOfMoves(ListOfMoves* list){
 	NodeList* temp;
 	if(list == NULL){
@@ -86,4 +85,19 @@ int DeleteListOfMoves(ListOfMoves* list){
 	free(list);
 
 	return 0;
+}
+
+/* Função: SearchListOfMoves
+		Objetivo: Buscar um movimento na lista de movimentos
+
+		Parametros:
+			list - Ponteiro para a estrutura da lista.
+				   Não deve ser nulo
+			move - Ponteiro para o tipo movimento a ser procurado
+				   Não deve ser nulo
+
+		Saída: Retorna um inteiro indicando a falha ou sucesso da operação.
+*/
+int SearchListOfMoves(ListOfMoves* list, Move* move){
+	return 1;
 }

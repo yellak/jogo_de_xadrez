@@ -146,6 +146,30 @@ TEST(Test_DeleteListOfMoves, Verify_Valid_Entrie){
 	EXPECT_EQ(0, DeleteListOfMoves(list));
 }
 
+/* Teste para verificar a se a função realiza uma busca corretamente
+	Procedimentos:
+	-Chamar a função para uma lista válida.
+	-Inicializar um movimento
+	-Inserir nós na lista
+	-Buscar movimento na lista
+	Resultados:
+	-A função deve retornar 0
+
+*/
+TEST(Test_SearchListOfMoves, Verify_Succesfull_Search){
+	ListOfMoves* list = CreateListOfMoves();
+	Move move;
+	move.origin[0] = 1;
+	move.origin[1] = 2;
+	move.destiny[0] = 3;
+	move.destiny[1] = 4;
+
+	InsertMove(list, 0, 0, 0, 0);
+	InsertMove(list, 1, 2, 3, 4);
+
+	EXPECT_EQ(0, SearchListOfMoves(list, &move));
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
