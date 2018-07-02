@@ -432,7 +432,7 @@ TEST(Test_TowerMovements, Verify_Movements_EmptyBoard){
 	free(board);
 }
 
-/* Verifica se captura apenas peças rivais */
+/* Verifica se captura apenas peças oponentes */
 
 TEST(Test_TowerMovements, Verify_Movements_WhifePieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
@@ -521,6 +521,21 @@ TEST(Test_BishopMovements, Verify_Movements_WhifePieces){
 	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+}
+
+TEST(Test_QueenMovements, Verify_NULL_Variables){
+	TBoard* board_null = NULL;
+	TBoard* board = AlocateBoard();
+	ListOfMoves* list_null = NULL;
+	ListOfMoves* list = CreateListOfMoves();
+
+	/* Testa para o primeiro parametro nulo e o segundo não */
+	EXPECT_EQ(NULL, QueenMovements(board_null, list, 1, 2));
+	/* Testa para o segundo parametro nulo e o primeiro não */
+	EXPECT_EQ(NULL, QueenMovements(board, list_null, 1, 2));
+
+	DeleteListOfMoves(list);
+	free(board);
 }
 
 int main(int argc, char **argv){

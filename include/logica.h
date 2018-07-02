@@ -46,4 +46,6 @@ ListOfMoves* TowerMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 
 ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
 
+ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
+
 #endif
