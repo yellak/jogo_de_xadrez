@@ -128,6 +128,12 @@ int FreeListPM(ListPastMoves* list){
 		Saída: Inteiro indicando o funcionamento (0 funciona, 1 não funciona)
 */
 int SaveBoardFile(TBoard* board, char* arq_name){
+	
+	/* Assertiva de entrada */
+	if(board == NULL || arq_name == NULL){
+		return 1;
+	}
+
 	FILE* fp = fopen(arq_name,"w");
 
 	for(int i = 0; i < 8; i++){
