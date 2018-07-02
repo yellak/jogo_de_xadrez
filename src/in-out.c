@@ -70,6 +70,8 @@ int RemoveLastListPM(ListPastMoves* list){
 	/* Verificar entradas. */
 	if(list == NULL)
 		return 1;
+	if(list->head == list->last)
+		return 1;
 
 	/* Achar elemento anterior. */
 	ListNode *anterior, *aux;
