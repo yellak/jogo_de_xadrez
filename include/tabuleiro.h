@@ -170,4 +170,6 @@ void copy_boards(TBoard* copy, TBoard* board);
 
 int valid_piece(char piece);
 
+int DontHaveMinimun(TBoard* board);
+
 #endif

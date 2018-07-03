@@ -26,7 +26,7 @@ int main()
 			exit(1);
 		}
 
-	/* Inicializando modo de cor do Ncurses */
+	/* Inicializando modo de cores do Ncurses */
 	start_color();
 
 	/* 
@@ -60,24 +60,21 @@ int main()
 		}
 
 	/* Janela do tabuleiro */
-	boardwin = newwin(YLIMIT*2 + 1, XLIMIT*4 + 1, BOARDY, BOARDX);
+	boardwin = MakeBoardWin();
 	/* Janelas dos eixos coordenados */
-	yaxis = newwin(YLIMIT*2 + 1, 2, BOARDY, 0);
-	xaxis = newwin(2, XLIMIT*4 + 1, BOARDY + YLIMIT*2 + 1, BOARDX);
+	yaxis = MakeYaxisWin();
+	xaxis = MakeXaxisWin();
 	/* Janela da interface com o teclado do usuário */
-	keywin = newwin(4, 78, BOARDY + 2*YLIMIT + 2, 1);
+	keywin = MakeKeyWin();
 	/* Janela onde serão impressas as mensagens para o usuário */
-	messages = newwin(3, 42, BOARDY + 2*YLIMIT - 2, BOARDX + 4*XLIMIT + 3);
+	messages = MakeMsgWin();
 	refresh();
 
 	/* Inicializando as janelas criadas a pouco */
-	init_msg_win(messages);
 	DrawBoard(boardwin);
 	DrawAxis(yaxis, xaxis);
-	wrefresh(boardwin);
-	wrefresh(yaxis);
-	wrefresh(xaxis);
-
+	init_msg_win(messages);
+	
 	/* Colocando as ajudas com as teclas */
 	write_keys_help(keywin, GAMING);
 

@@ -1,5 +1,70 @@
 #include "../include/interface.h"
 
+WINDOW* MakeBoardWin(void)
+{
+	WINDOW* boardwin = newwin(YLIMIT*2 + 1, XLIMIT*4 + 1, BOARDY, BOARDX);
+	return boardwin;
+}
+
+WINDOW* MakeYaxisWin(void)
+{
+	WINDOW* yaxis = newwin(YLIMIT*2 + 1, 2, BOARDY, 0);
+	return yaxis;
+}
+
+WINDOW* MakeXaxisWin(void)
+{
+	WINDOW* xaxis = newwin(1, XLIMIT*4 + 1, BOARDY + YLIMIT*2 + 1, BOARDX);
+	return xaxis;
+}
+
+WINDOW* MakeKeyWin(void)
+{
+	WINDOW* keywin = newwin(4, 78, BOARDY + 2*YLIMIT + 2, 1);
+	return keywin;
+}
+
+WINDOW* MakeMsgWin(void)
+{
+	WINDOW* messages = newwin(3, 42, BOARDY + 2*YLIMIT - 2, BOARDX + 4*XLIMIT + 3);
+	return messages;
+}
+
+WINDOW* MakeHelpWin(void)
+{
+	WINDOW* helpwin = newwin(YLIMIT*2 - 3, 42, BOARDY, BOARDX + 4*XLIMIT + 3);
+	return helpwin;
+}
+
+void TranslateCoord(int yscreen, int xscreen, int* yboard, int* xboard)
+{
+	int line, column; /* Contadores */
+	int yaux, xaux;	/* Auxiliares para tradução */
+	int minyaux = 5000, minxaux = 5000;
+
+	/* Retirando o excesso causado pelas bordas */
+	yscreen -= BOARDY;
+	xscreen -= BOARDX;
+
+	for(line = 0; line < 8; line++)
+		{
+			yaux = abs((line*YOFFSET) + 1 - yscreen);
+			if(yaux < minyaux){
+				minyaux = yaux;
+				*yboard = line;
+			}
+		}
+
+	for(column = 0; column < 8; column++)
+		{
+			xaux = abs((column*XOFFSET) + 2 - xscreen);
+			if(xaux < minxaux){
+				minxaux = xaux;
+				*xboard = column;
+			}
+		}
+} /* TranslateCoord() */
+
 /*
  Função: Verificar o turno (verify_turn)
        Objetivo:
@@ -138,6 +203,8 @@ void DrawBoard(WINDOW* boardwin){
 		//baixo
 		mvwaddch(boardwin, 0, 4*i + 4, ACS_TTEE);
 	}
+
+	wrefresh(boardwin);
 	
 } /* DrawBoard */
 
@@ -169,6 +236,10 @@ void DrawAxis(WINDOW* yaxis, WINDOW* xaxis){
 		wmove(xaxis, 0, i);
 		waddch(xaxis, 'a' + j);
 	}
+
+	wrefresh(yaxis);
+	wrefresh(xaxis);
+
 } /* DrawAxis() */
 
 /*
@@ -201,6 +272,8 @@ void HelpWinNewBoard(WINDOW* helpwin)
 	mvwprintw(helpwin, 7, 18, "n - Cavalo branco");
 	mvwprintw(helpwin, 8, 19, "p - Peão branco");
 
+	mvwprintw(helpwin, 11, 1, "Começe adicionando os reis");
+
 	/* Carregar as impressões acima */
 	wrefresh(helpwin);
 } /* HelpWinNewBoard() */
@@ -220,17 +293,31 @@ TBoard* CreateNewBoard(void)
 	TBoard* board = AlocateBoard();
 
 	/* Janelas do tabuleiro */
-	WINDOW* boardwin = newwin(YLIMIT*2 + 1, XLIMIT*4 + 1, BOARDY, BOARDX);
-	WINDOW* yaxis = newwin(YLIMIT*2 + 1, 2, BOARDY, 0);
-	WINDOW* xaxis = newwin(1, XLIMIT*4 + 1, BOARDY + YLIMIT*2 + 1, BOARDX);
+	WINDOW* boardwin = MakeBoardWin();
+	WINDOW* yaxis = MakeYaxisWin();
+	WINDOW* xaxis = MakeXaxisWin();
 
 	/* Janela de ajuda */
-	WINDOW* helpwin = newwin(YLIMIT*2 - 3, 42, BOARDY, BOARDX + 4*XLIMIT + 3);
+	WINDOW* helpwin = MakeHelpWin();
 
 	/* Janela onde serão impressas as mensagens para o usuário */
-	WINDOW* messages = newwin(3, 42, BOARDY + 2*YLIMIT - 2, BOARDX + 4*XLIMIT + 3);
+	WINDOW* messages = MakeMsgWin();
 
-	WINDOW* keywin = newwin(4, 78, BOARDY + 2*YLIMIT + 2, 1);
+	/* Janela interação com o teclado do usuário */
+	WINDOW* keywin = MakeKeyWin();
+
+	int finished = false; /* Indica processo finalizado ou não */
+	int choice;	/* É a tecla que o usuário apertou */
+	char piece;	/* Peça a ser adicionada ou removida */
+
+	int b_line, b_column;
+
+	/* Habilitando o reconhecimento do mouse */
+	mousemask(BUTTON1_PRESSED, NULL);
+	keypad(stdscr, TRUE);
+
+	MEVENT event; /* Guarda as coordenadas do clique do mouse */
+
 
 	/* Carregando as janelas */
 	refresh();
@@ -241,19 +328,142 @@ TBoard* CreateNewBoard(void)
 	/* Desenhando um tabuleiro */
 	DrawBoard(boardwin);
 	DrawAxis(yaxis, xaxis);
+
+	/* Mostrando as ajudas */
 	HelpWinNewBoard(helpwin);
-	init_msg_win(messages);
-	
-	/* Carregando o tabuleiro desenhado */
-	wrefresh(boardwin);
-	wrefresh(yaxis);
-	wrefresh(xaxis);
+	init_msg_win(messages);	/* Menu de mensagens */
 
-	getch();
+	/* Inicializando um tabuleiro vazio */
+	StartEmptyBoard(board);
 
+	while(!finished)
+		{
+			choice = getch();
+			clear_keywin(keywin);
+
+			switch(choice)
+				{
+				case 'a': /* Usuário escolheu adicionar uma peça */
+					{
+						print_message(messages, INSERT_PIECE);
+
+						/* Adiquirindo a peça do usuário */
+						curs_set(1);
+						echo();
+						wmove(keywin, 2, 1);
+						piece = wgetch(keywin); /* Aquirindo a peça do usuário */
+						noecho();
+						curs_set(0);
+
+						/* Verificando se a peça realmente é uma peça de xadrez */
+						if(valid_piece(piece) == true)
+							{
+								print_message(messages, CLICK); /* Avisar o usuário de clicar na tela */
+						
+								choice = getch(); /* Pegando o clique do mouse */
+
+								if(choice == KEY_MOUSE) /* Usuário apertou o botão esquerdo do mouse */
+									{
+										if(getmouse(&event) == OK)
+											{
+												/* Traduzindo das coordenadas da tela para as do tabuleiro */
+												TranslateCoord(event.y, event.x, &b_line, &b_column);
+												/* Inserindo a peça no tabuleiro */
+												InsertPiece(board, piece, b_line, b_column);
+
+												if(ValidBoard(board) || DontHaveMinimun(board))
+													{
+														InitBoard(boardwin, board);
+														wrefresh(boardwin);
+													}
+												else /* O tabuleiro não é válido */
+													{
+														RemovePiece(board, b_line, b_column);
+														print_message(messages, INVALID_BOARD);
+													}
+											} /* getmouse() OK */
+									} /* if(choice == KEY_MOUSE) */
+
+								else  /* Usuário não utilizou o mouse */
+									{
+										print_message(messages, USE_MOUSE);
+									}
+										
+							}
+						else
+							{
+								/* O usuário tentou adicionar uma peça que não devia */
+								print_message(messages, INVALID_PIECE);
+							}
+					
+						break;
+					}  /* case 'a' */
+
+				case 'r': /* Usuário escolheu remover uma peça */
+					{
+						print_message(messages, CLICK);
+						choice = getch(); /* Pegando o teclado */
+
+						if(choice == KEY_MOUSE)
+							{
+								if(getmouse(&event) == OK)
+									{
+										/* Traduzindo das coordenadas da tela para as do tabuleiro */
+										TranslateCoord(event.y, event.x, &b_line, &b_column);
+
+										/* Fazendo backup da peça na posição */
+										piece = WhatPiece(board, b_line, b_column);
+										/* Removendo a peça */
+										RemovePiece(board, b_line, b_column);
+
+										if(ValidBoard(board) || DontHaveMinimun(board))
+											{
+												InitBoard(boardwin, board);
+												wrefresh(boardwin);
+											}
+										else /* Tabuleiro não é válido */
+											{
+												InsertPiece(board, piece, b_line, b_column);
+												print_message(messages, INVALID_BOARD);
+											}
+									} /* getmouse( ... ) == OK */
+							} /* choice == KEY_MOUSE */
+						else
+							{
+								print_message(messages, USE_MOUSE);
+							}
+					} /* case 'r' */
+					break;
+					
+				case 'q': /* Usuário escolheu sair do jogo */
+					print_message(messages, ARE_YOU_SURE);
+					choice = 'a';
+					while((choice != 's') && (choice != 'n'))
+						{
+							choice = getch();
+							if(choice == 's'){
+								free(board);
+								board = NULL;
+								finished = true;
+							}
+							else if(choice == 'n'){
+								print_message(messages, CONTINUE);
+							}
+						} /* while(choice != ... ) */
+					break;
+					
+				case 'f':
+					finished = true;
+					break;
+				}
+		}
+
+	delwin(messages);
 	delwin(boardwin);
 	delwin(yaxis);
 	delwin(xaxis);
+	delwin(keywin);
+	delwin(helpwin);
 
 	return board;
 } /* CreateNewBoard() */
@@ -457,18 +667,19 @@ void write_keys_help(WINDOW* keywin, int wintype)
 	box(keywin, 0, 0);
 	
 	/* Escrevendo as ajudas de teclas */
-	if(wintype == GAMING)
+	if(wintype == GAMING) /* Jogando normalmente */
 		{
 			mvwprintw(keywin, 1, 1, "q-Sair");
 			mvwprintw(keywin, 1, 11, "j-Jogada pela notação");
 			mvwprintw(keywin, 1, 37, "h-Ajuda");
 			mvwprintw(keywin, 1, 48, "d-deletar jogada");
 		}
-	else if(wintype == CREATING)
+	else if(wintype == CREATING) /* Menu de criação de tabuleiro */
 		{
 			mvwprintw(keywin, 1, 1, "q-Sair");
 			mvwprintw(keywin, 1, 9, "a-Adicionar");
 			mvwprintw(keywin, 1, 24, "r-Remover");
+			mvwprintw(keywin, 1, 36, "f-Finalizar");
 		}
 	
 	/* Carregando a janela no terminal */
@@ -565,6 +776,24 @@ void print_message(WINDOW* messages, int msg)
 			break;
 		case NOTWHITESMOVE:
 			wprintw(messages, "Não é a vez das brancas");
+			break;
+		case CONTINUE:
+			wprintw(messages, "Continuando...");
+			break;
+		case INSERT_PIECE:
+			wprintw(messages, "Qual a peça a ser adicionada?");
+			break;
+		case CLICK:
+			wprintw(messages, "Clique na posição desejada");
+			break;
+		case INVALID_PIECE:
+			wprintw(messages, "Peça inválida");
+			break;
+		case INVALID_BOARD:
+			wprintw(messages, "Tabuleiro inválido");
+			break;
+		case USE_MOUSE:
+			wprintw(messages, "Por favor, utilize o mouse");
 			break;
 		}
 	

@@ -542,3 +542,37 @@ int valid_piece(char piece)
 		return false;
 	}
 } /* valid_piece() */
+
+
+int DontHaveMinimun(TBoard* board)
+{
+	int i, j;
+	int b_kings = 0, w_kings = 0;
+	char piece;
+
+	for(i = 0; i < 8; i++){
+		for(j = 0; j < 8; j++){
+			piece = board->Board[i][j];
+			if(piece != '\\')
+				{
+					if(piece == 'K'){
+						b_kings++;
+						if(b_kings > 1){
+							return false;
+						}
+					}
+					else if(piece == 'k'){
+						w_kings++;
+						if(w_kings > 1){
+							return false;
+						}
+					}
+					else{
+						return false;
+					}
+				} /* piece != '\\' */
+		} /* for das colunas */
+	} /* for das colunas */
+
+	return true;
+}

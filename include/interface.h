@@ -29,6 +29,12 @@ const int WHITE_MOVE     = 4;
 const int BLACK_MOVE     = 5;
 const int NOTBLACKSMOVE  = 6;
 const int NOTWHITESMOVE  = 7;
+const int CONTINUE       = 8;
+const int INSERT_PIECE   = 9;
+const int CLICK          = 10;
+const int INVALID_PIECE  = 11;
+const int INVALID_BOARD  = 12;
+const int USE_MOUSE      = 13;
 
 /* Constantes para modos de jogo */
 const int PVP      = 1; /* Player vs Player */
@@ -48,6 +54,22 @@ const int CREATING = 1;
 /* Constantes que indicam de quem é a vez de jogar */
 const int BLACKS_TURN = 0;
 const int WHITES_TURN = 1;
+
+
+WINDOW* MakeBoardWin(void);
+
+WINDOW* MakeYaxisWin(void);
+
+WINDOW* MakeXaxisWin(void);
+
+WINDOW* MakeKeyWin(void);
+
+WINDOW* MakeMsgWin(void);
+
+WINDOW* MakeHelpWin(void);
+
+void TranslateCoord(int yscreen, int xscreen, int* yboard, int* xboard);
+
 
 /* Inicia um tabuleiro graficamente */
 /*! \fn void InitBoard(WINDOW* boardwin, TBoard* board)
@@ -127,7 +149,7 @@ void clear_keywin(WINDOW* keywin);
 /*! \fn void init_msg_win(WINDOW* messages)
         \brief Inicializa a janela de mensagens
 
-        \param messages Janelas de mensagens já alocada */
+        \param messages Janela de mensagens já alocada */
 void init_msg_win(WINDOW* messages);
 
 /* Função de limpar janela de mensagens */
