@@ -15,4 +15,8 @@ Como jogar:
 
 . Modo Jogador x Jogador:
 
+Aparece a interface com o tabuleiro selecionado, começando pelas peças brancas. O jogador deve escrever na linha de comando usando o padrão pré estabelecido para determinar a peça em sua posição inicial e a posição final do movimento. Em seguida, é a vez das peça pretas jogarem, seguindo o mesmo procedimento. O jogo termina ao se chegar em uma condição de checkmate ou empate.
+
+. Modo Jogador x Computador:
  
+Aparece a interface com o tabuleiro selecionado, começando pelas peças brancas. O jogador recebe escrito naa tela as melhores jogadas possíveis para o momento, podendo escolhê-las ou não. Em seguida, a maquina joga baseada em sua IA para tentar ganhar do jogador. O jogo termina quando se chega em uma posição de checkmate ou empate.
