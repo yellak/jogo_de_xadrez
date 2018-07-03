@@ -517,3 +517,28 @@ void copy_boards(TBoard* copy, TBoard* board){
 
 	copy->Weight = board->Weight;
 }
+
+int valid_piece(char piece)
+{
+	if(piece == 'K' || piece == 'k'){
+		return true;
+	}
+	else if(piece == 'Q' || piece == 'q'){
+		return true;
+	}
+	else if(piece == 'R' || piece == 'r'){
+		return true;
+	}
+	else if(piece == 'B' || piece == 'b'){
+		return true;
+	}
+	else if(piece == 'N' || piece == 'n'){
+		return true;
+	}
+	else if(piece == 'P' || piece == 'p'){
+		return true;
+	}
+	else{
+		return false;
+	}
+} /* valid_piece() */

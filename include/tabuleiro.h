@@ -168,4 +168,6 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
 */
 void copy_boards(TBoard* copy, TBoard* board);
 
+int valid_piece(char piece);
+
 #endif
