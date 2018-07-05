@@ -14,4 +14,5 @@ Data  |Horas Trabalhadas |Tipo Tarefa                                  |Descriç
 02/07 |0.5 horas         |revisar casos de teste                       |Mudanças nos casos de teste
 02/07 |2 horas           |codifica módulo                              |Implementação das funções de movimento do módulo logica
 02/07 |2 horas           |Redigir casos de teste                       |Desenvolvimento dos casos de testes do modulo logica
-05/07 |
+05/07 |1.5 horas         |revisar código do módulo                     | 
+05/07 |1.5 horas         |revisar casos de teste                       |
