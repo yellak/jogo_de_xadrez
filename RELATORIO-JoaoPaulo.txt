@@ -1,0 +1,3 @@
+22/06 | 2 Horas | Discussões e Encontro                     | Decisão de estruturas e módulos
+29/06 | 1 Hora  | Reunião presencial                        | Decisões relativas à IA e árvore
+3/07  | 1 hora  | Inspeção e Readme			    | Revisão categorica dos headers e criação de um readme.
