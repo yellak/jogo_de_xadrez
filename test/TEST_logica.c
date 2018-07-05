@@ -396,6 +396,51 @@ TEST(Algebraic_translation, Unnamed_movement)
 	free(expect_move);
 }
 
+TEST(Test_WhitePawnMovements, Verify_NULL_Variables){
+	TBoard* board_null = NULL;
+	TBoard* board = AlocateBoard();
+	ListOfMoves* list_null = NULL;
+	ListOfMoves* list = CreateListOfMoves();
+
+	/* Testa para o primeiro parametro nulo e o segundo não */
+	EXPECT_EQ(NULL, WhitePawnMovements(board_null, list, 1, 2));
+	/* Testa para o segundo parametro nulo e o primeiro não */
+	EXPECT_EQ(NULL, WhitePawnMovements(board, list_null, 1, 2));
+
+	DeleteListOfMoves(list);
+	free(board);
+}
+
+TEST(Test_BlackPawnMovements, Verify_NULL_Variables){
+	TBoard* board_null = NULL;
+	TBoard* board = AlocateBoard();
+	ListOfMoves* list_null = NULL;
+	ListOfMoves* list = CreateListOfMoves();
+
+	/* Testa para o primeiro parametro nulo e o segundo não */
+	EXPECT_EQ(NULL, BlackPawnMovements(board_null, list, 1, 2));
+	/* Testa para o segundo parametro nulo e o primeiro não */
+	EXPECT_EQ(NULL, BlackPawnMovements(board, list_null, 1, 2));
+
+	DeleteListOfMoves(list);
+	free(board);
+}
+
+TEST(Test_HorseMovements, Verify_NULL_Variables){
+	TBoard* board_null = NULL;
+	TBoard* board = AlocateBoard();
+	ListOfMoves* list_null = NULL;
+	ListOfMoves* list = CreateListOfMoves();
+
+	/* Testa para o primeiro parametro nulo e o segundo não */
+	EXPECT_EQ(NULL, HorseMovements(board_null, list, 1, 2));
+	/* Testa para o segundo parametro nulo e o primeiro não */
+	EXPECT_EQ(NULL, HorseMovements(board, list_null, 1, 2));
+
+	DeleteListOfMoves(list);
+	free(board);
+}
+
 TEST(Test_TowerMovements, Verify_NULL_Variables){
 	TBoard* board_null = NULL;
 	TBoard* board = AlocateBoard();
@@ -411,7 +456,109 @@ TEST(Test_TowerMovements, Verify_NULL_Variables){
 	free(board);
 }
 
+TEST(Test_BishopMovements, Verify_NULL_Variables){
+	TBoard* board_null = NULL;
+	TBoard* board = AlocateBoard();
+	ListOfMoves* list_null = NULL;
+	ListOfMoves* list = CreateListOfMoves();
+
+	/* Testa para o primeiro parametro nulo e o segundo não */
+	EXPECT_EQ(NULL, BishopMovements(board_null, list, 1, 2));
+	/* Testa para o segundo parametro nulo e o primeiro não */
+	EXPECT_EQ(NULL, BishopMovements(board, list_null, 1, 2));
+
+	DeleteListOfMoves(list);
+	free(board);
+}
+
+TEST(Test_QueenMovements, Verify_NULL_Variables){
+	TBoard* board_null = NULL;
+	TBoard* board = AlocateBoard();
+	ListOfMoves* list_null = NULL;
+	ListOfMoves* list = CreateListOfMoves();
+
+	/* Testa para o primeiro parametro nulo e o segundo não */
+	EXPECT_EQ(NULL, QueenMovements(board_null, list, 1, 2));
+	/* Testa para o segundo parametro nulo e o primeiro não */
+	EXPECT_EQ(NULL, QueenMovements(board, list_null, 1, 2));
+
+	DeleteListOfMoves(list);
+	free(board);
+}
+
+TEST(Test_KingMovements, Verify_NULL_Variables){
+	TBoard* board_null = NULL;
+	TBoard* board = AlocateBoard();
+	ListOfMoves* list_null = NULL;
+	ListOfMoves* list = CreateListOfMoves();
+
+	/* Testa para o primeiro parametro nulo e o segundo não */
+	EXPECT_EQ(NULL, KingMovements(board_null, list, 1, 2));
+	/* Testa para o segundo parametro nulo e o primeiro não */
+	EXPECT_EQ(NULL, KingMovements(board, list_null, 1, 2));
+
+	DeleteListOfMoves(list);
+	free(board);
+}
+
 /* Verifica se armazena os movimentos corretamente em um tabuleiro vazio */
+
+TEST(Test_WhitePawnMovements, Verify_Movements_EmptyBoard){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[6][5] = W_PAWN;
+
+	WhitePawnMovements(board, AllPlays, 6, 5);
+	EXPECT_EQ(2, AllPlays->howmany);
+
+	board->Board[4][4] = W_PAWN;
+	WhitePawnMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(1, AllPlays2->howmany);
+
+	DeleteListOfMoves(AllPlays);
+	DeleteListOfMoves(AllPlays2);
+	free(board);
+}
+
+TEST(Test_BlackPawnMovements, Verify_Movements_EmptyBoard){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[1][5] = B_PAWN;
+
+	BlackPawnMovements(board, AllPlays, 1, 5);
+	EXPECT_EQ(2, AllPlays->howmany);
+
+	board->Board[4][4] = B_PAWN;
+	BlackPawnMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(1, AllPlays2->howmany);
+
+	DeleteListOfMoves(AllPlays);
+	DeleteListOfMoves(AllPlays2);
+	free(board);
+}
+
+TEST(Test_HorseMovements, Verify_Movements_EmptyBoard){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_HORSE;
+
+	HorseMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(8, AllPlays->howmany);
+
+	board->Board[4][4] = B_HORSE;
+	HorseMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(8, AllPlays2->howmany);
+
+	DeleteListOfMoves(AllPlays);
+	DeleteListOfMoves(AllPlays2);
+	free(board);
+}
 
 TEST(Test_TowerMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
@@ -429,51 +576,6 @@ TEST(Test_TowerMovements, Verify_Movements_EmptyBoard){
 
 	DeleteListOfMoves(AllPlays);
 	DeleteListOfMoves(AllPlays2);
-	free(board);
-}
-
-/* Verifica se captura apenas peças oponentes */
-
-TEST(Test_TowerMovements, Verify_Movements_WhifePieces){
-	ListOfMoves* AllPlays = CreateListOfMoves();
-	ListOfMoves* AllPlays2 = CreateListOfMoves();	
-	TBoard* board = AlocateBoard();
-	StartEmptyBoard(board);
-	board->Board[4][4] = W_TOWER;
-
-	
-	board->Board[5][4] = W_HORSE;
-	board->Board[3][4] = W_PAWN;
-	board->Board[4][5] = W_BISHOP;
-	board->Board[4][3] = W_TOWER;
-
-	TowerMovements(board, AllPlays, 4, 4);
-	EXPECT_EQ(0, AllPlays->howmany);
-
-	board->Board[5][4] = B_HORSE;
-	board->Board[3][4] = B_PAWN;
-	board->Board[4][5] = B_BISHOP;
-	board->Board[4][3] = B_TOWER;
-	TowerMovements(board, AllPlays2, 4, 4);
-	EXPECT_EQ(4, AllPlays2->howmany);
-
-	free(board);
-	DeleteListOfMoves(AllPlays2);
-	DeleteListOfMoves(AllPlays);
-}
-
-TEST(Test_BishopMovements, Verify_NULL_Variables){
-	TBoard* board_null = NULL;
-	TBoard* board = AlocateBoard();
-	ListOfMoves* list_null = NULL;
-	ListOfMoves* list = CreateListOfMoves();
-
-	/* Testa para o primeiro parametro nulo e o segundo não */
-	EXPECT_EQ(NULL, BishopMovements(board_null, list, 1, 2));
-	/* Testa para o segundo parametro nulo e o primeiro não */
-	EXPECT_EQ(NULL, BishopMovements(board, list_null, 1, 2));
-
-	DeleteListOfMoves(list);
 	free(board);
 }
 
@@ -496,7 +598,165 @@ TEST(Test_BishopMovements, Verify_Movements_EmptyBoard){
 	free(board);
 }
 
-TEST(Test_BishopMovements, Verify_Movements_WhifePieces){
+TEST(Test_QueenMovements, Verify_Movements_EmptyBoard){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_QUEEN;
+
+	QueenMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(27, AllPlays->howmany);
+
+	board->Board[4][4] = B_QUEEN;
+	QueenMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(27, AllPlays2->howmany);
+
+	DeleteListOfMoves(AllPlays);
+	DeleteListOfMoves(AllPlays2);
+	free(board);
+}
+
+TEST(Test_KingMovements, Verify_Movements_EmptyBoard){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_KING;
+
+	KingMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(8, AllPlays->howmany);
+
+	board->Board[4][4] = B_KING;
+	KingMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(8, AllPlays2->howmany);
+
+	DeleteListOfMoves(AllPlays);
+	DeleteListOfMoves(AllPlays2);
+	free(board);
+}
+
+/* Verifica se captura apenas peças oponentes */
+
+TEST(Test_WhitePawnMovements, Verify_Movements_RivalPieces){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_PAWN;
+
+	
+	board->Board[3][5] = W_HORSE;
+	board->Board[3][3] = W_BISHOP;
+	board->Board[5][5] = W_PAWN;
+	board->Board[5][3] = W_TOWER;
+
+	WhitePawnMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(1, AllPlays->howmany);
+
+	board->Board[3][5] = B_HORSE;
+	board->Board[3][3] = B_BISHOP;
+	board->Board[5][5] = B_PAWN;
+	board->Board[5][3] = B_TOWER;
+
+	WhitePawnMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(5, AllPlays2->howmany);
+
+	free(board);
+	DeleteListOfMoves(AllPlays2);
+	DeleteListOfMoves(AllPlays);
+}
+
+TEST(Test_BlackPawnMovements, Verify_Movements_RivalPieces){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = B_PAWN;
+
+	
+	board->Board[3][5] = B_HORSE;
+	board->Board[3][3] = B_BISHOP;
+	board->Board[5][5] = B_PAWN;
+	board->Board[5][3] = B_TOWER;
+
+	BlackPawnMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(1, AllPlays->howmany);
+
+	board->Board[3][5] = W_HORSE;
+	board->Board[3][3] = W_BISHOP;
+	board->Board[5][5] = W_PAWN;
+	board->Board[5][3] = W_TOWER;
+
+	BlackPawnMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(5, AllPlays2->howmany);
+
+	free(board);
+	DeleteListOfMoves(AllPlays2);
+	DeleteListOfMoves(AllPlays);
+}
+
+TEST(Test_HorseMovements, Verify_Movements_RivalPieces){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_HORSE;
+
+	
+	board->Board[3][2] = W_HORSE;
+	board->Board[2][3] = W_PAWN;
+	board->Board[2][5] = W_BISHOP;
+	board->Board[5][2] = W_PAWN;
+	board->Board[3][6] = W_TOWER;
+	board->Board[6][3] = W_PAWN;
+	board->Board[6][5] = W_PAWN;
+	board->Board[5][6] = W_PAWN;
+
+	HorseMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(0, AllPlays->howmany);
+
+	board->Board[4][4] = B_HORSE;
+
+	HorseMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(8, AllPlays2->howmany);
+
+	free(board);
+	DeleteListOfMoves(AllPlays2);
+	DeleteListOfMoves(AllPlays);
+}
+
+TEST(Test_TowerMovements, Verify_Movements_RivalPieces){
+	ListOfMoves* AllPlays = CreateListOfMoves();
+	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = W_TOWER;
+
+	
+	board->Board[5][4] = W_HORSE;
+	board->Board[3][4] = W_PAWN;
+	board->Board[4][5] = W_BISHOP;
+	board->Board[4][3] = W_TOWER;
+
+	TowerMovements(board, AllPlays, 4, 4);
+	EXPECT_EQ(0, AllPlays->howmany);
+
+	board->Board[5][4] = B_HORSE;
+	board->Board[3][4] = B_PAWN;
+	board->Board[4][5] = B_BISHOP;
+	board->Board[4][3] = B_TOWER;
+	TowerMovements(board, AllPlays2, 4, 4);
+	EXPECT_EQ(4, AllPlays2->howmany);
+
+	free(board);
+	DeleteListOfMoves(AllPlays2);
+	DeleteListOfMoves(AllPlays);
+}
+
+
+
+TEST(Test_BishopMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
 	TBoard* board = AlocateBoard();
@@ -523,41 +783,9 @@ TEST(Test_BishopMovements, Verify_Movements_WhifePieces){
 	DeleteListOfMoves(AllPlays);
 }
 
-TEST(Test_QueenMovements, Verify_NULL_Variables){
-	TBoard* board_null = NULL;
-	TBoard* board = AlocateBoard();
-	ListOfMoves* list_null = NULL;
-	ListOfMoves* list = CreateListOfMoves();
 
-	/* Testa para o primeiro parametro nulo e o segundo não */
-	EXPECT_EQ(NULL, QueenMovements(board_null, list, 1, 2));
-	/* Testa para o segundo parametro nulo e o primeiro não */
-	EXPECT_EQ(NULL, QueenMovements(board, list_null, 1, 2));
 
-	DeleteListOfMoves(list);
-	free(board);
-}
-
-TEST(Test_QueenMovements, Verify_Movements_EmptyBoard){
-	ListOfMoves* AllPlays = CreateListOfMoves();
-	ListOfMoves* AllPlays2 = CreateListOfMoves();	
-	TBoard* board = AlocateBoard();
-	StartEmptyBoard(board);
-	board->Board[4][4] = W_QUEEN;
-
-	QueenMovements(board, AllPlays, 4, 4);
-	EXPECT_EQ(27, AllPlays->howmany);
-
-	board->Board[4][4] = B_QUEEN;
-	QueenMovements(board, AllPlays2, 4, 4);
-	EXPECT_EQ(27, AllPlays2->howmany);
-
-	DeleteListOfMoves(AllPlays);
-	DeleteListOfMoves(AllPlays2);
-	free(board);
-}
-
-TEST(Test_QueenMovements, Verify_Movements_WhifePieces){
+TEST(Test_QueenMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
 	TBoard* board = AlocateBoard();
@@ -592,41 +820,9 @@ TEST(Test_QueenMovements, Verify_Movements_WhifePieces){
 	DeleteListOfMoves(AllPlays);
 }
 
-TEST(Test_KingMovements, Verify_NULL_Variables){
-	TBoard* board_null = NULL;
-	TBoard* board = AlocateBoard();
-	ListOfMoves* list_null = NULL;
-	ListOfMoves* list = CreateListOfMoves();
 
-	/* Testa para o primeiro parametro nulo e o segundo não */
-	EXPECT_EQ(NULL, KingMovements(board_null, list, 1, 2));
-	/* Testa para o segundo parametro nulo e o primeiro não */
-	EXPECT_EQ(NULL, KingMovements(board, list_null, 1, 2));
 
-	DeleteListOfMoves(list);
-	free(board);
-}
-
-TEST(Test_KingMovements, Verify_Movements_EmptyBoard){
-	ListOfMoves* AllPlays = CreateListOfMoves();
-	ListOfMoves* AllPlays2 = CreateListOfMoves();	
-	TBoard* board = AlocateBoard();
-	StartEmptyBoard(board);
-	board->Board[4][4] = W_KING;
-
-	KingMovements(board, AllPlays, 4, 4);
-	EXPECT_EQ(8, AllPlays->howmany);
-
-	board->Board[4][4] = B_KING;
-	KingMovements(board, AllPlays2, 4, 4);
-	EXPECT_EQ(8, AllPlays2->howmany);
-
-	DeleteListOfMoves(AllPlays);
-	DeleteListOfMoves(AllPlays2);
-	free(board);
-}
-
-TEST(Test_KingMovements, Verify_Movements_WhifePieces){
+TEST(Test_KingMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
 	TBoard* board = AlocateBoard();
@@ -653,6 +849,7 @@ TEST(Test_KingMovements, Verify_Movements_WhifePieces){
 	board->Board[3][4] = B_PAWN;
 	board->Board[4][5] = B_BISHOP;
 	board->Board[4][3] = B_TOWER;
+
 	KingMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(8, AllPlays2->howmany);
 
@@ -661,32 +858,75 @@ TEST(Test_KingMovements, Verify_Movements_WhifePieces){
 	DeleteListOfMoves(AllPlays);
 }
 
-/* Testa o adição do movimento de roque */
-TEST(Test_KingMovements, Verify_Addict_Roque_Movement){
-	ListOfMoves* AllPlays = CreateListOfMoves();
-	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+// /* Testa o adição do movimento de roque */
+// TEST(Test_KingMovements, Verify_Addict_Roque_Movement){
+// 	ListOfMoves* AllPlays = CreateListOfMoves();
+// 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+// 	TBoard* board = AlocateBoard();
+// 	TBoard* board2 = AlocateBoard();
+// 	StartEmptyBoard(board);
+// 	StartEmptyBoard(board2);
+// 	board->Board[0][4] = W_KING;
+// 	board->Board[0][0] = W_TOWER;
+// 	board->Board[0][7] = W_TOWER;
+
+// 	KingMovements(board, AllPlays, 0, 4);
+// 	EXPECT_EQ(7, AllPlays->howmany);
+
+// 	board2->Board[7][4] = B_KING;
+// 	board2->Board[7][0] = B_TOWER;
+// 	board2->Board[7][7] = B_TOWER;
+
+// 	KingMovements(board2, AllPlays2, 7, 4);
+// 	EXPECT_EQ(7, AllPlays2->howmany);
+
+// 	free(board);
+// 	free(board2);
+// 	DeleteListOfMoves(AllPlays2);
+// 	DeleteListOfMoves(AllPlays);
+// }
+
+TEST(Test_AllMovements, Verify_NULL_Board){
+	TBoard* board_null = NULL;
+
+	/* Testa para os movimentos referentes as peças brancas */
+	EXPECT_EQ(NULL, AnalyzePossibleMovementsWhite(board_null));
+	/* Testa para os movimentos referentes as peças pretas */
+	EXPECT_EQ(NULL, AnalyzePossibleMovementsBlack(board_null));
+}
+
+TEST(Test_AllMovements, Verify_Movements_EmptyBoard){
 	TBoard* board = AlocateBoard();
-	TBoard* board2 = AlocateBoard();
 	StartEmptyBoard(board);
-	StartEmptyBoard(board2);
-	board->Board[0][4] = W_KING;
-	board->Board[0][0] = W_TOWER;
-	board->Board[0][7] = W_TOWER;
+	ListOfMoves* AllPlays = AnalyzePossibleMovementsWhite(board);
 
-	KingMovements(board, AllPlays, 0, 4);
-	EXPECT_EQ(7, AllPlays->howmany);
+	/* Testa para os movimentos referentes as peças brancas */
+	EXPECT_EQ(0, AllPlays->howmany);
 
-	board2->Board[7][4] = B_KING;
-	board2->Board[7][0] = B_TOWER;
-	board2->Board[7][7] = B_TOWER;
+	AllPlays = AnalyzePossibleMovementsBlack(board);
 
-	KingMovements(board2, AllPlays2, 7, 4);
-	EXPECT_EQ(7, AllPlays2->howmany);
+	/* Testa para os movimentos referentes as peças pretas */
+	EXPECT_EQ(0, AllPlays->howmany);
 
-	free(board);
-	free(board2);
-	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
+}
+
+TEST(Test_AllMovements, Verify_Movements_StandardBoard){
+	TBoard* board = AlocateBoard();
+	StartStandardBoard(board);
+	ListOfMoves* AllPlays = AnalyzePossibleMovementsWhite(board);
+
+	/* Testa para os movimentos referentes as peças brancas */
+	EXPECT_EQ(20, AllPlays->howmany);
+
+	AllPlays = AnalyzePossibleMovementsBlack(board);
+
+	/* Testa para os movimentos referentes as peças pretas */
+	EXPECT_EQ(20, AllPlays->howmany);
+
+	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
 int main(int argc, char **argv){
