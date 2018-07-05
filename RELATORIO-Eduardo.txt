@@ -28,4 +28,9 @@ Tempo: 1.5 horas
 Tópico: Finalizar adaptações propostas no dia anterior
 Resumo = Finalizou-se a confecção das funções responsáveis pelos movimentos possíveis.
 
+Dia 05/07
+Tempo: 1.5 horas
+Tópico: Finalizar por completo os movimentos básicos de todas as peças
+Resumo = Terminou-se a construção de todos os movimentos básicos referentes a todas as peças.
+
 
