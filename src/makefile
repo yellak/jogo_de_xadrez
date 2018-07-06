@@ -50,7 +50,15 @@ IOOBJ = $(patsubst %, $(ODIR)/%, $(_IOOBJ))
 _IODEPS = in-out.h tabuleiro.h
 IODEPS = $(patsubst %, $(IDIR)/%, $(_IODEPS))
 
-all: main test_tabuleiro test_logica test_arvore test_list test_io
+# Dependências do módulo IA e seu módulo de testes
+
+_IAOBJ = ia.o TEST_ia.o logica.o arv_decisoes.o tabuleiro.o list_of_moves.o
+IAOBJ = $(patsubst %, $(ODIR)/%, $(_IAOBJ))
+
+_IADEPS = ia.h logica.h arv_decisoes.h tabuleiro.h list_of_moves.h
+IADEPS = $(patsubst %, $(IDIR)/%, $(_IADEPS))
+
+all: main test_tabuleiro test_logica test_arvore test_list test_io test_ia
 
 # Compila os módulos principais
 $(ODIR)/%.o: %.c
@@ -76,6 +84,9 @@ test_arvore: $(ARVOBJ) $(ARVDEPS)
 	$(CC) -g -o $@ $^ $(GTESTFLAGS)
 
 test_io: $(IOOBJ) $(IODEPS)
+	$(CC) -g -o $@ $^ $(GTESTFLAGS)
+
+test_ia: $(IAOBJ) $(IADEPS)
 	$(CC) -g -o $@ $^ $(GTESTFLAGS)
 
 

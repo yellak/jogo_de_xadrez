@@ -60,5 +60,6 @@ src/test_logica
 src/test_arvore
 src/test_list
 src/test_io
+src/test_ia
 
 include/gtest
