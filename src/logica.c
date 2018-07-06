@@ -874,4 +874,5 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 		DeleteListOfMoves(AllMoves);
 		return 1;
 	}
+
 }

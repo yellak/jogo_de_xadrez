@@ -1088,6 +1088,39 @@ TEST(Test_VerifyValidMovement, Verify_Valid_Movements){
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 6, 2, 7));
 }
 
+TEST(Test_VerifyValidMovement, Veirfy_Invalid_Movements){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[0][0] = B_PAWN;
+	board->Board[0][1] = B_TOWER;
+	board->Board[0][2] = B_BISHOP;
+	board->Board[0][4] = B_KING;
+	board->Board[0][5] = B_QUEEN;
+	board->Board[0][6] = B_HORSE;
+
+	/* Posições fora do tabuleiro */
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 0, 22, 15));
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 1, 14, 13));
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 2, 12, 33));
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 4, 11, 44));
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 5, 13, 54));
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 6, 23, 74));
+
+	/* Posições contendo peças de mesma cor */
+	board->Board[1][0] = B_PAWN;
+	board->Board[1][1] = B_PAWN;
+	board->Board[1][3] = B_PAWN;
+	board->Board[1][4] = B_PAWN;
+	board->Board[1][5] = B_PAWN;
+	board->Board[2][7] = B_PAWN;
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 0, 1, 0));
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 1, 1, 1));
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 2, 1, 3));
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 4, 1, 4));
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 5, 1, 5));
+	EXPECT_EQ(0, VerifyValidMovement(board, 0, 6, 2, 7));
+}
+
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
