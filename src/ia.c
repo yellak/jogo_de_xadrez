@@ -1,6 +1,6 @@
 #include "../include/ia.h"
 
-/* Função: Create_BestTree
+/* Função: Create_MovesTree
 		Objetivo: Criar uma árvore de decisões para ser base da IA
 
 		Parametros:
@@ -12,7 +12,7 @@
 		Saída: Essa função retorna um elemento do tipo árvore, contendo as jogadas possíveis para 
 		uma configuração específica do tabuleiro
 */
-Tree* Create_BestTree(TBoard *board, int turn){
+Tree* CreateMovesTree(TBoard *board, int turn){
 
 	/* Assertivas de entrada */
 	if(board == NULL || turn > 1 || turn < 0){
@@ -70,6 +70,7 @@ Tree* Create_BestTree(TBoard *board, int turn){
 			NodeTree* newnodechild = AlocateNodeTree(1, &boardauxchild, &currentnode->play);
 			AddChildNode(newnode, newnodechild, j);			
 		}
+
 		DeleteListOfMoves(AllMovesChild);
 	}
 
@@ -77,8 +78,21 @@ Tree* Create_BestTree(TBoard *board, int turn){
 
 	return tree;
 }
-//função que ordena jogadas, baseadas no peso do tabuleiro
-int Sort_Tree(Tree* tree) {}
+
+/* Função: Sort_Tree
+		Objetivo: Ordenar a árvore de acordo com a melhor jogada de uma cor e seus filhos de acordo com a melhor jogada da outra cor 
+
+		Parametros:
+			board - Ponteiro para a árvore que se deseja ordenar
+					Não deve ser nula
+			turn  - Inteiro contendo a informação de quem é jogada(Black = 0, White = 1)
+					Deve estar entre 0 e 1
+
+		Saída: Essa função retorna um inteiro indicando sucesso(0) ou fracasso(1) da operação de ordenar
+*/
+int SortTree(Tree* tree, int turn){
+	return 1;
+}
 
 //função para extrair melhor jogada , retorna a jogad
 

@@ -10,12 +10,12 @@
    	-A árvore alocada deve ser diferente de nula
  */
 
-TEST(Test_CreateTree, Verify_Creation_Tree){
+TEST(Test_CreateMovesTree, Verify_Creation_Tree){
 	Tree * tree;
 	TBoard board;
 	StartStandardBoard(&board);
 	int turn = WHITES_TURN;
-	tree = Create_MovesTree(&board, turn);
+	tree = CreateMovesTree(&board, turn);
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, tree != NULL);
@@ -32,11 +32,11 @@ TEST(Test_CreateTree, Verify_Creation_Tree){
    	-A árvore alocada deve ser nula
  */
 
-TEST(Test_CreateTree, Verify_Alocation_Tree){
+TEST(Test_CreateMovesTree, Verify_Alocation_Tree){
 	Tree * tree;
 	TBoard* board = NULL;
 	int turn = WHITES_TURN;
-	tree = Create_MovesTree(board, turn);
+	tree = CreateMovesTree(board, turn);
 
 	/* Testar a alocação */
 	EXPECT_EQ(NULL, tree);
@@ -53,12 +53,12 @@ TEST(Test_CreateTree, Verify_Alocation_Tree){
    	-Os tabuleiros de todos os nós devem ter peso 0
  */
 
-TEST(Test_CreateTree, Verify_Root_Information){
+TEST(Test_CreateMovesTree, Verify_Root_Information){
 	Tree * tree;
 	TBoard board;
 	StartStandardBoard(&board);
 	int turn = WHITES_TURN;
-	tree = Create_MovesTree(&board, turn);
+	tree = CreateMovesTree(&board, turn);
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, tree != NULL);
@@ -74,6 +74,29 @@ TEST(Test_CreateTree, Verify_Root_Information){
 		EXPECT_EQ(0, tree->root->child[i]->board->Weight);
 	}
 	
+	FreeTreeNodes(tree->root);
+	free(tree);
+}
+
+/* Teste para 
+   Procedimento:
+   	-
+   	-
+   	-
+   Resultados:
+   	-
+ */
+
+TEST(Test_SortTree, Verify_Creation_Tree){
+	TBoard board;
+	StartEmptyBoard(&board);
+	board.Board[4][4] = W_BISHOP;
+	board.Board[5][5] = B_PAWN;
+	int turn = WHITES_TURN;
+	Tree* tree = CreateMovesTree(&board, turn);
+
+	/* Testar a alocação */
+	EXPECT_EQ(0, SortTree(tree, turn));
 	FreeTreeNodes(tree->root);
 	free(tree);
 }
