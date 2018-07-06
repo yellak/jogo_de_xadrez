@@ -133,7 +133,7 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 */
 ListOfMoves* HorseMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
 
-int VerifyValidMovement(TBoard* board, int originx, int originy, int destinx, int destiny);
+int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, int destinyy);
 
 
 

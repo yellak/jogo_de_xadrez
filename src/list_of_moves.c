@@ -98,19 +98,19 @@ int DeleteListOfMoves(ListOfMoves* list){
 
 		Saída: Retorna um inteiro indicando a falha ou sucesso da operação.
 */
-int SearchListOfMoves(ListOfMoves* list, Move* move){
+int SearchListOfMoves(ListOfMoves* list, int originx, int originy, int destinyx, int destinyy){
 	NodeList* aux = list->first;
 
 	/* Percorre a lista até o último nó */
 	while(aux != NULL){
-		if(aux->play.origin[0] == move->origin[0] && aux->play.destiny[0] == move->destiny[0]){
-			if(aux->play.origin[1] == move->origin[1] && aux->play.destiny[1] == move->destiny[1]){
+		if(aux->play.origin[0] == originx && aux->play.destiny[0] == destinyx){
+			if(aux->play.origin[1] == originy && aux->play.destiny[1] == destinyy){
 				/* Caso encontre o movimento na lista, retorna 0 */
-				return 0;
+				return 1;
 			}
 		}
 		aux = aux->next;
 	}
 
-	return 1;
+	return 0;
 }

@@ -149,49 +149,37 @@ TEST(Test_DeleteListOfMoves, Verify_Valid_Entrie){
 /* Teste para verificar a se a função realiza uma busca corretamente
 	Procedimentos:
 	-Chamar a função para criar uma lista
-	-Inicializar um movimento
 	-Inserir nós na lista
 	-Buscar movimento na lista
 	Resultados:
-	-A função deve retornar 0
+	-A função deve retornar 1
 */
 TEST(Test_SearchListOfMoves, Verify_Succesfull_Search){
 	ListOfMoves* list = CreateListOfMoves();
-	Move move;
-	move.origin[0] = 1;
-	move.origin[1] = 2;
-	move.destiny[0] = 3;
-	move.destiny[1] = 4;
 
 	InsertMove(list, 0, 0, 0, 0);
 	InsertMove(list, 1, 2, 3, 4);
 
-	EXPECT_EQ(0, SearchListOfMoves(list, &move));
+	EXPECT_EQ(1, SearchListOfMoves(list, 1, 2, 3, 4));
 }
 
-/* Teste para verificar a se ao buscar um movimento que não está na lista retorna 1
+/* Teste para verificar a se ao buscar um movimento que não está na lista retorna 0
 	Procedimentos:
 	-Chamar a função para criar a lista.
-	-Inicializar um movimento
 	-Inserir nós na lista
 	-Buscar movimento que não existe na lista
 	Resultados:
-	-A função deve retornar 1
+	-A função deve retornar 0
 
 */
 
 TEST(Test_SearchListOfMoves, Verify_Failure_Search){
 	ListOfMoves* list = CreateListOfMoves();
-	Move move;
-	move.origin[0] = 1;
-	move.origin[1] = 2;
-	move.destiny[0] = 3;
-	move.destiny[1] = 4;
 
 	InsertMove(list, 0, 0, 0, 0);
 	InsertMove(list, 1, 1, 2, 3);
 
-	EXPECT_EQ(1, SearchListOfMoves(list, &move));
+	EXPECT_EQ(0, SearchListOfMoves(list, 1, 2, 3, 4));
 }
 
 int main(int argc, char **argv){

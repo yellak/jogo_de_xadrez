@@ -837,12 +837,37 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 	return AllMoves;
 }
 
-int VerifyValidMovement(TBoard* board, int originx, int originy, int destinx, int destiny){
+int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, int destinyy){
 	char piece;
+	ListOfMoves* AllMoves = CreateListOfMoves();
 
 	piece = WhatPiece(board, originx, originy);
-	if(board == NULL || piece == BLANK){
+	if(board == NULL){
 		return -1;	
+	}
+	if(piece == W_PAWN){
+		AllMoves = WhitePawnMovements(board, AllMoves, originx, originy);
+	}
+	if(piece == B_PAWN){
+		AllMoves = BlackPawnMovements(board, AllMoves, originx, originy);
+	}
+	else if(piece == W_HORSE || piece == B_HORSE){
+		AllMoves = HorseMovements(board, AllMoves, originx, originy);
+	}
+	else if(piece == W_TOWER || piece == B_TOWER){
+		AllMoves = TowerMovements(board, AllMoves, originx, originy);
+	}
+	else if(piece == W_BISHOP || piece == B_BISHOP){
+		AllMoves = BishopMovements(board, AllMoves, originx, originy);
+	}
+	else if(piece == W_QUEEN || piece == B_QUEEN){
+		AllMoves = QueenMovements(board, AllMoves, originx, originy);
+	}
+	else if(piece == W_KING || piece == B_KING){
+		AllMoves = KingMovements(board, AllMoves, originx, originy);
+	}
+	else{
+		return -1;
 	}
 
 }
