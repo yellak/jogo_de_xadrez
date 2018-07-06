@@ -161,15 +161,38 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
 /* Copiar dois tabuleiros */
 /*! \fn void copy_boards(TBoard* copy, TBoard* board)
         \brief Copia todas as peças de um tabuleiro para outro e também os
-               pesos. A função não possui retorno
+               pesos.
+
+        A função não possui retorno
 
         \param copy  Tabuleiro que será a cópia
         \param board Tabuleiro que será copiado
 */
 void copy_boards(TBoard* copy, TBoard* board);
 
+/* Verificar se uma peça é válida */
+/*! \fn int valid_piece(char piece)
+        \brief Verifica se uma peça dada é uma peça de xadrez ou não
+
+        \param piece Peça a ser verificada
+
+        \return true  Se a peça é uma peça de xadrez
+        \return false Se ela não for uma peça de xadrez */
 int valid_piece(char piece);
 
-int DontHaveMinimun(TBoard* board);
+/* Verificar tabuleiro mínino */
+/*! \fn int HaveMinimun(TBoard* board)
+        \brief Verifica se um tabuleiro é no máximo o mínimo para ser válido
+
+        Por exemplo, o tabuleiro mínimo é um rei de cada cor, se tiver
+		qualquer outra peça que não seja um rei ela retorna false, mas ela
+		também retorna true para um tabuleiro com menos que o mínimo para ser
+		válido como um tabuleiro vazio 
+
+        \param board Tabuleiro que será verificado
+
+        \return true  Se o tabuleiro obedece as condições estabelecidas
+        \return false Se o tabuleiro não obedece as condições estabelecidas */
+int HaveMinimun(TBoard* board);
 
 #endif

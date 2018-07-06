@@ -447,7 +447,7 @@ TBoard* CreateNewBoard(void)
 												/* Inserindo a peça no tabuleiro */
 												InsertPiece(board, piece, b_line, b_column);
 
-												if(ValidBoard(board) || DontHaveMinimun(board))
+												if(ValidBoard(board) || HaveMinimun(board))
 													{
 														InitBoard(boardwin, board);
 														wrefresh(boardwin);
@@ -492,7 +492,7 @@ TBoard* CreateNewBoard(void)
 										/* Removendo a peça */
 										RemovePiece(board, b_line, b_column);
 
-										if(ValidBoard(board) || DontHaveMinimun(board))
+										if(ValidBoard(board) || HaveMinimun(board))
 											{
 												InitBoard(boardwin, board);
 												wrefresh(boardwin);
@@ -931,7 +931,7 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 				print_message(messages, BLACK_MOVE);
 			}
 
-			if(choice == 'j') /* Tecla j */
+			if(choice == 'j') /* Tecla j - jogada pela notação */
 				{
 					/* Salvando tabuleiro anterior */
 					copy_boards(old_board, board);

@@ -28,7 +28,7 @@ TEST(Test_Verify_Empty_Board, Verify_If_Empty){
    Procedimento:
    	-Chamar função para uma variável nula.
    Resultados:
-   	-É esperado que a função retorne o valor de eroo '1'.
+   	-É esperado que a função retorne o valor de erro '1'.
 */
 TEST(Test_Verify_Empty_Board, Verify_NULL_Variables){
 	TBoard *board = NULL;
@@ -61,7 +61,7 @@ TEST(Test_Verify_Standard_Board, Verify_If_Correct_Positions){
 	EXPECT_EQ(B_HORSE, board.Board[0][6]);
 	EXPECT_EQ(W_HORSE, board.Board[7][1]);
 	EXPECT_EQ(W_HORSE, board.Board[7][6]);
-	/* Vericar Bispos. */
+	/* Verificar Bispos. */
 	EXPECT_EQ(B_BISHOP, board.Board[0][2]);
 	EXPECT_EQ(B_BISHOP, board.Board[0][5]);
 	EXPECT_EQ(W_BISHOP, board.Board[7][2]);
@@ -71,12 +71,12 @@ TEST(Test_Verify_Standard_Board, Verify_If_Correct_Positions){
 	EXPECT_EQ(W_KING, board.Board[7][4]);
 	EXPECT_EQ(B_QUEEN, board.Board[0][3]);
 	EXPECT_EQ(W_QUEEN, board.Board[7][3]);
-	/*Verificar peoes. */
+	/*Verificar peões. */
 	for(j=0; j < 8; j++){
 		EXPECT_EQ(B_PAWN, board.Board[1][j]);
 		EXPECT_EQ(W_PAWN, board.Board[6][j]);
 	}
-	/* VErificar espaços vazios. */
+	/* Verificar espaços vazios. */
 	for(i=2; i < 6; i++){
 		for(j=0; j < 8; j++){
 			EXPECT_EQ(BLANK, board.Board[i][j]);
@@ -108,7 +108,7 @@ TEST(Test_Color_Piece, Verify_Correct_Color){
 	EXPECT_EQ(-1, ColorPiece(BLANK));
 }
 
-/* Teste para verificar a validade da função que veifica qual peça está em determinda posição para um tabuleiro vazio.
+/* Teste para verificar a validade da função que verifica qual peça está em determinada posição para um tabuleiro vazio.
    Procedimentos:
    -Criar variável para o tabuleiro;
    -Chamar função que inicializa um tabuleiro vazio;
@@ -122,7 +122,7 @@ TEST(Test_What_Piece_in_Position, Verify_Empty_Boards){
 	EXPECT_EQ(BLANK, WhatPiece(&board, 2, 0));
 }
 
-/* Teste para verificar a validade da função que veifica qual peça está em determinda posição para um tabuleiro padrão.
+/* Teste para verificar a validade da função que verifica qual peça está em determinada posição para um tabuleiro padrão.
    Procedimentos:
    -Criar variável para o tabuleiro;
    -Chamar função que inicializa um tabuleiro padrão;
@@ -138,11 +138,11 @@ TEST(Test_What_Piece_in_Position, Verify_Standard_Boards){
 	EXPECT_EQ(W_KING, WhatPiece(&board, 7, 4));
 }
 
-/* Teste para verificar a validade da função que veifica qual peça está em determinda posição para tabuleiros nulos e para espaços fora do tabuleiro.
+/* Teste para verificar a validade da função que verifica qual peça está em determinada posição para tabuleiros nulos e para espaços fora do tabuleiro.
    Procedimentos:
    -Criar variável nula para o tabuleiro;
    -Chamar a função para a variável nula;
-   -Chamar função que inicializa um tabuleiro vazio para variavel nao-nula;
+   -Chamar função que inicializa um tabuleiro vazio para variável não nula;
    -Chamar a função para as coordenada (8,8) e (-1,-1).
    -É esperado que a função retorne o indicador de fora dos limites para os dois casos.
 */
@@ -191,7 +191,7 @@ TEST(Test_Get_Value_of_Piece, Verify_Every_Piece){
 	EXPECT_EQ(0, GetValue(WhatPiece(&board, 5, 5)));
 }
 
-/* Teste para verificar a funçãoque retorna o valor de uma peça para peças não existentes.
+/* Teste para verificar a função que retorna o valor de uma peça para peças não existentes.
    Procedimentos:
    -Chamar a função para OUT_OF_RANGE;
    -Chamar a função para o caractere *;
@@ -360,7 +360,7 @@ TEST(Test_Valid_Board, Verify_Two_Kings){
 	EXPECT_EQ(0, ValidBoard(&board));
 }
 
-/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais de 9 rainhas e 0 peoes.
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com mais de 9 rainhas e 0 peões.
    Procedimentos:
    -Criar um tabuleiro vazio;
    -Adicionar os dois reis de cada cor;
@@ -769,7 +769,7 @@ TEST(Test_Move_Piece, Test_Full_Space){
     - Verificar se o tabuleiro alocado possui peso zero
 
     Resultados:
-    - Esper-se que a função responda corretamente para os procedimentos
+    - Espera-se que a função responda corretamente para os procedimentos
       acima
  */
 TEST(Test_alocate, Alocate_new_board){
@@ -784,7 +784,7 @@ TEST(Test_alocate, Alocate_new_board){
 
 /* Teste para a função de copiar dois tabuleiros
     Procedimentos:
-    - Fazer comparações entre o esperado e o rececebido para um tabuleiro vazio
+    - Fazer comparações entre o esperado e o recebido para um tabuleiro vazio
 
     Resultados:
     - Espera-se que todas as peças dos tabuleiros tenham sido copiadas de
@@ -847,6 +847,210 @@ TEST(Copy_boards, CopySTDBoard){
 
 	free(test_board);
 	free(expect_board);
+}
+
+/* Teste para a função de verificar se uma peça é válida ou não
+   Procedimentos:
+   - Chamar a função para cada uma das letras do alfabeto, maiúsculas e
+     minúsculas
+
+   Resultados:
+   - Espera-se que a função retorne false para cada letra que não é válida e
+     true para cada letra válida */
+TEST(Valid_piece, Letters)
+{
+	/* Testando as letras do alfabeto */
+	EXPECT_EQ(false, valid_piece('A'));
+	EXPECT_EQ(false, valid_piece('a'));
+
+	EXPECT_EQ(true, valid_piece('B'));
+	EXPECT_EQ(true, valid_piece('b'));
+
+	EXPECT_EQ(false, valid_piece('C'));
+	EXPECT_EQ(false, valid_piece('c'));
+
+	EXPECT_EQ(false, valid_piece('D'));
+	EXPECT_EQ(false, valid_piece('d'));
+
+	EXPECT_EQ(false, valid_piece('E'));
+	EXPECT_EQ(false, valid_piece('e'));
+
+	EXPECT_EQ(false, valid_piece('F'));
+	EXPECT_EQ(false, valid_piece('f'));
+
+	EXPECT_EQ(false, valid_piece('G'));
+	EXPECT_EQ(false, valid_piece('g'));
+
+	EXPECT_EQ(false, valid_piece('H'));
+	EXPECT_EQ(false, valid_piece('h'));
+
+	EXPECT_EQ(false, valid_piece('I'));
+	EXPECT_EQ(false, valid_piece('i'));
+
+	EXPECT_EQ(false, valid_piece('J'));
+	EXPECT_EQ(false, valid_piece('j'));
+
+	EXPECT_EQ(true, valid_piece('K'));
+	EXPECT_EQ(true, valid_piece('k'));
+
+	EXPECT_EQ(false, valid_piece('L'));
+	EXPECT_EQ(false, valid_piece('l'));
+
+	EXPECT_EQ(false, valid_piece('M'));
+	EXPECT_EQ(false, valid_piece('m'));
+
+	EXPECT_EQ(true, valid_piece('N'));
+	EXPECT_EQ(true, valid_piece('n'));
+
+	EXPECT_EQ(false, valid_piece('O'));
+	EXPECT_EQ(false, valid_piece('o'));
+
+	EXPECT_EQ(true, valid_piece('P'));
+	EXPECT_EQ(true, valid_piece('p'));
+
+	EXPECT_EQ(true, valid_piece('Q'));
+	EXPECT_EQ(true, valid_piece('q'));
+
+	EXPECT_EQ(true, valid_piece('R'));
+	EXPECT_EQ(true, valid_piece('r'));
+
+	EXPECT_EQ(false, valid_piece('S'));
+	EXPECT_EQ(false, valid_piece('s'));
+
+	EXPECT_EQ(false, valid_piece('T'));
+	EXPECT_EQ(false, valid_piece('t'));
+
+	EXPECT_EQ(false, valid_piece('U'));
+	EXPECT_EQ(false, valid_piece('u'));
+
+	EXPECT_EQ(false, valid_piece('V'));
+	EXPECT_EQ(false, valid_piece('v'));
+
+	EXPECT_EQ(false, valid_piece('W'));
+	EXPECT_EQ(false, valid_piece('w'));
+
+	EXPECT_EQ(false, valid_piece('X'));
+	EXPECT_EQ(false, valid_piece('x'));
+
+	EXPECT_EQ(false, valid_piece('Y'));
+	EXPECT_EQ(false, valid_piece('y'));
+
+	EXPECT_EQ(false, valid_piece('Z'));
+	EXPECT_EQ(false, valid_piece('z'));
+}
+
+/* Teste para a função de verificar se uma peça é válida
+   Procedimentos:
+   - Chamar a função para cada um dos números de 0 a 9
+
+   Resultados:
+   - Espera-se que a função retorne false para qualquer um desses números uma
+     vez que números não são peças de xadrez */
+TEST(Valid_piece, Numbers)
+{
+	/* Testando para números de 0 a 9 */
+	EXPECT_EQ(false, valid_piece('0'));
+	EXPECT_EQ(false, valid_piece('1'));
+	EXPECT_EQ(false, valid_piece('2'));
+	EXPECT_EQ(false, valid_piece('3'));
+	EXPECT_EQ(false, valid_piece('4'));
+	EXPECT_EQ(false, valid_piece('5'));
+	EXPECT_EQ(false, valid_piece('6'));
+	EXPECT_EQ(false, valid_piece('7'));
+	EXPECT_EQ(false, valid_piece('8'));
+	EXPECT_EQ(false, valid_piece('9'));
+}
+
+/* Teste para a função de verificar se uma peça é válida
+   Procedimentos:
+   - Chamar a função para diferentes caracteres da tabela ASCII
+ 
+   Resultados:
+   - Espera-se que a função retorne false para todos estes caracteres uma vez
+     que eles não são peças de xadrez válidas */
+TEST(Valid_piece, Other_chars)
+{
+	/* Testando para caracteres diversos */
+	EXPECT_EQ(false, valid_piece('*'));
+	EXPECT_EQ(false, valid_piece('\\'));
+	EXPECT_EQ(false, valid_piece('.'));
+	EXPECT_EQ(false, valid_piece(','));
+	EXPECT_EQ(false, valid_piece(')'));
+	EXPECT_EQ(false, valid_piece('?'));
+	EXPECT_EQ(false, valid_piece(';'));
+	EXPECT_EQ(false, valid_piece(','));
+}
+
+/* Teste para a função de verificar um tabuleiro mínimo 
+   Procedimentos:
+   - Chamar a função para um tabuleiro vazio
+
+   Resultados:
+   - Espera-se que a função retorne true para um tabuleiro vazio */
+TEST(MinimumChessBoard, EmptyBoard)
+{
+	TBoard* board = AlocateBoard();
+
+	/* Testando para tabuleiro vazio */
+	StartEmptyBoard(board);
+	EXPECT_EQ(true, HaveMinimun(board));
+
+	free(board);
+}
+
+/* Teste para a função de verificar um tabuleiro mínimo
+   Procedimentos:
+   - Chamar a função para um tabuleiro com um único rei
+   - Chamar a função para um tabuleiro com dois reis
+
+   Resultados:
+   - Espera-se que a função retorne que os dois tabuleiros são aceitos */
+TEST(MinimumChessBoard, BoardWithKings)
+{
+	TBoard* board = AlocateBoard();
+
+	StartEmptyBoard(board);	/* Iniciando tabuleiro vazio */
+
+	/* Colocando um rei no tabuleiro */
+	board->Board[1][5] = B_KING;
+
+	EXPECT_EQ(true, HaveMinimun(board));
+
+	board->Board[6][6] = W_KING; /* Outro rei no tabuleiro */
+
+	EXPECT_EQ(true, HaveMinimun(board));
+
+	free(board);
+}
+
+/* Teste para a função de verificar um tabuleiro mínimo
+   Procedimentos:
+   - Chamar a função para um tabuleiro com uma única peça que não é rei
+   - Chamar a função para um tabuleiro com dois reis e um não rei
+   - Chamar a função para um tabuleiro com dois reis da mesma cor
+
+   Resultados:
+   - Espera-se que a função retorne false para todos os casos listados acima */
+TEST(MinimumChessBoard, BoardWithOtherPieces)
+{
+	TBoard* board = AlocateBoard();
+
+	StartEmptyBoard(board);	/* Tabuleiro vazio */
+
+	board->Board[2][2] = B_QUEEN; /* Uma peça que não é rei */
+	EXPECT_EQ(false, HaveMinimun(board));
+
+	/* Mais dois reis de cores diferentes */
+	board->Board[1][4] = B_KING;
+	board->Board[5][4] = W_KING;
+	EXPECT_EQ(false, HaveMinimun(board));
+
+	/* Dois reis da mesma cor */
+	board->Board[5][4] = B_KING;
+	board->Board[2][2] = BLANK;
+	EXPECT_EQ(false, HaveMinimun(board));
+
+	free(board);
 }
 
 int main(int argc, char **argv){

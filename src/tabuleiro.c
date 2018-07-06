@@ -465,10 +465,10 @@ int ChangePiece(TBoard *board, char piece, int line, int column){
 */
 int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, int dest_column){
 	/* Verificar x, y, xo e yo. */
-	if(origin_line<0 || origin_line>7 || origin_column<0 || origin_column>7){
+	if(origin_line < 0 || origin_line > 7 || origin_column < 0 || origin_column > 7){
 		return -1;
 	}
-	if(dest_line<0 || dest_line>7 || dest_column<0 || dest_column>7){
+	if(dest_line < 0 || dest_line > 7 || dest_column < 0 || dest_column > 7){
 		return -1;
 	}
 
@@ -518,24 +518,36 @@ void copy_boards(TBoard* copy, TBoard* board){
 	copy->Weight = board->Weight;
 }
 
+/* 
+ Função: Verificar se uma peça é válida (valid_piece)
+       Objetivo:
+           Verificar se uma dada peça é válida, ou seja, se ela é uma peça de
+           xadrez
+
+       Parâmetros:
+           piece - Caractere que será verificado
+
+       Saída:
+           true  - se a peça for válida
+           false - se a peça for inválida */
 int valid_piece(char piece)
 {
-	if(piece == 'K' || piece == 'k'){
+	if(piece == B_KING || piece == W_KING){
 		return true;
 	}
-	else if(piece == 'Q' || piece == 'q'){
+	else if(piece == B_QUEEN || piece == W_QUEEN){
 		return true;
 	}
-	else if(piece == 'R' || piece == 'r'){
+	else if(piece == B_TOWER || piece == W_TOWER){
 		return true;
 	}
-	else if(piece == 'B' || piece == 'b'){
+	else if(piece == B_BISHOP || piece == W_BISHOP){
 		return true;
 	}
-	else if(piece == 'N' || piece == 'n'){
+	else if(piece == B_HORSE || piece == W_HORSE){
 		return true;
 	}
-	else if(piece == 'P' || piece == 'p'){
+	else if(piece == B_PAWN || piece == W_PAWN){
 		return true;
 	}
 	else{
@@ -544,7 +556,23 @@ int valid_piece(char piece)
 } /* valid_piece() */
 
 
-int DontHaveMinimun(TBoard* board)
+/* 
+ Função: Verificar se um tabuleiro tem o mínimo para ser válido
+       Objetivo:
+           Verificar se um tabuleiro tem um mínimo de peças para ser válido
+           e estritamente esse mínimo, ou se ele tem menos que esse mínimo.
+           Por exemplo, o tabuleiro mínimo é um rei de cada cor, se tiver
+           qualquer outra peça que não seja um rei ela retorna false, mas ela
+           também retorna true para um tabuleiro com menos que o mínimo para ser
+           válido como um tabuleiro vazio
+
+      Parâmetros:
+           board - Tabuleiro a ser analisado
+
+      Saída:
+           true  - Se o tabuleiro obedece as condições explicadas acima
+           false - Se ele não obedece as condições explicadas acima */
+int HaveMinimun(TBoard* board)
 {
 	int i, j;
 	int b_kings = 0, w_kings = 0;
@@ -555,13 +583,13 @@ int DontHaveMinimun(TBoard* board)
 			piece = board->Board[i][j];
 			if(piece != '\\')
 				{
-					if(piece == 'K'){
+					if(piece == B_KING){
 						b_kings++;
 						if(b_kings > 1){
 							return false;
 						}
 					}
-					else if(piece == 'k'){
+					else if(piece == W_KING){
 						w_kings++;
 						if(w_kings > 1){
 							return false;
