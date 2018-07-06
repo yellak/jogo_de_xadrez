@@ -41,7 +41,10 @@ int StartEmptyBoard(TBoard *board){
 
 	/* Definir peso do tabuleiro como 0.*/
 	board->Weight = 0;
-
+	/* Definir o check como -1, indicando que o rei branco não está em xeque */
+	board->WhiteCheck = -1;
+	/* Definir o check como -1, indicando que o rei preto não está em xeque */
+	board->BlackCheck = -1;
 	/* Iniciar as posições do tabuleiro como vazias. */
 	for(i=0; i < 8;i++){
 		for(j=0; j < 8;j++){
@@ -76,6 +79,10 @@ int StartStandardBoard(TBoard *board){
 
 	/* Definir peso do tabuleiro como 0.*/
 	board->Weight = 0;
+	/* Definir o check como -1, indicando que o rei branco não está em xeque */
+	board->WhiteCheck = -1;
+	/* Definir o check como -1, indicando que o rei preto não está em xeque */
+	board->BlackCheck = -1;
 
 	/* Posicionar Torres. */
 	board->Board[0][0] = B_TOWER;

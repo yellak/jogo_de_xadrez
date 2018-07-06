@@ -29,6 +29,8 @@ const char OUT_OF_RANGE = '~';
 typedef struct board{
 	char Board[8][8]; /*!< Matriz de caracteres que representa o tabuleiro. */
 	int Weight; /*!< Inteiro que armazena o peso ponderado do tabuleiro. */
+	int WhiteCheck; /*!< Inteiro que armazena a condição de xeque do rei branco. */
+	int BlackCheck; /*!< Inteiro que armazena a condição de xeque do rei preto. */
 }TBoard;
 
 /* Funções para manipulação do tabuleiro: */

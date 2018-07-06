@@ -333,7 +333,7 @@ ListOfMoves* HorseMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 		InsertMove(AllMoves, originx, originy, originx - 2, originy + 1);
 	}
 	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy + 2]);
-	if(originy - 1 >= 0 && originy + 2 <= 7 && COLOR_POSITION != COLOR_PIECE){
+	if(originx - 1 >= 0 && originy + 2 <= 7 && COLOR_POSITION != COLOR_PIECE){
 		InsertMove(AllMoves, originx, originy, originx - 1, originy + 2);
 	}
 	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy - 2]);
@@ -835,4 +835,8 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 		}
 	}
 	return AllMoves;
+}
+
+int VerifyValidMovement(TBoard* board, int originx, int originy, int destinx, int destiny){
+	
 }
