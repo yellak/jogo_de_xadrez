@@ -676,24 +676,24 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
 	int COLOR_PIECE, COLOR_POSITION, old_howmany;
-	ListOfMoves* OppositeMoves;
+//	ListOfMoves* OppositeMoves;
 	if(board == NULL || AllMoves == NULL){
 		return NULL;
 	}
 	/* Determina a cor da peça */
 	piece = WhatPiece(board, originx, originy);
 	COLOR_PIECE = ColorPiece(piece);
+/*
 	old_howmany = AllMoves->howmany;
 	if(COLOR_PIECE == WHITE){
 		OppositeMoves = AnalyzePossibleMovementsBlack(board);
 	}else{
 		OppositeMoves = AnalyzePossibleMovementsWhite(board);
 	}
-
+*/
 	/* Movimentos na horizontal e na vertical */
 	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy]);
-	CHEQUE_POSITION = SearchListOfMoves(OppositeMoves, originx, originy, originx + 1, originy);
-	if(originx + 1 <= 7 && COLOR_POSITION != COLOR_PIECE && CHEQUE_POSITION == 1){
+	if(originx + 1 <= 7 && COLOR_POSITION != COLOR_PIECE){
 		InsertMove(AllMoves, originx, originy, originx + 1, originy);
 	}
 	COLOR_POSITION = ColorPiece(board->Board[originx][originy + 1]);
@@ -747,12 +747,13 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 			InsertMove(AllMoves, 4, 7, 2, 7);
 		}
 	}
+/*
 	if((AllMoves->howmany - old_howmany) == 0 && COLOR_PIECE == WHITE && board->WhiteCheck == CHEQUE){
 		board->WhiteCheck = CHEQUE_MATE;
 	}
 	else if((AllMoves->howmany - old_howmany) == 0 && COLOR_PIECE == BLACK && board->BlackCheck == CHEQUE){
 		board->BlackCheck = CHEQUE_MATE;
-	}
+	}*/
 
 	return AllMoves;
 }
