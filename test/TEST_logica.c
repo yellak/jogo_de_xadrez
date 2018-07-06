@@ -1072,20 +1072,20 @@ TEST(Test_VerifyValidMovement,  Veirfy_Invalid_Entries){
 
 TEST(Test_VerifyValidMovement, Verify_Valid_Movements){
 	TBoard* board = AlocateBoard();
-	StartStandardBoard(board);
-	board->Board[0][0] = W_PAWN;
-	board->Board[0][1] = W_TOWER;
-	board->Board[0][2] = W_BISHOP;
-	board->Board[0][3] = W_KING;
-	board->Board[0][4] = W_QUEEN;
-	board->Board[0][5] = W_HORSE;
+	StartEmptyBoard(board);
+	board->Board[0][0] = B_PAWN;
+	board->Board[0][1] = B_TOWER;
+	board->Board[0][2] = B_BISHOP;
+	board->Board[0][4] = B_KING;
+	board->Board[0][5] = B_QUEEN;
+	board->Board[0][6] = B_HORSE;
 
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 0, 1, 0));
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 1, 1, 1));
-	EXPECT_EQ(1, VerifyValidMovement(board, 0, 2, 1, 2));
-	EXPECT_EQ(1, VerifyValidMovement(board, 0, 3, 1, 3));
+	EXPECT_EQ(1, VerifyValidMovement(board, 0, 2, 1, 3));
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 4, 1, 4));
-	EXPECT_EQ(1, VerifyValidMovement(board, 0, 5, 2, 6));
+	EXPECT_EQ(1, VerifyValidMovement(board, 0, 5, 1, 5));
+	EXPECT_EQ(1, VerifyValidMovement(board, 0, 6, 2, 7));
 }
 
 

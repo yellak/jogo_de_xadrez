@@ -106,11 +106,11 @@ int SearchListOfMoves(ListOfMoves* list, int originx, int originy, int destinyx,
 		if(aux->play.origin[0] == originx && aux->play.destiny[0] == destinyx){
 			if(aux->play.origin[1] == originy && aux->play.destiny[1] == destinyy){
 				/* Caso encontre o movimento na lista, retorna 0 */
-				return 1;
+				return 0;
 			}
 		}
 		aux = aux->next;
 	}
 
-	return 0;
+	return 1;
 }
