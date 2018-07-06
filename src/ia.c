@@ -14,6 +14,11 @@
 */
 Tree* Create_BestTree(TBoard *board, int turn){
 
+	/* Assertivas de entrada */
+	if(board == NULL || turn > 1 || turn < 0){
+		return NULL;
+	}
+
 	ListOfMoves* AllMoves, *AllMovesChild;
 
 	/* Extraindo a lista de movimentos para a cor certa do jogador atual */
@@ -65,9 +70,10 @@ Tree* Create_BestTree(TBoard *board, int turn){
 			NodeTree* newnodechild = AlocateNodeTree(1, &boardauxchild, &currentnode->play);
 			AddChildNode(newnode, newnodechild, j);			
 		}
+		DeleteListOfMoves(AllMovesChild);
 	}
 
-
+	DeleteListOfMoves(AllMoves);
 
 	return tree;
 }
