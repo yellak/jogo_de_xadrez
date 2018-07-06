@@ -39,6 +39,14 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 
 	NodeList* currentnode = AllMoves->first;
 
+	for(int I = 0; I < 8; I++){
+		for(int J = 0; J < 8; J++){
+			printf("%c ", board->Board[I][J]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+
 	for(int i = 0 ; i < tree->root->n_child; i++, currentnode = currentnode->next){
 
 		/* Tabuleiro auxiliar para armazenar a nova jogada */
@@ -58,6 +66,14 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 
 		NodeList* currentnodechild = AllMovesChild->first;
 
+		for(int I = 0; I < 8; I++){
+			for(int J = 0; J < 8; J++){
+				printf("%c ", boardaux.Board[I][J]);
+			}
+			printf("\n");
+		}
+		printf("\n");
+		
 		for(int j = 0; j < AllMovesChild->howmany; j++, currentnodechild = currentnodechild->next){
 
 			/* Outro tabuleiro auxiliar para criar os filhos do newnode */

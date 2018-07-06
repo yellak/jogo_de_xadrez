@@ -91,12 +91,13 @@ TEST(Test_CreateMovesTree, Verify_Root_Information){
 TEST(Test_SortTree, Verify_SortTree){
 	TBoard board;
 	StartEmptyBoard(&board);
-	board.Board[4][4] = W_BISHOP;
-	board.Board[6][6] = B_PAWN;
+	InsertPiece(&board, W_BISHOP, 4, 4);
+	InsertPiece(&board, B_PAWN, 6, 6);
 	int turn = WHITES_TURN;
 	Tree* tree = CreateMovesTree(&board, turn);
 
 	/* Testar a alocação */
+	EXPECT_EQ(2, tree->root->child[1]->board->Weight);
 	EXPECT_EQ(0, SortTree(tree, turn));
 	FreeTreeNodes(tree->root);
 	free(tree);
@@ -106,3 +107,4 @@ int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }
+
