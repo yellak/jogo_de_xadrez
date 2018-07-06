@@ -96,6 +96,7 @@ test_ia: $(IAOBJ) $(IADEPS)
 clean:
 	rm -f  $(ODIR)/*.o $(ODIR)/*.gcno $(ODIR)/*.gcda *~ $(IDIR)/*~ main *.o
 
+
 .PHONY: gcov
 
 gcov: gcov_board gcov_list gcov_logica gcov_arvore gcov_io gcov_ia
@@ -123,3 +124,9 @@ gcov_io:
 gcov_ia:
 	./test_ia
 	gcov -abcfu ia.c -o obj > gcov_ia.txt
+
+
+.PHONY: clean_gcov
+
+clean_gcov:
+	rm -f *.gcno *.gcov
