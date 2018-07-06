@@ -45,8 +45,10 @@
 # GCov Files
 src/*.gcov
 src/*.gcno
+src/*.gcda
 src/obj/*.gcov
 src/obj/*.gcno
+src/obj/*.gcda
 src/gcov_arvore.txt
 src/gcov_list.txt
 src/gcov_io.txt
