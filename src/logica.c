@@ -838,5 +838,11 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 }
 
 int VerifyValidMovement(TBoard* board, int originx, int originy, int destinx, int destiny){
-	
+	char piece;
+
+	piece = WhatPiece(board, originx, originy);
+	if(board == NULL || piece == BLANK){
+		return -1;	
+	}
+
 }

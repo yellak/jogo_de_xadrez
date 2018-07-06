@@ -1061,9 +1061,9 @@ TEST(Test_AllMovements, Verify_Movements_StandardBoard){
 TEST(Test_VerifyValidMovement,  Veirfy_Invalid_Entries){
 	TBoard* board1 = NULL;
 	TBoard* board2 = AlocateBoard();
-	board2->Board[4][4] = W_QUEEN;
+	StartStandardBoard(board2);
 
-	/* Testa para tabuleiro nulo e coordenadas válidas */
+	/* Testa para tabuleiro nulo */
 	EXPECT_EQ(-1, VerifyValidMovement(board1, 4, 4, 5, 4));
 	/* Testa para tabuleiro válido e coordenadas inválidas (sem peça) */
 	EXPECT_EQ(-1, VerifyValidMovement(board2, 4, 4, 5, 4));
