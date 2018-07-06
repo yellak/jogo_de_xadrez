@@ -191,7 +191,7 @@ ListOfMoves* WhitePawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 	/* Caso andar 2 estando na posição inicial. */
 	COLOR_POSITION = ColorPiece(board->Board[originx - 2][originy]);
 	if(originx == 6 && COLOR_POSITION == -1 && originx - 2 >= 0){
-		InsertMove(AllMoves, originx, originx, originx - 2, originy);
+		InsertMove(AllMoves, originx, originy, originx - 2, originy);
 	}
 	/* Caso andar 1 estando na posição inicial/ andar normalmente. */
 	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy]);
