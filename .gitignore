@@ -42,6 +42,18 @@
 *.idb
 *.pdb
 
+# GCov Files
+src/*.gcov
+src/*.gcno
+src/obj/*.gcov
+src/obj/*.gcno
+src/gcov_arvore.txt
+src/gcov_list.txt
+src/gcov_io.txt
+src/gcov_ia.txt
+src/gcov_logica.txt
+src/gcov_tabuleiro.txt
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd

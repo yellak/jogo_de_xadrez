@@ -5,6 +5,7 @@ ODIR        = obj
 LDIR        = ../lib
 CURSESFLAGS = -lncurses
 GTESTFLAGS = -lgtest -lpthread
+GCOVFLAGS = -fprofile-arcs -ftest-coverage -lgcov --coverage
 
 # Dependências do módulo principal
 _MAINOBJ = interface.o main.o tabuleiro.o logica.o list_of_moves.o
@@ -62,36 +63,63 @@ all: main test_tabuleiro test_logica test_arvore test_list test_io test_ia
 
 # Compila os módulos principais
 $(ODIR)/%.o: %.c
-	$(CC) -g -c -o $@ $<
+	$(CC) -g -c -o $@ $< $(GCOVFLAGS)
 
 # Compila os módulos de testes
 $(ODIR)/%.o: $(TDIR)/%.c
 	$(CC) -g -c -o $@ $<
 
 main: $(MAINOBJ) $(MAINDEPS)
-	$(CC) -g -o $@ $^ $(CURSESFLAGS)
+	$(CC) -g -o $@ $^ $(CURSESFLAGS) $(GCOVFLAGS)
 
 test_list: $(LSTOBJ) $(LSTDEPS)
-	$(CC) -g -o $@ $^ $(GTESTFLAGS)
+	$(CC) -g -o $@ $^ $(GTESTFLAGS) $(GCOVFLAGS)
 	
 test_tabuleiro: $(TABOBJ) $(TABDEPS)
-	$(CC) -g -o $@ $^ $(GTESTFLAGS)
+	$(CC) -g -o $@ $^ $(GTESTFLAGS) $(GCOVFLAGS)
 
 test_logica: $(LOGOBJ) $(LOGDEPS)
-	$(CC) -g -o $@ $^ $(GTESTFLAGS)
+	$(CC) -g -o $@ $^ $(GTESTFLAGS) $(GCOVFLAGS)
 
 test_arvore: $(ARVOBJ) $(ARVDEPS)
-	$(CC) -g -o $@ $^ $(GTESTFLAGS)
+	$(CC) -g -o $@ $^ $(GTESTFLAGS) $(GCOVFLAGS)
 
 test_io: $(IOOBJ) $(IODEPS)
-	$(CC) -g -o $@ $^ $(GTESTFLAGS)
+	$(CC) -g -o $@ $^ $(GTESTFLAGS) $(GCOVFLAGS)
 
 test_ia: $(IAOBJ) $(IADEPS)
-	$(CC) -g -o $@ $^ $(GTESTFLAGS)
+	$(CC) -g -o $@ $^ $(GTESTFLAGS) $(GCOVFLAGS)
 
 
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o *~ $(IDIR)/*~ main *.o
+	rm -f  $(ODIR)/*.o $(ODIR)/*.gcno $(ODIR)/*.gcda *~ $(IDIR)/*~ main *.o
 
+.PHONY: gcov
+
+gcov: gcov_board gcov_list gcov_logica gcov_arvore gcov_io gcov_ia
+
+gcov_board:
+	./test_tabuleiro
+	gcov -abcfu tabuleiro.c -o obj > gcov_tabuleiro.txt
+
+gcov_list:
+	./test_list
+	gcov -abcfu list_of_moves.c -o obj > gcov_list.txt
+
+gcov_arvore:
+	./test_arvore
+	gcov -abcfu arv_decisoes.c -o obj > gcov_arvore.txt
+
+gcov_logica:
+	./test_logica
+	gcov -abcfu logica.c -o obj > gcov_logica.txt
+
+gcov_io:
+	./test_io
+	gcov -abcfu in-out.c -o obj > gcov_io.txt
+
+gcov_ia:
+	./test_ia
+	gcov -abcfu ia.c -o obj > gcov_ia.txt
