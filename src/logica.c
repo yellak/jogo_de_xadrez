@@ -692,8 +692,7 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 
 	/* Movimentos na horizontal e na vertical */
 	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy]);
-	CHEQUE_POSITION = SearchListOfMoves(OppositeMoves, originx, originy, originx + 1, originy);
-	if(originx + 1 <= 7 && COLOR_POSITION != COLOR_PIECE && CHEQUE_POSITION == 1){
+	if(originx + 1 <= 7 && COLOR_POSITION != COLOR_PIECE){
 		InsertMove(AllMoves, originx, originy, originx + 1, originy);
 	}
 	COLOR_POSITION = ColorPiece(board->Board[originx][originy + 1]);
