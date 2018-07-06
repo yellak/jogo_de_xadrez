@@ -218,11 +218,6 @@ ListOfMoves* WhitePawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 	if(originx + 1 <= 7 && originy - 1 >= 0 && COLOR_POSITION == BLACK){
 		InsertMove(AllMoves, originx, originy, originx + 1, originy - 1);
 	}
-	/* Caso de eliminar peça sendo um peão de frente. */
-	COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy]);
-	if(originx - 1 >= 0 && COLOR_POSITION == BLACK){
-		InsertMove(AllMoves, originx, originy, originx - 1, originy);
-	}
 	return AllMoves;
 }
 
@@ -280,11 +275,6 @@ ListOfMoves* BlackPawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy - 1]);
 	if(originx + 1 <= 7 && originy - 1 >= 0 && COLOR_POSITION == WHITE){
 		InsertMove(AllMoves, originx, originy, originx + 1, originy - 1);
-	}
-	/* Caso de eliminar peça sendo um peão de frente. */
-	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy]);
-	if(originx + 1 <= 7 && COLOR_POSITION == WHITE){
-		InsertMove(AllMoves, originx, originy, originx + 1, originy);
 	}
 	return AllMoves;
 }
@@ -891,5 +881,32 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 	}
 	else{
 		return 0;
+	}
+}
+
+void VerifyCheck(TBoard* board, int color){
+	if(color == BLACK){
+		ListOfMoves* AllMoves = AnalyzePossibleMovementsWhite(board);
+		AllMoves->current = AllMoves->first;
+		while(AllMoves->current != NULL){
+			char whichis = WhatPiece(board, AllMoves->current->play.destiny[0], AllMoves->current->play.destiny[1]);
+			if(whichis == B_KING){
+				board->BlackCheck = 1;
+				break;
+			}
+		AllMoves->current = AllMoves->current->next;
+		}
+	}
+	if(color == WHITE){
+		ListOfMoves* AllMoves = AnalyzePossibleMovementsBlack(board);
+		AllMoves->current = AllMoves->first;
+		while(AllMoves->current != NULL){
+			char whichis = WhatPiece(board, AllMoves->current->play.destiny[0], AllMoves->current->play.destiny[1]);
+			if(whichis == W_KING){
+				board->WhiteCheck = 1;
+				break;
+			}
+		AllMoves->current = AllMoves->current->next;
+		}
 	}
 }
