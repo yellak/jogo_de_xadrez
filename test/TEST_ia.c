@@ -78,24 +78,26 @@ TEST(Test_CreateMovesTree, Verify_Root_Information){
 	free(tree);
 }
 
-/* Teste para 
-   Procedimento:
-   	-
-   	-
-   	-
+/* Teste para verificar se a função de ordenar a árvore retorna o valor esperado quando a operação é bem sucedida
+   Procedimento: 
+   	-Inicia-se o tabuleiro vazio
+   	-Insere-se um bispo branco e um peão preto no tabuleiro
+   	-Inicializa-se a variável turno como turno do branco
+   	-Cria-se a árvore com os movimentos
    Resultados:
-   	-
+   	-A função deve retornar 1 no caso de sucesso
  */
 
-TEST(Test_SortTree, Verify_Creation_Tree){
+TEST(Test_SortTree, Verify_SortTree){
 	TBoard board;
 	StartEmptyBoard(&board);
-	board.Board[4][4] = W_BISHOP;
-	board.Board[5][5] = B_PAWN;
+	InsertPiece(&board, W_BISHOP, 4, 4);
+	InsertPiece(&board, B_PAWN, 6, 6);
 	int turn = WHITES_TURN;
 	Tree* tree = CreateMovesTree(&board, turn);
 
 	/* Testar a alocação */
+	EXPECT_EQ(2, tree->root->child[1]->board->Weight);
 	EXPECT_EQ(0, SortTree(tree, turn));
 	FreeTreeNodes(tree->root);
 	free(tree);
@@ -105,3 +107,4 @@ int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }
+
