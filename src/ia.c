@@ -70,9 +70,10 @@ Tree* Create_BestTree(TBoard *board, int turn){
 			NodeTree* newnodechild = AlocateNodeTree(1, &boardauxchild, &currentnode->play);
 			AddChildNode(newnode, newnodechild, j);			
 		}
+		DeleteListOfMoves(AllMovesChild);
 	}
 
-
+	DeleteListOfMoves(AllMoves);
 
 	return tree;
 }

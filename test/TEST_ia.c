@@ -19,6 +19,7 @@ TEST(Test_CreateTree, Verify_Creation_Tree){
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, tree != NULL);
+	FreeTreeNodes(tree->root);
 	free(tree);
 }
 
@@ -39,7 +40,6 @@ TEST(Test_CreateTree, Verify_Alocation_Tree){
 
 	/* Testar a alocação */
 	EXPECT_EQ(NULL, tree);
-	free(tree);
 }
 
 int main(int argc, char **argv){
