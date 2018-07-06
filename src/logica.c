@@ -665,14 +665,22 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 
 ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
-	int COLOR_PIECE, COLOR_POSITION;
+	int COLOR_PIECE, COLOR_POSITION, old_howmany;
+//	ListOfMoves* OppositeMoves;
 	if(board == NULL || AllMoves == NULL){
 		return NULL;
 	}
 	/* Determina a cor da peça */
 	piece = WhatPiece(board, originx, originy);
 	COLOR_PIECE = ColorPiece(piece);
-
+/*
+	old_howmany = AllMoves->howmany;
+	if(COLOR_PIECE == WHITE){
+		OppositeMoves = AnalyzePossibleMovementsBlack(board);
+	}else{
+		OppositeMoves = AnalyzePossibleMovementsWhite(board);
+	}
+*/
 	/* Movimentos na horizontal e na vertical */
 	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy]);
 	if(originx + 1 <= 7 && COLOR_POSITION != COLOR_PIECE){
@@ -729,6 +737,13 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 			InsertMove(AllMoves, 4, 7, 2, 7);
 		}
 	}
+/*
+	if((AllMoves->howmany - old_howmany) == 0 && COLOR_PIECE == WHITE && board->WhiteCheck == CHEQUE){
+		board->WhiteCheck = CHEQUE_MATE;
+	}
+	else if((AllMoves->howmany - old_howmany) == 0 && COLOR_PIECE == BLACK && board->BlackCheck == CHEQUE){
+		board->BlackCheck = CHEQUE_MATE;
+	}*/
 
 	return AllMoves;
 }
@@ -869,7 +884,22 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 	}
 }
 
-void VerifyCheck(TBoard* board, int color){
+/* Função: VerifyCheck
+		Objetivo: Verificar se uma determinada configuração do tabuleiro deixa algum rei em xeque.
+
+		Parametros:
+			board - Ponteiro para um tabuleiro.
+					Não deve ser nulo
+			color - Cor do rei em questão.
+
+		Saída: Essa função retorna um tabuleiro com sua variavél dedicada a xeque atualizada.
+*/
+TBoard* VerifyCheck(TBoard* board, int color){
+
+	if(board == NULL){
+		return NULL;	
+	}
+
 	if(color == BLACK){
 		ListOfMoves* AllMoves = AnalyzePossibleMovementsWhite(board);
 		AllMoves->current = AllMoves->first;
@@ -894,4 +924,5 @@ void VerifyCheck(TBoard* board, int color){
 		AllMoves->current = AllMoves->current->next;
 		}
 	}
+	return board;
 }

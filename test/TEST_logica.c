@@ -1088,7 +1088,7 @@ TEST(Test_VerifyValidMovement, Verify_Valid_Movements){
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 6, 2, 7));
 }
 
-TEST(Test_VerifyValidMovement, Veirfy_Invalid_Movements){
+TEST(Test_VerifyValidMovement, Verify_Invalid_Movements){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
 	board->Board[0][0] = B_PAWN;
@@ -1120,6 +1120,100 @@ TEST(Test_VerifyValidMovement, Veirfy_Invalid_Movements){
 	EXPECT_EQ(0, VerifyValidMovement(board, 0, 5, 1, 5));
 	EXPECT_EQ(0, VerifyValidMovement(board, 0, 6, 2, 7));
 }
+
+/* Teste para verificar a função de verificação de xeque funciona corretamente com um
+tabuleiro nulo.
+   Procedimentos:
+   -Criar um tabuleiro do tipo nulo.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um ponteiro NULL.
+*/
+TEST(Test_VerifyCheck, Verify_NULL_Variables){
+	TBoard* board1 = NULL;
+	TBoard* board2 = NULL;
+	board1 = VerifyCheck(board1, BLACK);
+	board2 = VerifyCheck(board2, WHITE);
+	EXPECT_EQ(NULL, board1);
+	EXPECT_EQ(NULL, board2);
+}
+
+/* Teste para verificar a função de verificação de xeque funciona corretamente com um
+tabuleiro em que está acontecendo um xeque real com o rei preto.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei preto atualizada.
+*/
+TEST(Test_VerifyCheck, Verify_RealBlackCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[0][0] = B_KING;
+	board->Board[1][1] = W_PAWN;
+	board = VerifyCheck(board, BLACK);
+	EXPECT_EQ(1, board->BlackCheck);
+	EXPECT_EQ(-1, board->WhiteCheck);
+	free(board);
+}
+
+/* Teste para verificar a função de verificação de xeque funciona corretamente com um
+tabuleiro em que está acontecendo um xeque real com o rei branco.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei branco atualizada.
+*/
+TEST(Test_VerifyCheck, Verify_RealWhiteCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[0][0] = W_KING;
+	board->Board[1][1] = B_PAWN;
+	board = VerifyCheck(board, WHITE);
+	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(1, board->WhiteCheck);
+	free(board);
+}
+
+/* Teste para verificar a função de verificação de xeque funciona corretamente com um
+tabuleiro em que está acontecendo um xeque falso com o rei preto.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei preto não modificada.
+*/
+TEST(Test_VerifyCheck, Verify_FakeBlackCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[0][0] = B_KING;
+	board->Board[2][2] = W_PAWN;
+	board = VerifyCheck(board, BLACK);
+	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(-1, board->WhiteCheck);
+	free(board);
+}
+
+/* Teste para verificar a função de verificação de xeque funciona corretamente com um
+tabuleiro em que está acontecendo um xeque falso com o rei branco.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei branco não modificada.
+*/
+TEST(Test_VerifyCheck, Verify_FakeWhiteCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[0][0] = W_KING;
+	board->Board[2][2] = B_PAWN;
+	board = VerifyCheck(board, WHITE);
+	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(-1, board->WhiteCheck);
+	free(board);
+}
+
 
 
 int main(int argc, char **argv){
