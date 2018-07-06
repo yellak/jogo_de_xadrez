@@ -396,6 +396,7 @@ TEST(Algebraic_translation, Unnamed_movement)
 	free(expect_move);
 }
 
+
 TEST(Test_WhitePawnMovements, Verify_NULL_Variables){
 	TBoard* board_null = NULL;
 	TBoard* board = AlocateBoard();
@@ -441,6 +442,15 @@ TEST(Test_HorseMovements, Verify_NULL_Variables){
 	free(board);
 }
 
+/* Testes para verificar o retorno da função de movimento da torre para parametros nulos.
+   Procedimentos:
+   -Criar um tabuleiro nulo e um não nulo.
+   -Criar uma lista de movimentos nula e uma não nula.
+   -Chamar função para tabuleiro nulo e lista não nula.
+   -Chamar a função para tabuleiro não nulo e lista nula.
+   Resultados:
+   -É esperado que a função retorne NULL para ambos os casos.
+*/
 TEST(Test_TowerMovements, Verify_NULL_Variables){
 	TBoard* board_null = NULL;
 	TBoard* board = AlocateBoard();
@@ -456,6 +466,15 @@ TEST(Test_TowerMovements, Verify_NULL_Variables){
 	free(board);
 }
 
+/* Testes para verificar o retorno da função de movimento do bispo para parametros nulos.
+   Procedimentos:
+   -Criar um tabuleiro nulo e um não nulo.
+   -Criar uma lista de movimentos nula e uma não nula.
+   -Chamar função para tabuleiro nulo e lista não nula.
+   -Chamar a função para tabuleiro não nulo e lista nula.
+   Resultados:
+   -É esperado que a função retorne NULL para ambos os casos.
+*/
 TEST(Test_BishopMovements, Verify_NULL_Variables){
 	TBoard* board_null = NULL;
 	TBoard* board = AlocateBoard();
@@ -471,6 +490,15 @@ TEST(Test_BishopMovements, Verify_NULL_Variables){
 	free(board);
 }
 
+/* Testes para verificar o retorno da função de movimento da rainha para parametros nulos.
+   Procedimentos:
+   -Criar um tabuleiro nulo e um não nulo.
+   -Criar uma lista de movimentos nula e uma não nula.
+   -Chamar função para tabuleiro nulo e lista não nula.
+   -Chamar a função para tabuleiro não nulo e lista nula.
+   Resultados:
+   -É esperado que a função retorne NULL para ambos os casos.
+*/
 TEST(Test_QueenMovements, Verify_NULL_Variables){
 	TBoard* board_null = NULL;
 	TBoard* board = AlocateBoard();
@@ -485,7 +513,15 @@ TEST(Test_QueenMovements, Verify_NULL_Variables){
 	DeleteListOfMoves(list);
 	free(board);
 }
-
+/* Testes para verificar o retorno da função de movimento do rei para parametros nulos.
+   Procedimentos:
+   -Criar um tabuleiro nulo e um não nulo.
+   -Criar uma lista de movimentos nula e uma não nula.
+   -Chamar função para tabuleiro nulo e lista não nula.
+   -Chamar a função para tabuleiro não nulo e lista nula.
+   Resultados:
+   -É esperado que a função retorne NULL para ambos os casos.
+*/
 TEST(Test_KingMovements, Verify_NULL_Variables){
 	TBoard* board_null = NULL;
 	TBoard* board = AlocateBoard();
@@ -501,7 +537,6 @@ TEST(Test_KingMovements, Verify_NULL_Variables){
 	free(board);
 }
 
-/* Verifica se armazena os movimentos corretamente em um tabuleiro vazio */
 
 TEST(Test_WhitePawnMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
@@ -560,6 +595,15 @@ TEST(Test_HorseMovements, Verify_Movements_EmptyBoard){
 	free(board);
 }
 
+/* Teste para verificar a função de movimento da torre para um tabuleiro vazio.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir uma torre na posição (4,4) no tabuleiro.
+   -Chamar a função para essa posição.
+   Resultados:
+   -É esperado que a lista de movimentos retornada possua 14 movimentos.
+*/
+
 TEST(Test_TowerMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -578,6 +622,15 @@ TEST(Test_TowerMovements, Verify_Movements_EmptyBoard){
 	DeleteListOfMoves(AllPlays2);
 	free(board);
 }
+
+/* Teste para verificar a função de movimento do bispo para um tabuleiro vazio.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir um bispo na posição (4,4) no tabuleiro.
+   -Chamar a função para essa posição.
+   Resultados:
+   -É esperado que a lista de movimentos retornada possua 13 movimentos.
+*/
 
 TEST(Test_BishopMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
@@ -598,6 +651,15 @@ TEST(Test_BishopMovements, Verify_Movements_EmptyBoard){
 	free(board);
 }
 
+/* Teste para verificar a função de movimento da rainha para um tabuleiro vazio.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir uma rainha na posição (4,4) no tabuleiro.
+   -Chamar a função para essa posição.
+   Resultados:
+   -É esperado que a lista de movimentos retornada possua 27 movimentos.
+*/
+
 TEST(Test_QueenMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -617,6 +679,15 @@ TEST(Test_QueenMovements, Verify_Movements_EmptyBoard){
 	free(board);
 }
 
+/* Teste para verificar a função de movimento do rei para um tabuleiro vazio.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir um rei na posição (4,4) no tabuleiro.
+   -Chamar a função para essa posição.
+   Resultados:
+   -É esperado que a lista de movimentos retornada possua 13 movimentos.
+*/
+
 TEST(Test_KingMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -635,8 +706,6 @@ TEST(Test_KingMovements, Verify_Movements_EmptyBoard){
 	DeleteListOfMoves(AllPlays2);
 	free(board);
 }
-
-/* Verifica se captura apenas peças oponentes */
 
 TEST(Test_WhitePawnMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
@@ -726,6 +795,20 @@ TEST(Test_HorseMovements, Verify_Movements_RivalPieces){
 	DeleteListOfMoves(AllPlays);
 }
 
+/* Teste para verificar a função de movimento da torre na diferenciação de peças aliadas
+e oponentes.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir uma torre na posição (4,4) no tabuleiro.
+   -Inserir peças da mesma cor nas posições para onde a torre poderia se mover.
+   -Chamar a função para a posição da torre.
+   -Inserir peças de cor diferente nas posições para onde a torre poderia se mover.
+   -Chamar a funça para a posição da torre.
+   Resultados:
+   -É esperado que a primeira chamada da função retorne uma lista de movimentos com 0 movimentos.
+   -É esperado que a segunda chamada da função retorne uma lista de movimentos com 4 movimentos.
+*/
+
 TEST(Test_TowerMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -755,7 +838,19 @@ TEST(Test_TowerMovements, Verify_Movements_RivalPieces){
 }
 
 
-
+/* Teste para verificar a função de movimento do bispo na diferenciação de peças aliadas
+e oponentes.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir um bispo na posição (4,4) no tabuleiro.
+   -Inserir peças da mesma cor nas posições para onde o bispo poderia se mover.
+   -Chamar a função para a posição do bispo.
+   -Inserir peças de cor diferente nas posições para onde o bispo poderia se mover.
+   -Chamar a funça para a posição do bispo.
+   Resultados:
+   -É esperado que a primeira chamada da função retorne uma lista de movimentos com 0 movimentos.
+   -É esperado que a segunda chamada da função retorne uma lista de movimentos com 4 movimentos.
+*/
 TEST(Test_BishopMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -784,7 +879,19 @@ TEST(Test_BishopMovements, Verify_Movements_RivalPieces){
 }
 
 
-
+/* Teste para verificar a função de movimento da rainha na diferenciação de peças aliadas
+e oponentes.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir uma rainha na posição (4,4) no tabuleiro.
+   -Inserir peças da mesma cor nas posições para onde a rainha poderia se mover.
+   -Chamar a função para a posição da rainha.
+   -Inserir peças de cor diferente nas posições para onde a rainha poderia se mover.
+   -Chamar a funça para a posição da rainha.
+   Resultados:
+   -É esperado que a primeira chamada da função retorne uma lista de movimentos com 0 movimentos.
+   -É esperado que a segunda chamada da função retorne uma lista de movimentos com 8 movimentos.
+*/
 TEST(Test_QueenMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -820,7 +927,19 @@ TEST(Test_QueenMovements, Verify_Movements_RivalPieces){
 	DeleteListOfMoves(AllPlays);
 }
 
-
+/* Teste para verificar a função de movimento do rei na diferenciação de peças aliadas
+e oponentes.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir um rei na posição (4,4) no tabuleiro.
+   -Inserir peças da mesma cor nas posições para onde o rei poderia se mover.
+   -Chamar a função para a posição do rei.
+   -Inserir peças de cor diferente nas posições para onde o rei poderia se mover.
+   -Chamar a funça para a posição do rei.
+   Resultados:
+   -É esperado que a primeira chamada da função retorne uma lista de movimentos com 0 movimentos.
+   -É esperado que a segunda chamada da função retorne uma lista de movimentos com 8 movimentos.
+*/
 
 TEST(Test_KingMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
@@ -858,33 +977,43 @@ TEST(Test_KingMovements, Verify_Movements_RivalPieces){
 	DeleteListOfMoves(AllPlays);
 }
 
-// /* Testa o adição do movimento de roque */
-// TEST(Test_KingMovements, Verify_Addict_Roque_Movement){
-// 	ListOfMoves* AllPlays = CreateListOfMoves();
-// 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
-// 	TBoard* board = AlocateBoard();
-// 	TBoard* board2 = AlocateBoard();
-// 	StartEmptyBoard(board);
-// 	StartEmptyBoard(board2);
-// 	board->Board[0][4] = W_KING;
-// 	board->Board[0][0] = W_TOWER;
-// 	board->Board[0][7] = W_TOWER;
+ /* Testa o adição do movimento de roque */
+/* Teste para verificar a adição dos movimentos de roque na função de movimentos do rei..
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir um rei no tabuleiro na sua posição inicial de um jogo de xadrez.
+   -Inserir torres da mesma cor do rei em um tabuleiro nas suas posições iniciais de um jogo de xadrez.
+   -Chamar a funça para a posição do rei.
+   Resultados:
+   -É esperado que a função retorne uma lista de movimentos com 7 movimentos.
+*/
 
-// 	KingMovements(board, AllPlays, 0, 4);
-// 	EXPECT_EQ(7, AllPlays->howmany);
+TEST(Test_KingMovements, Verify_Addict_Roque_Movement){
+ 	ListOfMoves* AllPlays = CreateListOfMoves();
+ 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
+ 	TBoard* board = AlocateBoard();
+ 	TBoard* board2 = AlocateBoard();
+ 	StartEmptyBoard(board);
+ 	StartEmptyBoard(board2);
+ 	board->Board[0][4] = W_KING;
+ 	board->Board[0][0] = W_TOWER;
+ 	board->Board[0][7] = W_TOWER;
 
-// 	board2->Board[7][4] = B_KING;
-// 	board2->Board[7][0] = B_TOWER;
-// 	board2->Board[7][7] = B_TOWER;
+ 	KingMovements(board, AllPlays, 0, 4);
+ 	EXPECT_EQ(7, AllPlays->howmany);
 
-// 	KingMovements(board2, AllPlays2, 7, 4);
-// 	EXPECT_EQ(7, AllPlays2->howmany);
+ 	board2->Board[7][4] = B_KING;
+ 	board2->Board[7][0] = B_TOWER;
+ 	board2->Board[7][7] = B_TOWER;
 
-// 	free(board);
-// 	free(board2);
-// 	DeleteListOfMoves(AllPlays2);
-// 	DeleteListOfMoves(AllPlays);
-// }
+ 	KingMovements(board2, AllPlays2, 7, 4);
+ 	EXPECT_EQ(7, AllPlays2->howmany);
+
+ 	free(board);
+ 	free(board2);
+ 	DeleteListOfMoves(AllPlays2);
+ 	DeleteListOfMoves(AllPlays);
+}
 
 TEST(Test_AllMovements, Verify_NULL_Board){
 	TBoard* board_null = NULL;

@@ -163,6 +163,24 @@ Move* algebraic_translate(char chess_move[]){
 	return result;
 }
 
+/* Função: WhitePawnMovements
+		Objetivo: Calcular todos os movimentos possíveis para um peão branco dada uma
+		determinada configuração de tabuleiro.
+
+		Parametros:
+			board - Ponteiro para um tabuleiro.
+					Não deve ser nulo
+			AllMoves - Ponteiro para uma lista de movimentos.
+					Não deve ser nulo
+			originx - Inteiro representando a coordenada x da posição (x,y) a ser verificada.
+				   Deve ser um valor entre 0 e 7.
+			originy - Inteiro representando a coordenada y da posição (x,y) a ser verificada.
+				     Deve ser um valor entre 0 e 7.
+
+		Saída: Essa função retorna a lista de movimentos com os movimentos possíveis do peão
+		branco adicionados.
+*/
+
 ListOfMoves* WhitePawnMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
 	int COLOR_POSITION;
 
@@ -208,6 +226,24 @@ ListOfMoves* WhitePawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 	return AllMoves;
 }
 
+/* Função: BlackPawnMovements
+		Objetivo: Calcular todos os movimentos possíveis para um peão preto dada uma
+		determinada configuração de tabuleiro.
+
+		Parametros:
+			board - Ponteiro para um tabuleiro.
+					Não deve ser nulo
+			AllMoves - Ponteiro para uma lista de movimentos.
+					Não deve ser nulo
+			originx - Inteiro representando a coordenada x da posição (x,y) a ser verificada.
+				   Deve ser um valor entre 0 e 7.
+			originy - Inteiro representando a coordenada y da posição (x,y) a ser verificada.
+				     Deve ser um valor entre 0 e 7.
+
+		Saída: Essa função retorna a lista de movimentos com os movimentos possíveis do peão
+		preto adicionados.
+*/
+
 ListOfMoves* BlackPawnMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
 	int COLOR_POSITION;
 
@@ -252,6 +288,24 @@ ListOfMoves* BlackPawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 	}
 	return AllMoves;
 }
+
+/* Função: HorseMovements
+		Objetivo: Calcular todos os movimentos possíveis para um cavalo dada uma
+		determinada configuração de tabuleiro.
+
+		Parametros:
+			board - Ponteiro para um tabuleiro.
+					Não deve ser nulo
+			AllMoves - Ponteiro para uma lista de movimentos.
+					Não deve ser nulo
+			originx - Inteiro representando a coordenada x da posição (x,y) a ser verificada.
+				   Deve ser um valor entre 0 e 7.
+			originy - Inteiro representando a coordenada y da posição (x,y) a ser verificada.
+				     Deve ser um valor entre 0 e 7.
+
+		Saída: Essa função retorna a lista de movimentos com os movimentos possíveis do cavalo
+		adicionados.
+*/
 
 ListOfMoves* HorseMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
@@ -303,6 +357,23 @@ ListOfMoves* HorseMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 }
 
 
+/* Função: TowerMovements
+		Objetivo: Calcular todos os movimentos possíveis para uma torre dada uma
+		determinada configuração de tabuleiro.
+
+		Parametros:
+			board - Ponteiro para um tabuleiro.
+					Não deve ser nulo
+			AllMoves - Ponteiro para uma lista de movimentos.
+					Não deve ser nulo
+			originx - Inteiro representando a coordenada x da posição (x,y) a ser verificada.
+				   Deve ser um valor entre 0 e 7.
+			originy - Inteiro representando a coordenada y da posição (x,y) a ser verificada.
+				     Deve ser um valor entre 0 e 7.
+
+		Saída: Essa função retorna a lista de movimentos com os movimentos possíveis da torre
+		adicionados.
+*/
 
 ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
@@ -366,6 +437,24 @@ ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, i
 
 	return AllMoves;	
 }
+
+/* Função: TowerMovements
+		Objetivo: Calcular todos os movimentos possíveis para um bispo dada uma
+		determinada configuração de tabuleiro.
+
+		Parametros:
+			board - Ponteiro para um tabuleiro.
+					Não deve ser nulo
+			AllMoves - Ponteiro para uma lista de movimentos.
+					Não deve ser nulo
+			originx - Inteiro representando a coordenada x da posição (x,y) a ser verificada.
+				   Deve ser um valor entre 0 e 7.
+			originy - Inteiro representando a coordenada y da posição (x,y) a ser verificada.
+				     Deve ser um valor entre 0 e 7.
+
+		Saída: Essa função retorna a lista de movimentos com os movimentos possíveis do bispo
+		adicionados.
+*/
 
 ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
@@ -435,6 +524,24 @@ ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, 
 
 	return AllMoves;
 }
+
+/* Função: QueenMovements
+		Objetivo: Calcular todos os movimentos possíveis para uma rainha dada uma
+		determinada configuração de tabuleiro.
+
+		Parametros:
+			board - Ponteiro para um tabuleiro.
+					Não deve ser nulo
+			AllMoves - Ponteiro para uma lista de movimentos.
+					Não deve ser nulo
+			originx - Inteiro representando a coordenada x da posição (x,y) a ser verificada.
+				   Deve ser um valor entre 0 e 7.
+			originy - Inteiro representando a coordenada y da posição (x,y) a ser verificada.
+				     Deve ser um valor entre 0 e 7.
+
+		Saída: Essa função retorna a lista de movimentos com os movimentos possíveis da rainha
+		adicionados.
+*/
 
 ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
@@ -548,6 +655,24 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 	return AllMoves;
 }
 
+/* Função: TowerMovements
+		Objetivo: Calcular todos os movimentos possíveis para um rei dada uma
+		determinada configuração de tabuleiro.
+
+		Parametros:
+			board - Ponteiro para um tabuleiro.
+					Não deve ser nulo
+			AllMoves - Ponteiro para uma lista de movimentos.
+					Não deve ser nulo
+			originx - Inteiro representando a coordenada x da posição (x,y) a ser verificada.
+				   Deve ser um valor entre 0 e 7.
+			originy - Inteiro representando a coordenada y da posição (x,y) a ser verificada.
+				     Deve ser um valor entre 0 e 7.
+
+		Saída: Essa função retorna a lista de movimentos com os movimentos possíveis do rei
+		adicionados.
+*/
+
 ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
 	int COLOR_PIECE, COLOR_POSITION;
@@ -594,6 +719,28 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 	if(originx - 1 >= 0 && originy + 1 <= 7 && COLOR_POSITION != COLOR_PIECE){
 		InsertMove(AllMoves, originx, originy, originx - 1, originy + 1);
 	}
+	/* Roque */
+	if( COLOR_PIECE == WHITE && originx == 0 && originy == 4){
+		/* Roque pequeno */
+		if(WhatPiece(board, 0, 7) == W_TOWER && board->Board[0][5] == BLANK && board->Board[0][6] == BLANK){
+			InsertMove(AllMoves, 4, 0, 6, 0);
+		}
+		/* Roque grande */
+		if(WhatPiece(board, 0, 0) == W_TOWER && board->Board[0][1] == BLANK && board->Board[0][2] == BLANK && board->Board[0][3] == BLANK){
+			InsertMove(AllMoves, 4, 0, 2, 0);
+		}
+	}
+	if(COLOR_PIECE == BLACK && originx == 7 && originy == 4){
+		/* Roque pequeno */
+		if(WhatPiece(board, 7, 7) == B_TOWER && board->Board[7][5] == BLANK && board->Board[7][6] == BLANK){
+			InsertMove(AllMoves, 4, 7, 6, 7);
+		}
+		/* Roque grande */
+		if(WhatPiece(board, 7, 0) == B_TOWER && board->Board[7][1] == BLANK && board->Board[7][2] == BLANK && board->Board[7][3] == BLANK){
+			InsertMove(AllMoves, 4, 7, 2, 7);
+		}
+	}
+
 	return AllMoves;
 }
 
