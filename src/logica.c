@@ -869,10 +869,11 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 	else{
 		return -1;
 	}
-
 	if(!SearchListOfMoves(AllMoves, originx, originy, destinyx, destinyy)){
 		DeleteListOfMoves(AllMoves);
 		return 1;
 	}
-
+	else{
+		return 0;
+	}
 }
