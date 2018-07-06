@@ -1,51 +1,126 @@
 #include "../include/interface.h"
 
+/*
+ Função: Criar janela do tabuleiro (MakeBoardWin)
+       Objetivo:
+           Inicializar a janela onde estará o Tabueleiro
+
+       Saída:
+           boardwin - Ponteiro para a janela do tabuleiro alocada
+*/
 WINDOW* MakeBoardWin(void)
 {
 	WINDOW* boardwin = newwin(YLIMIT*2 + 1, XLIMIT*4 + 1, BOARDY, BOARDX);
 	return boardwin;
 }
 
+/*
+ Função: Criar janela do eixo Y (MakeYaxisWin)
+       Objetivo:
+           Inicializar a janela onde estará o eixo X
+
+       Saída:
+           yaxis - Ponteiro para a janela alocada
+*/
 WINDOW* MakeYaxisWin(void)
 {
 	WINDOW* yaxis = newwin(YLIMIT*2 + 1, 2, BOARDY, 0);
 	return yaxis;
 }
 
+/*
+ Função: Criar janela do eixo X (MakeXaxisWin)
+       Objetivo:
+           Inicializar a janela do eixo X
+
+       Saída:
+           xaxis - Ponteiro para a janela do eixo X
+*/
 WINDOW* MakeXaxisWin(void)
 {
 	WINDOW* xaxis = newwin(1, XLIMIT*4 + 1, BOARDY + YLIMIT*2 + 1, BOARDX);
 	return xaxis;
 }
 
+/* 
+ Função: Criar janela do menu de atalhos (MakeKeyWin)
+       Objetivo:
+           Inicilizar a janela do menu de atalhos. Este é o menu onde o usuário
+           digita os comandos quando ele vai mover uma peça pela notação
+
+       Saída:
+           keywin - Ponteiro para a janela alocada
+*/
 WINDOW* MakeKeyWin(void)
 {
 	WINDOW* keywin = newwin(4, 78, BOARDY + 2*YLIMIT + 2, 1);
 	return keywin;
 }
 
+/*
+ Função: Criar a janela de mensagens (MakeMsgWin)
+       Objetivo:
+           Inicializar a janela de mensagens para o usuário
+
+       Saída:
+           messages - Ponteiro para a janela de mensagens
+*/
 WINDOW* MakeMsgWin(void)
 {
 	WINDOW* messages = newwin(3, 42, BOARDY + 2*YLIMIT - 2, BOARDX + 4*XLIMIT + 3);
 	return messages;
 }
 
+/* 
+ Função: Criar janela de ajuda (MakeHelpWin)
+       Objetivo:
+           Inicializar a janela de ajuda para o usuário
+
+       Saída:
+           helpwin - Ponteiro para a janela de ajuda
+*/
 WINDOW* MakeHelpWin(void)
 {
 	WINDOW* helpwin = newwin(YLIMIT*2 - 3, 42, BOARDY, BOARDX + 4*XLIMIT + 3);
 	return helpwin;
 }
 
+/* 
+ Função: Traduzir coordenadas para coordenadas do tabuleiro em memória
+       Objetivo:
+           Esta função irá receber as coordenadas em que o usuário tenha
+           digitado na tela e irá traduzí-las para as coordenadas do tabuleiro
+           armazenado em memória
+
+       Saída:
+           yboard - Coordenada Y traduzida
+           xboard - Coordenada X traduzida
+
+       Assertivas de entrada:
+           0 <= yscreen < 5000
+           0 <= xscreen < 5000
+
+		   * A função depende de muito de como foi desenhado o tabuleiro, dessa
+             forma, mudanças no design do tabuleiro implicam numa análise desta
+             função para saber se ela precisa ser adapatada ao novo design
+
+      Assertivas de saída:
+           0 <= yboard <= 7
+           0 <= xboard <= 7
+*/
 void TranslateCoord(int yscreen, int xscreen, int* yboard, int* xboard)
 {
 	int line, column; /* Contadores */
 	int yaux, xaux;	/* Auxiliares para tradução */
+	/* Coordenadas válidas mais próximas até a posição que o usuário digitou */
 	int minyaux = 5000, minxaux = 5000;
 
 	/* Retirando o excesso causado pelas bordas */
 	yscreen -= BOARDY;
 	xscreen -= BOARDX;
 
+	/* Loop para encontrar qual a coodernada y válida mais próxima de onde o
+       usuário digitou */
 	for(line = 0; line < 8; line++)
 		{
 			yaux = abs((line*YOFFSET) + 1 - yscreen);
@@ -55,6 +130,7 @@ void TranslateCoord(int yscreen, int xscreen, int* yboard, int* xboard)
 			}
 		}
 
+	/* Mesmo objetivo do loop anterior mas para a coordenada x */
 	for(column = 0; column < 8; column++)
 		{
 			xaux = abs((column*XOFFSET) + 2 - xscreen);

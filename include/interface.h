@@ -8,38 +8,38 @@
 #include "logica.h"
 
 /* Tamanho do tabuleiro */
-const int XLIMIT = 8;
-const int YLIMIT = 8;
+const int XLIMIT = 8; /*!< Indica o tamanho do eixo Y do tabuleiro  */
+const int YLIMIT = 8; /*!< Indica o tamanho do eixo X do tabuleiro */
 
 /* Coordenadas para o início do tabuleiro */
-const int BOARDY = 2;
-const int BOARDX = 3;
+const int BOARDY = 2; /*!< Indica onde começa o tabuleiro pelo eixo Y */
+const int BOARDX = 3; /*!< Indica onde começa o tabuleiro pelo eixo X */
 
 /* Variáveis usadas para diferenciar entre o tabuleiro mostrado ao usuário e o
    que está armazenado na memória */
-const int YOFFSET = 2;
-const int XOFFSET = 4;
+const int YOFFSET = 2; /*!< Número de caracteres entre duas posições no tabuleiro gráfico pelo eixo Y */
+const int XOFFSET = 4; /*!< Mesma coisa do YOFFSET só que para o eixo X */
 
 /* Constantes para as mensagens */
-const int INVALID_SINTAX = 0;
-const int ARE_YOU_SURE   = 1;
-const int CONTINUE_GAME  = 2;
-const int INVALID_MOVE   = 3;
-const int WHITE_MOVE     = 4;
-const int BLACK_MOVE     = 5;
-const int NOTBLACKSMOVE  = 6;
-const int NOTWHITESMOVE  = 7;
-const int CONTINUE       = 8;
-const int INSERT_PIECE   = 9;
-const int CLICK          = 10;
-const int INVALID_PIECE  = 11;
-const int INVALID_BOARD  = 12;
-const int USE_MOUSE      = 13;
+const int INVALID_SINTAX = 0; /*!< Avisa sobre sintxe inválida */
+const int ARE_YOU_SURE   = 1; /*!< Perguntar se usuário tem certeza */
+const int CONTINUE_GAME  = 2; /*!< Avisar que o jogo vai continuar */
+const int INVALID_MOVE   = 3; /*!< Avisar sobre movimento inválido */
+const int WHITE_MOVE     = 4; /*!< Avisar que a vez das brancas */
+const int BLACK_MOVE     = 5; /*!< Avisar que a vez das pretas */
+const int NOTBLACKSMOVE  = 6; /*!< Avisar que não é a vez das pretas */
+const int NOTWHITESMOVE  = 7; /*!< Avisar que não é a vez das brancas */
+const int CONTINUE       = 8; /*!<  */
+const int INSERT_PIECE   = 9; /*!<  */
+const int CLICK          = 10; /*!< Avisar para clicar na posição desejada */
+const int INVALID_PIECE  = 11; /*!< Avisar de peça inválida */
+const int INVALID_BOARD  = 12; /*!< Avisar de tabuleiro inválido */
+const int USE_MOUSE      = 13; /*!< Avisar para usar o mouse */
 
 /* Constantes para modos de jogo */
-const int PVP      = 1; /* Player vs Player */
+const int PVP      = 1; /*!< Player vs Player */
 const int PVE      = 2;
-const int EXITGAME = 3;
+const int EXITGAME = 3;	/*!< Sair do jogo */
 
 /* Constantes para opção da escolha do tabuleiro */
 const int STD_BOARD   = 1;
@@ -56,18 +56,64 @@ const int BLACKS_TURN = 0;
 const int WHITES_TURN = 1;
 
 
+/* Cria uma janela do tabuleiro */
+/*! \fn WINDOW* MakeBoardWin(void)
+        \brief Cria janela do tabuleiro
+
+        \return boardwin Ponteiro para a janela do tabuleiro */
 WINDOW* MakeBoardWin(void);
 
+/* Cria uma janela do eixo Y */
+/*! \fn WINDOW* MakeYaxisWin(void)
+        \brief Cria janela do eixo Y
+        
+        \return yaxis Ponteiro para a janela do eixo Y */
 WINDOW* MakeYaxisWin(void);
 
+/* Cria uma janela do eixo X */
+/*! \fn WINDOW* MakeXaxisWin(void)
+       \brief Cria janela do eixo X
+
+       \return xaxis Ponteiro para a janela do eixo X */
 WINDOW* MakeXaxisWin(void);
 
+/* Cria uma janela do menu de atalhos */
+/*! \fn WINDOW* MakeKeyWin(void)
+        \brief Cria a janela do menu de atalhos
+
+		Este menu de atalhos é o que mostra as opções de atalhos no teclado
+        para o usuário, como a tecla 'j' no menu do PVP que é usada para fazer
+        jogadas usando a notação
+
+        \return keywin Janela do menu de atalhos */
 WINDOW* MakeKeyWin(void);
 
+/* Cria uma janela de mensagens */
+/*! \fn WINDOW* MakeMsgWin(void)
+        \brief Cria janela de mensagens
+
+        \return messages Janela de mensagens */
 WINDOW* MakeMsgWin(void);
 
+/* Cria uma janela de ajuda */
+/*! \fn WINDOW* MakeHelpWin(void)
+        \brief Cria a janela de ajuda
+     
+        \return helpwin Janela da ajuda */
 WINDOW* MakeHelpWin(void);
 
+/* Traduz coordenadas, da tela para tabuleiro na memória */
+/*! \fn void TranslateCoord(int yscreen, int xscreen, int* yboard, int* xboard)
+        \brief Traduz as coordenadas da tela para as do tabuleiro
+         
+        Esta função é chamada toda vez que o usuário clica na tela e traduz as
+        coordenadas da posição que o usuário digitou para as coordenadas do
+        tabuleiro
+
+        \param yscreen Posição Y onde o usuário digitou
+        \param xscreen Posição X onde o usuário digitou
+        \param yboard  Posição Y traduzida
+        \param xboard  Posição X traduzida */
 void TranslateCoord(int yscreen, int xscreen, int* yboard, int* xboard);
 
 

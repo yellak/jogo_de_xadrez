@@ -5,5 +5,5 @@ Data | Horas |     Tipo Tarefa     |                 Descrição
 27/07| 2h30m | Projetar, testes    | Carregar tabuleiro na GUI, função de alocar tabuleiro e testes
 30/07| 7h30m | Proj., real. testes | Funções de verificar sintaxe, melhoria da GUI
 01/07| 4h10m | Projetar            | GUI, iniciando opção de criar tabuleiro
-02/07| 9h20m | Proj., real. teste  | Avanços na GUI; função de validar uma peça
-03/07|
+02/07| 9h20m | Proj., real. testes | Avanços na GUI; função de validar uma peça
+03/07| 6h    | Proj., real. testes | GUI, modo de criação de tabuleiro pronto
