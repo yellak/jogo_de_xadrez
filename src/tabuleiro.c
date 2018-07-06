@@ -487,7 +487,7 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
 	/* Movimento do roque. */
 	/* Branco. */
 	if(origin_line == 0 && origin_column == 4){
-		if(WhatPiece(board, 0, 4) == W_KING){
+		if(WhatPiece(board, 0, 4) == B_KING){
 			/* Roque pequeno. */
 			if(dest_line == 0 && dest_column == 6){
 				/* Mover torre. */
@@ -502,7 +502,7 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
 	}
 	/* Preto. */
 	if(origin_line == 7 && origin_column == 4){
-		if(WhatPiece(board, 7, 4) == B_KING){
+		if(WhatPiece(board, 7, 4) == W_KING){
 			/* Roque pequeno. */
 			if(dest_line == 7 && dest_column == 6){
 				/* Mover torre. */
