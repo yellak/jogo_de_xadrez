@@ -921,3 +921,7 @@ TBoard* VerifyCheck(TBoard* board, int color){
 		return board;
 	}
 }
+
+int VerifyCheckMate(TBoard* board, int color){
+	
+}
