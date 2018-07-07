@@ -150,6 +150,32 @@ TEST(Test_SortTree, Verify_DontSucicide){
 	free(tree);
 }
 
+/* Teste para 
+   	Procedimento:
+   	-Inicia-se o tabuleiro
+   	-Insere-se uma torre no tabuleiro
+   	-Insere-se uma rainha e um peão em posições que a torre possa matar
+   Resultados:
+   	-A função deve retornar 0 no caso de fracasso
+   	-A torre deve escolher matar a rainha ao invés do peão
+ */
+
+TEST(Test_SortTree, Verify_PiecePreference1){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	InsertPiece(board, W_QUEEN, 3, 7);
+	InsertPiece(board, B_TOWER, 3, 4);
+	InsertPiece(board, W_PAWN, 3, 0);
+	int turn = BLACKS_TURN;
+	Tree* tree = CreateMovesTree(board, turn);
+
+	/* Testar a alocação */
+	EXPECT_EQ(0, SortTree(tree, turn));
+	EXPECT_EQ(-4, tree->root->child[0]->board->Weight);
+	FreeTreeNodes(tree->root);
+	free(tree);
+}
+
 /* Teste para verificar se a lista contendo todas as jogada ordenadas está sendo criada de maneira adequada
 - Inicia-se a árvore com jogadas, usando apenas um peão no tabuleiro;
 - Inicia-se a lista para criação;
