@@ -22,9 +22,13 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 	ListOfMoves* AllMoves, *AllMovesChild;
 
 	/* Extraindo a lista de movimentos para a cor certa do jogador atual */
-	if(turn == WHITES_TURN) AllMoves = AnalyzePossibleMovementsWhite(board);
-	else if(turn == BLACKS_TURN) AllMoves = AnalyzePossibleMovementsBlack(board);
-	
+	if(turn == WHITES_TURN){
+	 	AllMoves = AnalyzePossibleMovementsWhite(board);
+	}
+
+	else if(turn == BLACKS_TURN){
+		AllMoves = AnalyzePossibleMovementsBlack(board);
+	}
 	/* Inicializando o movimento da raiz */
 	Move play;
 	play.origin[0] = 0;
@@ -35,61 +39,46 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 	/* Alocando a raíz da árvore */
 	Tree* tree = AlocateTree();
 	tree->root = AlocateNodeTree(AllMoves->howmany, board, &play);
-	
 
 	NodeList* currentnode = AllMoves->first;
-
-	for(int I = 0; I < 8; I++){
-		for(int J = 0; J < 8; J++){
-			printf("%c ", board->Board[I][J]);
-		}
-		printf("\n");
-	}
-	printf("\n");
+	TBoard* boardaux = AlocateBoard();
+	TBoard* boardauxchild = AlocateBoard();
 
 	for(int i = 0 ; i < tree->root->n_child; i++, currentnode = currentnode->next){
 
-		/* Tabuleiro auxiliar para armazenar a nova jogada */
-		TBoard boardaux = *board;
+		/* Tabuleiro auxiliar para armazenar a nova jogada */		
+		boardaux = board;
 
 		/* Movimenta-se a peça no tabuleiro auxiliar de acordo com a jogada da lista de jogadas*/
-		MovePiece(&boardaux, currentnode->play.origin[0], currentnode->play.origin[1], currentnode->play.destiny[0], currentnode->play.destiny[1]);
+		MovePiece(boardaux, currentnode->play.origin[0], currentnode->play.origin[1], currentnode->play.destiny[0], currentnode->play.destiny[1]);
 
 		/* Extraindo a lista de movimentos para a jogada seguinte */
 		/* Por isso, caso a primeira jogada seja do branco a seguinte será do preto e vice-versa */
-		if(turn == WHITES_TURN) AllMovesChild = AnalyzePossibleMovementsBlack(&boardaux);
-		else if(turn == BLACKS_TURN) AllMovesChild = AnalyzePossibleMovementsWhite(&boardaux);	
+		if(turn == WHITES_TURN) AllMovesChild = AnalyzePossibleMovementsBlack(boardaux);
+		else if(turn == BLACKS_TURN) AllMovesChild = AnalyzePossibleMovementsWhite(boardaux);	
 		
 		/* Alocando o nó da nova jogada */
-		NodeTree* newnode = AlocateNodeTree(AllMovesChild->howmany, &boardaux, &currentnode->play);
+		NodeTree* newnode = AlocateNodeTree(AllMovesChild->howmany, boardaux, &currentnode->play);
 		AddChildNode(tree->root, newnode, i);
 
 		NodeList* currentnodechild = AllMovesChild->first;
 
-		for(int I = 0; I < 8; I++){
-			for(int J = 0; J < 8; J++){
-				printf("%c ", boardaux.Board[I][J]);
-			}
-			printf("\n");
-		}
-		printf("\n");
-		
 		for(int j = 0; j < AllMovesChild->howmany; j++, currentnodechild = currentnodechild->next){
 
 			/* Outro tabuleiro auxiliar para criar os filhos do newnode */
-			TBoard boardauxchild = boardaux;
+			boardauxchild = boardaux;
 
 			/* Movimenta-se a peça no tabuleiro de arcordo com a configuração do tabuleiro de newnode */
-			MovePiece(&boardauxchild, currentnodechild->play.origin[0], currentnodechild->play.origin[1], currentnodechild->play.destiny[0], currentnodechild->play.destiny[1]);
+			MovePiece(boardauxchild, currentnodechild->play.origin[0], currentnodechild->play.origin[1], currentnodechild->play.destiny[0], currentnodechild->play.destiny[1]);
 			
 			/* Alocando o nó do filho de newnode */
-			NodeTree* newnodechild = AlocateNodeTree(1, &boardauxchild, &currentnode->play);
+			NodeTree* newnodechild = AlocateNodeTree(1, boardauxchild, &currentnode->play);
 			AddChildNode(newnode, newnodechild, j);			
 		}
-
+		
 		DeleteListOfMoves(AllMovesChild);
 	}
-
+	
 	DeleteListOfMoves(AllMoves);
 
 	return tree;
@@ -107,9 +96,48 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 		Saída: Essa função retorna um inteiro indicando sucesso(0) ou fracasso(1) da operação de ordenar
 */
 int SortTree(Tree* tree, int turn){
-	return 1;
-}
 
+	int n_child = tree->root->n_child;
+	int i, j, k;
+
+	/*Loop para cada um dos filhos dos filhos da raiz*/
+	for (k = 0; k < n_child; k++){
+		int n = tree->root->child[k]->n_child;
+
+		/* Loop para ordenar os nós filhos de um nó */
+		for (i = 0; i < n; i++){     
+	   		for (j = 0; j < n-i-1; j++){
+	      		if (tree->root->child[k]->child[j]->board->Weight > tree->root->child[k]->child[j+1]->board->Weight){
+	      			NodeTree* nodeaux = tree->root->child[k]->child[j];
+	      			tree->root->child[k]->child[j] = tree->root->child[k]->child[j + 1];
+	      			tree->root->child[k]->child[j + 1] = nodeaux;
+	      		}
+	    	}
+	  	}
+	}
+
+	int n = tree->root->n_child;
+	for (i = 0; i < n; i++){     
+	   	for (j = 0; j < n-i-1; j++){
+	      	if (tree->root->child[j]->child[0]->board->Weight < tree->root->child[j]->child[0]->board->Weight){
+	      		NodeTree* nodeaux = tree->root->child[j]->child[0];
+	      		tree->root->child[j]->child[0] = tree->root->child[j]->child[j + 1];
+	      		tree->root->child[j]->child[j + 1] = nodeaux;
+	      	}
+	    }
+	}
+
+	return 0;
+}
+NodeList* Best_Plays(Tree* tree, int n_child) {
+		NodeList* Lista = (NodeList*)malloc(sizeof(NodeList));
+		int j;
+		for(j=0; j< n_child; j++) {
+			Lista->play = *tree->root->child[j]->play;
+			Lista = Lista->next;
+		}
+		return Lista;
+}
 //função para extrair melhor jogada , retorna a jogad
 
 //função para retornar as n melhores jogadas

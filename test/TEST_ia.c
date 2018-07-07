@@ -97,8 +97,8 @@ TEST(Test_SortTree, Verify_SortTree){
 	Tree* tree = CreateMovesTree(&board, turn);
 
 	/* Testar a alocação */
-	EXPECT_EQ(2, tree->root->child[1]->board->Weight);
 	EXPECT_EQ(0, SortTree(tree, turn));
+	EXPECT_EQ(3, tree->root->child[0]->board->Weight);
 	FreeTreeNodes(tree->root);
 	free(tree);
 }
