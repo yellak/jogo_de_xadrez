@@ -114,6 +114,8 @@ TEST(Test_AddChildNode, Verify_Insertion_Failure){
 
 	free(child->child);
 	free(child);
+	free(boardchild);
+	free(boardfather);
 }
 
 /* Teste para verificar se um nó foi liberado
