@@ -1045,6 +1045,9 @@ int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, M
 			dl = movement->destiny[0]; /* destiny line */
 			dc = movement->destiny[1]; /* destiny column */
 
+			board = VerifyCheck(board, BLACK);
+			board = VerifyCheck(board, WHITE);
+
 			if(VerifyValidMovement(board, ol, oc, dl, dc) == 1)
 				{
 					/* Agora é a vez do próximo jogador */
@@ -1133,6 +1136,9 @@ int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, M
 					oc = movement->origin[1]; /* origin column */
 					dl = movement->destiny[0]; /* destiny line */
 					dc = movement->destiny[1]; /* destiny column */
+
+					board = VerifyCheck(board, BLACK);
+					board = VerifyCheck(board, WHITE);
 
 					if(VerifyValidMovement(board, ol, oc, dl, dc) == 1)
 						{
