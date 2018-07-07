@@ -47,6 +47,7 @@ TEST(Test_AlocateNodeTree, Verify_Alocation_Node){
 	EXPECT_EQ(1, node->play != NULL);
 	EXPECT_EQ(n_child, node->n_child);
 	FreeTreeNodes(node);
+	free(board);
 } 
 
 /* Teste para verificar se a inserção de um filho foi bem sucedida
@@ -80,6 +81,8 @@ TEST(Test_AddChildNode, Verify_Insertion_Sucess){
 	EXPECT_EQ(father->child[position], child);
 	
 	FreeTreeNodes(father);
+	free(boardfather);
+	free(boardchild);
 }
 
 /* Teste para verificar a inserção de um filho foi um fracasso quando tentamos
@@ -104,16 +107,15 @@ TEST(Test_AddChildNode, Verify_Insertion_Failure){
 
 	/* Alocação do nó pai e do filho*/
 	father = AlocateNodeTree(n_child, boardfather, &playfather);
-	child = AlocateNodeTree(n_child, boardchild, &playfather);
+	child = AlocateNodeTree(n_child, boardchild, &playchild);
 
 
 	/* Testar se a adição do filho foi um fracasso */
 	EXPECT_EQ(0, AddChildNode(father, child, position));
 
-	FreeTreeNodes(father);	
+	FreeTreeNodes(father);
+	FreeTreeNodes(child);
 
-	free(child->child);
-	free(child);
 	free(boardchild);
 	free(boardfather);
 }
@@ -138,6 +140,7 @@ TEST(Test_FreeTreeNodes, Verify_Free_OneNode){
 
 	/* Testar se a liberação deu certo */
 	EXPECT_EQ(NULL, FreeTreeNodes(node));
+	free(board);
 
 }
 
@@ -166,6 +169,10 @@ TEST(Test_FreeTreeNodes, Verify_Free_NodewithChild){
 
 	/* Testar se o nó pai seu filho foram liberados */
 	EXPECT_EQ(NULL, FreeTreeNodes(nodefather));
+
+
+	free(boardfather);
+	free(boardchild);
 }
 
 int main(int argc, char **argv){
