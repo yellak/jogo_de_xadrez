@@ -709,23 +709,23 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 		InsertMove(AllMoves, originx, originy, originx - 1, originy + 1);
 	}
 	/* Roque */
-	if( COLOR_PIECE == WHITE && originx == 0 && originy == 4){
+	if( COLOR_PIECE == BLACK && originx == 0 && originy == 4){
 		/* Roque pequeno */
-		if(WhatPiece(board, 0, 7) == W_TOWER && board->Board[0][5] == BLANK && board->Board[0][6] == BLANK){
+		if(WhatPiece(board, 0, 7) == B_TOWER && board->Board[0][5] == BLANK && board->Board[0][6] == BLANK){
 			InsertMove(AllMoves, 4, 0, 6, 0);
 		}
 		/* Roque grande */
-		if(WhatPiece(board, 0, 0) == W_TOWER && board->Board[0][1] == BLANK && board->Board[0][2] == BLANK && board->Board[0][3] == BLANK){
+		if(WhatPiece(board, 0, 0) == B_TOWER && board->Board[0][1] == BLANK && board->Board[0][2] == BLANK && board->Board[0][3] == BLANK){
 			InsertMove(AllMoves, 4, 0, 2, 0);
 		}
 	}
-	if(COLOR_PIECE == BLACK && originx == 7 && originy == 4){
+	if(COLOR_PIECE == WHITE && originx == 7 && originy == 4){
 		/* Roque pequeno */
-		if(WhatPiece(board, 7, 7) == B_TOWER && board->Board[7][5] == BLANK && board->Board[7][6] == BLANK){
+		if(WhatPiece(board, 7, 7) == W_TOWER && board->Board[7][5] == BLANK && board->Board[7][6] == BLANK){
 			InsertMove(AllMoves, 4, 7, 6, 7);
 		}
 		/* Roque grande */
-		if(WhatPiece(board, 7, 0) == B_TOWER && board->Board[7][1] == BLANK && board->Board[7][2] == BLANK && board->Board[7][3] == BLANK){
+		if(WhatPiece(board, 7, 0) == W_TOWER && board->Board[7][1] == BLANK && board->Board[7][2] == BLANK && board->Board[7][3] == BLANK){
 			InsertMove(AllMoves, 4, 7, 2, 7);
 		}
 	}

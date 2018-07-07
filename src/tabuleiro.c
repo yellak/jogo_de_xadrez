@@ -557,6 +557,8 @@ void copy_boards(TBoard* copy, TBoard* board){
 	}
 
 	copy->Weight = board->Weight;
+	copy->WhiteCheck = board->WhiteCheck;
+	copy->BlackCheck = board->BlackCheck;
 }
 
 /* 
