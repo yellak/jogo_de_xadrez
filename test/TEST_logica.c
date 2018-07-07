@@ -1087,6 +1087,22 @@ TEST(Test_VerifyValidMovement, Verify_Valid_Movements){
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 4, 1, 4));
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 5, 1, 5));
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 6, 2, 7));
+
+
+	board->Board[7][0] = W_PAWN;
+	board->Board[7][1] = W_TOWER;
+	board->Board[7][2] = W_BISHOP;
+	board->Board[7][4] = W_KING;
+	board->Board[7][5] = W_QUEEN;
+	board->Board[7][6] = W_HORSE;
+
+	EXPECT_EQ(1, VerifyValidMovement(board, 7, 0, 6, 0));
+	EXPECT_EQ(1, VerifyValidMovement(board, 7, 1, 6, 1));
+	EXPECT_EQ(1, VerifyValidMovement(board, 7, 2, 6, 3));
+	EXPECT_EQ(1, VerifyValidMovement(board, 7, 4, 6, 4));
+	EXPECT_EQ(1, VerifyValidMovement(board, 7, 5, 6, 5));
+	EXPECT_EQ(1, VerifyValidMovement(board, 7, 6, 5, 7));
+
 	free(board);
 }
 
