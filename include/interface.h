@@ -35,6 +35,8 @@ const int CLICK          = 10; /*!< Avisar para clicar na posição desejada */
 const int INVALID_PIECE  = 11; /*!< Avisar de peça inválida */
 const int INVALID_BOARD  = 12; /*!< Avisar de tabuleiro inválido */
 const int USE_MOUSE      = 13; /*!< Avisar para usar o mouse */
+const int NOTPIECE       = 14; /*!< Avisar que não há uma peça naquela posição */
+const int CLICK_DESTINY  = 15; /*!< Pedir para clicar no destino */
 
 /* Constantes para modos de jogo */
 const int PVP      = 1; /*!< Player vs Player */
@@ -280,5 +282,15 @@ int change_turn(int turn);
         \return true  Se é o turno da cor da peça a ser mexida
         \return false Se não é o turno da cor da peça a ser mexida */
 int verify_turn(TBoard* board, Move* movement, int turn);
+
+void print_turn(WINDOW* helpwin, int turn);
+
+int reverse_color_in_board(WINDOW* boardwin, TBoard* board, int line, int column);
+
+int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, Move* movement);
+
+int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, MEVENT event);
+
+Move* GetMovement(WINDOW* keywin, char chess_move[]);
 	
 #endif

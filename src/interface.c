@@ -318,6 +318,33 @@ void DrawAxis(WINDOW* yaxis, WINDOW* xaxis){
 
 } /* DrawAxis() */
 
+void HelpWinPVP(WINDOW* helpwin)
+{
+	/* Destacando a janela */
+	box(helpwin, 0, 0);
+
+	/* Mostrando o título */
+	mvwprintw(helpwin, 1, 11, "Legenda das peças");
+
+	/* Mostrando as opções de peças pretas */
+	mvwprintw(helpwin, 3, 1, "K - Rei preto");
+	mvwprintw(helpwin, 4, 1, "Q - Rainha preta");
+	mvwprintw(helpwin, 5, 1, "R - Torre preta");
+	mvwprintw(helpwin, 6, 1, "B - Bispo preto");
+	mvwprintw(helpwin, 7, 1, "N - Cavalo preto");
+	mvwprintw(helpwin, 8, 1, "P - Peão preto");
+
+	/* Mostrando as opções de peças brancas */
+	mvwprintw(helpwin, 3, 18, "k - Rei branco");
+	mvwprintw(helpwin, 4, 18, "q - Rainha branca");
+	mvwprintw(helpwin, 5, 18, "r - Torre branca");
+	mvwprintw(helpwin, 6, 18, "b - Bispo branco");
+	mvwprintw(helpwin, 7, 18, "n - Cavalo branco");
+	mvwprintw(helpwin, 8, 19, "p - Peão branco");
+	
+	wrefresh(helpwin);
+}
+
 /*
  Função: Inicializar a janela de ajuda
        Objetivo:
@@ -386,14 +413,13 @@ TBoard* CreateNewBoard(void)
 	int choice;	/* É a tecla que o usuário apertou */
 	char piece;	/* Peça a ser adicionada ou removida */
 
-	int b_line, b_column;
+	int b_line, b_column; /* Posições traduzidas da posição onde o usuário clicou */
 
 	/* Habilitando o reconhecimento do mouse */
 	mousemask(BUTTON1_PRESSED, NULL);
 	keypad(stdscr, TRUE);
-
+	
 	MEVENT event; /* Guarda as coordenadas do clique do mouse */
-
 
 	/* Carregando as janelas */
 	refresh();
@@ -842,10 +868,10 @@ void print_message(WINDOW* messages, int msg)
 			wprintw(messages, "Movimento inválido");
 			break;
 		case WHITE_MOVE:
-			wprintw(messages, "Vez das brancas");
+			wprintw(messages, "Vez das brancas (Minúsculas)");
 			break;
 		case BLACK_MOVE:
-			wprintw(messages, "Vez das pretas");
+			wprintw(messages, "Vez das pretas (maiúsculas)");
 			break;
 		case NOTBLACKSMOVE:
 			wprintw(messages, "Não é a vez das pretas");
@@ -871,10 +897,207 @@ void print_message(WINDOW* messages, int msg)
 		case USE_MOUSE:
 			wprintw(messages, "Por favor, utilize o mouse");
 			break;
+		case NOTPIECE:
+			wprintw(messages, "Posição vazia");
+			break;
+		case CLICK_DESTINY:
+			wprintw(messages, "Clique no destino da peça");
+			break;
 		}
 	
 	wrefresh(messages);
 } /* print_message() */
+
+int reverse_color_in_board(WINDOW* boardwin, TBoard* board, int line, int column)
+{
+	wmove(boardwin, (line * YOFFSET) + 1, (XOFFSET * column) + 2);
+	if(board->Board[line][column] != BLANK)
+		{
+			wattron(boardwin, A_REVERSE);
+			wprintw(boardwin, "%c", board->Board[line][column]);
+			wattroff(boardwin, A_REVERSE);
+			wrefresh(boardwin);
+
+			return true;
+		}
+
+	return false;
+}
+
+Move* GetMovement(WINDOW* keywin, char chess_move[])
+{
+	Move* movement;
+	
+	echo();	/* Deixar as teclas aparecerem na tela */
+	curs_set(1); /* Fazer o cursor aparecer */
+	wmove(keywin, 2, 1);
+	/* Obter a notação de movimento do usuário */
+	wgetstr(keywin, chess_move); /* Pegar a jogada */
+	clear_keywin(keywin);
+	curs_set(0); /* Tirar o cursor */
+	noecho(); /* Desabilitar teclas aparecerem na tela */
+
+	/* Traduzindo o notação para elemento de movimento */
+	movement = algebraic_translate(chess_move);
+
+	return movement;
+}
+
+void print_turn(WINDOW* helpwin, int turn)
+{
+	/* Limpando a janela */
+	wmove(helpwin, 11, 12);
+	wprintw(helpwin, "               ");
+
+	/* Escrevendo de quem é a vez */
+	wmove(helpwin, 11, 12);
+	if(turn == WHITES_TURN){
+		wprintw(helpwin, "Vez das brancas");
+	}
+	else{
+		wprintw(helpwin, "Vez das pretas");
+	}
+
+	wrefresh(helpwin);
+}
+
+/* 
+ Função: Mover a peça na interface gráfica
+       Objetivo:
+           Mover a peça e fazer todas as verificações pela própria interface
+
+       Parâmetros:
+*/
+int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, Move* movement)
+{
+	int ol, oc, dl, dc; /* Indicam as posições de origem e destino */
+	int boolean;
+	
+	if(verify_turn(board, movement, turn) == true)
+		{
+			/* Agora é a vez do próximo jogador */
+			turn = change_turn(turn);
+					
+			ol = movement->origin[0]; /* origin line */
+			oc = movement->origin[1]; /* origin column */
+			dl = movement->destiny[0]; /* destiny line */
+			dc = movement->destiny[1]; /* destiny column */
+			
+			/* Realizando a jogada */
+			boolean = MovePiece(board, ol, oc, dl, dc);
+
+			if(boolean == 0) /* Jogada válida */
+				{
+					/* Recria o tabuleiro com as novas posições */
+					InitBoard(boardwin, board);
+					wrefresh(boardwin); /* Recarrega o tabuleiro */
+				}
+			else
+				{
+					print_message(messages, INVALID_MOVE);
+				}
+									
+			free(movement);
+		} /* if(verify_turn( ... )) */
+	else  /* Não é a vez da peça que o usuário tentou mexer */
+		{
+			if(movement == NULL){
+				print_message(messages, INVALID_SINTAX);
+			}
+			else if(turn == WHITES_TURN){
+				print_message(messages, NOTBLACKSMOVE);
+			}
+			else{
+				print_message(messages, NOTWHITESMOVE);
+			}
+		} /* Não é a vez da peça que o jogador escolheu */
+
+	return turn;
+} /* UI_MOVE_PIECE */
+
+int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, MEVENT event)
+{
+	/* Movimento do jogador */
+	Move* movement = (Move*) malloc(sizeof(Move));
+	/* Coordenadas traduzidas da posição onde o mouse clicou */
+	int b_line, b_column;
+	/* Coordenadas de origem e destino quando o usuário usar o mouse */
+	int ol, oc, dl, dc;
+	/* Boleano para fins diversos */
+	int boolean;
+	/* Tecla que o usuário apertou */
+	int choice;
+	
+	/* Traduzindo as coordenadas de onde o usuário digitou */
+	TranslateCoord(event.y, event.x, &b_line, &b_column);
+							
+	/* Marcando a posição no tabuleiro onde o usuário apertou */
+	if(reverse_color_in_board(boardwin, board, b_line, b_column) == true)
+		{
+			/* Passando as coordenadas de origem */
+			movement->origin[0] = b_line;
+			movement->origin[1] = b_column;
+
+			if(verify_turn(board, movement, turn) == true)
+				{
+					/* Mudando a vez do jogador */
+					turn = change_turn(turn);
+
+					/* Avisar para o usuário clicar no destino */
+					print_message(messages, CLICK_DESTINY);
+
+					/* Pegar a posição destino */
+					do{
+						choice = getch();
+					} while(choice != KEY_MOUSE);
+
+					if(getmouse(&event) == OK)
+						{
+							TranslateCoord(event.y, event.x, &b_line, &b_column);
+
+							/* Passando as coordenadas de destino */
+							movement->destiny[0] = b_line;
+							movement->destiny[1] = b_column;
+						}
+
+					ol = movement->origin[0]; /* origin line */
+					oc = movement->origin[1]; /* origin column */
+					dl = movement->destiny[0]; /* destiny line */
+					dc = movement->destiny[1]; /* destiny column */
+									
+					boolean = MovePiece(board, ol, oc, dl, dc);
+
+					if(boolean == 0) /* Jogada válida */
+						{
+							/* Recria o tabuleiro com as novas posições */
+							InitBoard(boardwin, board);
+							wrefresh(boardwin); /* Recarrega o tabuleiro */
+						}
+					else
+						{
+							print_message(messages, INVALID_MOVE);
+						}
+				}
+			else /* Não é a vez da peça que o usuário tentou mexer */
+				{
+					/* Recarregando o tabuleiro na tela */
+					InitBoard(boardwin, board);
+					wrefresh(boardwin);
+					
+					if(turn == WHITES_TURN){
+						print_message(messages, NOTBLACKSMOVE);
+					}
+					else{
+						print_message(messages, NOTWHITESMOVE);
+					}
+				} /* Não é a vez da peça que o usuário tentou mexer */
+		} /* if(reverse_color_in_board...) */
+	else{
+		print_message(messages, NOTPIECE);
+	}
+
+	return turn;
+} /* UI_MOUSE_MOVE */
 
 /*
   Função: Jogar modo PVP (play_pvp)
@@ -900,91 +1123,45 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 	int finished = false;
 	/* String com a jogada escolhida pelo usuário */
 	char chess_move[8];
-	/* Booleano para fins diversos */
-	int boolean;
 	/* Movimento do jogador */
-	Move* movement = (Move*) malloc(sizeof(Move));
+	Move* movement;
 	/* Inteiro que indicará de quem é a vez de jogar */
 	int turn = WHITES_TURN;
-	/* Variáveis para movimento, elas não são intuitivas para que
-       haja uma economia de espaço mais a frente, elas também são melhor
-       apresentadas mais a frente */
-	int ol, oc, dl, dc;
 	/* Indica qual era o tabuleiro antigo */
 	TBoard* old_board = AlocateBoard();
+	/* Evento de clicar numa tecla do mouse */
+	MEVENT event;
+	/* janela de ajuda */
+	WINDOW* helpwin = MakeHelpWin();
 
+	/* Iniciando janela de ajuda */
+	HelpWinPVP(helpwin);
+
+	/* Guardando o tabuleiro para o caso do usuário querer deletar último movimento */
 	copy_boards(old_board, board);
 
-
+	/* Reconhecimento do mouse */
+	mousemask(BUTTON1_PRESSED, NULL);
 	keypad(stdscr, TRUE);
 
 	while(!finished)
 		{
+			/* Mostrando de quem é a vez de jogar */
+			print_turn(helpwin, turn);
+			
 			/* Pegar a tecla que o usuário digitar */
 			choice = getch();
-
-			/* Mostrando de quem é a vez de jogar */
-			if(turn == WHITES_TURN){
-				print_message(messages, WHITE_MOVE);
-			}
-			else{
-				print_message(messages, BLACK_MOVE);
-			}
 
 			if(choice == 'j') /* Tecla j - jogada pela notação */
 				{
 					/* Salvando tabuleiro anterior */
 					copy_boards(old_board, board);
-					
-					echo();	/* Deixar as teclas aparecerem na tela */
-					curs_set(1); /* Fazer o cursor aparecer */
-					wmove(keywin, 2, 1);
-					/* Obter a notação de movimento do usuário */
-					wgetstr(keywin, chess_move); /* Pegar a jogada */
-					clear_keywin(keywin);
-					curs_set(0); /* Tirar o cursor */
-					noecho(); /* Desabilitar teclas aparecerem na tela */
 
-					/* Traduzindo o notação para elemento de movimento */
-					movement = algebraic_translate(chess_move);
+					/* Obtendo o movimento do jogador pela notação */
+					movement = GetMovement(keywin, chess_move);
 
-					if(verify_turn(board, movement, turn) == true)
-						{
-							/* Agora é a vez do próximo jogador */
-							turn = change_turn(turn);
-					
-							ol = movement->origin[0]; /* origin line */
-							oc = movement->origin[1]; /* origin column */
-							dl = movement->destiny[0]; /* destiny line */
-							dc = movement->destiny[1]; /* destiny column */
-							/* Realizando a jogada */
-							boolean = MovePiece(board, ol, oc, dl, dc);
-
-							if(boolean == 0) /* Jogada válida */
-								{
-									/* Recria o tabuleiro com as novas posições */
-									InitBoard(boardwin, board);
-									wrefresh(boardwin); /* Recarrega o tabuleiro */
-								}
-							else
-								{
-									print_message(messages, INVALID_MOVE);
-								}
-									
-							free(movement);
-						} /* if(verify_turn( ... )) */
-					else  /* Não é a vez da peça que o usuário tentou mexer */
-						{
-							if(movement == NULL){
-								print_message(messages, INVALID_SINTAX);
-							}
-							else if(turn == WHITES_TURN){
-								print_message(messages, NOTBLACKSMOVE);
-							}
-							else{
-								print_message(messages, NOTWHITESMOVE);
-							}
-						} /* Não é a vez da peça que o jogador escolheu */
+					/* Movendo a peça */
+					turn = UI_MOVE_PIECE(boardwin, messages, board, turn, movement);
 						
 				} /* Choide == j */
 			
@@ -1004,6 +1181,18 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 							}
 						}
 				} /* choice == 'q' */
+
+			else if(choice == KEY_MOUSE) /* Usuário apertou o botão esquerdo do mouse */
+				{
+					/* Salvando tabuleiro anterior */
+					copy_boards(old_board, board);
+					
+					if(getmouse(&event) == OK)
+						{
+							/* Fazendo o movimento para o mouse */
+							turn = UI_MOUSE_MOVE(boardwin, messages, board, turn, event);
+						}
+				} /* else if(choice == KEY_MOUSE) */
 
 			else if(choice == 'd') /* Escolheu deletar última jogada */
 				{
