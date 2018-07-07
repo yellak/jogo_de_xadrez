@@ -174,10 +174,12 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
 
         A função não possui retorno
 
-        \param copy  Tabuleiro que será a cópia
-        \param board Tabuleiro que será copiado
+        \param copy  Tabuleiro que será a cópia. Não deve ser nulo.
+        \param board Tabuleiro que será copiado. Não deve ser nulo.
+
+        \return 0, caso funcione adequadamente ou 1, caso contrário
 */
-void copy_boards(TBoard* copy, TBoard* board);
+int copy_boards(TBoard* copy, TBoard* board);
 
 /* Verificar se uma peça é válida */
 /*! \fn int valid_piece(char piece)
