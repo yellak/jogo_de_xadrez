@@ -628,12 +628,20 @@ int valid_piece(char piece)
 
       Parâmetros:
            board - Tabuleiro a ser analisado
+           		   Não pode ser nulo.
 
       Saída:
            true  - Se o tabuleiro obedece as condições explicadas acima
-           false - Se ele não obedece as condições explicadas acima */
+           false - Se ele não obedece as condições explicadas acima 
+           -1 - Caso o tabuleiro seja nulo 
+*/
 int HaveMinimun(TBoard* board)
-{
+{	
+	/* Veriificar tabuleiro. */
+	if(board == NULL){
+		return -1;
+	}
+
 	int i, j;
 	int b_kings = 0, w_kings = 0;
 	char piece;
