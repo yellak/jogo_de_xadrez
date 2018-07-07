@@ -12,10 +12,10 @@
 
 TEST(Test_CreateMovesTree, Verify_Creation_Tree){
 	Tree * tree;
-	TBoard board;
-	StartStandardBoard(&board);
+	TBoard* board = AlocateBoard();
+	StartStandardBoard(board);
 	int turn = WHITES_TURN;
-	tree = CreateMovesTree(&board, turn);
+	tree = CreateMovesTree(board, turn);
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, tree != NULL);
@@ -55,10 +55,11 @@ TEST(Test_CreateMovesTree, Verify_Alocation_Tree){
 
 TEST(Test_CreateMovesTree, Verify_Root_Information){
 	Tree * tree;
-	TBoard board;
-	StartStandardBoard(&board);
+	TBoard* board = AlocateBoard();
+	StartStandardBoard(board);
+
 	int turn = WHITES_TURN;
-	tree = CreateMovesTree(&board, turn);
+	tree = CreateMovesTree(board, turn);
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, tree != NULL);
@@ -89,12 +90,12 @@ TEST(Test_CreateMovesTree, Verify_Root_Information){
  */
 
 TEST(Test_SortTree, Verify_SortTree){
-	TBoard board;
-	StartEmptyBoard(&board);
-	InsertPiece(&board, W_BISHOP, 4, 4);
-	InsertPiece(&board, B_PAWN, 6, 6);
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	InsertPiece(board, W_BISHOP, 4, 4);
+	InsertPiece(board, B_PAWN, 6, 6);
 	int turn = WHITES_TURN;
-	Tree* tree = CreateMovesTree(&board, turn);
+	Tree* tree = CreateMovesTree(board, turn);
 
 	/* Testar a alocação */
 	EXPECT_EQ(0, SortTree(tree, turn));
@@ -111,15 +112,15 @@ TEST(Test_SortTree, Verify_SortTree){
 */
 
 TEST(TEST_Best_Plays, VerifyListCreation){
-	TBoard board;
+	TBoard* board = AlocateBoard();
+	StartStandardBoard(board);
 	ListOfMoves* Lista;
-	ListOfMoves* Aux;
-	StartEmptyBoard(&board);
-	InsertPiece(&board, B_PAWN, 6, 6);
+	StartEmptyBoard(board);
+	InsertPiece(board, B_PAWN, 6, 6);
 	int turn = WHITES_TURN;
 	int valid;
 	int a = 6,b=5,c = 4;
-	Tree* tree = CreateMovesTree(&board, turn);
+	Tree* tree = CreateMovesTree(board, turn);
 	int plays = tree->root->n_child;
 	//valid = SortTree(tree, turn);
 	/*Testar a lista*/
