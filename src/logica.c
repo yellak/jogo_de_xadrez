@@ -712,21 +712,21 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 	if( piece == B_KING && originx == 0 && originy == 4){
 		/* Roque pequeno */
 		if(WhatPiece(board, 0, 7) == B_TOWER && board->Board[0][5] == BLANK && board->Board[0][6] == BLANK){
-			InsertMove(AllMoves, 4, 0, 6, 0);
+			InsertMove(AllMoves, 0, 4, 0, 6);
 		}
 		/* Roque grande */
 		if(WhatPiece(board, 0, 0) == B_TOWER && board->Board[0][1] == BLANK && board->Board[0][2] == BLANK && board->Board[0][3] == BLANK){
-			InsertMove(AllMoves, 4, 0, 2, 0);
+			InsertMove(AllMoves, 0, 4, 0, 2);
 		}
 	}
 	if(piece == W_KING && originx == 7 && originy == 4){
 		/* Roque pequeno */
 		if(WhatPiece(board, 7, 7) == W_TOWER && board->Board[7][5] == BLANK && board->Board[7][6] == BLANK){
-			InsertMove(AllMoves, 4, 7, 6, 7);
+			InsertMove(AllMoves, 7, 4, 7, 6);
 		}
 		/* Roque grande */
 		if(WhatPiece(board, 7, 0) == W_TOWER && board->Board[7][1] == BLANK && board->Board[7][2] == BLANK && board->Board[7][3] == BLANK){
-			InsertMove(AllMoves, 4, 7, 2, 7);
+			InsertMove(AllMoves, 7, 4, 7, 2);
 		}
 	}
 /*
