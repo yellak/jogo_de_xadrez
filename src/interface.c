@@ -781,8 +781,8 @@ void write_keys_help(WINDOW* keywin, int wintype)
 		{
 			mvwprintw(keywin, 1, 1, "q-Sair");
 			mvwprintw(keywin, 1, 11, "j-Jogada pela notação");
-			mvwprintw(keywin, 1, 37, "s-salvar");
-			mvwprintw(keywin, 1, 48, "d-deletar jogada");
+			mvwprintw(keywin, 1, 37, "s-Salvar");
+			mvwprintw(keywin, 1, 48, "d-Deletar jogada");
 		}
 	else if(wintype == CREATING) /* Menu de criação de tabuleiro */
 		{
@@ -961,7 +961,8 @@ void print_turn(WINDOW* helpwin, int turn)
 {
 	/* Limpando a janela */
 	wmove(helpwin, 11, 12);
-	wprintw(helpwin, "               ");
+	wprintw(helpwin, "                   ");
+	wrefresh(helpwin);
 
 	/* Escrevendo de quem é a vez */
 	wmove(helpwin, 11, 12);
