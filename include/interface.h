@@ -40,6 +40,11 @@ const int NOTPIECE       = 14; /*!< Avisar que não há uma peça naquela posiç
 const int CLICK_DESTINY  = 15; /*!< Pedir para clicar no destino */
 const int OUT_RANGE      = 16; /*!< Avisar que o destino está fora do tabuleiro */
 const int SAVED_GAME     = 17; /*!< Avisa que o jogo foi salvo */
+const int W_CHECK        = 18; /*!< Indica xeque no rei branco */
+const int B_CHECK        = 19; /*!< Indica xeque no rei preto */
+const int WHITE_WON      = 20; /*!< Indica que as brancas veceram */
+const int BLACK_WON      = 21; /*!< Indica que as pretas venceram */
+const int WANNA_SAVE     = 22; /*!< Perguntar se o usuário quer salvar o jogo */
 
 /* Constantes para modos de jogo */
 const int PVP      = 1; /*!< Player vs Player */
@@ -287,6 +292,10 @@ int change_turn(int turn);
 int verify_turn(TBoard* board, Move* movement, int turn);
 
 void print_turn(WINDOW* helpwin, int turn);
+
+int wanna_save(WINDOW* messages);
+
+void print_winner(WINDOW* helpwin, int who);
 
 int reverse_color_in_board(WINDOW* boardwin, TBoard* board, int line, int column);
 
