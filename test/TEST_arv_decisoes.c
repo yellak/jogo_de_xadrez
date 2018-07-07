@@ -35,11 +35,11 @@ TEST(Test_AlocateTree, Verify_Alocation_Tree){
  */
 TEST(Test_AlocateNodeTree, Verify_Alocation_Node){
 	NodeTree * node;
-	TBoard board;
+	TBoard* board = AlocateBoard();
 	Move play;
 	int n_child = 1;
 
-	node = AlocateNodeTree(n_child, &board, &play);
+	node = AlocateNodeTree(n_child, board, &play);
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, node != NULL);
@@ -63,13 +63,14 @@ TEST(Test_AlocateNodeTree, Verify_Alocation_Node){
  */
 TEST(Test_AddChildNode, Verify_Insertion_Sucess){
 	NodeTree * father, *child;
-	TBoard boardfather, boardchild;
+	TBoard *boardfather = AlocateBoard();
+	TBoard *boardchild = AlocateBoard();
 	Move playfather, playchild;
 	int n_childfather = 1, n_childchild = 5, position = 0;
 
 	/* Alocação do nó pai e do filho*/
-	father = AlocateNodeTree(n_childfather, &boardfather, &playfather);
-	child = AlocateNodeTree(n_childchild, &boardfather, &playfather);
+	father = AlocateNodeTree(n_childfather, boardfather, &playfather);
+	child = AlocateNodeTree(n_childchild, boardchild, &playfather);
 
 
 	/* Testar se a adição do filho foi bem sucedida */
@@ -96,13 +97,14 @@ TEST(Test_AddChildNode, Verify_Insertion_Sucess){
  */
 TEST(Test_AddChildNode, Verify_Insertion_Failure){
 	NodeTree * father, *child;
-	TBoard boardfather, boardchild;
+	TBoard *boardfather = AlocateBoard();
+	TBoard *boardchild = AlocateBoard();
 	Move playfather, playchild;
 	int n_child = 1, position = 5;
 
 	/* Alocação do nó pai e do filho*/
-	father = AlocateNodeTree(n_child, &boardfather, &playfather);
-	child = AlocateNodeTree(n_child, &boardfather, &playfather);
+	father = AlocateNodeTree(n_child, boardfather, &playfather);
+	child = AlocateNodeTree(n_child, boardchild, &playfather);
 
 
 	/* Testar se a adição do filho foi um fracasso */
@@ -126,11 +128,11 @@ TEST(Test_AddChildNode, Verify_Insertion_Failure){
  */
 TEST(Test_FreeTreeNodes, Verify_Free_OneNode){
 	NodeTree * node;
-	TBoard board;
+	TBoard* board = AlocateBoard();
 	Move play;
 	int n_child = 1;
 
-	node = AlocateNodeTree(n_child, &board, &play);
+	node = AlocateNodeTree(n_child, board, &play);
 
 	/* Testar se a liberação deu certo */
 	EXPECT_EQ(NULL, FreeTreeNodes(node));
@@ -149,13 +151,14 @@ TEST(Test_FreeTreeNodes, Verify_Free_OneNode){
  */
 TEST(Test_FreeTreeNodes, Verify_Free_NodewithChild){
 	NodeTree * nodefather, *nodechild;
-	TBoard boardfather, boardchild;
+	TBoard *boardfather = AlocateBoard();
+	TBoard *boardchild = AlocateBoard();
 	Move playfather, playchild;
 	int n_child = 1;
 
 	/* Alocação do nó pai e do filho*/
-	nodefather = AlocateNodeTree(n_child, &boardfather, &playfather);
-	nodechild = AlocateNodeTree(n_child, &boardchild, &playchild);
+	nodefather = AlocateNodeTree(n_child, boardfather, &playfather);
+	nodechild = AlocateNodeTree(n_child, boardchild, &playchild);
 
 	AddChildNode(nodefather, nodechild, 0);
 
