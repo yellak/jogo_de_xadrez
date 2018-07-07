@@ -15,6 +15,7 @@ TEST(Test_Verify_Empty_Board, Verify_If_Empty){
 	TBoard board;
 	ASSERT_EQ(0, StartEmptyBoard(&board));
 
+	/* Verificar se todas as posições estão vazias. */
 	int i, j;
 	for(i=0; i < 8; i++){
 		for(j=0; j < 8; j++){
@@ -97,14 +98,27 @@ TEST(Test_Verify_Standard_Board, Verify_NULL_Variables){
 	ASSERT_EQ(1, StartStandardBoard(board));
 }
 
-/*                 */
 
+/* Teste para verificar o funcionamento da função ColorPiece
+   
+   Procedimentos:
+   -Chamar a função para uma peça branca;
+   -Chamar a função para uma peça branca;
+   -Chamar a função para um espaço em branco;
+   -Chamar a função para um caractere não peça.
+
+   Resultados:
+   -Na primeira chamada, espera-se o retorno 1;
+   -Na segunda chamada, espera-se o retorno 0;
+   -Nas chamadas subsequentes, se espera o retorno -1.
+*/
 TEST(Test_Color_Piece, Verify_Correct_Color){
-	char peace = W_TOWER;
-	char peace2 = B_TOWER;
-
+	/* Verificar para peças válidas. */
 	EXPECT_EQ(1, ColorPiece(W_TOWER));
 	EXPECT_EQ(0, ColorPiece(B_TOWER));
+
+	/* Verificarnão peças. */
+	EXPECT_EQ(-1, ColorPiece('u'));
 	EXPECT_EQ(-1, ColorPiece(BLANK));
 }
 
@@ -119,6 +133,8 @@ TEST(Test_Color_Piece, Verify_Correct_Color){
 TEST(Test_What_Piece_in_Position, Verify_Empty_Boards){
 	TBoard board;
 	StartEmptyBoard(&board);
+
+	/* Chamar para espaço vazoi. */
 	EXPECT_EQ(BLANK, WhatPiece(&board, 2, 0));
 }
 
@@ -133,6 +149,8 @@ TEST(Test_What_Piece_in_Position, Verify_Empty_Boards){
 TEST(Test_What_Piece_in_Position, Verify_Standard_Boards){
 	TBoard board;
 	StartStandardBoard(&board);
+
+	/* Verificar para posições do tabuleiro padrão. */
 	EXPECT_EQ(B_TOWER, WhatPiece(&board, 0, 0));
 	EXPECT_EQ(W_PAWN, WhatPiece(&board, 6, 1));
 	EXPECT_EQ(W_KING, WhatPiece(&board, 7, 4));
@@ -199,6 +217,7 @@ TEST(Test_Get_Value_of_Piece, Verify_Every_Piece){
    -É esperado que a função retorne 0 em todos esses casos.
 */
 TEST(Test_Get_Value_of_Piece, Verify_Non_Pieces){
+	/* Testar para caracteres inválidos. */
 	EXPECT_EQ(0, GetValue(OUT_OF_RANGE));
 	EXPECT_EQ(0, GetValue('*'));
 }
@@ -221,6 +240,7 @@ TEST(Test_Remove_Piece, Verify_Remotion){
 	TBoard board;
 	StartStandardBoard(&board);
 
+	/* Remover peças e testar tabuleiro resultante. */
 	RemovePiece(&board, 0, 0);
 	EXPECT_EQ(BLANK, WhatPiece(&board, 0, 0));
 	EXPECT_EQ(5, board.Weight);
@@ -314,8 +334,33 @@ TEST(Test_Valid_Board, Verify_Standard){
 	TBoard board;
 	StartStandardBoard(&board);
 	
+	/* Chamar função para tabuleiro padrão. */
 	EXPECT_EQ(1, ValidBoard(&board));
 }
+
+/* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros com só uma peça de cada (exceto peão).
+   Procedimentos:
+   -Criar um tabuleiro padrão;
+   -Remover peças repetidas e chamar a função.
+   Resultados:
+   -É esperado que a função retorne um inteiro 1 indicando a corretude do tabuleiro. 
+*/
+TEST(Test_Valid_Board, Verify_No_Double_Pieces){
+	TBoard board;
+	StartStandardBoard(&board);
+	
+	/* Remover peças extras. */
+	RemovePiece(&board, 0, 0);
+	RemovePiece(&board, 0, 1);
+	RemovePiece(&board, 0, 2);
+	RemovePiece(&board, 7, 0);
+	RemovePiece(&board, 7, 1);
+	RemovePiece(&board, 7, 2);
+
+	/* Chamar função para tabuleiro padrão. */
+	EXPECT_EQ(1, ValidBoard(&board));
+}
+
 
 /* Teste para verificar a função que verifica se um tabuleiro é válido para tabuleiros vazios e só com um rei.
    Procedimentos:
@@ -330,8 +375,10 @@ TEST(Test_Valid_Board, Verify_Empty_and_One_King){
 	TBoard board;
 	StartEmptyBoard(&board);
 	
+	/* Chamar função para tabuleiro vazio. */
 	EXPECT_EQ(0, ValidBoard(&board));
 
+	/* Chamar função para tabuleiros com só um rei. */
 	InsertPiece(&board, B_KING , 0, 0);
 	EXPECT_EQ(0, ValidBoard(&board));
 
@@ -352,6 +399,7 @@ TEST(Test_Valid_Board, Verify_Two_Kings){
 	TBoard board;
 	StartStandardBoard(&board);
 
+	/* Chamar funções para tabuleiros com mais de um rei. */
 	InsertPiece(&board, B_KING , 4, 4);
 	EXPECT_EQ(0, ValidBoard(&board));
 
@@ -375,9 +423,11 @@ TEST(Test_Valid_Board, Verify_Queens){
 	TBoard board;
 	StartEmptyBoard(&board);
 
+	/* Adicionar reis. */
 	InsertPiece(&board, B_KING , 0, 0);
 	InsertPiece(&board, W_KING , 7, 7);
 
+	/* Inseir número máximo de rainhas.*/
 	InsertPiece(&board, W_QUEEN , 7, 6);
 	InsertPiece(&board, W_QUEEN , 7, 5);
 	InsertPiece(&board, W_QUEEN , 7, 4);
@@ -400,6 +450,7 @@ TEST(Test_Valid_Board, Verify_Queens){
 
 	EXPECT_EQ(1, ValidBoard(&board));
 
+	/* Adicionar novas rainhas e testar. */
 	InsertPiece(&board, W_QUEEN , 4, 4);
 	EXPECT_EQ(0, ValidBoard(&board));
 
@@ -423,9 +474,11 @@ TEST(Test_Valid_Board, Verify_Horses){
 	TBoard board;
 	StartEmptyBoard(&board);
 
+	/* Adicionar reis. */
 	InsertPiece(&board, B_KING , 0, 0);
 	InsertPiece(&board, W_KING , 7, 7);
 
+	/* Inseir número máximo de cavalos.*/
 	InsertPiece(&board, W_HORSE , 7, 6);
 	InsertPiece(&board, W_HORSE , 7, 5);
 	InsertPiece(&board, W_HORSE , 7, 4);
@@ -450,6 +503,7 @@ TEST(Test_Valid_Board, Verify_Horses){
 
 	EXPECT_EQ(1, ValidBoard(&board));
 
+	/* Adicionar novos cavalos e testar. */
 	InsertPiece(&board, W_HORSE , 4, 4);
 	EXPECT_EQ(0, ValidBoard(&board));
 
@@ -473,9 +527,11 @@ TEST(Test_Valid_Board, Verify_Bishops){
 	TBoard board;
 	StartEmptyBoard(&board);
 
+	/* Adicionar reis. */
 	InsertPiece(&board, B_KING , 0, 0);
 	InsertPiece(&board, W_KING , 7, 7);
 
+	/* Inseir número máximo de bispos.*/
 	InsertPiece(&board, W_BISHOP , 7, 6);
 	InsertPiece(&board, W_BISHOP , 7, 5);
 	InsertPiece(&board, W_BISHOP , 7, 4);
@@ -500,6 +556,7 @@ TEST(Test_Valid_Board, Verify_Bishops){
 
 	EXPECT_EQ(1, ValidBoard(&board));
 
+	/* Adicionar novos bispos e testar. */
 	InsertPiece(&board, W_BISHOP , 4, 4);
 	EXPECT_EQ(0, ValidBoard(&board));
 
@@ -523,9 +580,11 @@ TEST(Test_Valid_Board, Verify_Towers){
 	TBoard board;
 	StartEmptyBoard(&board);
 
+	/* Adicionar reis. */
 	InsertPiece(&board, B_KING , 0, 0);
 	InsertPiece(&board, W_KING , 7, 7);
 
+	/* Inseir número máximo de torres.*/
 	InsertPiece(&board, W_TOWER , 7, 6);
 	InsertPiece(&board, W_TOWER , 7, 5);
 	InsertPiece(&board, W_TOWER , 7, 4);
@@ -550,6 +609,7 @@ TEST(Test_Valid_Board, Verify_Towers){
 
 	EXPECT_EQ(1, ValidBoard(&board));
 
+	/* Adicionar novas torres e testar. */
 	InsertPiece(&board, W_TOWER , 4, 4);
 	EXPECT_EQ(0, ValidBoard(&board));
 
@@ -570,9 +630,11 @@ TEST(Test_Valid_Board, Verify_Pawns){
 	TBoard board;
 	StartStandardBoard(&board);
 
+	/* Verificar função para núnmero escessivo de peões pretos. */
 	InsertPiece(&board, B_PAWN , 4, 4);
 	EXPECT_EQ(0, ValidBoard(&board));
 
+	/* Verificar função para núnmero escessivo de peões brancos. */
 	RemovePiece(&board, 4, 4);
 	InsertPiece(&board, W_PAWN , 4, 4);
 	EXPECT_EQ(0, ValidBoard(&board));
@@ -607,6 +669,7 @@ TEST(Test_Valid_Board, Verify_Equivalance){
 	TBoard board;
 	StartStandardBoard(&board);
 
+	/* Testar equivalência do número de peões e outras peças. */
 	InsertPiece(&board, W_QUEEN , 4, 0);
 	EXPECT_EQ(0, ValidBoard(&board));
 	RemovePiece(&board, 6, 0);
@@ -707,8 +770,8 @@ TEST(Test_Change_Piece, Verify_Valid_Entries){
 TEST(Test_Move_Piece, Verify_Invalid_Entries){
 	TBoard board;
 	char piece = B_KING;
-	/* Testar posição invalida */
 
+	/* Testar posição invalida */
 	EXPECT_EQ(-1, MovePiece(&board, 12, 13, 0, 0));
 	EXPECT_EQ(-1, MovePiece(&board, 0, 0, 9, 14));
 
@@ -732,11 +795,14 @@ TEST(Test_Move_Piece, Test_Empty_Space){
 	TBoard board;
 	StartStandardBoard(&board);
 
+	/* Mover peça. */
 	EXPECT_EQ(0, MovePiece(&board, 6, 1, 4, 1));
 
+	/* Verificar posições. */
 	EXPECT_EQ(GetValue(BLANK), GetValue(board.Board[6][1]));
 	EXPECT_EQ(GetValue(W_PAWN), GetValue(board.Board[4][1]));
 
+	/* Verificar peso. */
 	EXPECT_EQ(0, board.Weight);
 }
 
@@ -755,11 +821,14 @@ TEST(Test_Move_Piece, Test_Full_Space){
 	TBoard board;
 	StartStandardBoard(&board);
 
+	/* Mover peça. */
 	EXPECT_EQ(0, MovePiece(&board, 6, 1, 1, 1));
 
+	/* Verificar posições. */
 	EXPECT_EQ(GetValue(BLANK), GetValue(board.Board[6][1]));
 	EXPECT_EQ(GetValue(W_PAWN), GetValue(board.Board[1][1]));
 
+	/* Verificar peso. */
 	EXPECT_EQ(1, board.Weight);
 }
 
@@ -778,6 +847,7 @@ TEST(Test_Move_Piece, Test_Roque){
 	TBoard board1, board2;
 	StartStandardBoard(&board1);
 
+	/* Remover bispos, cavalos e rainhas. */
 	RemovePiece(&board1, 0, 1);
 	RemovePiece(&board1, 0, 2);
 	RemovePiece(&board1, 0, 3);
@@ -790,11 +860,13 @@ TEST(Test_Move_Piece, Test_Roque){
 	RemovePiece(&board1, 7, 6);
 	board2 = board1;
 
+	/* Chamar e testar movimentos do roque. */
 	EXPECT_EQ(0, MovePiece(&board1, 0, 4, 0, 6));
 	EXPECT_EQ(0, MovePiece(&board1, 7, 4, 7, 6));
 	EXPECT_EQ(0, MovePiece(&board2, 0, 4, 0, 2));
 	EXPECT_EQ(0, MovePiece(&board2, 7, 4, 7, 2));
 
+	/* Verificar posições nos tabuleiros. */
 	EXPECT_EQ(GetValue(BLANK), GetValue(board1.Board[0][4]));
 	EXPECT_EQ(GetValue(BLANK), GetValue(board1.Board[0][7]));
 	EXPECT_EQ(GetValue(BLANK), GetValue(board1.Board[7][4]));
@@ -803,7 +875,6 @@ TEST(Test_Move_Piece, Test_Roque){
 	EXPECT_EQ(GetValue(B_TOWER), GetValue(board1.Board[0][5]));
 	EXPECT_EQ(GetValue(W_KING), GetValue(board1.Board[7][6]));
 	EXPECT_EQ(GetValue(W_TOWER), GetValue(board1.Board[7][5]));
-
 
 	EXPECT_EQ(GetValue(BLANK), GetValue(board2.Board[0][4]));
 	EXPECT_EQ(GetValue(BLANK), GetValue(board2.Board[0][0]));
@@ -814,6 +885,7 @@ TEST(Test_Move_Piece, Test_Roque){
 	EXPECT_EQ(GetValue(W_KING), GetValue(board2.Board[7][2]));
 	EXPECT_EQ(GetValue(W_TOWER), GetValue(board2.Board[7][3]));
 
+	/* Verificar pesos dos tabuleiros. */
 	EXPECT_EQ(0, board1.Weight);
 	EXPECT_EQ(0, board2.Weight);
 }
@@ -902,6 +974,22 @@ TEST(Copy_boards, CopySTDBoard){
 
 	free(test_board);
 	free(expect_board);
+}
+
+/* Teste para a função de copiar um tabuleiro em outro para tabuleiros nulos
+   Procedimentos:
+   -Chamar a função para tabuleiros nulos.
+
+   Resultados:
+   -Espera-se que a função retorne 1.
+ */
+TEST(Copy_boards, NULL_Board){
+	TBoard board;
+
+	/* Testar a função para cada tabuleiro sendo nulo. */
+	EXPECT_EQ(1, copy_boards(&board, NULL));
+	EXPECT_EQ(1, copy_boards(NULL, &board));
+	EXPECT_EQ(1, copy_boards(NULL, NULL));
 }
 
 /* Teste para a função de verificar se uma peça é válida ou não

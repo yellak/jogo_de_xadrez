@@ -135,16 +135,14 @@ int StartStandardBoard(TBoard *board){
 */
 int ColorPiece(char piece){
 	/* Asseriva de entrada. */
-	if(GetValue(piece) == 0){
-		return -1;
-	}
-
-	/* Achar valor da peça em comparação com o valor de BLANK. */
-	if(piece < BLANK){
-		return BLACK;
-	}
-	else if(piece > BLANK){
-		return WHITE;
+	if(GetValue(piece) != 0){
+		/* Achar valor da peça em comparação com o valor de BLANK. */
+		if(piece < BLANK){
+			return BLACK;
+		}
+		else if(piece > BLANK){
+			return WHITE;
+		}
 	}
 
 	return -1;
@@ -560,8 +558,17 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
            Os dois tabuleiros já deverão ter sido alocados ou seja,
            copy  != NULL
            board != NULL
+
+        Saída:
+           1, caso não funcione
+           0, caso funcione
 */
-void copy_boards(TBoard* copy, TBoard* board){
+int copy_boards(TBoard* copy, TBoard* board){
+	/* Veriificar tabuleiro. */
+	if(copy == NULL || board == NULL){
+		return 1;
+	}
+
 	/* Contadores */
 	int i, j;
 
@@ -576,6 +583,8 @@ void copy_boards(TBoard* copy, TBoard* board){
 	copy->Weight = board->Weight;
 	copy->WhiteCheck = board->WhiteCheck;
 	copy->BlackCheck = board->BlackCheck;
+
+	return 0;
 }
 
 /* 
