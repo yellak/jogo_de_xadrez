@@ -67,7 +67,7 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 		for(int j = 0; j < AllMovesChild->howmany; j++, currentnodechild = currentnodechild->next){
 
 			/* Outro tabuleiro auxiliar para criar os filhos do newnode */
-			boardauxchild[j] = boardaux[j];
+			boardauxchild[j] = boardaux[i];
 
 			/* Movimenta-se a peça no tabuleiro de arcordo com a configuração do tabuleiro de newnode */
 			MovePiece(&boardauxchild[j], currentnodechild->play.origin[0], currentnodechild->play.origin[1], currentnodechild->play.destiny[0], currentnodechild->play.destiny[1]);
@@ -76,11 +76,11 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 			NodeTree* newnodechild = AlocateNodeTree(1, &boardauxchild[j], &currentnode->play);
 			AddChildNode(newnode, newnodechild, j);			
 		}
-		free(boardauxchild);
 		
+		//free(boardauxchild);
 		DeleteListOfMoves(AllMovesChild);
 	}
-	free(boardaux);
+
 
 	DeleteListOfMoves(AllMoves);
 
