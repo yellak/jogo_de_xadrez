@@ -39,14 +39,6 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 
 	NodeList* currentnode = AllMoves->first;
 
-	for(int I = 0; I < 8; I++){
-		for(int J = 0; J < 8; J++){
-			printf("%c ", board->Board[I][J]);
-		}
-		printf("\n");
-	}
-	printf("\n");
-
 	for(int i = 0 ; i < tree->root->n_child; i++, currentnode = currentnode->next){
 
 		/* Tabuleiro auxiliar para armazenar a nova jogada */
@@ -66,14 +58,6 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 
 		NodeList* currentnodechild = AllMovesChild->first;
 
-		for(int I = 0; I < 8; I++){
-			for(int J = 0; J < 8; J++){
-				printf("%c ", boardaux.Board[I][J]);
-			}
-			printf("\n");
-		}
-		printf("\n");
-		
 		for(int j = 0; j < AllMovesChild->howmany; j++, currentnodechild = currentnodechild->next){
 
 			/* Outro tabuleiro auxiliar para criar os filhos do newnode */
@@ -107,7 +91,38 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 		Saída: Essa função retorna um inteiro indicando sucesso(0) ou fracasso(1) da operação de ordenar
 */
 int SortTree(Tree* tree, int turn){
-	return 1;
+
+	int n_child = tree->root->n_child;
+	int i, j, k;
+
+	/*Loop para cada um dos filhos dos filhos da raiz*/
+	for (k = 0; k < n_child; k++){
+		int n = tree->root->child[k]->n_child;
+
+		/* Loop para ordenar os nós filhos de um nó */
+		for (i = 0; i < n; i++){     
+	   		for (j = 0; j < n-i-1; j++){
+	      		if (tree->root->child[k]->child[j]->board->Weight > tree->root->child[k]->child[j+1]->board->Weight){
+	      			NodeTree* nodeaux = tree->root->child[k]->child[j];
+	      			tree->root->child[k]->child[j] = tree->root->child[k]->child[j + 1];
+	      			tree->root->child[k]->child[j + 1] = nodeaux;
+	      		}
+	    	}
+	  	}
+	}
+
+	int n = tree->root->n_child;
+	for (i = 0; i < n; i++){     
+	   	for (j = 0; j < n-i-1; j++){
+	      	if (tree->root->child[j]->child[0]->board->Weight < tree->root->child[j]->child[0]->board->Weight){
+	      		NodeTree* nodeaux = tree->root->child[j]->child[0];
+	      		tree->root->child[j]->child[0] = tree->root->child[j]->child[j + 1];
+	      		tree->root->child[j]->child[j + 1] = nodeaux;
+	      	}
+	    }
+	}
+
+	return 0;
 }
 
 //função para extrair melhor jogada , retorna a jogad
