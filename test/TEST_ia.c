@@ -111,6 +111,32 @@ TEST(Test_SortTree, Verify_SortTree){
 */
 
 TEST(TEST_Best_Plays, VerifyListCreation){
+	TBoard board;
+	NodeList* Lista;
+	StartEmptyBoard(&board);
+	InsertPiece(&board, B_PAWN, 6, 6);
+	int turn = WHITES_TURN;
+	int valid;
+	int a = 6,b=5,c = 4;
+	Tree* tree = CreateMovesTree(&board, turn);
+	int plays = tree->root->n_child;
+	valid = SortTree(tree, turn);
+	/*Testar a lista*/
+	Lista = Best_Plays(tree, plays);
+	
+	EXPECT_EQ(a, Lista->play.origin[0]);
+	EXPECT_EQ(a, Lista->play.origin[1]);
+	EXPECT_EQ(a, Lista->play.destiny[0]);
+	EXPECT_EQ(c, Lista->play.destiny[1]);
+	EXPECT_EQ(a, Lista->next->play.origin[0]);
+	EXPECT_EQ(a, Lista->next->play.origin[1]);
+	EXPECT_EQ(a, Lista->next->play.destiny[0]);
+	EXPECT_EQ(b, Lista->next->play.destiny[1]);
+
+	free(tree);
+	FreeTreeNodes(tree->root);
+
+}
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
