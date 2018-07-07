@@ -836,12 +836,14 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 
 int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, int destinyy){
 	char piece;
-	ListOfMoves* AllMoves = CreateListOfMoves();
 
 	piece = WhatPiece(board, originx, originy);
 	if(board == NULL){
 		return -1;	
 	}
+
+	ListOfMoves* AllMoves = CreateListOfMoves();
+	
 	/* Calcula os movimentos possíveis de acordo com a peça e em caso de xeque 
 	calcula os movimentos que possam tirar o rei do xeque */
 	if(board->WhiteCheck == CHECK && ColorPiece(piece) == WHITE){
@@ -872,6 +874,7 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 		AllMoves = KingMovements(board, AllMoves, originx, originy);
 	}
 	else{
+		DeleteListOfMoves(AllMoves);
 		return -1;
 	}
 	/* Busca o movimento na lista de movimentos possíveis */
@@ -892,10 +895,12 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 			temp = VerifyCheck(temp, ColorPiece(piece));
 			/* Caso ponha o seu rei em xeque o movimento é inválido */
 			if((ColorPiece(piece) == WHITE && temp->WhiteCheck == CHECK) || (ColorPiece(piece) == BLACK && temp->BlackCheck == CHECK)){
+				free(temp);
 				return 0;
 			}
 			/* Caso contrário é válido */
 			else{
+				free(temp);
 				return 1;
 			}
 		}	
@@ -960,12 +965,13 @@ TBoard* VerifyCheck(TBoard* board, int color){
 /* Confirma um xeque mate retornando NULL, e em caso contrário 
 retorna uma lista de movimentos possíveis para sair do xeque */
 ListOfMoves* VerifyCheckMate(TBoard* board, int color){
-	TBoard* temp = AlocateBoard();
 	int originx, originy, destinyx, destinyy;
-	ListOfMoves* AllMoves, *LeaveCheck = CreateListOfMoves();
 	if(board == NULL || (color != WHITE && color != BLACK)){
 		return NULL;
 	}
+	TBoard* temp = AlocateBoard();
+	ListOfMoves* AllMoves;
+	ListOfMoves *LeaveCheck = CreateListOfMoves();
 	if(color == WHITE && board->WhiteCheck == CHECK){
 		AllMoves = AnalyzePossibleMovementsWhite(board);
 		AllMoves->current = AllMoves->first;
@@ -984,6 +990,8 @@ ListOfMoves* VerifyCheckMate(TBoard* board, int color){
 			AllMoves->current = AllMoves->current->next;
 		}
 		if(LeaveCheck->howmany != 0){
+			free(temp);
+			DeleteListOfMoves(AllMoves);
 			return LeaveCheck;
 		}
 	}
@@ -1005,8 +1013,14 @@ ListOfMoves* VerifyCheckMate(TBoard* board, int color){
 			AllMoves->current = AllMoves->current->next;
 		}
 		if(LeaveCheck->howmany != 0){
+			free(temp);
+			DeleteListOfMoves(AllMoves);
 			return LeaveCheck;			
 		}
 	}
+
+	free(temp);
+	DeleteListOfMoves(AllMoves);
+	DeleteListOfMoves(LeaveCheck);
 	return NULL;
 }

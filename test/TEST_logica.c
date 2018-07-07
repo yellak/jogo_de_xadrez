@@ -1315,6 +1315,7 @@ TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
 	board->Board[2][6] = W_HORSE;
 	LeaveCheck = VerifyCheckMate(board, BLACK);
 	EXPECT_EQ(1, LeaveCheck->howmany);
+	free(LeaveCheck);
 	free(board);
 }
 
