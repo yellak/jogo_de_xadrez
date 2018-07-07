@@ -113,6 +113,7 @@ TEST(Test_SortTree, Verify_SortTree){
 TEST(TEST_Best_Plays, VerifyListCreation){
 	TBoard board;
 	NodeList* Lista;
+	NodeList* Aux;
 	StartEmptyBoard(&board);
 	InsertPiece(&board, B_PAWN, 6, 6);
 	int turn = WHITES_TURN;
@@ -127,14 +128,14 @@ TEST(TEST_Best_Plays, VerifyListCreation){
 	EXPECT_EQ(a, Lista->play.origin[0]);
 	EXPECT_EQ(a, Lista->play.origin[1]);
 	EXPECT_EQ(a, Lista->play.destiny[0]);
-	EXPECT_EQ(c, Lista->play.destiny[1]);
-	EXPECT_EQ(a, Lista->next->play.origin[0]);
-	EXPECT_EQ(a, Lista->next->play.origin[1]);
-	EXPECT_EQ(a, Lista->next->play.destiny[0]);
-	EXPECT_EQ(b, Lista->next->play.destiny[1]);
+	EXPECT_EQ(b, Lista->play.destiny[1]);
+	EXPECT_EQ(a, Aux->play.origin[0]);
+	EXPECT_EQ(a, Aux->play.origin[1]);
+	EXPECT_EQ(a, Aux->play.destiny[0]);
+	EXPECT_EQ(c, Aux->play.destiny[1]);
 
-	free(tree);
-	FreeTreeNodes(tree->root);
+	//free(tree);
+	//FreeTreeNodes(tree->root);
 
 }
 int main(int argc, char **argv){
