@@ -41,24 +41,24 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 	tree->root = AlocateNodeTree(AllMoves->howmany, board, &play);
 
 	NodeList* currentnode = AllMoves->first;
-
-	TBoard boardaux, boardauxchild;
+	TBoard* boardaux = AlocateBoard();
+	TBoard* boardauxchild = AlocateBoard();
 
 	for(int i = 0 ; i < tree->root->n_child; i++, currentnode = currentnode->next){
 
-		/* Tabuleiro auxiliar para armazenar a nova jogada */
-		copy_boards(&boardaux, board);
+		/* Tabuleiro auxiliar para armazenar a nova jogada */		
+		boardaux = board;
 
 		/* Movimenta-se a peça no tabuleiro auxiliar de acordo com a jogada da lista de jogadas*/
-		MovePiece(&boardaux, currentnode->play.origin[0], currentnode->play.origin[1], currentnode->play.destiny[0], currentnode->play.destiny[1]);
+		MovePiece(boardaux, currentnode->play.origin[0], currentnode->play.origin[1], currentnode->play.destiny[0], currentnode->play.destiny[1]);
 
 		/* Extraindo a lista de movimentos para a jogada seguinte */
 		/* Por isso, caso a primeira jogada seja do branco a seguinte será do preto e vice-versa */
-		if(turn == WHITES_TURN) AllMovesChild = AnalyzePossibleMovementsBlack(&boardaux);
-		else if(turn == BLACKS_TURN) AllMovesChild = AnalyzePossibleMovementsWhite(&boardaux);	
+		if(turn == WHITES_TURN) AllMovesChild = AnalyzePossibleMovementsBlack(boardaux);
+		else if(turn == BLACKS_TURN) AllMovesChild = AnalyzePossibleMovementsWhite(boardaux);	
 		
 		/* Alocando o nó da nova jogada */
-		NodeTree* newnode = AlocateNodeTree(AllMovesChild->howmany, &boardaux, &currentnode->play);
+		NodeTree* newnode = AlocateNodeTree(AllMovesChild->howmany, boardaux, &currentnode->play);
 		AddChildNode(tree->root, newnode, i);
 
 		NodeList* currentnodechild = AllMovesChild->first;
@@ -66,19 +66,19 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 		for(int j = 0; j < AllMovesChild->howmany; j++, currentnodechild = currentnodechild->next){
 
 			/* Outro tabuleiro auxiliar para criar os filhos do newnode */
-			copy_boards(&boardauxchild, &boardaux);
+			boardauxchild = boardaux;
 
 			/* Movimenta-se a peça no tabuleiro de arcordo com a configuração do tabuleiro de newnode */
-			MovePiece(&boardauxchild, currentnodechild->play.origin[0], currentnodechild->play.origin[1], currentnodechild->play.destiny[0], currentnodechild->play.destiny[1]);
+			MovePiece(boardauxchild, currentnodechild->play.origin[0], currentnodechild->play.origin[1], currentnodechild->play.destiny[0], currentnodechild->play.destiny[1]);
 			
 			/* Alocando o nó do filho de newnode */
-			NodeTree* newnodechild = AlocateNodeTree(1, &boardauxchild, &currentnode->play);
+			NodeTree* newnodechild = AlocateNodeTree(1, boardauxchild, &currentnode->play);
 			AddChildNode(newnode, newnodechild, j);			
 		}
-
+		
 		DeleteListOfMoves(AllMovesChild);
 	}
-
+	
 	DeleteListOfMoves(AllMoves);
 
 	return tree;
