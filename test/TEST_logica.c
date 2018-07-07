@@ -1283,8 +1283,22 @@ TEST(Test_VerifyCheckMate, Veirfy_Invalid_Entries){
 	/* Testa para tabuleiro válido e cor inválida */
 	EXPECT_EQ(-1, VerifyCheckMate(board2, 25));
 
+	free(board2);
 }
 
+TEST(Test_VerifyCheckMate, Verify_Correct_CheckMate){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[4][4] = B_KING;
+	board->Board[6][5] = W_PAWN;
+	board->Board[6][6] = W_BISHOP;
+	board->Board[7][3] = W_QUEEN;
+	board->Board[2][5] = W_TOWER;
+	board->Board[2][6] = W_HORSE;
+
+	EXPECT_EQ(1, VerifyCheckMate(board, BLACK));
+
+}
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
