@@ -137,7 +137,7 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 
 TBoard* VerifyCheck(TBoard* board, int color);
 
-int VerifyCheckMate(TBoard* board, int color);
+ListOfMoves* VerifyCheckMate(TBoard* board, int color);
 
 
 
