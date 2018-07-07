@@ -112,8 +112,8 @@ TEST(Test_SortTree, Verify_SortTree){
 
 TEST(TEST_Best_Plays, VerifyListCreation){
 	TBoard board;
-	NodeList* Lista;
-	NodeList* Aux;
+	ListOfMoves* Lista;
+	ListOfMoves* Aux;
 	StartEmptyBoard(&board);
 	InsertPiece(&board, B_PAWN, 6, 6);
 	int turn = WHITES_TURN;
@@ -121,18 +121,18 @@ TEST(TEST_Best_Plays, VerifyListCreation){
 	int a = 6,b=5,c = 4;
 	Tree* tree = CreateMovesTree(&board, turn);
 	int plays = tree->root->n_child;
-	valid = SortTree(tree, turn);
+	//valid = SortTree(tree, turn);
 	/*Testar a lista*/
 	Lista = Best_Plays(tree, plays);
 	
-	EXPECT_EQ(a, Lista->play.origin[0]);
-	EXPECT_EQ(a, Lista->play.origin[1]);
-	EXPECT_EQ(a, Lista->play.destiny[0]);
-	EXPECT_EQ(b, Lista->play.destiny[1]);
-	EXPECT_EQ(a, Aux->play.origin[0]);
-	EXPECT_EQ(a, Aux->play.origin[1]);
-	EXPECT_EQ(a, Aux->play.destiny[0]);
-	EXPECT_EQ(c, Aux->play.destiny[1]);
+	EXPECT_EQ(a, Lista->current->play.origin[0]);
+	EXPECT_EQ(a, Lista->current->play.origin[1]);
+	EXPECT_EQ(a, Lista->current->play.destiny[0]);
+	EXPECT_EQ(b, Lista->current->play.destiny[1]);
+	EXPECT_EQ(a, Lista->current->next->play.origin[0]);
+	EXPECT_EQ(a, Lista->current->next->play.origin[1]);
+	EXPECT_EQ(a, Lista->current->next->play.destiny[0]);
+	EXPECT_EQ(c, Lista->current->next->play.destiny[1]);
 
 	//free(tree);
 	//FreeTreeNodes(tree->root);
