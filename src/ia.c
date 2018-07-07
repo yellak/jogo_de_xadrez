@@ -130,6 +130,13 @@ int SortTree(Tree* tree, int turn){
 	return 0;
 }
 
+List* Best_Plays(Tree* SortedTree, int SortedTree->root->n_child) {
+		NodeList* Lista = (NodeList*)malloc(sizeof(NodeList));
+		int i;
+		int j;
+		// Criação dos loops gerais.
+		return Lista;
+}
 //função para extrair melhor jogada , retorna a jogad
 
 //função para retornar as n melhores jogadas
