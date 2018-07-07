@@ -88,20 +88,20 @@ TEST(Test_CreateMovesTree, Verify_Root_Information){
    	-A função deve retornar 1 no caso de sucesso
  */
 
-TEST(Test_SortTree, Verify_SortTree){
-	TBoard board;
-	StartEmptyBoard(&board);
-	InsertPiece(&board, W_BISHOP, 4, 4);
-	InsertPiece(&board, B_PAWN, 6, 6);
-	int turn = WHITES_TURN;
-	Tree* tree = CreateMovesTree(&board, turn);
+// TEST(Test_SortTree, Verify_SortTree){
+// 	TBoard board;
+// 	StartEmptyBoard(&board);
+// 	InsertPiece(&board, W_BISHOP, 4, 4);
+// 	InsertPiece(&board, B_PAWN, 6, 6);
+// 	int turn = WHITES_TURN;
+// 	Tree* tree = CreateMovesTree(&board, turn);
 
-	/* Testar a alocação */
-	EXPECT_EQ(0, SortTree(tree, turn));
-	EXPECT_EQ(3, tree->root->child[0]->board->Weight);
-	FreeTreeNodes(tree->root);
-	free(tree);
-}
+// 	/* Testar a alocação */
+// 	EXPECT_EQ(0, SortTree(tree, turn));
+// 	EXPECT_EQ(3, tree->root->child[0]->board->Weight);
+// 	FreeTreeNodes(tree->root);
+// 	free(tree);
+// }
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
