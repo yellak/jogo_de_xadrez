@@ -102,7 +102,15 @@ TEST(Test_SortTree, Verify_SortTree){
 	FreeTreeNodes(tree->root);
 	free(tree);
 }
+/* Teste para verificar se a lista contendo todas as jogada ordenadas está sendo criada de maneira adequada
+- Inicia-se a árvore com jogadas, usando apenas um peão no tabuleiro;
+- Inicia-se a lista para criação;
+- Cria-se variáveis com os resultados esperados pela função
+- Resultados:
+- A função deve retornar o mesmo dado que as variáveis fixadas
+*/
 
+TEST(TEST_Best_Plays, VerifyListCreation){
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
