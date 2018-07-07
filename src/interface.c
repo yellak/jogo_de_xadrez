@@ -917,6 +917,21 @@ void print_message(WINDOW* messages, int msg)
 		case SAVED_GAME:
 			wprintw(messages, "Jogo salvo");
 			break;
+		case W_CHECK:
+			wprintw(messages, "Xeque no rei branco");
+			break;
+		case B_CHECK:
+			wprintw(messages, "Xeque no rei preto");
+			break;
+		case WHITE_WON:
+			wprintw(messages, "As brancas venceram");
+			break;
+		case BLACK_WON:
+			wprintw(messages, "As pretas venceram");
+			break;
+		case WANNA_SAVE:
+			wprintw(messages, "Você deseja salvar? (s/n)");
+			break;
 		}
 	
 	wrefresh(messages);
@@ -957,6 +972,24 @@ Move* GetMovement(WINDOW* keywin, char chess_move[])
 	return movement;
 }
 
+void print_winner(WINDOW* helpwin, int who)
+{
+	/* Limpando a janela */
+	wmove(helpwin, 11, 12);
+	wprintw(helpwin, "                   ");
+	wrefresh(helpwin);
+
+	wmove(helpwin, 11, 12);
+	if(who == WHITE){
+		wprintw(helpwin, "Brancas Venceram!");
+	}
+	else{
+		wprintw(helpwin, "Pretas Venceram!");
+	}
+
+	wrefresh(helpwin);
+}
+
 void print_turn(WINDOW* helpwin, int turn)
 {
 	/* Limpando a janela */
@@ -974,6 +1007,23 @@ void print_turn(WINDOW* helpwin, int turn)
 	}
 
 	wrefresh(helpwin);
+}
+
+int wanna_save(WINDOW* messages)
+{
+	int choice;
+	print_message(messages, WANNA_SAVE);
+
+	do{
+		choice = getch();
+	} while(choice != 's' && choice != 'n');
+
+	if(choice == 's'){
+		return true;
+	}
+	else{
+		return false;
+	}
 }
 
 /* 
@@ -1186,6 +1236,45 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 		{
 			/* Mostrando de quem é a vez de jogar */
 			print_turn(helpwin, turn);
+
+			/* Verificando se tem xeque no jogo */
+			if(turn == WHITES_TURN)
+				{
+					board = VerifyCheck(board, WHITE);
+					if(board->WhiteCheck == CHECK){
+						/* Mostrando que as brancas fizeram xeque */
+						print_message(messages, W_CHECK);
+						if(VerifyCheckMate(board, WHITE) == 1)
+							{
+								print_winner(helpwin, BLACK);
+								if(wanna_save(messages)){
+									SaveBoardFile(board, txtboard); /* Arquivo txt */
+									SavePGNFile(pastmoves, pgnboard); /* Arquivo pgn */
+									print_message(messages, SAVED_GAME);
+								}
+								break;
+							} /* if(VerifyCheckMate...) */
+					} /* if(board->whi..) */
+				}
+			else /* Vez das pretas */
+				{
+					board = VerifyCheck(board, BLACK);
+					if(board->BlackCheck == 1){
+						/* Mostrando que as pretas fizeram xeque */
+						print_message(messages, B_CHECK);
+
+						if(VerifyCheckMate(board, BLACK) == 1)
+							{
+								print_winner(helpwin, WHITE);
+								if(wanna_save(messages)){
+									SaveBoardFile(board, txtboard);
+									SavePGNFile(pastmoves, pgnboard);
+									print_message(messages, SAVED_GAME);
+								}
+								break;
+							}
+					} /* if(board->Blac...) */
+				}
 			
 			/* Pegar a tecla que o usuário digitar */
 			choice = getch();
@@ -1205,9 +1294,10 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					/* Movendo a peça */
 					turn = UI_MOVE_PIECE(boardwin, messages, board, turn, movement);
 
-					if(turn != old_turn){
-						AddListPM(pastmoves, chess_move);
-					}
+					if(turn != old_turn)
+						{
+							AddListPM(pastmoves, chess_move);
+						}
 						
 				} /* Choide == j */
 			
