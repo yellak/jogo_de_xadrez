@@ -907,10 +907,12 @@ TBoard* VerifyCheck(TBoard* board, int color){
 			char whichis = WhatPiece(board, AllMoves->current->play.destiny[0], AllMoves->current->play.destiny[1]);
 			if(whichis == B_KING){
 				board->BlackCheck = 1;
-				break;
+				return board;	
 			}
 		AllMoves->current = AllMoves->current->next;
 		}
+		board->BlackCheck = -1;
+		return board;
 	}
 	if(color == WHITE){
 		ListOfMoves* AllMoves = AnalyzePossibleMovementsBlack(board);
@@ -919,10 +921,11 @@ TBoard* VerifyCheck(TBoard* board, int color){
 			char whichis = WhatPiece(board, AllMoves->current->play.destiny[0], AllMoves->current->play.destiny[1]);
 			if(whichis == W_KING){
 				board->WhiteCheck = 1;
-				break;
+				return board;
 			}
 		AllMoves->current = AllMoves->current->next;
 		}
+		board->WhiteCheck = -1;
+		return board;
 	}
-	return board;
 }

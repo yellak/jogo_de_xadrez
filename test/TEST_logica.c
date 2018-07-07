@@ -1217,6 +1217,46 @@ TEST(Test_VerifyCheck, Verify_FakeWhiteCheck){
 	free(board);
 }
 
+TEST(Test_VerifyCheck, Verify_ChangeBlackCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+
+	board->Board[0][0] = B_KING;
+	board->Board[1][1] = W_PAWN;
+
+	board = VerifyCheck(board, BLACK);
+
+	EXPECT_EQ(1, board->BlackCheck);
+	EXPECT_EQ(-1, board->WhiteCheck);
+
+	board->Board[1][1] = B_PAWN;
+	board = VerifyCheck(board, BLACK);
+
+	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(-1, board->WhiteCheck);
+	free(board);
+}
+
+TEST(Test_VerifyCheck, Verify_ChangeWhiteCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+
+	board->Board[0][0] = W_KING;
+	board->Board[1][1] = B_PAWN;
+
+	board = VerifyCheck(board, WHITE);
+
+	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(1, board->WhiteCheck);
+
+	board->Board[1][1] = W_PAWN;
+	board = VerifyCheck(board, WHITE);
+
+	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(-1, board->WhiteCheck);
+	free(board);
+}
+
 
 
 int main(int argc, char **argv){
