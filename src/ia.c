@@ -129,25 +129,13 @@ int SortTree(Tree* tree, int turn){
 
 	return 0;
 }
-List* Best_Plays(Tree* SortedTree, int SortedTree->root->n_child) {
+NodeList* Best_Plays(Tree* tree, int n_child) {
 		NodeList* Lista = (NodeList*)malloc(sizeof(NodeList));
-		int i;
 		int j;
-		for(j=0; j< SortedTree->root->n_child; j++) {
-			for(i=0; i< 3; i++) {
-				strcpy(Lista->move[i], SortedTree->root->child[j]->play->origin[i]);
-			}
-
-			Lista->move[3] = ' ';
-
-			for(i=0; i< 3; i++) {
-				strcpy(Lista->move[i+4], SortedTree->root->child[j]->play->origin[i]);
-			}
-
-			Lista->move[7] = '\0';
+		for(j=0; j< n_child; j++) {
+			Lista->play = *tree->root->child[j]->play;
 			Lista = Lista->next;
 		}
-
 		return Lista;
 }
 //função para extrair melhor jogada , retorna a jogad
