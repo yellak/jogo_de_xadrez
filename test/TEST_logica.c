@@ -1301,6 +1301,22 @@ TEST(Test_VerifyCheckMate, Verify_Correct_CheckMate){
 
 }
 
+TEST(Test_VerifyCheckMate, Verify_No_CheckMate){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->BlackCheck = 1;
+	board->Board[4][4] = B_KING;
+	board->Board[5][2] = B_TOWER;
+	board->Board[6][5] = W_PAWN;
+	board->Board[6][6] = W_BISHOP;
+	board->Board[7][3] = W_QUEEN;
+	board->Board[2][5] = W_TOWER;
+	board->Board[2][6] = W_HORSE;
+
+	EXPECT_EQ(0, VerifyCheckMate(board, BLACK));
+
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
