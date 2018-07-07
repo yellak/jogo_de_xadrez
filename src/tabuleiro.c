@@ -17,9 +17,11 @@
 */
 TBoard* AlocateBoard(void){
 	TBoard* new_board = (TBoard*) malloc(sizeof(TBoard));
+
 	new_board->Weight = 0;
 	new_board->WhiteCheck = -1;
 	new_board->BlackCheck = -1;
+	
 	return new_board;
 }
 
@@ -122,18 +124,32 @@ int StartStandardBoard(TBoard *board){
 	return 0;
 }
 
-/*                           */
+/* Função: ColorPiece
+		Objetivo: Verificar qual a cor da peça.
+
+		Parametros:
+			piece - Peça a ser verificada, seguindo as constantes definidas.
+					Deve ser uma das peças definidas.
+
+		Saída: Essa função retorna BLACK para peças pretas, WHITÉ, para brancas e -1 para não peças.
+*/
 int ColorPiece(char piece){
+	/* Asseriva de entrada. */
+	if(GetValue(piece) == 0){
+		return -1;
+	}
+
+	/* Achar valor da peça em comparação com o valor de BLANK. */
 	if(piece < BLANK){
 		return BLACK;
 	}
 	else if(piece > BLANK){
 		return WHITE;
 	}
-	else{
-		return -1;
-	}
+
+	return -1;
 }
+
 /* Função: WhatPiece
 		Objetivo: Verificar qual peça se encontra na posição (x,y) do tabuleiro.
 
@@ -540,7 +556,7 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
            copy  - É o tabuleiro que será a cópia do tabuleiro destino
            board - É o tabuleiro que será copiado
 
-      Entrada:
+       Entrada:
            Os dois tabuleiros já deverão ter sido alocados ou seja,
            copy  != NULL
            board != NULL
@@ -556,6 +572,7 @@ void copy_boards(TBoard* copy, TBoard* board){
 		}
 	}
 
+	/* Copiar informações adicionais do tabuleiro. */
 	copy->Weight = board->Weight;
 	copy->WhiteCheck = board->WhiteCheck;
 	copy->BlackCheck = board->BlackCheck;
@@ -625,13 +642,15 @@ int HaveMinimun(TBoard* board)
 		for(j = 0; j < 8; j++){
 			piece = board->Board[i][j];
 			if(piece != '\\')
-				{
+				{	
+					/* Verificar existência do rei preto. */
 					if(piece == B_KING){
 						b_kings++;
 						if(b_kings > 1){
 							return false;
 						}
 					}
+					/* Veriifcar existência do rei branco. */
 					else if(piece == W_KING){
 						w_kings++;
 						if(w_kings > 1){

@@ -72,17 +72,23 @@ int StartEmptyBoard(TBoard *board);
 */
 int StartStandardBoard(TBoard *board);
 
-/*                    */
-int ColorPiece(char peace);
-
-/* Verificar qual peça se encontra na posição (x,y) do tabuleiro. */
-/*! \fn char WhatPiece(TBoard *board, int line, int column)
-		\brief Verifica qual peça se encontra na posição dada.
+/* Verificar qual a cor da peça requisitada. */
+/*! \fn int ColorPiece(char piece)
+		\brief Dada uma determinada peça, verifica qual a cor dela.
 		
 		\param board Ponteiro para um tabuleiro.
 		\param line Inteiro indicando a linha x da posição (x,y) a ser verificada. Deve ser um número de 0 a 7.
 		\param column Inteiro indicando a coluna y da posição (x,y) a ser verificada. Deve ser um número de 0 a 7.
 		\return Retorna o caractere correspondente da peça na posição (x,y) ou OUT_OF_RANGE para posições não existentes.
+*/
+int ColorPiece(char piece);
+
+/* Verificar qual peça se encontra na posição (x,y) do tabuleiro. */
+/*! \fn char WhatPiece(TBoard *board, int line, int column)
+		\brief Verifica qual peça se encontra na posição dada.
+		
+		\param piece É um caractere representado por alguma das constantes de peças definidas.
+		\return Retorna a constante definida BLACK ou WHITE para a cor da peça passada ou -1 se não for uma peça.
 */
 char WhatPiece(TBoard *board, int line, int column);
 
