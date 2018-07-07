@@ -923,5 +923,7 @@ TBoard* VerifyCheck(TBoard* board, int color){
 }
 
 int VerifyCheckMate(TBoard* board, int color){
-	
+	if(board == NULL || (color != WHITE && color != BLACK)){
+		return -1;
+	}
 }
