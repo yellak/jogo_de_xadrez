@@ -872,6 +872,7 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 		return 1;
 	}
 	else{
+		DeleteListOfMoves(AllMoves);
 		return 0;
 	}
 }
@@ -899,11 +900,13 @@ TBoard* VerifyCheck(TBoard* board, int color){
 			char whichis = WhatPiece(board, AllMoves->current->play.destiny[0], AllMoves->current->play.destiny[1]);
 			if(whichis == B_KING){
 				board->BlackCheck = 1;
+				DeleteListOfMoves(AllMoves);
 				return board;	
 			}
 		AllMoves->current = AllMoves->current->next;
 		}
 		board->BlackCheck = -1;
+		DeleteListOfMoves(AllMoves);
 		return board;
 	}
 	if(color == WHITE){
@@ -913,13 +916,16 @@ TBoard* VerifyCheck(TBoard* board, int color){
 			char whichis = WhatPiece(board, AllMoves->current->play.destiny[0], AllMoves->current->play.destiny[1]);
 			if(whichis == W_KING){
 				board->WhiteCheck = 1;
+				DeleteListOfMoves(AllMoves);
 				return board;
 			}
 		AllMoves->current = AllMoves->current->next;
 		}
 		board->WhiteCheck = -1;
+		DeleteListOfMoves(AllMoves);
 		return board;
 	}
+	return NULL;
 }
 
 int VerifyCheckMate(TBoard* board, int color){
@@ -932,6 +938,7 @@ int VerifyCheckMate(TBoard* board, int color){
 	if(color == WHITE && board->WhiteCheck == CHECK){
 		AllMoves = AnalyzePossibleMovementsWhite(board);
 		AllMoves->current = AllMoves->first;
+		/* Verifica se existe algum movimento que possa tirar o rei do xeque */
 		while(AllMoves->current != NULL){
 			originx = AllMoves->current->play.origin[0];
 			originy = AllMoves->current->play.origin[1];
@@ -945,11 +952,13 @@ int VerifyCheckMate(TBoard* board, int color){
 			}	
 			AllMoves->current = AllMoves->current->next;
 		}
+		/* Caso nenhum dos movimentos possíveis impeça o xeque */
 		return 1;
 	}
 	else if(color == BLACK && board->BlackCheck == CHECK){
 		AllMoves = AnalyzePossibleMovementsBlack(board);
 		AllMoves->current = AllMoves->first;
+		/* Verifica se existe algum movimento que possa tirar o rei do xeque */		
 		while(AllMoves->current != NULL){
 			originx = AllMoves->current->play.origin[0];
 			originy = AllMoves->current->play.origin[1];
@@ -963,6 +972,7 @@ int VerifyCheckMate(TBoard* board, int color){
 			}	
 			AllMoves->current = AllMoves->current->next;
 		}
+		/* Caso nenhum dos movimentos possíveis impeça o xeque */
 		return 1;
 	}
 	return 0;

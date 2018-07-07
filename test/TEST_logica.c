@@ -1031,7 +1031,7 @@ TEST(Test_AllMovements, Verify_Movements_EmptyBoard){
 
 	/* Testa para os movimentos referentes as peças brancas */
 	EXPECT_EQ(0, AllPlays->howmany);
-
+	DeleteListOfMoves(AllPlays);
 	AllPlays = AnalyzePossibleMovementsBlack(board);
 
 	/* Testa para os movimentos referentes as peças pretas */
@@ -1048,7 +1048,7 @@ TEST(Test_AllMovements, Verify_Movements_StandardBoard){
 
 	/* Testa para os movimentos referentes as peças brancas */
 	EXPECT_EQ(20, AllPlays->howmany);
-
+	DeleteListOfMoves(AllPlays);
 	AllPlays = AnalyzePossibleMovementsBlack(board);
 
 	/* Testa para os movimentos referentes as peças pretas */
@@ -1298,7 +1298,7 @@ TEST(Test_VerifyCheckMate, Verify_Correct_CheckMate){
 	board->Board[2][6] = W_HORSE;
 
 	EXPECT_EQ(1, VerifyCheckMate(board, BLACK));
-
+	free(board);
 }
 
 TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
@@ -1314,7 +1314,7 @@ TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
 	board->Board[2][6] = W_HORSE;
 
 	EXPECT_EQ(0, VerifyCheckMate(board, BLACK));
-
+	free(board);
 }
 
 int main(int argc, char **argv){
