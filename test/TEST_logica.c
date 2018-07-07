@@ -995,16 +995,16 @@ TEST(Test_KingMovements, Verify_Addict_Roque_Movement){
  	TBoard* board2 = AlocateBoard();
  	StartEmptyBoard(board);
  	StartEmptyBoard(board2);
- 	board->Board[0][4] = W_KING;
- 	board->Board[0][0] = W_TOWER;
- 	board->Board[0][7] = W_TOWER;
+ 	board->Board[0][4] = B_KING;
+ 	board->Board[0][0] = B_TOWER;
+ 	board->Board[0][7] = B_TOWER;
 
  	KingMovements(board, AllPlays, 0, 4);
  	EXPECT_EQ(7, AllPlays->howmany);
 
- 	board2->Board[7][4] = B_KING;
- 	board2->Board[7][0] = B_TOWER;
- 	board2->Board[7][7] = B_TOWER;
+ 	board2->Board[7][4] = W_KING;
+ 	board2->Board[7][0] = W_TOWER;
+ 	board2->Board[7][7] = W_TOWER;
 
  	KingMovements(board2, AllPlays2, 7, 4);
  	EXPECT_EQ(7, AllPlays2->howmany);
@@ -1031,7 +1031,7 @@ TEST(Test_AllMovements, Verify_Movements_EmptyBoard){
 
 	/* Testa para os movimentos referentes as peças brancas */
 	EXPECT_EQ(0, AllPlays->howmany);
-
+	DeleteListOfMoves(AllPlays);
 	AllPlays = AnalyzePossibleMovementsBlack(board);
 
 	/* Testa para os movimentos referentes as peças pretas */
@@ -1048,7 +1048,7 @@ TEST(Test_AllMovements, Verify_Movements_StandardBoard){
 
 	/* Testa para os movimentos referentes as peças brancas */
 	EXPECT_EQ(20, AllPlays->howmany);
-
+	DeleteListOfMoves(AllPlays);
 	AllPlays = AnalyzePossibleMovementsBlack(board);
 
 	/* Testa para os movimentos referentes as peças pretas */
@@ -1298,7 +1298,7 @@ TEST(Test_VerifyCheckMate, Verify_Correct_CheckMate){
 	board->Board[2][6] = W_HORSE;
 
 	EXPECT_EQ(1, VerifyCheckMate(board, BLACK));
-
+	free(board);
 }
 
 TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
@@ -1314,7 +1314,7 @@ TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
 	board->Board[2][6] = W_HORSE;
 
 	EXPECT_EQ(0, VerifyCheckMate(board, BLACK));
-
+	free(board);
 }
 
 int main(int argc, char **argv){

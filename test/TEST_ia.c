@@ -12,10 +12,10 @@
 
 TEST(Test_CreateMovesTree, Verify_Creation_Tree){
 	Tree * tree;
-	TBoard board;
-	StartStandardBoard(&board);
+	TBoard* board = AlocateBoard();
+	StartStandardBoard(board);
 	int turn = WHITES_TURN;
-	tree = CreateMovesTree(&board, turn);
+	tree = CreateMovesTree(board, turn);
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, tree != NULL);
@@ -55,10 +55,11 @@ TEST(Test_CreateMovesTree, Verify_Alocation_Tree){
 
 TEST(Test_CreateMovesTree, Verify_Root_Information){
 	Tree * tree;
-	TBoard board;
-	StartStandardBoard(&board);
+	TBoard* board = AlocateBoard();
+	StartStandardBoard(board);
+
 	int turn = WHITES_TURN;
-	tree = CreateMovesTree(&board, turn);
+	tree = CreateMovesTree(board, turn);
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, tree != NULL);
@@ -89,12 +90,12 @@ TEST(Test_CreateMovesTree, Verify_Root_Information){
  */
 
 TEST(Test_SortTree, Verify_SortTree){
-	TBoard board;
-	StartEmptyBoard(&board);
-	InsertPiece(&board, W_BISHOP, 4, 4);
-	InsertPiece(&board, B_PAWN, 6, 6);
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	InsertPiece(board, W_BISHOP, 4, 4);
+	InsertPiece(board, B_PAWN, 6, 6);
 	int turn = WHITES_TURN;
-	Tree* tree = CreateMovesTree(&board, turn);
+	Tree* tree = CreateMovesTree(board, turn);
 
 	/* Testar a alocação */
 	EXPECT_EQ(0, SortTree(tree, turn));
@@ -102,7 +103,41 @@ TEST(Test_SortTree, Verify_SortTree){
 	FreeTreeNodes(tree->root);
 	free(tree);
 }
+/* Teste para verificar se a lista contendo todas as jogada ordenadas está sendo criada de maneira adequada
+- Inicia-se a árvore com jogadas, usando apenas um peão no tabuleiro;
+- Inicia-se a lista para criação;
+- Cria-se variáveis com os resultados esperados pela função
+- Resultados:
+- A função deve retornar o mesmo dado que as variáveis fixadas
+*/
 
+TEST(TEST_Best_Plays, VerifyListCreation){
+	TBoard* board = AlocateBoard();
+	ListOfMoves* Lista;
+	StartEmptyBoard(board);
+	InsertPiece(board, B_PAWN, 1, 1);
+	int turn = BLACKS_TURN;
+	int valid;
+	int a = 1,b=2,c = 3;
+	Tree* tree = CreateMovesTree(board, turn);
+	int plays = tree->root->n_child;
+	//valid = SortTree(tree, turn);
+	/*Testar a lista*/
+	Lista = Best_Plays(tree, plays);
+	
+	EXPECT_EQ(a, Lista->first->play.origin[0]);
+	EXPECT_EQ(a, Lista->first->play.origin[1]);
+	EXPECT_EQ(a, Lista->first->play.destiny[0]);
+	EXPECT_EQ(b, Lista->first->play.destiny[1]);
+	EXPECT_EQ(a, Lista->first->next->play.origin[0]);
+	EXPECT_EQ(a, Lista->first->next->play.origin[1]);
+	EXPECT_EQ(a, Lista->first->next->play.destiny[0]);
+	EXPECT_EQ(c, Lista->first->next->play.destiny[1]);
+
+	//free(tree);
+	//FreeTreeNodes(tree->root);
+
+}
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

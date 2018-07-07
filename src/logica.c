@@ -709,23 +709,23 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 		InsertMove(AllMoves, originx, originy, originx - 1, originy + 1);
 	}
 	/* Roque */
-	if( COLOR_PIECE == WHITE && originx == 0 && originy == 4){
+	if( COLOR_PIECE == BLACK && originx == 0 && originy == 4){
 		/* Roque pequeno */
-		if(WhatPiece(board, 0, 7) == W_TOWER && board->Board[0][5] == BLANK && board->Board[0][6] == BLANK){
+		if(WhatPiece(board, 0, 7) == B_TOWER && board->Board[0][5] == BLANK && board->Board[0][6] == BLANK){
 			InsertMove(AllMoves, 4, 0, 6, 0);
 		}
 		/* Roque grande */
-		if(WhatPiece(board, 0, 0) == W_TOWER && board->Board[0][1] == BLANK && board->Board[0][2] == BLANK && board->Board[0][3] == BLANK){
+		if(WhatPiece(board, 0, 0) == B_TOWER && board->Board[0][1] == BLANK && board->Board[0][2] == BLANK && board->Board[0][3] == BLANK){
 			InsertMove(AllMoves, 4, 0, 2, 0);
 		}
 	}
-	if(COLOR_PIECE == BLACK && originx == 7 && originy == 4){
+	if(COLOR_PIECE == WHITE && originx == 7 && originy == 4){
 		/* Roque pequeno */
-		if(WhatPiece(board, 7, 7) == B_TOWER && board->Board[7][5] == BLANK && board->Board[7][6] == BLANK){
+		if(WhatPiece(board, 7, 7) == W_TOWER && board->Board[7][5] == BLANK && board->Board[7][6] == BLANK){
 			InsertMove(AllMoves, 4, 7, 6, 7);
 		}
 		/* Roque grande */
-		if(WhatPiece(board, 7, 0) == B_TOWER && board->Board[7][1] == BLANK && board->Board[7][2] == BLANK && board->Board[7][3] == BLANK){
+		if(WhatPiece(board, 7, 0) == W_TOWER && board->Board[7][1] == BLANK && board->Board[7][2] == BLANK && board->Board[7][3] == BLANK){
 			InsertMove(AllMoves, 4, 7, 2, 7);
 		}
 	}
@@ -872,6 +872,7 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 		return 1;
 	}
 	else{
+		DeleteListOfMoves(AllMoves);
 		return 0;
 	}
 }
@@ -899,11 +900,13 @@ TBoard* VerifyCheck(TBoard* board, int color){
 			char whichis = WhatPiece(board, AllMoves->current->play.destiny[0], AllMoves->current->play.destiny[1]);
 			if(whichis == B_KING){
 				board->BlackCheck = 1;
+				DeleteListOfMoves(AllMoves);
 				return board;	
 			}
 		AllMoves->current = AllMoves->current->next;
 		}
 		board->BlackCheck = -1;
+		DeleteListOfMoves(AllMoves);
 		return board;
 	}
 	if(color == WHITE){
@@ -913,13 +916,16 @@ TBoard* VerifyCheck(TBoard* board, int color){
 			char whichis = WhatPiece(board, AllMoves->current->play.destiny[0], AllMoves->current->play.destiny[1]);
 			if(whichis == W_KING){
 				board->WhiteCheck = 1;
+				DeleteListOfMoves(AllMoves);
 				return board;
 			}
 		AllMoves->current = AllMoves->current->next;
 		}
 		board->WhiteCheck = -1;
+		DeleteListOfMoves(AllMoves);
 		return board;
 	}
+	return NULL;
 }
 
 int VerifyCheckMate(TBoard* board, int color){
@@ -932,6 +938,7 @@ int VerifyCheckMate(TBoard* board, int color){
 	if(color == WHITE && board->WhiteCheck == CHECK){
 		AllMoves = AnalyzePossibleMovementsWhite(board);
 		AllMoves->current = AllMoves->first;
+		/* Verifica se existe algum movimento que possa tirar o rei do xeque */
 		while(AllMoves->current != NULL){
 			originx = AllMoves->current->play.origin[0];
 			originy = AllMoves->current->play.origin[1];
@@ -945,11 +952,13 @@ int VerifyCheckMate(TBoard* board, int color){
 			}	
 			AllMoves->current = AllMoves->current->next;
 		}
+		/* Caso nenhum dos movimentos possíveis impeça o xeque */
 		return 1;
 	}
 	else if(color == BLACK && board->BlackCheck == CHECK){
 		AllMoves = AnalyzePossibleMovementsBlack(board);
 		AllMoves->current = AllMoves->first;
+		/* Verifica se existe algum movimento que possa tirar o rei do xeque */		
 		while(AllMoves->current != NULL){
 			originx = AllMoves->current->play.origin[0];
 			originy = AllMoves->current->play.origin[1];
@@ -963,6 +972,7 @@ int VerifyCheckMate(TBoard* board, int color){
 			}	
 			AllMoves->current = AllMoves->current->next;
 		}
+		/* Caso nenhum dos movimentos possíveis impeça o xeque */
 		return 1;
 	}
 	return 0;
