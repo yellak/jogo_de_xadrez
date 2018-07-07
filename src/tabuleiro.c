@@ -18,6 +18,8 @@
 TBoard* AlocateBoard(void){
 	TBoard* new_board = (TBoard*) malloc(sizeof(TBoard));
 	new_board->Weight = 0;
+	new_board->WhiteCheck = -1;
+	new_board->BlackCheck = -1;
 	return new_board;
 }
 

@@ -15,8 +15,10 @@ Data  |Horas Trabalhadas |Tipo Tarefa                                  |Descriç
 02/07 |0.5 horas         |revisar casos de teste                       |Mudanças nos casos de teste
 02/07 |2 horas           |codifica módulo                              |Implementação das funções de movimento do módulo logica
 02/07 |2 horas           |Redigir casos de teste                       |Desenvolvimento dos casos de testes do modulo logica
-05/07 |1.5 horas         |revisar código do módulo                     | 
-05/07 |1.5 horas         |revisar casos de teste                       |
-06/07 |2 horas           |codificar módulo                             |
-06/07 |2 horas           |Redigir casos de teste                       |
-06/07 |5 horas           |Projetar                                     |
+05/07 |1.5 horas         |revisar código do módulo                     |Revisão das funções de movimentos das peças 
+05/07 |1.5 horas         |revisar casos de teste                       |Revisão dos casos de teste das funções de movimentos
+06/07 |2 horas           |codificar módulo                             |Desenvolvimento de funções do módulo logica
+06/07 |2 horas           |Redigir casos de teste                       |Desenvolvimento de testes do módulo lógica
+06/07 |5 horas           |Projetar                                     |Definição de funções de xeque e xeque mate
+06/07 |1 horas           |codificar módulo                             |Implementação da função de xeque mate
+06/07 |1 hora            |redigir casos de teste                       |Desenvolvimento de casos de teste para a função xeque mate

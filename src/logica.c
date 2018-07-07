@@ -921,3 +921,49 @@ TBoard* VerifyCheck(TBoard* board, int color){
 		return board;
 	}
 }
+
+int VerifyCheckMate(TBoard* board, int color){
+	TBoard* temp = AlocateBoard();
+	int originx, originy, destinyx, destinyy;
+	ListOfMoves* AllMoves;
+	if(board == NULL || (color != WHITE && color != BLACK)){
+		return -1;
+	}
+	if(color == WHITE && board->WhiteCheck == CHECK){
+		AllMoves = AnalyzePossibleMovementsWhite(board);
+		AllMoves->current = AllMoves->first;
+		while(AllMoves->current != NULL){
+			originx = AllMoves->current->play.origin[0];
+			originy = AllMoves->current->play.origin[1];
+			destinyx = AllMoves->current->play.destiny[0];
+			destinyy = AllMoves->current->play.destiny[1];
+			copy_boards(temp, board);
+			MovePiece(temp, originx, originy, destinyx, destinyy);
+			temp = VerifyCheck(temp, WHITE);
+			if(temp->WhiteCheck != CHECK){
+				return 0;
+			}	
+			AllMoves->current = AllMoves->current->next;
+		}
+		return 1;
+	}
+	else if(color == BLACK && board->BlackCheck == CHECK){
+		AllMoves = AnalyzePossibleMovementsBlack(board);
+		AllMoves->current = AllMoves->first;
+		while(AllMoves->current != NULL){
+			originx = AllMoves->current->play.origin[0];
+			originy = AllMoves->current->play.origin[1];
+			destinyx = AllMoves->current->play.destiny[0];
+			destinyy = AllMoves->current->play.destiny[1];
+			copy_boards(temp, board);
+			MovePiece(temp, originx, originy, destinyx, destinyy);
+			temp = VerifyCheck(temp, BLACK);
+			if(temp->BlackCheck != CHECK){
+				return 0;
+			}	
+			AllMoves->current = AllMoves->current->next;
+		}
+		return 1;
+	}
+	return 0;
+}
