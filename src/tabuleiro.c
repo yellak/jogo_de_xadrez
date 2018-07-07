@@ -484,6 +484,38 @@ int MovePiece(TBoard *board, int origin_line, int origin_column, int dest_line, 
 		return -1;
 	}
 
+	/* Movimento do roque. */
+	/* Branco. */
+	if(origin_line == 0 && origin_column == 4){
+		if(WhatPiece(board, 0, 4) == B_KING){
+			/* Roque pequeno. */
+			if(dest_line == 0 && dest_column == 6){
+				/* Mover torre. */
+				MovePiece(board, 0, 7, 0, 5);
+			}
+			/* Roque grande. */
+			if(dest_line == 0 && dest_column == 2){
+				/* Mover torre. */
+				MovePiece(board, 0, 0, 0, 3);
+			}
+		}
+	}
+	/* Preto. */
+	if(origin_line == 7 && origin_column == 4){
+		if(WhatPiece(board, 7, 4) == W_KING){
+			/* Roque pequeno. */
+			if(dest_line == 7 && dest_column == 6){
+				/* Mover torre. */
+				MovePiece(board, 7, 7, 7, 5);
+			}
+			/* Roque grande. */
+			if(dest_line == 7 && dest_column == 2){
+				/* Mover torre. */
+				MovePiece(board, 7, 0, 7, 3);
+			}
+		}
+	}
+
 	/* Salvar peça na posição de origem. */
 	char piece = board->Board[origin_line][origin_column];
 

@@ -33,4 +33,9 @@ Tempo: 1.5 horas
 Tópico: Finalizar por completo os movimentos básicos de todas as peças
 Resumo = Terminou-se a construção de todos os movimentos básicos referentes a todas as peças.
 
+Dia 06/07
+Tempo: 2.5 horas
+Tópico: Mais uma reunião com o grupo e início da função de verificação de cheque
+Resumo = Começou-se a função de verificação da função de xeque junto com seus testes, e ocorreu outra reunião com o grupo sobre tópicos finais. Uma tentativa para melhorar o status do valgrind foi feita.
+
 

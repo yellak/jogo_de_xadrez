@@ -760,9 +760,9 @@ TEST(Test_BlackPawnMovements, Verify_Movements_RivalPieces){
 	BlackPawnMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(5, AllPlays2->howmany);
 
-	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
 TEST(Test_HorseMovements, Verify_Movements_RivalPieces){
@@ -790,9 +790,9 @@ TEST(Test_HorseMovements, Verify_Movements_RivalPieces){
 	HorseMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(8, AllPlays2->howmany);
 
-	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
 /* Teste para verificar a função de movimento da torre na diferenciação de peças aliadas
@@ -832,9 +832,9 @@ TEST(Test_TowerMovements, Verify_Movements_RivalPieces){
 	TowerMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(4, AllPlays2->howmany);
 
-	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
 
@@ -873,9 +873,9 @@ TEST(Test_BishopMovements, Verify_Movements_RivalPieces){
 	BishopMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(4, AllPlays2->howmany);
 
-	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
 
@@ -972,9 +972,9 @@ TEST(Test_KingMovements, Verify_Movements_RivalPieces){
 	KingMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(8, AllPlays2->howmany);
 
-	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
  /* Testa o adição do movimento de roque */
@@ -1009,10 +1009,10 @@ TEST(Test_KingMovements, Verify_Addict_Roque_Movement){
  	KingMovements(board2, AllPlays2, 7, 4);
  	EXPECT_EQ(7, AllPlays2->howmany);
 
- 	free(board);
- 	free(board2);
  	DeleteListOfMoves(AllPlays2);
  	DeleteListOfMoves(AllPlays);
+ 	free(board);
+ 	free(board2);
 }
 
 TEST(Test_AllMovements, Verify_NULL_Board){
@@ -1067,6 +1067,7 @@ TEST(Test_VerifyValidMovement,  Veirfy_Invalid_Entries){
 	EXPECT_EQ(-1, VerifyValidMovement(board1, 4, 4, 5, 4));
 	/* Testa para tabuleiro válido e coordenadas inválidas (sem peça) */
 	EXPECT_EQ(-1, VerifyValidMovement(board2, 4, 4, 5, 4));
+	free(board2);
 	
 }
 
@@ -1086,9 +1087,10 @@ TEST(Test_VerifyValidMovement, Verify_Valid_Movements){
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 4, 1, 4));
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 5, 1, 5));
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 6, 2, 7));
+	free(board);
 }
 
-TEST(Test_VerifyValidMovement, Veirfy_Invalid_Movements){
+TEST(Test_VerifyValidMovement, Verify_Invalid_Movements){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
 	board->Board[0][0] = B_PAWN;
@@ -1119,7 +1121,102 @@ TEST(Test_VerifyValidMovement, Veirfy_Invalid_Movements){
 	EXPECT_EQ(0, VerifyValidMovement(board, 0, 4, 1, 4));
 	EXPECT_EQ(0, VerifyValidMovement(board, 0, 5, 1, 5));
 	EXPECT_EQ(0, VerifyValidMovement(board, 0, 6, 2, 7));
+	free(board);
 }
+
+/* Teste para verificar a função de verificação de xeque funciona corretamente com um
+tabuleiro nulo.
+   Procedimentos:
+   -Criar um tabuleiro do tipo nulo.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um ponteiro NULL.
+*/
+TEST(Test_VerifyCheck, Verify_NULL_Variables){
+	TBoard* board1 = NULL;
+	TBoard* board2 = NULL;
+	board1 = VerifyCheck(board1, BLACK);
+	board2 = VerifyCheck(board2, WHITE);
+	EXPECT_EQ(NULL, board1);
+	EXPECT_EQ(NULL, board2);
+}
+
+/* Teste para verificar a função de verificação de xeque funciona corretamente com um
+tabuleiro em que está acontecendo um xeque real com o rei preto.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei preto atualizada.
+*/
+TEST(Test_VerifyCheck, Verify_RealBlackCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[0][0] = B_KING;
+	board->Board[1][1] = W_PAWN;
+	board = VerifyCheck(board, BLACK);
+	EXPECT_EQ(1, board->BlackCheck);
+	EXPECT_EQ(-1, board->WhiteCheck);
+	free(board);
+}
+
+/* Teste para verificar a função de verificação de xeque funciona corretamente com um
+tabuleiro em que está acontecendo um xeque real com o rei branco.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei branco atualizada.
+*/
+TEST(Test_VerifyCheck, Verify_RealWhiteCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[0][0] = W_KING;
+	board->Board[1][1] = B_PAWN;
+	board = VerifyCheck(board, WHITE);
+	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(1, board->WhiteCheck);
+	free(board);
+}
+
+/* Teste para verificar a função de verificação de xeque funciona corretamente com um
+tabuleiro em que está acontecendo um xeque falso com o rei preto.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei preto não modificada.
+*/
+TEST(Test_VerifyCheck, Verify_FakeBlackCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[0][0] = B_KING;
+	board->Board[2][2] = W_PAWN;
+	board = VerifyCheck(board, BLACK);
+	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(-1, board->WhiteCheck);
+	free(board);
+}
+
+/* Teste para verificar a função de verificação de xeque funciona corretamente com um
+tabuleiro em que está acontecendo um xeque falso com o rei branco.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei branco não modificada.
+*/
+TEST(Test_VerifyCheck, Verify_FakeWhiteCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->Board[0][0] = W_KING;
+	board->Board[2][2] = B_PAWN;
+	board = VerifyCheck(board, WHITE);
+	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(-1, board->WhiteCheck);
+	free(board);
+}
+
 
 
 int main(int argc, char **argv){

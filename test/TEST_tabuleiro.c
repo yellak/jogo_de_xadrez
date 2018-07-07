@@ -763,6 +763,61 @@ TEST(Test_Move_Piece, Test_Full_Space){
 	EXPECT_EQ(1, board.Weight);
 }
 
+/* Teste para verificar o movimento de roque.
+	Procedimentos:
+	-Criar 2 tabuleiros padrões;
+	-Remover rainhas, bispos e cavalos;
+	-Chamar roques pequenos para um tabuleiro e grandes para o outro.
+	Resultados:
+	-É esperado que a função retorne um inteiro 0 indicando o sucesso da operação;
+	-É esperado que as peças estejam na mesma posição;
+	-É esperado que o peso do tabuleiro continue 0.
+
+*/
+TEST(Test_Move_Piece, Test_Roque){
+	TBoard board1, board2;
+	StartStandardBoard(&board1);
+
+	RemovePiece(&board1, 0, 1);
+	RemovePiece(&board1, 0, 2);
+	RemovePiece(&board1, 0, 3);
+	RemovePiece(&board1, 0, 5);
+	RemovePiece(&board1, 0, 6);
+	RemovePiece(&board1, 7, 1);
+	RemovePiece(&board1, 7, 2);
+	RemovePiece(&board1, 7, 3);
+	RemovePiece(&board1, 7, 5);
+	RemovePiece(&board1, 7, 6);
+	board2 = board1;
+
+	EXPECT_EQ(0, MovePiece(&board1, 0, 4, 0, 6));
+	EXPECT_EQ(0, MovePiece(&board1, 7, 4, 7, 6));
+	EXPECT_EQ(0, MovePiece(&board2, 0, 4, 0, 2));
+	EXPECT_EQ(0, MovePiece(&board2, 7, 4, 7, 2));
+
+	EXPECT_EQ(GetValue(BLANK), GetValue(board1.Board[0][4]));
+	EXPECT_EQ(GetValue(BLANK), GetValue(board1.Board[0][7]));
+	EXPECT_EQ(GetValue(BLANK), GetValue(board1.Board[7][4]));
+	EXPECT_EQ(GetValue(BLANK), GetValue(board1.Board[7][7]));
+	EXPECT_EQ(GetValue(B_KING), GetValue(board1.Board[0][6]));
+	EXPECT_EQ(GetValue(B_TOWER), GetValue(board1.Board[0][5]));
+	EXPECT_EQ(GetValue(W_KING), GetValue(board1.Board[7][6]));
+	EXPECT_EQ(GetValue(W_TOWER), GetValue(board1.Board[7][5]));
+
+
+	EXPECT_EQ(GetValue(BLANK), GetValue(board2.Board[0][4]));
+	EXPECT_EQ(GetValue(BLANK), GetValue(board2.Board[0][0]));
+	EXPECT_EQ(GetValue(BLANK), GetValue(board2.Board[7][4]));
+	EXPECT_EQ(GetValue(BLANK), GetValue(board2.Board[7][0]));
+	EXPECT_EQ(GetValue(B_KING), GetValue(board2.Board[0][2]));
+	EXPECT_EQ(GetValue(B_TOWER), GetValue(board2.Board[0][3]));
+	EXPECT_EQ(GetValue(W_KING), GetValue(board2.Board[7][2]));
+	EXPECT_EQ(GetValue(W_TOWER), GetValue(board2.Board[7][3]));
+
+	EXPECT_EQ(0, board1.Weight);
+	EXPECT_EQ(0, board2.Weight);
+}
+
 /* Teste para verificar a validez da função que aloca um novo tabuleiro
     Procedimentos:
     - Verificar se foi alocado um espaço de memória para o tabuleiro

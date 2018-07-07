@@ -135,6 +135,8 @@ ListOfMoves* HorseMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 
 int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, int destinyy);
 
+TBoard* VerifyCheck(TBoard* board, int color);
+
 
 
 
