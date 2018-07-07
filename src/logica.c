@@ -842,7 +842,15 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 	if(board == NULL){
 		return -1;	
 	}
-	if(piece == W_PAWN){
+	/* Calcula os movimentos possíveis de acordo com a peça e em caso de xeque 
+	calcula os movimentos que possam tirar o rei do xeque */
+	if(board->WhiteCheck == CHECK && ColorPiece(piece) == WHITE){
+		AllMoves = VerifyCheckMate(board, WHITE);
+	}
+	else if(board->BlackCheck == CHECK && ColorPiece(piece == BLACK)){
+		AllMoves = VerifyCheckMate(board, BLACK);
+	}
+	else if(piece == W_PAWN){
 		AllMoves = WhitePawnMovements(board, AllMoves, originx, originy);
 	}
 	else if(piece == B_PAWN){
@@ -866,10 +874,31 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 	else{
 		return -1;
 	}
-	/* Busca o movimento na lista de movimentos possíveis para a peça correspondente */
+	/* Busca o movimento na lista de movimentos possíveis */
 	if(!SearchListOfMoves(AllMoves, originx, originy, destinyx, destinyy)){
 		DeleteListOfMoves(AllMoves);
-		return 1;
+		/* Caso o rei da mesma cor estivesse em xeque e o movimento foi encontrado 
+		na lista de movimentos capazes de tira-lo do xeque, o movimento é válido */
+		if((board->WhiteCheck == CHECK && ColorPiece(piece) == WHITE) || (board->BlackCheck == CHECK && ColorPiece(piece) == BLACK)){
+			return 1;
+		}
+		/* Caso o rei de mesma cor não estivesse em xeque e o movimento foi encontrado
+		na lista de movimentos possíveis para aquela peça, é testado se o movimento causa
+		xeque em seu rei. */
+		else{
+			TBoard *temp = AlocateBoard();
+			copy_boards(temp, board);
+			MovePiece(temp, originx, originy, destinyx, destinyy);
+			temp = VerifyCheck(temp, ColorPiece(piece));
+			/* Caso ponha o seu rei em xeque o movimento é inválido */
+			if((ColorPiece(piece) == WHITE && temp->WhiteCheck == CHECK) || (ColorPiece(piece) == BLACK && temp->BlackCheck == CHECK)){
+				return 0;
+			}
+			/* Caso contrário é válido */
+			else{
+				return 1;
+			}
+		}	
 	}
 	else{
 		DeleteListOfMoves(AllMoves);
@@ -928,12 +957,14 @@ TBoard* VerifyCheck(TBoard* board, int color){
 	return NULL;
 }
 
-int VerifyCheckMate(TBoard* board, int color){
+/* Confirma um xeque mate retornando NULL, e em caso contrário 
+retorna uma lista de movimentos possíveis para sair do xeque */
+ListOfMoves* VerifyCheckMate(TBoard* board, int color){
 	TBoard* temp = AlocateBoard();
 	int originx, originy, destinyx, destinyy;
-	ListOfMoves* AllMoves;
+	ListOfMoves* AllMoves, *LeaveCheck = CreateListOfMoves();
 	if(board == NULL || (color != WHITE && color != BLACK)){
-		return -1;
+		return NULL;
 	}
 	if(color == WHITE && board->WhiteCheck == CHECK){
 		AllMoves = AnalyzePossibleMovementsWhite(board);
@@ -948,12 +979,13 @@ int VerifyCheckMate(TBoard* board, int color){
 			MovePiece(temp, originx, originy, destinyx, destinyy);
 			temp = VerifyCheck(temp, WHITE);
 			if(temp->WhiteCheck != CHECK){
-				return 0;
+				InsertMove(LeaveCheck, originx, originy, destinyx, destinyy);
 			}	
 			AllMoves->current = AllMoves->current->next;
 		}
-		/* Caso nenhum dos movimentos possíveis impeça o xeque */
-		return 1;
+		if(LeaveCheck->howmany != 0){
+			return LeaveCheck;
+		}
 	}
 	else if(color == BLACK && board->BlackCheck == CHECK){
 		AllMoves = AnalyzePossibleMovementsBlack(board);
@@ -968,12 +1000,13 @@ int VerifyCheckMate(TBoard* board, int color){
 			MovePiece(temp, originx, originy, destinyx, destinyy);
 			temp = VerifyCheck(temp, BLACK);
 			if(temp->BlackCheck != CHECK){
-				return 0;
+				InsertMove(LeaveCheck, originx, originy, destinyx, destinyy);
 			}	
 			AllMoves->current = AllMoves->current->next;
 		}
-		/* Caso nenhum dos movimentos possíveis impeça o xeque */
-		return 1;
+		if(LeaveCheck->howmany != 0){
+			return LeaveCheck;			
+		}
 	}
-	return 0;
+	return NULL;
 }

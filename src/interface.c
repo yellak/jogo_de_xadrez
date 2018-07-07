@@ -1244,7 +1244,7 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					if(board->WhiteCheck == CHECK){
 						/* Mostrando que as brancas fizeram xeque */
 						print_message(messages, W_CHECK);
-						if(VerifyCheckMate(board, WHITE) == 1)
+						if(VerifyCheckMate(board, WHITE) == NULL)
 							{
 								print_winner(helpwin, BLACK);
 								if(wanna_save(messages)){
@@ -1263,7 +1263,7 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 						/* Mostrando que as pretas fizeram xeque */
 						print_message(messages, B_CHECK);
 
-						if(VerifyCheckMate(board, BLACK) == 1)
+						if(VerifyCheckMate(board, BLACK) == NULL)
 							{
 								print_winner(helpwin, WHITE);
 								if(wanna_save(messages)){
