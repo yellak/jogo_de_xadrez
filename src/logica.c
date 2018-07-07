@@ -665,22 +665,14 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 
 ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy){
 	char piece;
-	int COLOR_PIECE, COLOR_POSITION, old_howmany;
-//	ListOfMoves* OppositeMoves;
+	int COLOR_PIECE, COLOR_POSITION;
 	if(board == NULL || AllMoves == NULL){
 		return NULL;
 	}
 	/* Determina a cor da peça */
 	piece = WhatPiece(board, originx, originy);
 	COLOR_PIECE = ColorPiece(piece);
-/*
-	old_howmany = AllMoves->howmany;
-	if(COLOR_PIECE == WHITE){
-		OppositeMoves = AnalyzePossibleMovementsBlack(board);
-	}else{
-		OppositeMoves = AnalyzePossibleMovementsWhite(board);
-	}
-*/
+
 	/* Movimentos na horizontal e na vertical */
 	COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy]);
 	if(originx + 1 <= 7 && COLOR_POSITION != COLOR_PIECE){
@@ -853,7 +845,7 @@ int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, i
 	if(piece == W_PAWN){
 		AllMoves = WhitePawnMovements(board, AllMoves, originx, originy);
 	}
-	if(piece == B_PAWN){
+	else if(piece == B_PAWN){
 		AllMoves = BlackPawnMovements(board, AllMoves, originx, originy);
 	}
 	else if(piece == W_HORSE || piece == B_HORSE){

@@ -37,6 +37,7 @@ const int INVALID_BOARD  = 12; /*!< Avisar de tabuleiro inválido */
 const int USE_MOUSE      = 13; /*!< Avisar para usar o mouse */
 const int NOTPIECE       = 14; /*!< Avisar que não há uma peça naquela posição */
 const int CLICK_DESTINY  = 15; /*!< Pedir para clicar no destino */
+const int OUT_RANGE   = 16; /*!< Avisar que o destino está fora do tabuleiro */
 
 /* Constantes para modos de jogo */
 const int PVP      = 1; /*!< Player vs Player */
