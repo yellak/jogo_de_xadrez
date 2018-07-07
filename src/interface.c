@@ -903,6 +903,9 @@ void print_message(WINDOW* messages, int msg)
 		case CLICK_DESTINY:
 			wprintw(messages, "Clique no destino da peça");
 			break;
+		case OUT_RANGE:
+			wprintw(messages, "Posição fora do tabuleiro");
+			break;
 		}
 	
 	wrefresh(messages);
@@ -974,23 +977,30 @@ int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, M
 	int boolean;
 	
 	if(verify_turn(board, movement, turn) == true)
-		{
-			/* Agora é a vez do próximo jogador */
-			turn = change_turn(turn);
-					
+		{			
 			ol = movement->origin[0]; /* origin line */
 			oc = movement->origin[1]; /* origin column */
 			dl = movement->destiny[0]; /* destiny line */
 			dc = movement->destiny[1]; /* destiny column */
-			
-			/* Realizando a jogada */
-			boolean = MovePiece(board, ol, oc, dl, dc);
 
-			if(boolean == 0) /* Jogada válida */
+			if(VerifyValidMovement(board, ol, oc, dl, dc) == 1)
 				{
-					/* Recria o tabuleiro com as novas posições */
-					InitBoard(boardwin, board);
-					wrefresh(boardwin); /* Recarrega o tabuleiro */
+					/* Agora é a vez do próximo jogador */
+					turn = change_turn(turn);
+			
+					/* Realizando a jogada */
+					boolean = MovePiece(board, ol, oc, dl, dc);
+
+					if(boolean == 0) /* Jogada válida */
+						{
+							/* Recria o tabuleiro com as novas posições */
+							InitBoard(boardwin, board);
+							wrefresh(boardwin); /* Recarrega o tabuleiro */
+						}
+					else
+						{
+							print_message(messages, INVALID_MOVE);
+						}
 				}
 			else
 				{
@@ -1040,9 +1050,6 @@ int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, M
 
 			if(verify_turn(board, movement, turn) == true)
 				{
-					/* Mudando a vez do jogador */
-					turn = change_turn(turn);
-
 					/* Avisar para o usuário clicar no destino */
 					print_message(messages, CLICK_DESTINY);
 
@@ -1064,18 +1071,32 @@ int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, M
 					oc = movement->origin[1]; /* origin column */
 					dl = movement->destiny[0]; /* destiny line */
 					dc = movement->destiny[1]; /* destiny column */
-									
-					boolean = MovePiece(board, ol, oc, dl, dc);
 
-					if(boolean == 0) /* Jogada válida */
+					if(VerifyValidMovement(board, ol, oc, dl, dc) == 1)
 						{
-							/* Recria o tabuleiro com as novas posições */
-							InitBoard(boardwin, board);
-							wrefresh(boardwin); /* Recarrega o tabuleiro */
+									
+							boolean = MovePiece(board, ol, oc, dl, dc);
+
+							if(boolean == 0) /* Jogada válida */
+								{
+									/* Recria o tabuleiro com as novas posições */
+									InitBoard(boardwin, board);
+									wrefresh(boardwin); /* Recarrega o tabuleiro */
+
+									/* Mudando a vez do jogador */
+									turn = change_turn(turn);
+								}
+							else
+								{
+									print_message(messages, OUT_RANGE);
+								}
 						}
-					else
+					else /* Movimento não é válido */
 						{
 							print_message(messages, INVALID_MOVE);
+							/* Recarregando o tabuleiro para limpar a sujeira */
+							InitBoard(boardwin, board);
+							wrefresh(boardwin);
 						}
 				}
 			else /* Não é a vez da peça que o usuário tentou mexer */
