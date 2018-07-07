@@ -1301,7 +1301,7 @@ TEST(Test_VerifyCheckMate, Verify_Correct_CheckMate){
 
 }
 
-TEST(Test_VerifyCheckMate, Verify_No_CheckMate){
+TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
 	board->BlackCheck = 1;

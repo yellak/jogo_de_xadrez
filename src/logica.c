@@ -940,6 +940,9 @@ int VerifyCheckMate(TBoard* board, int color){
 			copy_boards(temp, board);
 			MovePiece(temp, originx, originy, destinyx, destinyy);
 			temp = VerifyCheck(temp, WHITE);
+			if(temp->WhiteCheck != CHECK){
+				return 0;
+			}	
 			AllMoves->current = AllMoves->current->next;
 		}
 		return 1;
@@ -955,8 +958,12 @@ int VerifyCheckMate(TBoard* board, int color){
 			copy_boards(temp, board);
 			MovePiece(temp, originx, originy, destinyx, destinyy);
 			temp = VerifyCheck(temp, BLACK);
+			if(temp->BlackCheck != CHECK){
+				return 0;
+			}	
 			AllMoves->current = AllMoves->current->next;
 		}
 		return 1;
 	}
+	return 0;
 }
