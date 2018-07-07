@@ -150,7 +150,7 @@ TEST(Test_SortTree, Verify_DontSucicide){
 	free(tree);
 }
 
-/* Teste para 
+/* Teste para verificar se a IA esolhe matar a peça que vale mais
    	Procedimento:
    	-Inicia-se o tabuleiro
    	-Insere-se uma torre no tabuleiro
@@ -160,7 +160,7 @@ TEST(Test_SortTree, Verify_DontSucicide){
    	-A torre deve escolher matar a rainha ao invés do peão
  */
 
-TEST(Test_SortTree, Verify_PiecePreference1){
+TEST(Test_SortTree, Verify_PiecePreference){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
 	InsertPiece(board, W_QUEEN, 3, 7);
@@ -172,6 +172,40 @@ TEST(Test_SortTree, Verify_PiecePreference1){
 	/* Testar a alocação */
 	EXPECT_EQ(0, SortTree(tree, turn));
 	EXPECT_EQ(-4, tree->root->child[0]->board->Weight);
+	FreeTreeNodes(tree->root);
+	free(tree);
+}
+
+/* Teste para verificar se a IA decide sacrificar uma peça para salvar uma que vale mais
+   	Procedimento:
+   	-Inicia-se o tabuleiro
+   	-Insere-se uma bispo no tabuleiro com 4 peões impedindo seu movimento
+   	-Insere-se uma rainha em uma posição que pode matar o bispo
+   Resultados:
+   	-A função deve retornar 0 no caso de fracasso
+   	-A Ia deve mover o peão de modo que ele se sacrifique para que o bispo não morra
+ */
+
+TEST(Test_SortTree, Verify_PieceSacrifice){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	InsertPiece(board, B_QUEEN, 3, 1);
+	InsertPiece(board, W_PAWN, 2, 4);
+	InsertPiece(board, W_PAWN, 2, 6);
+	InsertPiece(board, W_PAWN, 4, 4);
+	InsertPiece(board, W_PAWN, 4, 6);
+	InsertPiece(board, W_BISHOP, 3, 5);
+	int turn = WHITES_TURN;	
+	Tree* tree = CreateMovesTree(board, turn);
+
+	/* Testar a alocação */
+	EXPECT_EQ(0, SortTree(tree, turn));
+	EXPECT_EQ(-2, tree->root->child[0]->board->Weight);
+	EXPECT_EQ(4, tree->root->child[0]->play->origin[0]);
+	EXPECT_EQ(4, tree->root->child[0]->play->origin[1]);
+	EXPECT_EQ(3, tree->root->child[0]->play->destiny[0]);
+	EXPECT_EQ(4, tree->root->child[0]->play->destiny[1]);
+
 	FreeTreeNodes(tree->root);
 	free(tree);
 }
