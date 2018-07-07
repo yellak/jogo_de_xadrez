@@ -116,8 +116,8 @@ NodeTree* FreeTreeNodes(NodeTree* node){
 
 	if(node->n_child != 0){
 		free(node->child);
+		free(node->board);
 	}
-	free(node->board);
 	free(node);
 	return NULL;
 }

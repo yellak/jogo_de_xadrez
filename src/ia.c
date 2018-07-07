@@ -20,6 +20,7 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 	}
 
 	ListOfMoves* AllMoves, *AllMovesChild;
+	NodeTree* newnode, *newnodechild;
 
 	/* Extraindo a lista de movimentos para a cor certa do jogador atual */
 	if(turn == WHITES_TURN){
@@ -59,8 +60,18 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 		else if(turn == BLACKS_TURN) AllMovesChild = AnalyzePossibleMovementsWhite(boardaux[i]);	
 		
 		/* Alocando o nó da nova jogada */
-		NodeTree* newnode = AlocateNodeTree(AllMovesChild->howmany, boardaux[i], &currentnode->play);
-		AddChildNode(tree->root, newnode, i);
+
+		if(AllMovesChild->howmany == 0){
+			newnode = AlocateNodeTree(1, boardaux[i], &currentnode->play);
+			AddChildNode(tree->root, newnode, i);	
+			newnodechild = AlocateNodeTree(0, newnode->board, newnode->play);
+			AddChildNode(newnode, newnodechild, 0);			
+		}
+
+		else{
+			newnode = AlocateNodeTree(AllMovesChild->howmany, boardaux[i], &currentnode->play);
+			AddChildNode(tree->root, newnode, i);
+		}
 
 		NodeList* currentnodechild = AllMovesChild->first;
 
@@ -75,7 +86,7 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 			MovePiece(boardauxchild[j], currentnodechild->play.origin[0], currentnodechild->play.origin[1], currentnodechild->play.destiny[0], currentnodechild->play.destiny[1]);
 			
 			/* Alocando o nó do filho de newnode */
-			NodeTree* newnodechild = AlocateNodeTree(1, boardauxchild[j], &currentnode->play);
+			NodeTree* newnodechild = AlocateNodeTree(1, boardauxchild[j], &currentnodechild->play);
 			AddChildNode(newnode, newnodechild, j);			
 		}
 		
@@ -121,13 +132,13 @@ int SortTree(Tree* tree, int turn){
 	  	}
 	}
 
-	int n = tree->root->n_child;
-	for (i = 0; i < n; i++){     
-	   	for (j = 0; j < n-i-1; j++){
-	      	if (tree->root->child[j]->child[0]->board->Weight < tree->root->child[j]->child[0]->board->Weight){
-	      		NodeTree* nodeaux = tree->root->child[j]->child[0];
-	      		tree->root->child[j]->child[0] = tree->root->child[j]->child[j + 1];
-	      		tree->root->child[j]->child[j + 1] = nodeaux;
+	for (i = 0; i < n_child; i++){     
+	   	for (j = 0; j < n_child-i-1; j++){
+	      	if(tree->root->child[j]->child[0]->board->Weight < tree->root->child[j]->child[0]->board->Weight){
+	      		printf("passou\n");
+	      		NodeTree* nodeaux = tree->root->child[j];
+	      		tree->root->child[j] = tree->root->child[j + 1];
+	      		tree->root->child[j + 1] = nodeaux;
 	      	}
 	    }
 	}
