@@ -80,11 +80,11 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 		}
 		
 		//free(boardauxchild);
-		DeleteListOfMoves(AllMovesChild);
+		//DeleteListOfMoves(AllMovesChild);
 	}
 
 
-	DeleteListOfMoves(AllMoves);
+	//DeleteListOfMoves(AllMoves);
 
 	return tree;
 }
@@ -137,10 +137,8 @@ int SortTree(Tree* tree, int turn){
 ListOfMoves* Best_Plays(Tree* tree, int n_child) {
 		ListOfMoves* Lista = CreateListOfMoves();
 		int j;
-		Lista->current = Lista->first;
 		for(j=0; j< n_child; j++) {
 			InsertMove(Lista,tree->root->child[j]->play->origin[0],tree->root->child[j]->play->origin[1],tree->root->child[j]->play->destiny[0], tree->root->child[j]->play->destiny[1]);
-			Lista->current = Lista->current->next;	
 		}
 		return Lista;
 }
