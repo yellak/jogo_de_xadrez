@@ -6,6 +6,7 @@
 #include <string.h>
 #include "tabuleiro.h"
 #include "logica.h"
+#include "in-out.h"
 
 /* Tamanho do tabuleiro */
 const int XLIMIT = 8; /*!< Indica o tamanho do eixo Y do tabuleiro  */
@@ -37,7 +38,8 @@ const int INVALID_BOARD  = 12; /*!< Avisar de tabuleiro inválido */
 const int USE_MOUSE      = 13; /*!< Avisar para usar o mouse */
 const int NOTPIECE       = 14; /*!< Avisar que não há uma peça naquela posição */
 const int CLICK_DESTINY  = 15; /*!< Pedir para clicar no destino */
-const int OUT_RANGE   = 16; /*!< Avisar que o destino está fora do tabuleiro */
+const int OUT_RANGE      = 16; /*!< Avisar que o destino está fora do tabuleiro */
+const int SAVED_GAME     = 17; /*!< Avisa que o jogo foi salvo */
 
 /* Constantes para modos de jogo */
 const int PVP      = 1; /*!< Player vs Player */

@@ -171,7 +171,7 @@ int RecoverBoardFromFile(TBoard* board, char* file_name){
 
 	for(int i = 0; i < 8; i++){
 		for(int j = 0; j < 8; j++){
-			board->Board[i][i] = fgetc(fp);
+			board->Board[i][j] = fgetc(fp);
 			/* c serve para pegar os espaços */
 			c = fgetc(fp);
 		}

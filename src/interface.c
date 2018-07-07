@@ -555,7 +555,12 @@ TBoard* CreateNewBoard(void)
 					break;
 					
 				case 'f':
-					finished = true;
+					if(ValidBoard(board)){
+						finished = true;
+					}
+					else{
+						print_message(messages, INVALID_BOARD);
+					}
 					break;
 				}
 		}
@@ -665,6 +670,7 @@ TBoard* MenuGetBoard(void)
 	WINDOW* menu;
 	/* Tabuleiro que será retornado para o módulo principal */
 	TBoard* board;
+	char saved_board[] = "save/board.txt";
 
 	/* Pegando o tamanho do terminal */
 	getmaxyx(stdscr, yMax, xMax);
@@ -736,6 +742,8 @@ TBoard* MenuGetBoard(void)
 			break;
 
 		case SAVED_BOARD:
+			board = AlocateBoard();
+			RecoverBoardFromFile(board, saved_board);
 			break;
 			
 		case NEW_BOARD:
@@ -773,7 +781,7 @@ void write_keys_help(WINDOW* keywin, int wintype)
 		{
 			mvwprintw(keywin, 1, 1, "q-Sair");
 			mvwprintw(keywin, 1, 11, "j-Jogada pela notação");
-			mvwprintw(keywin, 1, 37, "h-Ajuda");
+			mvwprintw(keywin, 1, 37, "s-salvar");
 			mvwprintw(keywin, 1, 48, "d-deletar jogada");
 		}
 	else if(wintype == CREATING) /* Menu de criação de tabuleiro */
@@ -906,6 +914,9 @@ void print_message(WINDOW* messages, int msg)
 		case OUT_RANGE:
 			wprintw(messages, "Posição fora do tabuleiro");
 			break;
+		case SAVED_GAME:
+			wprintw(messages, "Jogo salvo");
+			break;
 		}
 	
 	wrefresh(messages);
@@ -999,7 +1010,7 @@ int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, M
 						}
 					else
 						{
-							print_message(messages, INVALID_MOVE);
+							print_message(messages, OUT_RANGE);
 						}
 				}
 			else
@@ -1147,13 +1158,18 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 	/* Movimento do jogador */
 	Move* movement;
 	/* Inteiro que indicará de quem é a vez de jogar */
-	int turn = WHITES_TURN;
+	int turn = WHITES_TURN, old_turn = BLACKS_TURN;
 	/* Indica qual era o tabuleiro antigo */
 	TBoard* old_board = AlocateBoard();
 	/* Evento de clicar numa tecla do mouse */
 	MEVENT event;
 	/* janela de ajuda */
 	WINDOW* helpwin = MakeHelpWin();
+
+	/* Inicializando variáveis necessárias para salvar o jogo */
+	char txtboard[] = "save/board.txt";
+	char pgnboard[] = "save/board.pgn";
+	ListPastMoves* pastmoves = StartListPM();
 
 	/* Iniciando janela de ajuda */
 	HelpWinPVP(helpwin);
@@ -1173,6 +1189,8 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 			/* Pegar a tecla que o usuário digitar */
 			choice = getch();
 
+			clear_message(messages);
+
 			if(choice == 'j') /* Tecla j - jogada pela notação */
 				{
 					/* Salvando tabuleiro anterior */
@@ -1180,9 +1198,15 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 
 					/* Obtendo o movimento do jogador pela notação */
 					movement = GetMovement(keywin, chess_move);
+					
+					old_turn = turn;
 
 					/* Movendo a peça */
 					turn = UI_MOVE_PIECE(boardwin, messages, board, turn, movement);
+
+					if(turn != old_turn){
+						AddListPM(pastmoves, chess_move);
+					}
 						
 				} /* Choide == j */
 			
@@ -1195,6 +1219,7 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 						{
 							choice = getchar(); /* Verificando se o usuário realmente quer sair */
 							if(choice == 's'){
+								FreeListPM(pastmoves);
 								finished = true; /* Fim de jogo */
 							}
 							else if(choice == 'n'){ /* Ele escolheu continuar */
@@ -1217,6 +1242,8 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 
 			else if(choice == 'd') /* Escolheu deletar última jogada */
 				{
+					/* Removendo a jogada da lista de jogadas já feitas */
+					RemoveLastListPM(pastmoves);
 					/* Copiando o tabuleiro antigo no novo */
 					copy_boards(board, old_board);
 					/* Mudando a vez de quem joga */
@@ -1224,6 +1251,13 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					/* Refazendo o tabuleiro na interface */
 					InitBoard(boardwin, board);
 					wrefresh(boardwin);
+				}
+
+			else if(choice == 's')
+				{
+					SaveBoardFile(board, txtboard); /* Arquivo txt */
+					SavePGNFile(pastmoves, pgnboard); /* Arquivo pgn */
+					print_message(messages, SAVED_GAME);
 				}
 		}  /* while(!finished) */
 } /* Modo PVP */
