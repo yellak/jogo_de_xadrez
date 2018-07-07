@@ -32,6 +32,6 @@ Tree* CreateMovesTree(TBoard *board, int turn);
 */
 int SortTree(Tree* tree, int turn);
 
-NodeList* Best_Plays(Tree* tree, int n_child);
+ListOfMoves* Best_Plays(Tree* tree, int n_child);
 
 #endif
