@@ -3,6 +3,7 @@
 
 const int WHITE = 1;
 const int BLACK = 0;
+const int CHECK = 1;
 
 /* Constantes para as peças do jogo */
 const char W_KING       = 'k';

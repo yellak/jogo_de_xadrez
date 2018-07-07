@@ -1289,6 +1289,7 @@ TEST(Test_VerifyCheckMate, Veirfy_Invalid_Entries){
 TEST(Test_VerifyCheckMate, Verify_Correct_CheckMate){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
+	board->BlackCheck = 1;
 	board->Board[4][4] = B_KING;
 	board->Board[6][5] = W_PAWN;
 	board->Board[6][6] = W_BISHOP;
