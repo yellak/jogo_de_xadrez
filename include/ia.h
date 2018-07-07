@@ -31,4 +31,7 @@ Tree* CreateMovesTree(TBoard *board, int turn);
 		\return Inteiro indicando sucesso(0) ou fracasso(1) da operação
 */
 int SortTree(Tree* tree, int turn);
+
+NodeList* Best_Plays(Tree* tree, int n_child);
+
 #endif
