@@ -119,6 +119,11 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 */
 int SortTree(Tree* tree, int turn){
 
+		/* Assertivas de entrada */
+	if(tree == NULL || turn > 1 || turn < 0){
+		return 1;
+	}
+
 	int n_child = tree->root->n_child;
 	int i, j, k;
 

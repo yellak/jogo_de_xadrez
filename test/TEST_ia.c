@@ -103,6 +103,26 @@ TEST(Test_SortTree, Verify_SortTree){
 	FreeTreeNodes(tree->root);
 	free(tree);
 }
+
+/* Teste para verificar se a função de ordenar a árvore retorna o valor esperado quando a entrada é inválida
+   Procedimento: 
+   	-Inicia-se o tabuleiro como nulo e o turno como maior que 1 (entradas inválidas)
+   	-Cria-se a árvore com os movimentos
+   Resultados:
+   	-A função deve retornar 0 no caso de fracasso
+ */
+
+TEST(Test_SortTree, Verify_InvalidValues_SortTree){
+
+	/* Entradas inválidas */
+	TBoard* board = NULL;
+	int turn = 5;
+	Tree* tree = CreateMovesTree(board, turn);
+
+	/* Testar a alocação */
+	EXPECT_EQ(1, SortTree(tree, turn));
+}
+
 /* Teste para verificar se a lista contendo todas as jogada ordenadas está sendo criada de maneira adequada
 - Inicia-se a árvore com jogadas, usando apenas um peão no tabuleiro;
 - Inicia-se a lista para criação;
