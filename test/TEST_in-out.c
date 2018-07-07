@@ -17,6 +17,9 @@ TEST(Test_Verify_Start_List, Verify_Funcionality){
 	EXPECT_TRUE(list->head != NULL);
 	EXPECT_EQ(NULL, list->head->next);
 	EXPECT_EQ(list->head, list->last);
+
+	free(list->head);
+	free(list);
 }
 
 /* Teste para verificar a função de adicionar um item para entradas inválidas.
