@@ -86,7 +86,8 @@ TEST(Test_CreateMovesTree, Verify_Root_Information){
    	-Inicializa-se a variável turno como turno do branco
    	-Cria-se a árvore com os movimentos
    Resultados:
-   	-A função deve retornar 1 no caso de sucesso
+   	-A função deve retornar 0 no caso de sucesso
+   	-A melhor jogada que está contida no primeiro nó deve ser aquela em que o bispo come o peão
  */
 
 TEST(Test_SortTree, Verify_SortTree){
@@ -109,7 +110,7 @@ TEST(Test_SortTree, Verify_SortTree){
    	-Inicia-se o tabuleiro como nulo e o turno como maior que 1 (entradas inválidas)
    	-Cria-se a árvore com os movimentos
    Resultados:
-   	-A função deve retornar 0 no caso de fracasso
+   	-A função deve retornar 1 no caso de fracasso
  */
 
 TEST(Test_SortTree, Verify_InvalidValues_SortTree){
@@ -121,6 +122,32 @@ TEST(Test_SortTree, Verify_InvalidValues_SortTree){
 
 	/* Testar a alocação */
 	EXPECT_EQ(1, SortTree(tree, turn));
+}
+
+/* Teste para verificar se a IA deixa de capturar uma peça para não morrer
+   	Procedimento:
+   	-Inicia-se o tabuleiro
+   	-Insere-se ũm cavalo,um peão em uma posição que o cavalo possa matar
+   	-Insere-se uma torre em uma posição que ela possa matar o cavalo caso ele coma o peão
+   Resultados:
+   	-A função deve retornar 0 no caso de fracasso
+   	-O cavalo não deve matar o peão e o peso do tabuleiro deve se manter igual
+ */
+
+TEST(Test_SortTree, Verify_DontSucicide){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	InsertPiece(board, B_HORSE, 2, 3);
+	InsertPiece(board, W_PAWN, 4, 4);
+	InsertPiece(board, W_TOWER, 4, 1);
+	int turn = BLACKS_TURN;
+	Tree* tree = CreateMovesTree(board, turn);
+
+	/* Testar a alocação */
+	EXPECT_EQ(0, SortTree(tree, turn));
+	EXPECT_EQ(3, tree->root->child[0]->board->Weight);
+	FreeTreeNodes(tree->root);
+	free(tree);
 }
 
 /* Teste para verificar se a lista contendo todas as jogada ordenadas está sendo criada de maneira adequada
