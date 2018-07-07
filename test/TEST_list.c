@@ -161,6 +161,8 @@ TEST(Test_SearchListOfMoves, Verify_Succesfull_Search){
 	InsertMove(list, 1, 2, 3, 4);
 
 	EXPECT_EQ(0, SearchListOfMoves(list, 1, 2, 3, 4));
+
+	DeleteListOfMoves(list);
 }
 
 /* Teste para verificar a se ao buscar um movimento que não está na lista retorna 1
@@ -180,6 +182,8 @@ TEST(Test_SearchListOfMoves, Verify_Failure_Search){
 	InsertMove(list, 1, 1, 2, 3);
 
 	EXPECT_EQ(1, SearchListOfMoves(list, 1, 2, 3, 4));
+
+	DeleteListOfMoves(list);
 }
 
 int main(int argc, char **argv){
