@@ -86,7 +86,8 @@ TEST(Test_CreateMovesTree, Verify_Root_Information){
    	-Inicializa-se a variável turno como turno do branco
    	-Cria-se a árvore com os movimentos
    Resultados:
-   	-A função deve retornar 1 no caso de sucesso
+   	-A função deve retornar 0 no caso de sucesso
+   	-A melhor jogada que está contida no primeiro nó deve ser aquela em que o bispo come o peão
  */
 
 TEST(Test_SortTree, Verify_SortTree){
@@ -103,6 +104,112 @@ TEST(Test_SortTree, Verify_SortTree){
 	FreeTreeNodes(tree->root);
 	free(tree);
 }
+
+/* Teste para verificar se a função de ordenar a árvore retorna o valor esperado quando a entrada é inválida
+   Procedimento: 
+   	-Inicia-se o tabuleiro como nulo e o turno como maior que 1 (entradas inválidas)
+   	-Cria-se a árvore com os movimentos
+   Resultados:
+   	-A função deve retornar 1 no caso de fracasso
+ */
+
+TEST(Test_SortTree, Verify_InvalidValues_SortTree){
+
+	/* Entradas inválidas */
+	TBoard* board = NULL;
+	int turn = 5;
+	Tree* tree = CreateMovesTree(board, turn);
+
+	/* Testar a alocação */
+	EXPECT_EQ(1, SortTree(tree, turn));
+}
+
+/* Teste para verificar se a IA deixa de capturar uma peça para não morrer
+   	Procedimento:
+   	-Inicia-se o tabuleiro
+   	-Insere-se ũm cavalo,um peão em uma posição que o cavalo possa matar
+   	-Insere-se uma torre em uma posição que ela possa matar o cavalo caso ele coma o peão
+   Resultados:
+   	-A função deve retornar 0 no caso de fracasso
+   	-O cavalo não deve matar o peão e o peso do tabuleiro deve se manter igual
+ */
+
+TEST(Test_SortTree, Verify_DontSucicide){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	InsertPiece(board, B_HORSE, 2, 3);
+	InsertPiece(board, W_PAWN, 4, 4);
+	InsertPiece(board, W_TOWER, 4, 1);
+	int turn = BLACKS_TURN;
+	Tree* tree = CreateMovesTree(board, turn);
+
+	/* Testar a alocação */
+	EXPECT_EQ(0, SortTree(tree, turn));
+	EXPECT_EQ(3, tree->root->child[0]->board->Weight);
+	FreeTreeNodes(tree->root);
+	free(tree);
+}
+
+/* Teste para verificar se a IA esolhe matar a peça que vale mais
+   	Procedimento:
+   	-Inicia-se o tabuleiro
+   	-Insere-se uma torre no tabuleiro
+   	-Insere-se uma rainha e um peão em posições que a torre possa matar
+   Resultados:
+   	-A função deve retornar 0 no caso de fracasso
+   	-A torre deve escolher matar a rainha ao invés do peão
+ */
+
+TEST(Test_SortTree, Verify_PiecePreference){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	InsertPiece(board, W_QUEEN, 3, 7);
+	InsertPiece(board, B_TOWER, 3, 4);
+	InsertPiece(board, W_PAWN, 3, 0);
+	int turn = BLACKS_TURN;
+	Tree* tree = CreateMovesTree(board, turn);
+
+	/* Testar a alocação */
+	EXPECT_EQ(0, SortTree(tree, turn));
+	EXPECT_EQ(-4, tree->root->child[0]->board->Weight);
+	FreeTreeNodes(tree->root);
+	free(tree);
+}
+
+/* Teste para verificar se a IA decide sacrificar uma peça para salvar uma que vale mais
+   	Procedimento:
+   	-Inicia-se o tabuleiro
+   	-Insere-se uma bispo no tabuleiro com 4 peões impedindo seu movimento
+   	-Insere-se uma rainha em uma posição que pode matar o bispo
+   Resultados:
+   	-A função deve retornar 0 no caso de fracasso
+   	-A Ia deve mover o peão de modo que ele se sacrifique para que o bispo não morra
+ */
+
+TEST(Test_SortTree, Verify_PieceSacrifice){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	InsertPiece(board, B_QUEEN, 3, 1);
+	InsertPiece(board, W_PAWN, 2, 4);
+	InsertPiece(board, W_PAWN, 2, 6);
+	InsertPiece(board, W_PAWN, 4, 4);
+	InsertPiece(board, W_PAWN, 4, 6);
+	InsertPiece(board, W_BISHOP, 3, 5);
+	int turn = WHITES_TURN;	
+	Tree* tree = CreateMovesTree(board, turn);
+
+	/* Testar a alocação */
+	EXPECT_EQ(0, SortTree(tree, turn));
+	EXPECT_EQ(-2, tree->root->child[0]->board->Weight);
+	EXPECT_EQ(4, tree->root->child[0]->play->origin[0]);
+	EXPECT_EQ(4, tree->root->child[0]->play->origin[1]);
+	EXPECT_EQ(3, tree->root->child[0]->play->destiny[0]);
+	EXPECT_EQ(4, tree->root->child[0]->play->destiny[1]);
+
+	FreeTreeNodes(tree->root);
+	free(tree);
+}
+
 /* Teste para verificar se a lista contendo todas as jogada ordenadas está sendo criada de maneira adequada
 - Inicia-se a árvore com jogadas, usando apenas um peão no tabuleiro;
 - Inicia-se a lista para criação;

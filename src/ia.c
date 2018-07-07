@@ -30,7 +30,7 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 	else if(turn == BLACKS_TURN){
 		AllMoves = AnalyzePossibleMovementsBlack(board);
 	}
-	/* Inicializando o movimento da raiz */
+	/* Inicializando o movimento da raiz como zero */
 	Move play;
 	play.origin[0] = 0;
 	play.origin[1] = 0;
@@ -40,11 +40,12 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 	/* Alocando a raíz da árvore */
 	Tree* tree = AlocateTree();
 	tree->root = AlocateNodeTree(AllMoves->howmany, board, &play);
-
-	NodeList* currentnode = AllMoves->first;
 	
+	/* Vetor de tabuleiros auxiliares */
 	TBoard** boardaux = (TBoard**) malloc(AllMoves->howmany*sizeof(TBoard*)); 
+	NodeList* currentnode = AllMoves->first;
 
+	/* Loop para cada um dos filhos da raiz */
 	for(int i = 0 ; i < tree->root->n_child; i++, currentnode = currentnode->next){
 
 		/* Tabuleiro auxiliar para armazenar a nova jogada */
@@ -61,6 +62,8 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 		
 		/* Alocando o nó da nova jogada */
 
+		/* Caso não haja uma próxima jogada depois do nó atual, apenas copiamos o seu tabuleiro  */
+		/* e o seu movimento para o seu filho para facilitar na hora de ordenar a árvore        */
 		if(AllMovesChild->howmany == 0){
 			newnode = AlocateNodeTree(1, boardaux[i], &currentnode->play);
 			AddChildNode(tree->root, newnode, i);	
@@ -68,6 +71,7 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 			AddChildNode(newnode, newnodechild, 0);			
 		}
 
+		/* Caso exista uma próxima jogada, apenas aloca-se o espaço para ela */
 		else{
 			newnode = AlocateNodeTree(AllMovesChild->howmany, boardaux[i], &currentnode->play);
 			AddChildNode(tree->root, newnode, i);
@@ -76,6 +80,8 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 		NodeList* currentnodechild = AllMovesChild->first;
 
 		TBoard** boardauxchild = (TBoard**) malloc(AllMovesChild->howmany*sizeof(TBoard*)); 
+
+		/* Loop para percorrer cada um dos filhos dos filhos para inserir as jogadas seguintes */
 		for(int j = 0; j < AllMovesChild->howmany; j++, currentnodechild = currentnodechild->next){
 
 			/* Outro tabuleiro auxiliar para criar os filhos do newnode */
@@ -113,38 +119,80 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 */
 int SortTree(Tree* tree, int turn){
 
+		/* Assertivas de entrada */
+	if(tree == NULL || turn > 1 || turn < 0){
+		return 1;
+	}
+
 	int n_child = tree->root->n_child;
 	int i, j, k;
 
-	/*Loop para cada um dos filhos dos filhos da raiz*/
-	for (k = 0; k < n_child; k++){
-		int n = tree->root->child[k]->n_child;
+	/* Caso seja turno dos brancos, ordena-se o primeiro sub-nível para que o primeiro filho seja a 
+		melhor jogada do branco e o segundo sub-nível a melhor jogada do preto */
+	if(turn == WHITES_TURN){
 
-		/* Loop para ordenar os nós filhos de um nó */
-		for (i = 0; i < n; i++){     
-	   		for (j = 0; j < n-i-1; j++){
-	      		if (tree->root->child[k]->child[j]->board->Weight > tree->root->child[k]->child[j+1]->board->Weight){
-	      			NodeTree* nodeaux = tree->root->child[k]->child[j];
-	      			tree->root->child[k]->child[j] = tree->root->child[k]->child[j + 1];
-	      			tree->root->child[k]->child[j + 1] = nodeaux;
-	      		}
-	    	}
-	  	}
+		/* Loop para ordenar o segundo sub-nível de cada nó do primeiro sub-nível*/
+		for (k = 0; k < n_child; k++){
+			int n = tree->root->child[k]->n_child;
+
+			for (i = 0; i < n; i++){     
+		   		for (j = 0; j < n-i-1; j++){
+		      		if(tree->root->child[k]->child[j]->board->Weight > tree->root->child[k]->child[j+1]->board->Weight){
+		      			NodeTree* nodeaux = tree->root->child[k]->child[j];
+		      			tree->root->child[k]->child[j] = tree->root->child[k]->child[j + 1];
+		      			tree->root->child[k]->child[j + 1] = nodeaux;
+		      		}
+		    	}
+		  	}
+		}
+
+		/* Loop para ordenar o primeiro sub-nível em função do primeiro filho ordenado anteriormente*/
+		for (i = 0; i < n_child; i++){     
+		   	for (j = 0; j < n_child-i-1; j++){
+
+		      	if(tree->root->child[j]->child[0]->board->Weight < tree->root->child[j + 1]->child[0]->board->Weight){
+		      		NodeTree* nodeaux = tree->root->child[j];
+		      		tree->root->child[j] = tree->root->child[j + 1];
+		      		tree->root->child[j + 1] = nodeaux;
+		      	}
+		    }
+		}
 	}
 
-	for (i = 0; i < n_child; i++){     
-	   	for (j = 0; j < n_child-i-1; j++){
-	      	if(tree->root->child[j]->child[0]->board->Weight < tree->root->child[j]->child[0]->board->Weight){
-	      		printf("passou\n");
-	      		NodeTree* nodeaux = tree->root->child[j];
-	      		tree->root->child[j] = tree->root->child[j + 1];
-	      		tree->root->child[j + 1] = nodeaux;
-	      	}
-	    }
-	}
+	/* Caso seja turno dos pretos, ordena-se o primeiro sub-nível para que o primeiro filho seja a 
+		melhor jogada do preto e o segundo sub-nível a melhor jogada do branco */
+	else if(turn == BLACKS_TURN){
 
+		/* Loop para ordenar o segundo sub-nível de cada nó do primeiro sub-nível*/
+		for (k = 0; k < n_child; k++){
+			int n = tree->root->child[k]->n_child;
+
+			for (i = 0; i < n; i++){     
+		   		for (j = 0; j < n-i-1; j++){
+		      		if(tree->root->child[k]->child[j]->board->Weight < tree->root->child[k]->child[j+1]->board->Weight){
+		      			NodeTree* nodeaux = tree->root->child[k]->child[j];
+		      			tree->root->child[k]->child[j] = tree->root->child[k]->child[j + 1];
+		      			tree->root->child[k]->child[j + 1] = nodeaux;
+		      		}
+		    	}
+		  	}
+		}
+
+		/* Loop para ordenar o primeiro sub-nível em função do primeiro filho ordenado anteriormente*/
+		for (i = 0; i < n_child; i++){     
+		   	for (j = 0; j < n_child-i-1; j++){
+
+		      	if(tree->root->child[j]->child[0]->board->Weight > tree->root->child[j + 1]->child[0]->board->Weight){
+		      		NodeTree* nodeaux = tree->root->child[j];
+		      		tree->root->child[j] = tree->root->child[j + 1];
+		      		tree->root->child[j + 1] = nodeaux;
+		      	}
+		    }
+		}	
+	}
 	return 0;
 }
+
 ListOfMoves* Best_Plays(Tree* tree, int n_child) {
 		ListOfMoves* Lista = CreateListOfMoves();
 		int j;

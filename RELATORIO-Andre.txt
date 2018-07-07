@@ -6,7 +6,8 @@ Data  |Horas Trabalhadas |Tipo Tarefa           |Descrição da Tarefa Realizada
 01/07 |4 horas           |Reunião com o grupo   |Decisão de coisas finais para o trabalho e divisão de trabalho.
 02/07 |5 horas           |Módulo in-out.        |Criacao da lista de movimentos passados
 06/07 |1 hora            |Módulo tabuleiro      |Atualizar função de mover peça e testes para funcionar com o roque.
-0
 06/07 |0.5 horas         |Cobertura e makefile  |Atualizar makefile para funcionar com o gcov e fazer os teste de cobertura.
-06/07 |2.5 hora            |Verificação do código |Procura de erros e de vazamentos de memória.
-06/07 |6 horas           |Reunião do grupo      |Decidir coisas finais do trabalho e grupo de ajuda
+06/07 |2.5 horas         |Verificação do código |Procura de erros e de vazamentos de memória.
+06/07 |6 horas           |Reunião do grupo      |Decidir coisas finais do trabalho e grupo de ajuda.
+07/07 |2 horas           |Adição de comentários |Adicionar comentários estruturais e do doxygen no módulo de tabuleiro.
+07/07 |2.5 horas         |Revisão do código     |Melhoria de funções e testes do módulo tabuleiro, correção de vazamentos de memória e aumento da cobertura dos testes.
