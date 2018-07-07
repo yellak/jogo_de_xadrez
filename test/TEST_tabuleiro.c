@@ -1036,6 +1036,18 @@ TEST(Valid_piece, Other_chars)
 	EXPECT_EQ(false, valid_piece(','));
 }
 
+/* Teste para a função de verificar um tabuleiro mínimo para um tabuleiro nulo
+   Procedimentos:
+   - Chamar a função para um tabuleiro nulo
+
+   Resultados:
+   - Espera-se que a função retorne o valor -1 */
+TEST(MinimumChessBoard, NULL_Board)
+{
+	/* Testando para tabuleiro nulo */
+	EXPECT_EQ(-1, HaveMinimun(NULL));
+}
+
 /* Teste para a função de verificar um tabuleiro mínimo 
    Procedimentos:
    - Chamar a função para um tabuleiro vazio
@@ -1102,6 +1114,11 @@ TEST(MinimumChessBoard, BoardWithOtherPieces)
 
 	/* Dois reis da mesma cor */
 	board->Board[5][4] = B_KING;
+	board->Board[2][2] = BLANK;
+	EXPECT_EQ(false, HaveMinimun(board));
+
+	board->Board[5][4] = W_KING;
+	board->Board[1][4] = W_KING;
 	board->Board[2][2] = BLANK;
 	EXPECT_EQ(false, HaveMinimun(board));
 
