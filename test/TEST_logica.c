@@ -760,9 +760,9 @@ TEST(Test_BlackPawnMovements, Verify_Movements_RivalPieces){
 	BlackPawnMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(5, AllPlays2->howmany);
 
-	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
 TEST(Test_HorseMovements, Verify_Movements_RivalPieces){
@@ -790,9 +790,9 @@ TEST(Test_HorseMovements, Verify_Movements_RivalPieces){
 	HorseMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(8, AllPlays2->howmany);
 
-	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
 /* Teste para verificar a função de movimento da torre na diferenciação de peças aliadas
@@ -832,9 +832,9 @@ TEST(Test_TowerMovements, Verify_Movements_RivalPieces){
 	TowerMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(4, AllPlays2->howmany);
 
-	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
 
@@ -873,9 +873,9 @@ TEST(Test_BishopMovements, Verify_Movements_RivalPieces){
 	BishopMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(4, AllPlays2->howmany);
 
-	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
 
@@ -972,9 +972,9 @@ TEST(Test_KingMovements, Verify_Movements_RivalPieces){
 	KingMovements(board, AllPlays2, 4, 4);
 	EXPECT_EQ(8, AllPlays2->howmany);
 
-	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
+	free(board);
 }
 
  /* Testa o adição do movimento de roque */
@@ -1009,10 +1009,10 @@ TEST(Test_KingMovements, Verify_Addict_Roque_Movement){
  	KingMovements(board2, AllPlays2, 7, 4);
  	EXPECT_EQ(7, AllPlays2->howmany);
 
- 	free(board);
- 	free(board2);
  	DeleteListOfMoves(AllPlays2);
  	DeleteListOfMoves(AllPlays);
+ 	free(board);
+ 	free(board2);
 }
 
 TEST(Test_AllMovements, Verify_NULL_Board){
@@ -1067,6 +1067,7 @@ TEST(Test_VerifyValidMovement,  Veirfy_Invalid_Entries){
 	EXPECT_EQ(-1, VerifyValidMovement(board1, 4, 4, 5, 4));
 	/* Testa para tabuleiro válido e coordenadas inválidas (sem peça) */
 	EXPECT_EQ(-1, VerifyValidMovement(board2, 4, 4, 5, 4));
+	free(board2);
 	
 }
 
@@ -1086,6 +1087,7 @@ TEST(Test_VerifyValidMovement, Verify_Valid_Movements){
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 4, 1, 4));
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 5, 1, 5));
 	EXPECT_EQ(1, VerifyValidMovement(board, 0, 6, 2, 7));
+	free(board);
 }
 
 TEST(Test_VerifyValidMovement, Verify_Invalid_Movements){
@@ -1119,6 +1121,7 @@ TEST(Test_VerifyValidMovement, Verify_Invalid_Movements){
 	EXPECT_EQ(0, VerifyValidMovement(board, 0, 4, 1, 4));
 	EXPECT_EQ(0, VerifyValidMovement(board, 0, 5, 1, 5));
 	EXPECT_EQ(0, VerifyValidMovement(board, 0, 6, 2, 7));
+	free(board);
 }
 
 /* Teste para verificar a função de verificação de xeque funciona corretamente com um
