@@ -22,9 +22,13 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 	ListOfMoves* AllMoves, *AllMovesChild;
 
 	/* Extraindo a lista de movimentos para a cor certa do jogador atual */
-	if(turn == WHITES_TURN) AllMoves = AnalyzePossibleMovementsWhite(board);
-	else if(turn == BLACKS_TURN) AllMoves = AnalyzePossibleMovementsBlack(board);
-	
+	if(turn == WHITES_TURN){
+	 	AllMoves = AnalyzePossibleMovementsWhite(board);
+	}
+
+	else if(turn == BLACKS_TURN){
+		AllMoves = AnalyzePossibleMovementsBlack(board);
+	}
 	/* Inicializando o movimento da raiz */
 	Move play;
 	play.origin[0] = 0;
@@ -35,14 +39,15 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 	/* Alocando a raíz da árvore */
 	Tree* tree = AlocateTree();
 	tree->root = AlocateNodeTree(AllMoves->howmany, board, &play);
-	
 
 	NodeList* currentnode = AllMoves->first;
+
+	TBoard boardaux, boardauxchild;
 
 	for(int i = 0 ; i < tree->root->n_child; i++, currentnode = currentnode->next){
 
 		/* Tabuleiro auxiliar para armazenar a nova jogada */
-		TBoard boardaux = *board;
+		copy_boards(&boardaux, board);
 
 		/* Movimenta-se a peça no tabuleiro auxiliar de acordo com a jogada da lista de jogadas*/
 		MovePiece(&boardaux, currentnode->play.origin[0], currentnode->play.origin[1], currentnode->play.destiny[0], currentnode->play.destiny[1]);
@@ -61,7 +66,7 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 		for(int j = 0; j < AllMovesChild->howmany; j++, currentnodechild = currentnodechild->next){
 
 			/* Outro tabuleiro auxiliar para criar os filhos do newnode */
-			TBoard boardauxchild = boardaux;
+			copy_boards(&boardauxchild, &boardaux);
 
 			/* Movimenta-se a peça no tabuleiro de arcordo com a configuração do tabuleiro de newnode */
 			MovePiece(&boardauxchild, currentnodechild->play.origin[0], currentnodechild->play.origin[1], currentnodechild->play.destiny[0], currentnodechild->play.destiny[1]);
