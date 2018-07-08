@@ -1677,7 +1677,7 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 	ListOfMoves* possiblemoves;
 	ListOfMoves* auxilary;
 	int ol, oc, dl, dc; /* Para indicar para onde o pc vai mexer */
-	int aux_color;
+	int aux_color, mate = false;
 	int player_moved = false;
 
 	/* Variáveis para salvar o jogo */
@@ -1735,7 +1735,8 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					if(board->WhiteCheck == CHECK){
 						/* Mostrando que as brancas fizeram xeque */
 						print_message(messages, W_CHECK);
-						if(VerifyCheckMate(board, WHITE) == NULL)
+						auxilary = VerifyCheckMate(board, WHITE);
+						if(auxilary == NULL)
 							{
 								print_winner(helpwin, BLACK);
 								if(wanna_save(messages)){
@@ -1745,6 +1746,10 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 								}
 								break;
 							} /* if(VerifyCheckMate...) */
+						else
+							{
+								DeleteListOfMoves(auxilary);
+							}
 					} /* if(board->whi..) */
 				}
 			else /* Vez das pretas */
@@ -1753,8 +1758,8 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					if(board->BlackCheck == CHECK){
 						/* Mostrando que as pretas fizeram xeque */
 						print_message(messages, B_CHECK);
-
-						if(VerifyCheckMate(board, BLACK) == NULL)
+						auxilary = VerifyCheckMate(board, BLACK);
+						if(auxilary == NULL)
 							{
 								print_winner(helpwin, WHITE);
 								if(wanna_save(messages)){
@@ -1763,6 +1768,10 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 									print_message(messages, SAVED_GAME);
 								}
 								break;
+							}
+						else
+							{
+								DeleteListOfMoves(auxilary);
 							}
 					} /* if(board->Blac...) */
 				}
@@ -1778,8 +1787,6 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 
 			if(choice == 'j')
 				{
-					player_moved = false;
-					
 					/* Guardando ponteiro para o tabuleiro anterior */
 					copy_boards(old_board, board);
 
@@ -1794,28 +1801,18 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					if(turn != old_turn)
 						{
 							AddListPM(pastmoves, chess_move);
-							player_moved = true;
 						}
 				} /* choice == j */
 
 			else if(choice == KEY_MOUSE)
-				{
-					player_moved = false;
-					
+				{	
 					/* Guardando o tabuleiro anterior */
 					copy_boards(old_board, board);
-
-					old_turn = turn;
 
 					if(getmouse(&event) == OK)
 						{
 							/* Fazendo o movimento para o mouse */
 							turn = UI_MOUSE_MOVE(boardwin, messages, board, turn, event, pastmoves);
-						}
-
-					if(turn != old_turn)
-						{
-							player_moved = true;
 						}
 				} /* KEY_MOUSE */
 
@@ -1864,11 +1861,23 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 			else{
 				aux_color = BLACK;
 			}
-			if(player_moved == true){
-				auxilary = VerifyCheckMate(board, aux_color);
-			}
 
-			if(turn == machine && auxilary != NULL)
+
+			board = VerifyCheck(board, aux_color);
+			if((board->WhiteCheck == CHECK) || (board->BlackCheck == CHECK))
+				{
+					auxilary = VerifyCheckMate(board, aux_color);
+					if(auxilary == NULL)
+						{
+							mate = true;
+						}
+					else
+						{
+							DeleteListOfMoves(auxilary);
+						}
+				}
+			
+			if((turn == machine) && (mate == false))
 				{
 					/* Fazendo o movimento do computador */
 					decisions = CreateMovesTree(board, turn);
@@ -1900,11 +1909,5 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					free(decisions);
 					DeleteListOfMoves(possiblemoves);
 				}
-
-			/* 
-			 * if(auxilary != NULL){
-			 * 	DeleteListOfMoves(auxilary);
-			 * }
-			 */
 		} /* while(!finished) */
 } /* play_pve() */
