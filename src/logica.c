@@ -1076,7 +1076,7 @@ ListOfMoves* VerifyCheckMate(TBoard* board, int color){
 		return NULL;
 	}
 	TBoard* temp = AlocateBoard();
-	ListOfMoves* AllMoves;
+	ListOfMoves* AllMoves = NULL;
 	ListOfMoves *LeaveCheck = CreateListOfMoves();
 	if(color == WHITE && board->WhiteCheck == CHECK){
 		AllMoves = AnalyzePossibleMovementsWhite(board);
