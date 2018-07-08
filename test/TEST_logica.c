@@ -396,7 +396,15 @@ TEST(Algebraic_translation, Unnamed_movement)
 	free(expect_move);
 }
 
-
+/* Testes para verificar o retorno da função de movimento do peão branco para parametros nulos.
+   Procedimentos:
+   -Criar um tabuleiro nulo e um não nulo.
+   -Criar uma lista de movimentos nula e uma não nula.
+   -Chamar função para tabuleiro nulo e lista não nula.
+   -Chamar a função para tabuleiro não nulo e lista nula.
+   Resultados:
+   -É esperado que a função retorne NULL para ambos os casos.
+*/
 TEST(Test_WhitePawnMovements, Verify_NULL_Variables){
 	TBoard* board_null = NULL;
 	TBoard* board = AlocateBoard();
@@ -412,6 +420,15 @@ TEST(Test_WhitePawnMovements, Verify_NULL_Variables){
 	free(board);
 }
 
+/* Testes para verificar o retorno da função de movimento do peão preto para parametros nulos.
+   Procedimentos:
+   -Criar um tabuleiro nulo e um não nulo.
+   -Criar uma lista de movimentos nula e uma não nula.
+   -Chamar função para tabuleiro nulo e lista não nula.
+   -Chamar a função para tabuleiro não nulo e lista nula.
+   Resultados:
+   -É esperado que a função retorne NULL para ambos os casos.
+*/
 TEST(Test_BlackPawnMovements, Verify_NULL_Variables){
 	TBoard* board_null = NULL;
 	TBoard* board = AlocateBoard();
@@ -427,6 +444,15 @@ TEST(Test_BlackPawnMovements, Verify_NULL_Variables){
 	free(board);
 }
 
+/* Testes para verificar o retorno da função de movimento do cavalo para parametros nulos.
+   Procedimentos:
+   -Criar um tabuleiro nulo e um não nulo.
+   -Criar uma lista de movimentos nula e uma não nula.
+   -Chamar função para tabuleiro nulo e lista não nula.
+   -Chamar a função para tabuleiro não nulo e lista nula.
+   Resultados:
+   -É esperado que a função retorne NULL para ambos os casos.
+*/
 TEST(Test_HorseMovements, Verify_NULL_Variables){
 	TBoard* board_null = NULL;
 	TBoard* board = AlocateBoard();
@@ -537,7 +563,14 @@ TEST(Test_KingMovements, Verify_NULL_Variables){
 	free(board);
 }
 
-
+/* Teste para verificar a função de movimento do peão branco para um tabuleiro vazio.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir um peão branco na posição (6,5) e em (4,4) no tabuleiro.
+   -Chamar a função para essa posição.
+   Resultados:
+   -É esperado que a lista de movimentos retornada possua 2/1 movimentos.
+*/
 TEST(Test_WhitePawnMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -557,6 +590,14 @@ TEST(Test_WhitePawnMovements, Verify_Movements_EmptyBoard){
 	free(board);
 }
 
+/* Teste para verificar a função de movimento do peão preto para um tabuleiro vazio.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir um peão branco na posição (1,5) e em (4,4) no tabuleiro.
+   -Chamar a função para essa posição.
+   Resultados:
+   -É esperado que a lista de movimentos retornada possua 2/1 movimentos.
+*/
 TEST(Test_BlackPawnMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -576,6 +617,14 @@ TEST(Test_BlackPawnMovements, Verify_Movements_EmptyBoard){
 	free(board);
 }
 
+/* Teste para verificar a função de movimento do cavalo para um tabuleiro vazio.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir um peão branco na posição (4,4) no tabuleiro.
+   -Chamar a função para essa posição.
+   Resultados:
+   -É esperado que a lista de movimentos retornada possua 8 movimentos.
+*/
 TEST(Test_HorseMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -603,7 +652,6 @@ TEST(Test_HorseMovements, Verify_Movements_EmptyBoard){
    Resultados:
    -É esperado que a lista de movimentos retornada possua 14 movimentos.
 */
-
 TEST(Test_TowerMovements, Verify_Movements_EmptyBoard){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -707,6 +755,19 @@ TEST(Test_KingMovements, Verify_Movements_EmptyBoard){
 	free(board);
 }
 
+/* Teste para verificar a função de movimento do peão branco na diferenciação de peças aliadas
+e oponentes.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir um peão branco na posição (4,4) no tabuleiro.
+   -Inserir peças da mesma cor nas posições para onde o pẽao poderia se mover.
+   -Chamar a função para a posição do peão branco.
+   -Inserir peças de cor diferente nas posições para onde o peão poderia se mover.
+   -Chamar a funça para a posição do peão branco.
+   Resultados:
+   -É esperado que a primeira chamada da função retorne uma lista de movimentos com 0 movimentos.
+   -É esperado que a segunda chamada da função retorne uma lista de movimentos com 3 movimentos.
+*/
 TEST(Test_WhitePawnMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -729,13 +790,26 @@ TEST(Test_WhitePawnMovements, Verify_Movements_RivalPieces){
 	board->Board[5][3] = B_TOWER;
 
 	WhitePawnMovements(board, AllPlays2, 4, 4);
-	EXPECT_EQ(5, AllPlays2->howmany);
+	EXPECT_EQ(3, AllPlays2->howmany);
 
 	free(board);
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
 }
 
+/* Teste para verificar a função de movimento do peão preto na diferenciação de peças aliadas
+e oponentes.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir um peão preto na posição (4,4) no tabuleiro.
+   -Inserir peças da mesma cor nas posições para onde o pẽao poderia se mover.
+   -Chamar a função para a posição do peão preto.
+   -Inserir peças de cor diferente nas posições para onde o peão poderia se mover.
+   -Chamar a funça para a posição do peão preto.
+   Resultados:
+   -É esperado que a primeira chamada da função retorne uma lista de movimentos com 0 movimentos.
+   -É esperado que a segunda chamada da função retorne uma lista de movimentos com 3 movimentos.
+*/
 TEST(Test_BlackPawnMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -758,13 +832,26 @@ TEST(Test_BlackPawnMovements, Verify_Movements_RivalPieces){
 	board->Board[5][3] = W_TOWER;
 
 	BlackPawnMovements(board, AllPlays2, 4, 4);
-	EXPECT_EQ(5, AllPlays2->howmany);
+	EXPECT_EQ(3, AllPlays2->howmany);
 
 	DeleteListOfMoves(AllPlays2);
 	DeleteListOfMoves(AllPlays);
 	free(board);
 }
 
+/* Teste para verificar a função de movimento do cavalo na diferenciação de peças aliadas
+e oponentes.
+   Procedimentos:
+   -Criar um tabuleiro e uma lista de movimentos vazios.
+   -Inserir uma cavalo na posição (4,4) no tabuleiro.
+   -Inserir peças da mesma cor nas posições para onde a cavalo poderia se mover.
+   -Chamar a função para a posição do cavalo.
+   -Inserir peças de cor diferente nas posições para onde a torre poderia se mover.
+   -Chamar a funça para a posição do cavalo.
+   Resultados:
+   -É esperado que a primeira chamada da função retorne uma lista de movimentos com 0 movimentos.
+   -É esperado que a segunda chamada da função retorne uma lista de movimentos com 8 movimentos.
+*/
 TEST(Test_HorseMovements, Verify_Movements_RivalPieces){
 	ListOfMoves* AllPlays = CreateListOfMoves();
 	ListOfMoves* AllPlays2 = CreateListOfMoves();	
@@ -1015,6 +1102,13 @@ TEST(Test_KingMovements, Verify_Addict_Roque_Movement){
  	free(board2);
 }
 
+/* Teste para verificar a função que calcula todos os movimentos possíveis funciona corretamente com um
+tabuleiro nulo.
+   Procedimentos:
+   -Criar um tabuleiro do tipo nulo.
+   Resultados:
+   -É esperado que o retorno da função seja um ponteiro NULL indicando sucesso.
+*/
 TEST(Test_AllMovements, Verify_NULL_Board){
 	TBoard* board_null = NULL;
 
@@ -1024,6 +1118,13 @@ TEST(Test_AllMovements, Verify_NULL_Board){
 	EXPECT_EQ(NULL, AnalyzePossibleMovementsBlack(board_null));
 }
 
+/* Teste para verificar a função que calcula todos os movimentos possíveis funciona corretamente com um
+tabuleiro vazio.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   Resultados:
+   -É esperado que o retorno da função seja um inteiro indicando sucesso.
+*/
 TEST(Test_AllMovements, Verify_Movements_EmptyBoard){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
@@ -1041,6 +1142,13 @@ TEST(Test_AllMovements, Verify_Movements_EmptyBoard){
 	free(board);
 }
 
+/* Teste para verificar a função que calcula todos os movimentos possíveis funciona corretamente com um
+tabuleiro padrão.
+   Procedimentos:
+   -Criar um tabuleiro do tipo padrão.
+   Resultados:
+   -É esperado que o retorno da função seja um inteiro indicando sucesso.
+*/
 TEST(Test_AllMovements, Verify_Movements_StandardBoard){
 	TBoard* board = AlocateBoard();
 	StartStandardBoard(board);
@@ -1161,6 +1269,7 @@ TEST(Test_VerifyCheck, Verify_NULL_Variables){
 tabuleiro em que está acontecendo um xeque real com o rei preto.
    Procedimentos:
    -Criar um tabuleiro vazio.
+   -Inserir peças para uma simulação de xeque.
    -Chamar a função de atualização da variável de xeque no tabuleiro.
    Resultados:
    -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei preto atualizada.
@@ -1180,6 +1289,7 @@ TEST(Test_VerifyCheck, Verify_RealBlackCheck){
 tabuleiro em que está acontecendo um xeque real com o rei branco.
    Procedimentos:
    -Criar um tabuleiro vazio.
+   -Inserir peças para uma simulação de xeque.
    -Chamar a função de atualização da variável de xeque no tabuleiro.
    Resultados:
    -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei branco atualizada.
@@ -1188,7 +1298,7 @@ TEST(Test_VerifyCheck, Verify_RealWhiteCheck){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
 	board->Board[0][0] = W_KING;
-	board->Board[1][1] = B_PAWN;
+	board->Board[1][1] = B_BISHOP;
 	board = VerifyCheck(board, WHITE);
 	EXPECT_EQ(-1, board->BlackCheck);
 	EXPECT_EQ(1, board->WhiteCheck);
@@ -1199,6 +1309,7 @@ TEST(Test_VerifyCheck, Verify_RealWhiteCheck){
 tabuleiro em que está acontecendo um xeque falso com o rei preto.
    Procedimentos:
    -Criar um tabuleiro vazio.
+   -Inserir peças para uma simulação de xeque.
    -Chamar a função de atualização da variável de xeque no tabuleiro.
    Resultados:
    -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei preto não modificada.
@@ -1218,6 +1329,7 @@ TEST(Test_VerifyCheck, Verify_FakeBlackCheck){
 tabuleiro em que está acontecendo um xeque falso com o rei branco.
    Procedimentos:
    -Criar um tabuleiro vazio.
+   -Inserir peças para uma simulação de xeque.
    -Chamar a função de atualização da variável de xeque no tabuleiro.
    Resultados:
    -É esperado que o retorno da função seja um tabuleiro com a variável dedicada ao xeque do rei branco não modificada.
@@ -1233,19 +1345,29 @@ TEST(Test_VerifyCheck, Verify_FakeWhiteCheck){
 	free(board);
 }
 
+/* Teste para verificar a função de mudança de estado de xeque funciona corretamente com um
+tabuleiro em que está deixando de acontecer um xeque com o rei preto.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   -Inserir peças para uma simulação de entrada e saida de xeque.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um tabuleiro com a variável
+    dedicada ao xeque do rei preto modificada para a mudança de estado de xeque.
+*/
 TEST(Test_VerifyCheck, Verify_ChangeBlackCheck){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
 
 	board->Board[0][0] = B_KING;
-	board->Board[1][1] = W_PAWN;
+	board->Board[1][1] = W_BISHOP;
 
 	board = VerifyCheck(board, BLACK);
 
 	EXPECT_EQ(1, board->BlackCheck);
 	EXPECT_EQ(-1, board->WhiteCheck);
 
-	board->Board[1][1] = B_PAWN;
+	board->Board[1][1] = B_BISHOP;
 	board = VerifyCheck(board, BLACK);
 
 	EXPECT_EQ(-1, board->BlackCheck);
@@ -1253,19 +1375,29 @@ TEST(Test_VerifyCheck, Verify_ChangeBlackCheck){
 	free(board);
 }
 
+/* Teste para verificar a função de mudança de estado de xeque funciona corretamente com um
+tabuleiro em que está deixando de acontecer um xeque com o rei branco.
+   Procedimentos:
+   -Criar um tabuleiro vazio.
+   -Inserir peças para uma simulação de entrada e saida de xeque.
+   -Chamar a função de atualização da variável de xeque no tabuleiro.
+   Resultados:
+   -É esperado que o retorno da função seja um tabuleiro com a variável
+    dedicada ao xeque do rei branco modificada para a mudança de estado de xeque.
+*/
 TEST(Test_VerifyCheck, Verify_ChangeWhiteCheck){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
 
 	board->Board[0][0] = W_KING;
-	board->Board[1][1] = B_PAWN;
+	board->Board[1][1] = B_BISHOP;
 
 	board = VerifyCheck(board, WHITE);
 
 	EXPECT_EQ(-1, board->BlackCheck);
 	EXPECT_EQ(1, board->WhiteCheck);
 
-	board->Board[1][1] = W_PAWN;
+	board->Board[1][1] = W_BISHOP;
 	board = VerifyCheck(board, WHITE);
 
 	EXPECT_EQ(-1, board->BlackCheck);
