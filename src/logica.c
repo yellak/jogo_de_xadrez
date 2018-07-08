@@ -232,20 +232,6 @@ ListOfMoves* WhitePawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 			InsertMove(AllMoves, originx, originy, originx - 1, originy - 1);
 		}
 	}
-	/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
-	if(WhatPiece(board, originx+1, originy+1) != OUT_OF_RANGE){
-		COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy + 1]);
-		if(originx + 1 <= 7 && originy + 1 <= 7 && COLOR_POSITION == BLACK){
-			InsertMove(AllMoves, originx, originy, originx + 1, originy + 1);
-		}
-	}
-	/* Caso de eliminar peça sendo um peão na diagonal inferior esquerda. */
-	if(WhatPiece(board, originx+1, originy-1) != OUT_OF_RANGE){
-		COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy - 1]);
-		if(originx + 1 <= 7 && originy - 1 >= 0 && COLOR_POSITION == BLACK){
-			InsertMove(AllMoves, originx, originy, originx + 1, originy - 1);
-		}
-	}
 
 	return AllMoves;
 }
@@ -287,20 +273,6 @@ ListOfMoves* BlackPawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 		COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy]);
 		if(((originx == 1 && COLOR_POSITION == -1) || COLOR_POSITION == -1) && originx + 1 <= 7){
 			InsertMove(AllMoves, originx, originy, originx + 1, originy);
-		}
-	}
-	/* Caso de eliminar peça sendo um peão na diagonal superior direita. */
-	if(WhatPiece(board, originx-1, originy+1) != OUT_OF_RANGE){
-		COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy + 1]);
-		if(originx - 1 >= 0 && originy + 1 <= 7 && COLOR_POSITION == WHITE){
-			InsertMove(AllMoves, originx, originy, originx - 1, originy + 1);
-		}
-	}
-	/* Caso de eliminar peça sendo um peão na diagonal superior esquerda. */
-	if(WhatPiece(board, originx-1, originy-1) != OUT_OF_RANGE){
-		COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy - 1]);
-		if(originx - 1 >= 0 && originy - 1 >= 0 && COLOR_POSITION == WHITE){
-			InsertMove(AllMoves, originx, originy, originx - 1, originy - 1);
 		}
 	}
 	/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
