@@ -133,11 +133,38 @@ ListOfMoves* KingMovements(TBoard* board, ListOfMoves* AllMoves, int originx, in
 */
 ListOfMoves* HorseMovements(TBoard* board, ListOfMoves* AllMoves, int originx, int originy);
 
+/* Função para verificar se um movimento é válido */
+/*! \fn int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, int destinyy)
+    \brief Verifica com base nas coordenadas de origem e destino do movimento, se ele
+    é válido.
+    \param board Ponteiro para um tabuleiro.
+    \param originx Inteiro representando a coordenada x da posição (x,y) a ser verificada.
+    \param originy Inteiro representando a coordenada y da posição (x,y) a ser verificada.
+    \param destinyx Inteiro representando a coordenada x da posição de destino (x,y) a ser verificada.
+    \param destinyy Inteiro representando a coordenada y da posição de destubi (x,y) a ser verificada.
+    \return Retorna um inteiro 0 ou 1 indicando movimento inválido ou válido respectivamente.
+*/
 int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, int destinyy);
 
+/* Função para verificar se é xeque */
+/*! \fn TBoard* VerifyCheck(TBoard* board, int color)
+    \brief Verifica com base em um tabuleiro e uma cor se o rei dessa cor está em xeque.
+    \param board Ponteiro para um tabuleiro.
+    \param color Inteiro indicando a cor do rei.
+    \return Retorna um ponteiro para um tabuleiro com o campo check da cor analisada, atualizado.
+*/
 TBoard* VerifyCheck(TBoard* board, int color);
 
+/* Função para verificar se é xeque mate */
+/*! \fn TBoard* VerifyCheck(TBoard* board, int color)
+    \brief Verifica com base em um tabuleiro e uma cor se o rei dessa cor está em xeque mate.
+    \param board Ponteiro para um tabuleiro.
+    \param color Inteiro indicando a cor do rei.
+    \return Retorna um ponteiro para uma lista de movimentos contendo os movimentos possíveis para sair do 
+    xeque ou NULL em caso de xeque mate.
+*/
 ListOfMoves* VerifyCheckMate(TBoard* board, int color);
+
 
 void Move2Algebraic(Move* movement, char chess_move[]);
 

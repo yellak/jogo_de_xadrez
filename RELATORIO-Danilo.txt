@@ -24,4 +24,4 @@ Data  |Horas Trabalhadas |Tipo Tarefa                                  |Descriç
 06/07 |1 hora            |redigir casos de teste                       |Desenvolvimento de casos de teste para a função xeque mate
 07/07 |2 horas           |revisar código do módulo                     |Alterações na função de verificar se um movimento é válido e a de verificar xeque mate
 07/07 |2 horas           |revisar casos de teste                       |Alterações nos casos de testes do módulo lógica
-08/07 |2 horas           |revisar código do módulo
+08/07 |4 horas           |revisar código do módulo                     |

@@ -1165,7 +1165,16 @@ TEST(Test_AllMovements, Verify_Movements_StandardBoard){
 	DeleteListOfMoves(AllPlays);
 	free(board);
 }
-
+/* Teste para verificar a função de verificar movimento para entradas inválidas
+   Procedimento:
+   	-Criar um tabuleiro vazio.
+   	-Chamar função que inicia o tabuleiro vazio;
+    -Chamar a função de verificar se um movimento é válido para um tabuleiro nulo.
+    -Chamar a função de verificar se um movimento é valido para um tabuleiro alocado,
+    mas para coordenadas em que não exista uma peça.
+   Resultados:
+	-É esperado quem em ambos os casos retorne -1.
+ */
 TEST(Test_VerifyValidMovement,  Veirfy_Invalid_Entries){
 	TBoard* board1 = NULL;
 	TBoard* board2 = AlocateBoard();
@@ -1178,6 +1187,15 @@ TEST(Test_VerifyValidMovement,  Veirfy_Invalid_Entries){
 	free(board2);
 	
 }
+
+/* Teste para verificar a função de verificar movimento para movimentos válidos
+   Procedimento:
+   	-Criar um tabuleiro vazio.
+   	-Preencher com uma peça de cada tipo.
+    -Chamar a função de verificar movimento para movimentos válidos para cada peça.
+   Resultados:
+	-É esperado quem em todos os casos, para brancas e pretas, retorne 1.
+ */
 
 TEST(Test_VerifyValidMovement, Verify_Valid_Movements){
 	TBoard* board = AlocateBoard();
@@ -1213,6 +1231,15 @@ TEST(Test_VerifyValidMovement, Verify_Valid_Movements){
 
 	free(board);
 }
+
+/* Teste para verificar a função de verificar movimento para movimentos inválidos
+   Procedimento:
+   	-Criar um tabuleiro vazio.
+   	-Preencher com uma peça de cada tipo.
+    -Chamar a função de verificar movimento para movimentos inválidos para cada peça.
+   Resultados:
+	-É esperado quem em todos os casos, para brancas e pretas, retorne 0.
+ */
 
 TEST(Test_VerifyValidMovement, Verify_Invalid_Movements){
 	TBoard* board = AlocateBoard();
@@ -1405,6 +1432,17 @@ TEST(Test_VerifyCheck, Verify_ChangeWhiteCheck){
 	free(board);
 }
 
+/* Teste para verificar a função de verificar xeque mate para entradas inválidas
+   Procedimento:
+   	-Criar um tabuleiro vazio.
+   	-Chamar função que inicia o tabuleiro vazio;
+    -Chamar a função de verificar xeque para um tabuleiro nulo.
+    -Chamar a função de verificar xeque para um tabuleiro alocado,
+    mas cor inválida.
+   Resultados:
+	-É esperado quem em ambos os casos retorne NULL.
+ */
+
 TEST(Test_VerifyCheckMate, Veirfy_Invalid_Entries){
 	TBoard* board = NULL;
 	TBoard* board2 = AlocateBoard();
@@ -1418,9 +1456,22 @@ TEST(Test_VerifyCheckMate, Veirfy_Invalid_Entries){
 	free(board2);
 }
 
+
+/* Teste para verificar a função de verificar xeque mate para entradas inválidas
+   Procedimento:
+   	-Criar um tabuleiro vazio.
+   	-Chamar função que inicia o tabuleiro vazio.
+   	-Inserir algumas peças em uma configuração de xeque mate.
+    -Chamar a função de verificar xeque mate.
+   Resultados:
+	-É esperado que retorne NULL para peças brancas ou pretas.
+ */
+
 TEST(Test_VerifyCheckMate, Verify_Correct_CheckMate){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
+
+	/* Testa xeque mate no rei preto */
 	board->BlackCheck = 1;
 	board->Board[4][4] = B_KING;
 	board->Board[6][5] = W_PAWN;
@@ -1431,12 +1482,39 @@ TEST(Test_VerifyCheckMate, Verify_Correct_CheckMate){
 
 	EXPECT_EQ(NULL, VerifyCheckMate(board, BLACK));
 	free(board);
+
+	/* Testa xeque mate no rei branco */
+	board = AlocateBoard();
+	StartEmptyBoard(board);
+	board->WhiteCheck = 1;
+	board->Board[4][4] = W_KING;
+	board->Board[6][5] = B_PAWN;
+	board->Board[6][6] = B_BISHOP;
+	board->Board[7][3] = B_QUEEN;
+	board->Board[2][5] = B_TOWER;
+	board->Board[2][6] = B_HORSE;
+
+	EXPECT_EQ(NULL, VerifyCheckMate(board, WHITE));
+	free(board);
+
 }
+
+/* Teste para verificar a função de verificar xeque mate para entradas inválidas
+   Procedimento:
+   	-Criar um tabuleiro vazio.
+   	-Chamar função que inicia o tabuleiro vazio.
+   	-Inserir algumas peças em uma configuração de xeque mate com apenas um movimento
+   	possível para sair do xeque.
+    -Chamar a função de verificar xeque mate.
+   Resultados:
+	-É esperado que para peças brancas e pretas retorne uma lista de movimentos com howmany igual a 1.
+ */
 
 TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
 	TBoard* board = AlocateBoard();
 	ListOfMoves* LeaveCheck;
 	StartEmptyBoard(board);
+	/* Testa não xeque mate paro rei preto */
 	board->BlackCheck = 1;
 	board->Board[4][4] = B_KING;
 	board->Board[5][2] = B_TOWER;
@@ -1447,8 +1525,25 @@ TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
 	board->Board[2][6] = W_HORSE;
 	LeaveCheck = VerifyCheckMate(board, BLACK);
 	EXPECT_EQ(1, LeaveCheck->howmany);
-	free(LeaveCheck);
+	DeleteListOfMoves(LeaveCheck);
 	free(board);
+
+	board = AlocateBoard();
+	StartEmptyBoard(board);
+	/* Testa não xeque mate para o rei branco */
+	board->WhiteCheck = 1;
+	board->Board[4][4] = W_KING;
+	board->Board[5][2] = W_TOWER;
+	board->Board[6][5] = B_PAWN;
+	board->Board[6][6] = B_BISHOP;
+	board->Board[7][3] = B_QUEEN;
+	board->Board[2][5] = B_TOWER;
+	board->Board[2][6] = B_HORSE;
+	LeaveCheck = VerifyCheckMate(board, WHITE);
+	EXPECT_EQ(1, LeaveCheck->howmany);
+	DeleteListOfMoves(LeaveCheck);
+	free(board);
+
 }
 
 TEST(MovementTranslation, VariusMovements)
