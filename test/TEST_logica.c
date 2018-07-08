@@ -1281,7 +1281,7 @@ TEST(Test_VerifyCheck, Verify_RealBlackCheck){
 	board->Board[1][1] = W_PAWN;
 	board = VerifyCheck(board, BLACK);
 	EXPECT_EQ(1, board->BlackCheck);
-	EXPECT_EQ(-1, board->WhiteCheck);
+	EXPECT_EQ(0, board->WhiteCheck);
 	free(board);
 }
 
@@ -1300,7 +1300,7 @@ TEST(Test_VerifyCheck, Verify_RealWhiteCheck){
 	board->Board[0][0] = W_KING;
 	board->Board[1][1] = B_BISHOP;
 	board = VerifyCheck(board, WHITE);
-	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(0, board->BlackCheck);
 	EXPECT_EQ(1, board->WhiteCheck);
 	free(board);
 }
@@ -1320,8 +1320,8 @@ TEST(Test_VerifyCheck, Verify_FakeBlackCheck){
 	board->Board[0][0] = B_KING;
 	board->Board[2][2] = W_PAWN;
 	board = VerifyCheck(board, BLACK);
-	EXPECT_EQ(-1, board->BlackCheck);
-	EXPECT_EQ(-1, board->WhiteCheck);
+	EXPECT_EQ(0, board->BlackCheck);
+	EXPECT_EQ(0, board->WhiteCheck);
 	free(board);
 }
 
@@ -1340,8 +1340,8 @@ TEST(Test_VerifyCheck, Verify_FakeWhiteCheck){
 	board->Board[0][0] = W_KING;
 	board->Board[2][2] = B_PAWN;
 	board = VerifyCheck(board, WHITE);
-	EXPECT_EQ(-1, board->BlackCheck);
-	EXPECT_EQ(-1, board->WhiteCheck);
+	EXPECT_EQ(0, board->BlackCheck);
+	EXPECT_EQ(0, board->WhiteCheck);
 	free(board);
 }
 
@@ -1365,13 +1365,13 @@ TEST(Test_VerifyCheck, Verify_ChangeBlackCheck){
 	board = VerifyCheck(board, BLACK);
 
 	EXPECT_EQ(1, board->BlackCheck);
-	EXPECT_EQ(-1, board->WhiteCheck);
+	EXPECT_EQ(0, board->WhiteCheck);
 
 	board->Board[1][1] = B_BISHOP;
 	board = VerifyCheck(board, BLACK);
 
-	EXPECT_EQ(-1, board->BlackCheck);
-	EXPECT_EQ(-1, board->WhiteCheck);
+	EXPECT_EQ(0, board->BlackCheck);
+	EXPECT_EQ(0, board->WhiteCheck);
 	free(board);
 }
 
@@ -1394,14 +1394,14 @@ TEST(Test_VerifyCheck, Verify_ChangeWhiteCheck){
 
 	board = VerifyCheck(board, WHITE);
 
-	EXPECT_EQ(-1, board->BlackCheck);
+	EXPECT_EQ(0, board->BlackCheck);
 	EXPECT_EQ(1, board->WhiteCheck);
 
 	board->Board[1][1] = W_BISHOP;
 	board = VerifyCheck(board, WHITE);
 
-	EXPECT_EQ(-1, board->BlackCheck);
-	EXPECT_EQ(-1, board->WhiteCheck);
+	EXPECT_EQ(0, board->BlackCheck);
+	EXPECT_EQ(0, board->WhiteCheck);
 	free(board);
 }
 

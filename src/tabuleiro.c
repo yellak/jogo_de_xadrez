@@ -19,8 +19,8 @@ TBoard* AlocateBoard(void){
 	TBoard* new_board = (TBoard*) malloc(sizeof(TBoard));
 
 	new_board->Weight = 0;
-	new_board->WhiteCheck = -1;
-	new_board->BlackCheck = -1;
+	new_board->WhiteCheck = 0;
+	new_board->BlackCheck = 0;
 	
 	return new_board;
 }
@@ -45,10 +45,10 @@ int StartEmptyBoard(TBoard *board){
 
 	/* Definir peso do tabuleiro como 0.*/
 	board->Weight = 0;
-	/* Definir o check como -1, indicando que o rei branco não está em xeque */
-	board->WhiteCheck = -1;
-	/* Definir o check como -1, indicando que o rei preto não está em xeque */
-	board->BlackCheck = -1;
+	/* Definir o check como 0, indicando que o rei branco não está em xeque */
+	board->WhiteCheck = 0;
+	/* Definir o check como 0, indicando que o rei preto não está em xeque */
+	board->BlackCheck = 0;
 	/* Iniciar as posições do tabuleiro como vazias. */
 	for(i=0; i < 8;i++){
 		for(j=0; j < 8;j++){

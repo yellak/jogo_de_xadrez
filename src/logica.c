@@ -1036,7 +1036,7 @@ TBoard* VerifyCheck(TBoard* board, int color){
 			}
 		AllMoves->current = AllMoves->current->next;
 		}
-		board->BlackCheck = -1;
+		board->BlackCheck = 0;
 		DeleteListOfMoves(AllMoves);
 		return board;
 	}
@@ -1052,7 +1052,7 @@ TBoard* VerifyCheck(TBoard* board, int color){
 			}
 		AllMoves->current = AllMoves->current->next;
 		}
-		board->WhiteCheck = -1;
+		board->WhiteCheck = 0;
 		DeleteListOfMoves(AllMoves);
 		return board;
 	}
