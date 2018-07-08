@@ -1487,12 +1487,12 @@ TEST(Test_VerifyCheckMate, Verify_Correct_CheckMate){
 	board = AlocateBoard();
 	StartEmptyBoard(board);
 	board->WhiteCheck = 1;
-	board->Board[4][4] = W_KING;
-	board->Board[6][5] = B_PAWN;
-	board->Board[6][6] = B_BISHOP;
-	board->Board[7][3] = B_QUEEN;
-	board->Board[2][5] = B_TOWER;
-	board->Board[2][6] = B_HORSE;
+	board->WhiteCheck = 1;
+	board->Board[7][0] = W_KING;
+	board->Board[4][1] = B_HORSE;
+	board->Board[5][0] = B_PAWN;
+	board->Board[5][2] = B_BISHOP;
+	board->Board[5][1] = B_TOWER;
 
 	EXPECT_EQ(NULL, VerifyCheckMate(board, WHITE));
 	free(board);
@@ -1532,13 +1532,12 @@ TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
 	StartEmptyBoard(board);
 	/* Testa não xeque mate para o rei branco */
 	board->WhiteCheck = 1;
-	board->Board[4][4] = W_KING;
-	board->Board[5][2] = W_TOWER;
-	board->Board[6][5] = B_PAWN;
-	board->Board[6][6] = B_BISHOP;
-	board->Board[7][3] = B_QUEEN;
-	board->Board[2][5] = B_TOWER;
-	board->Board[2][6] = B_HORSE;
+	board->Board[7][0] = W_KING;
+	board->Board[7][2] = W_BISHOP;
+	board->Board[4][1] = B_HORSE;
+	board->Board[5][0] = B_PAWN;
+	board->Board[5][2] = B_BISHOP;
+	board->Board[5][1] = B_TOWER;
 	LeaveCheck = VerifyCheckMate(board, WHITE);
 	EXPECT_EQ(1, LeaveCheck->howmany);
 	DeleteListOfMoves(LeaveCheck);
