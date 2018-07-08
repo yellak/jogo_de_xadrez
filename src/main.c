@@ -86,6 +86,10 @@ int main()
 		{
 			play_pvp(boardwin, keywin, messages, board);
 		}
+	else if(gamemode == PVE)
+		{
+			play_pve(boardwin, keywin, messages, board);
+		}
 		
 	delwin(boardwin);
 	delwin(yaxis);

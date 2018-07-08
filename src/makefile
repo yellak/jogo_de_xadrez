@@ -8,10 +8,10 @@ GTESTFLAGS = -lgtest -lpthread
 GCOVFLAGS = -fprofile-arcs -ftest-coverage -lgcov --coverage
 
 # Dependências do módulo principal
-_MAINOBJ = interface.o main.o tabuleiro.o logica.o list_of_moves.o in-out.o
+_MAINOBJ = interface.o main.o tabuleiro.o logica.o list_of_moves.o in-out.o arv_decisoes.o ia.o
 MAINOBJ = $(patsubst %, $(ODIR)/%, $(_MAINOBJ))
 
-_MAINDEPS = interface.h tabuleiro.h logica.h list_of_moves.h in-out.h
+_MAINDEPS = interface.h tabuleiro.h logica.h list_of_moves.h in-out.h arv_decisoes.h ia.h
 MAINDEPS = $(patsubst %, $(IDIR)/%, $(_MAINDEPS))
 
 # Dependências do módulo tabuleiro e seu módulo de testes

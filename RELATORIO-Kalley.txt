@@ -7,3 +7,6 @@ Data | Horas |     Tipo Tarefa     |                 Descrição
 01/07| 4h10m | Projetar            | GUI, iniciando opção de criar tabuleiro
 02/07| 9h20m | Proj., real. testes | Avanços na GUI; função de validar uma peça
 03/07| 6h    | Proj., real. testes | GUI, modo de criação de tabuleiro pronto
+05/07| 1h    | Projetar, rev. proj.| Comentários na interface e refatoração
+06/07| 6h30m | Proj., real. testes | GUI, mouse, verificar movimento na interface
+07/07| 3h15m | Proj., real. testes | GUI, xeque/xeque-mate, printar vencedor

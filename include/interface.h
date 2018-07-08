@@ -7,6 +7,9 @@
 #include "tabuleiro.h"
 #include "logica.h"
 #include "in-out.h"
+#include "arv_decisoes.h"
+#include "ia.h"
+#include "list_of_moves.h"
 
 /* Tamanho do tabuleiro */
 const int XLIMIT = 8; /*!< Indica o tamanho do eixo Y do tabuleiro  */
@@ -45,6 +48,8 @@ const int B_CHECK        = 19; /*!< Indica xeque no rei preto */
 const int WHITE_WON      = 20; /*!< Indica que as brancas veceram */
 const int BLACK_WON      = 21; /*!< Indica que as pretas venceram */
 const int WANNA_SAVE     = 22; /*!< Perguntar se o usuário quer salvar o jogo */
+const int GIVE_A_PIECE   = 23; /*!< Pedir para o usuário digitar uma peça */
+const int YOURCOLOR      = 24; /*!< Perguntar para o usuário qual cor ele prefere */
 
 /* Constantes para modos de jogo */
 const int PVP      = 1; /*!< Player vs Player */
@@ -62,8 +67,8 @@ const int GAMING   = 0;
 const int CREATING = 1;
 
 /* Constantes que indicam de quem é a vez de jogar */
-const int BLACKS_TURN = 0;
-const int WHITES_TURN = 1;
+//const int BLACKS_TURN = 0;
+//const int WHITES_TURN = 1;
 
 
 /* Cria uma janela do tabuleiro */
@@ -191,6 +196,8 @@ void write_keys_help(WINDOW* keywin, int wintype);
 */
 void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board);
 
+void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board);
+
 /* Função para limpar a janelas de ajuda com atalhos */
 /*! \fn void clear_keywin(WINDOW* keywin)
         \brief Limpa a área de comandos da janela de ajuda com atalhos
@@ -299,10 +306,16 @@ void print_winner(WINDOW* helpwin, int who);
 
 int reverse_color_in_board(WINDOW* boardwin, TBoard* board, int line, int column);
 
+int verify_evolve_pawn(WINDOW* messages, TBoard* board);
+
 int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, Move* movement);
 
 int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, MEVENT event);
 
 Move* GetMovement(WINDOW* keywin, char chess_move[]);
+
+void HelpWinPVE(WINDOW* helpwin);
+
+void HelpWinPVP(WINDOW* helpwin);
 	
 #endif

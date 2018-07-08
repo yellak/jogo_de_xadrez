@@ -53,7 +53,7 @@ WINDOW* MakeXaxisWin(void)
 */
 WINDOW* MakeKeyWin(void)
 {
-	WINDOW* keywin = newwin(4, 78, BOARDY + 2*YLIMIT + 2, 1);
+	WINDOW* keywin = newwin(4, 79, BOARDY + 2*YLIMIT + 2, 1);
 	return keywin;
 }
 
@@ -342,6 +342,16 @@ void HelpWinPVP(WINDOW* helpwin)
 	mvwprintw(helpwin, 7, 18, "n - Cavalo branco");
 	mvwprintw(helpwin, 8, 19, "p - Peão branco");
 	
+	wrefresh(helpwin);
+}
+
+void HelpWinPVE(WINDOW* helpwin)
+{
+	/* Destacando a janela */
+	box(helpwin, 0, 0);
+
+	mvwprintw(helpwin, 1, 1, "Dicas de movimento:");
+
 	wrefresh(helpwin);
 }
 
@@ -932,6 +942,12 @@ void print_message(WINDOW* messages, int msg)
 		case WANNA_SAVE:
 			wprintw(messages, "Você deseja salvar? (s/n)");
 			break;
+		case GIVE_A_PIECE:
+			wprintw(messages, "A qual peça evoluir o peão?");
+			break;
+		case YOURCOLOR:
+			wprintw(messages, "Qual cor você escolhe? (p/b)");
+			break;
 		}
 	
 	wrefresh(messages);
@@ -1024,6 +1040,73 @@ int wanna_save(WINDOW* messages)
 	else{
 		return false;
 	}
+}
+
+int verify_evolve_pawn(WINDOW* messages, TBoard* board)
+{
+	int y_pos, x_pos, i;
+	int whos;
+	int found = false; /* Indica se tem um peão para ser evoluido */
+	char piece;
+
+	/* Loop para procurar o peão */
+	for(i = 0; i < 8; i++)
+		{
+			piece = board->Board[0][i];
+			if(piece == W_PAWN)
+				{
+					found = true;
+					x_pos = i;
+					y_pos = 0;
+					whos = WHITE;
+					break;
+				}
+			else
+				{
+					piece = board->Board[7][i];
+					if(piece == B_PAWN)
+						{
+							found = true;
+							x_pos = i;
+							y_pos = 7;
+							whos  = BLACK;
+							break;
+						}
+				}
+		} /* for(i = 0; i < 8; i++) */
+
+	if(found == true)
+		{
+			piece = 'a';
+			print_message(messages, GIVE_A_PIECE);
+
+			if(whos == WHITE)
+				{
+					while(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece < '\\')
+						{
+							piece = getch();
+							if(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece < '\\')
+								{
+									print_message(messages, INVALID_PIECE);
+								}
+						}
+				} /* if(whos == WHITE) */
+			else /* Peão preto */
+				{
+					while(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece > '\\')
+						{
+							piece = getch();
+							if(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece > '\\')
+								{
+									print_message(messages, INVALID_PIECE);
+								}
+						}
+				} /* Peão preto */
+				
+			board->Board[y_pos][x_pos] = piece;
+		}
+
+	return found;
 }
 
 /* 
@@ -1356,5 +1439,198 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					SavePGNFile(pastmoves, pgnboard); /* Arquivo pgn */
 					print_message(messages, SAVED_GAME);
 				}
+
+			if(verify_evolve_pawn(messages, board))
+				{
+					InitBoard(boardwin, board);
+					wrefresh(boardwin);
+				}
 		}  /* while(!finished) */
 } /* Modo PVP */
+
+void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
+{
+	int choice;	/* Escolha do usuário */
+	WINDOW* helpwin = MakeHelpWin();
+	int player, machine, turn, old_turn; /* Turno do jogador, da máquina e atual do jogo */
+	int finished = false; /* Indica o fim do jogo */
+	TBoard* old_board = AlocateBoard(); /* Armazena a forma anterior do tabuleiro */
+	char chess_move[8];	/* String do movimento que o jogador fez */
+	Move* movement;	/* Movimento do jogador */
+	MEVENT event; /* evento de mouse */
+	Tree* decisions;
+	ListOfMoves* possiblemoves;
+	int ol, oc, dl, dc; /* Para indicar para onde o pc vai mexer */
+
+	/* Variáveis para salvar o jogo */
+	char txtboard[] = "save/board.txt";
+	char pgnboard[] = "save/board.pgn";
+	ListPastMoves* pastmoves = StartListPM();
+
+	HelpWinPVE(helpwin);
+
+	/* Adquirindo a cor que o usuário deseja ser */
+	print_message(messages, YOURCOLOR);
+	do{
+		choice = getch();
+	} while(choice != 'p' && choice != 'b');
+
+	/* Limpando a janela de mensagens */
+	clear_message(messages);
+
+	/* Habilitando as variáveis dos movimentos */
+	if(choice == 'p'){
+		player = BLACKS_TURN;
+		machine = WHITES_TURN;
+		turn = machine;
+	}
+	else{
+		player = WHITES_TURN;
+		machine = BLACKS_TURN;
+		turn = player;
+	}
+
+	/* Armazenando o tabuleiro anterior */
+	copy_boards(old_board, board);
+
+	/* Reconhecimento do mouse */
+	mousemask(BUTTON1_PRESSED, NULL);
+	keypad(stdscr, TRUE);
+
+	while(!finished)
+		{
+			/* Mostrando de quem é a vez de jogar */
+			print_turn(helpwin, turn);
+
+			/* Verificando se tem xeque no jogo */
+			if(turn == WHITES_TURN)
+				{
+					board = VerifyCheck(board, WHITE);
+					if(board->WhiteCheck == CHECK){
+						/* Mostrando que as brancas fizeram xeque */
+						print_message(messages, W_CHECK);
+						if(VerifyCheckMate(board, WHITE) == NULL)
+							{
+								print_winner(helpwin, BLACK);
+								if(wanna_save(messages)){
+									SaveBoardFile(board, txtboard); /* Arquivo txt */
+									SavePGNFile(pastmoves, pgnboard); /* Arquivo pgn */
+									print_message(messages, SAVED_GAME);
+								}
+								break;
+							} /* if(VerifyCheckMate...) */
+					} /* if(board->whi..) */
+				}
+			else /* Vez das pretas */
+				{
+					board = VerifyCheck(board, BLACK);
+					if(board->BlackCheck == CHECK){
+						/* Mostrando que as pretas fizeram xeque */
+						print_message(messages, B_CHECK);
+
+						if(VerifyCheckMate(board, BLACK) == NULL)
+							{
+								print_winner(helpwin, WHITE);
+								if(wanna_save(messages)){
+									SaveBoardFile(board, txtboard);
+									SavePGNFile(pastmoves, pgnboard);
+									print_message(messages, SAVED_GAME);
+								}
+								break;
+							}
+					} /* if(board->Blac...) */
+				}
+			
+			/* Adquirindo tecla ou mouse do usuário */
+			choice = getch();
+
+			if(choice == 'j')
+				{
+					/* Guardando ponteiro para o tabuleiro anterior */
+					copy_boards(old_board, board);
+
+					/* Adquirindo o movimento do usuário pela notação */
+					movement = GetMovement(keywin, chess_move);
+
+					old_turn = turn; /* Pro caso do pgn, resolver ainda */
+
+					/* Movendo a peça para a nova posição */
+					turn = UI_MOVE_PIECE(boardwin, messages, board, turn, movement);
+
+					if(turn != old_turn)
+						{
+							AddListPM(pastmoves, chess_move);
+						}
+				} /* choice == j */
+
+			else if(choice == KEY_MOUSE)
+				{
+					/* Guardando o tabuleiro anterior */
+					copy_boards(old_board, board);
+
+					if(getmouse(&event) == OK)
+						{
+							/* Fazendo o movimento para o mouse */
+							turn = UI_MOUSE_MOVE(boardwin, messages, board, turn, event);
+						}
+				} /* KEY_MOUSE */
+
+			else if(choice == 'd')
+				{
+					/* Removendo a jogada da lista de jogadas já feitas */
+					RemoveLastListPM(pastmoves);
+					/* Pegando o tabuleiro antigo */
+					copy_boards(board, old_board);
+					turn = change_turn(turn);
+					/* Refazendo tabuleiro na interface */
+					InitBoard(boardwin, board);
+					wrefresh(boardwin);
+				} /* choice == 'd' */
+
+			else if(choice == 'q')
+				{
+					print_message(messages, ARE_YOU_SURE);
+					choice = 'a';
+
+					while((choice != 's') && (choice != 'n'))
+						{
+							choice = getch();
+							if(choice == 's'){
+								FreeListPM(pastmoves);
+								finished = true;
+							}
+							else if(choice == 'n'){
+								print_message(messages, CONTINUE_GAME);
+							}
+						} /* while((choice != 's') ... */
+				} /* else if(choice == 'q') */
+
+			else if(choice == 's') /* Usuário escolheu salvar o jogo */
+				{
+					SaveBoardFile(board, txtboard); /* Arquivo txt */
+					SavePGNFile(pastmoves, pgnboard); /* Arquivo pgn */
+					print_message(messages, SAVED_GAME);
+				}
+
+			/* Mostrando de quem é a vez de jogar */
+			print_turn(helpwin, turn);
+
+			if(turn == machine)
+				{
+					/* Fazendo o movimento do computador */
+					decisions = CreateMovesTree(board, turn);
+					SortTree(decisions, turn);
+					possiblemoves = Best_Plays(decisions, decisions->root->n_child);
+					ol = possiblemoves->first->play.origin[0]; /* Origin line */
+					oc = possiblemoves->first->play.origin[1]; /* origin column */
+					dl = possiblemoves->first->play.destiny[0]; /* destiny line */
+					dc = possiblemoves->first->play.destiny[1]; /* destiny column */
+					MovePiece(board, ol, oc, dl, dc);
+
+					InitBoard(boardwin, board);
+					wrefresh(boardwin);
+
+					turn = change_turn(turn);
+				}
+		} /* while(!finished) */
+}
