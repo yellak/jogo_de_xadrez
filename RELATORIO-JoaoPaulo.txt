@@ -5,4 +5,8 @@
 06/07 |4 horas  | Redigir códigos			    | Funções IA
 06/07 |4 horas  | Reunião de Grupo                          | xeque, IA e definições
 7/7   |3 horas  | Testes e funções de IA		    | BEst Plays e testes
+8/7   |0.66horas| Estudo de historietas e caso de uso       | Slides e aulas
+8/7   |1.5 horas| Confecção de historietas		    | Escrita e revisão
+8/7   |1.5 horas| Casos de uso				    | Escrita e revisão
+8/7   |1.5 horas| Diagramas dos Casos de uso		    | modelagem e decisões
 

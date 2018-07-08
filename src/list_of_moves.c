@@ -99,6 +99,10 @@ int DeleteListOfMoves(ListOfMoves* list){
 		Saída: Retorna um inteiro indicando a falha ou sucesso da operação.
 */
 int SearchListOfMoves(ListOfMoves* list, int originx, int originy, int destinyx, int destinyy){
+
+	if(list == NULL){
+		return 1;
+	}
 	NodeList* aux = list->first;
 
 	/* Percorre a lista até o último nó */
