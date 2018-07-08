@@ -10,6 +10,9 @@
 const int BLACKS_TURN = 0;
 const int WHITES_TURN = 1;
 
+/* Constante que indica o peso de um cheque para a IA priorizar cheque em função de outras jogadas */
+const int CHECK_WEIGHT = 50;
+
 /* Criar a árvore com todas as jogadas. */
 /*! \fn Tree* CreateBestTree(TBoard *board)
 		\brief Criar a ávore com todas as jogadas
