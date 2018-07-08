@@ -35,6 +35,15 @@ Tree* CreateMovesTree(TBoard *board, int turn);
 */
 int SortTree(Tree* tree, int turn);
 
+/* Extrai as melhores jogadas em função da árvore de jogadas */
+/*! \fn ListOfMoves* Best_Plays(Tree* tree, int n_child)
+		\brief Extrai as melhores jogadas
+
+		\param tree Ponteiro para a árvore que se deseja extrair as jogadas
+		\param turn Inteiro contendo o número de filhos da raiz da árvore
+
+		\return Um ponteiro para uma lista de movimentos
+*/
 ListOfMoves* Best_Plays(Tree* tree, int n_child);
 
 #endif

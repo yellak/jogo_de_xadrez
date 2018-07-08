@@ -26,10 +26,10 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 	if(turn == WHITES_TURN){
 	 	AllMoves = AnalyzePossibleMovementsWhite(board);
 	}
-
 	else if(turn == BLACKS_TURN){
 		AllMoves = AnalyzePossibleMovementsBlack(board);
 	}
+
 	/* Inicializando o movimento da raiz como zero */
 	Move play;
 	play.origin[0] = 0;
@@ -45,7 +45,7 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 	TBoard** boardaux = (TBoard**) malloc(AllMoves->howmany*sizeof(TBoard*)); 
 	NodeList* currentnode = AllMoves->first;
 
-	/* Loop para cada um dos filhos da raiz */
+	/* Loop para cada um dos filhos da raiz contendo as jogadas possíveis a partir do tabuleiro inicial */
 	for(int i = 0 ; i < tree->root->n_child; i++, currentnode = currentnode->next){
 
 		/* Tabuleiro auxiliar para armazenar a nova jogada */
@@ -87,8 +87,8 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 			AddChildNode(tree->root, newnode, i);
 		}
 
-		NodeList* currentnodechild = AllMovesChild->first;
 
+		NodeList* currentnodechild = AllMovesChild->first;
 		TBoard** boardauxchild = (TBoard**) malloc(AllMovesChild->howmany*sizeof(TBoard*)); 
 
 		/* Loop para percorrer cada um dos filhos dos filhos para inserir as jogadas seguintes */
@@ -98,13 +98,13 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 			boardauxchild[j] = AlocateBoard();
 			copy_boards(boardauxchild[j], boardaux[i]);
 
-			/* Movimenta-se a peça no tabuleiro de arcordo com a configuração do tabuleiro de newnode */
-
+			/* Movimenta-se a peça no tabuleiro de acordo com a configuração do tabuleiro de newnode */
+			/* Apenas no caso do movimento ser válido */
 			if(VerifyValidMovement(boardauxchild[j], currentnodechild->play.origin[0], currentnodechild->play.origin[1], currentnodechild->play.destiny[0], currentnodechild->play.destiny[1])){
 				MovePiece(boardauxchild[j], currentnodechild->play.origin[0], currentnodechild->play.origin[1], currentnodechild->play.destiny[0], currentnodechild->play.destiny[1]);
 			}
 
-			/* Verifica se deposi do movimento, o rei continua em cheque */
+			/* Verifica se depois do movimento, o rei continua em cheque */
 			if(turn == WHITES_TURN){
 				boardauxchild[j] = VerifyCheck(boardauxchild[j], BLACK);
 			} 
@@ -161,7 +161,7 @@ int SortTree(Tree* tree, int turn){
 		   			check1 = tree->root->child[k]->child[j]->board->BlackCheck;
 		   			check2 = tree->root->child[k]->child[j + 1]->board->BlackCheck;
 
-		   			/* negativo + positivo -> cheque é ruim */
+		   			/* O fato de ter ou não xeque é levado em consideração para ordenar a árvore */
 		      		if(tree->root->child[k]->child[j]->board->Weight + CHECK_WEIGHT*check1 > tree->root->child[k]->child[j+1]->board->Weight + CHECK_WEIGHT*check2){
 		      			NodeTree* nodeaux = tree->root->child[k]->child[j];
 		      			tree->root->child[k]->child[j] = tree->root->child[k]->child[j + 1];
@@ -199,6 +199,7 @@ int SortTree(Tree* tree, int turn){
 		   			check1 = tree->root->child[k]->child[j]->board->WhiteCheck;
 		   			check2 = tree->root->child[k]->child[j + 1]->board->WhiteCheck;
 
+		   			/* O fato de ter ou não xeque é levado em consideração para ordenar a árvore */
 		      		if(tree->root->child[k]->child[j]->board->Weight - CHECK_WEIGHT*check1 < tree->root->child[k]->child[j+1]->board->Weight - CHECK_WEIGHT*check2){
 		      			NodeTree* nodeaux = tree->root->child[k]->child[j];
 		      			tree->root->child[k]->child[j] = tree->root->child[k]->child[j + 1];
@@ -223,14 +224,28 @@ int SortTree(Tree* tree, int turn){
 	return 0;
 }
 
-ListOfMoves* Best_Plays(Tree* tree, int n_child) {
-		ListOfMoves* Lista = CreateListOfMoves();
-		int j;
-		for(j=0; j< n_child; j++) {
-			InsertMove(Lista,tree->root->child[j]->play->origin[0],tree->root->child[j]->play->origin[1],tree->root->child[j]->play->destiny[0], tree->root->child[j]->play->destiny[1]);
-		}
-		return Lista;
-}
-//função para extrair melhor jogada , retorna a jogad
+/* Função: Best_Plays
+		Objetivo: Extrair uma lista de movimentos dos nós de uma árvore
 
-//função para retornar as n melhores jogadas
+		Parametros:
+			tree  	 - Ponteiro para a árvore que se deseja extrair a lista de movimentos
+					   Não deve ser nula
+			n_child  - Inteiro contendo o número de filhos que a raiz da árvore tem
+
+		Saída: Retorna uma lista com todas as jogadas de uma árvore
+*/
+ListOfMoves* Best_Plays(Tree* tree, int n_child) {
+
+	if(tree == NULL){
+		return NULL;
+	}
+
+	ListOfMoves* Lista = CreateListOfMoves();
+
+	/* Insere todas as jogadas possíveis da árvore na lista de movimentos */
+	for(int j=0; j< n_child; j++){
+		InsertMove(Lista,tree->root->child[j]->play->origin[0],tree->root->child[j]->play->origin[1],tree->root->child[j]->play->destiny[0], tree->root->child[j]->play->destiny[1]);
+	}
+	
+	return Lista;
+}

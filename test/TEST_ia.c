@@ -217,16 +217,16 @@ TEST(Test_SortTree, Verify_PieceSacrifice){
 	free(board);
 }
 
-/* Teste 
+/* Teste para verificar se a IA é capaz de dar um cheque mate nas peças brancas
    	Procedimento:
-   	-
-   	-
-   	-
+   	-Inicia-se a rainha branca e o rei branco em uma posição que seja possível conseguir um xeque-mate no rei preto
+   	-Inicializa o turno como sendo dos brancos
    Resultados:
    	-A função deve retornar 0 no caso de fracasso
-   	-
+   	-A IA deve priorizar dar um xeque
+   	-Variável BlackCheck deve ser 1
  */
-TEST(Test_SortTree, Verify_PieceCheck){
+TEST(Test_SortTree, Verify_PieceWhiteCheck){
 	TBoard* board = AlocateBoard();
 	StartEmptyBoard(board);
 	InsertPiece(board, B_KING, 5, 7);
@@ -237,22 +237,53 @@ TEST(Test_SortTree, Verify_PieceCheck){
 
 	/* Testar a alocação */
 	EXPECT_EQ(0, SortTree(tree, turn));
+	EXPECT_EQ(1, tree->root->child[0]->board->BlackCheck);
+	EXPECT_EQ(3, tree->root->child[0]->play->origin[0]);
+	EXPECT_EQ(6, tree->root->child[0]->play->origin[1]);
+	EXPECT_EQ(5, tree->root->child[0]->play->destiny[0]);
+	EXPECT_EQ(6, tree->root->child[0]->play->destiny[1]);
+
+	FreeTreeNodes(tree->root);
+	free(tree);
+}
+
+/* Teste para verificar se a IA é capaz de dar um cheque mate nas peças pretas
+   	Procedimento:
+   	-Inicia-se a rainha preta e o rei preto em uma posição que seja possível conseguir um xeque-mate no rei branco
+   	-Inicializa o turno como sendo dos pretos
+   Resultados:
+   	-A função deve retornar 0 no caso de fracasso
+   	-A IA deve priorizar dar um xeque
+   	-Variável WhiteCheck deve ser 1
+ */
+TEST(Test_SortTree, Verify_PieceBlackCheck){
+	TBoard* board = AlocateBoard();
+	StartEmptyBoard(board);
+	InsertPiece(board, W_KING, 5, 7);
+	InsertPiece(board, B_QUEEN, 3, 6);
+	InsertPiece(board, B_KING, 6, 5);
+	int turn = BLACKS_TURN;	
+	Tree* tree = CreateMovesTree(board, turn);
+
+	/* Testar a alocação */
+	EXPECT_EQ(0, SortTree(tree, turn));
 	EXPECT_EQ(1, tree->root->child[0]->board->WhiteCheck);
-	EXPECT_EQ(5, tree->root->child[0]->play->origin[0]);
-	EXPECT_EQ(2, tree->root->child[0]->play->origin[1]);
-	EXPECT_EQ(7, tree->root->child[0]->play->destiny[0]);
-	EXPECT_EQ(2, tree->root->child[0]->play->destiny[1]);
+	EXPECT_EQ(3, tree->root->child[0]->play->origin[0]);
+	EXPECT_EQ(6, tree->root->child[0]->play->origin[1]);
+	EXPECT_EQ(5, tree->root->child[0]->play->destiny[0]);
+	EXPECT_EQ(6, tree->root->child[0]->play->destiny[1]);
 
 	FreeTreeNodes(tree->root);
 	free(tree);
 }
 
 /* Teste para verificar se a lista contendo todas as jogada ordenadas está sendo criada de maneira adequada
-- Inicia-se a árvore com jogadas, usando apenas um peão no tabuleiro;
-- Inicia-se a lista para criação;
-- Cria-se variáveis com os resultados esperados pela função
-- Resultados:
-- A função deve retornar o mesmo dado que as variáveis fixadas
+	Procedimento:
+	- Inicia-se a árvore com jogadas, usando apenas um peão no tabuleiro;
+	- Inicia-se a lista para criação;
+	- Cria-se variáveis com os resultados esperados pela função
+	Resultados:
+	- A função deve retornar o mesmo dado que as variáveis fixadas
 */
 
 TEST(TEST_Best_Plays, VerifyListCreation){
