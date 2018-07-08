@@ -10,6 +10,9 @@
 const int BLACKS_TURN = 0;
 const int WHITES_TURN = 1;
 
+/* Constante que indica o peso de um cheque para a IA priorizar cheque em função de outras jogadas */
+const int CHECK_WEIGHT = 50;
+
 /* Criar a árvore com todas as jogadas. */
 /*! \fn Tree* CreateBestTree(TBoard *board)
 		\brief Criar a ávore com todas as jogadas
@@ -32,6 +35,15 @@ Tree* CreateMovesTree(TBoard *board, int turn);
 */
 int SortTree(Tree* tree, int turn);
 
+/* Extrai as melhores jogadas em função da árvore de jogadas */
+/*! \fn ListOfMoves* Best_Plays(Tree* tree, int n_child)
+		\brief Extrai as melhores jogadas
+
+		\param tree Ponteiro para a árvore que se deseja extrair as jogadas
+		\param turn Inteiro contendo o número de filhos da raiz da árvore
+
+		\return Um ponteiro para uma lista de movimentos
+*/
 ListOfMoves* Best_Plays(Tree* tree, int n_child);
 
 #endif
