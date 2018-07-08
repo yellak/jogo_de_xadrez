@@ -165,6 +165,18 @@ Move* algebraic_translate(char chess_move[]){
 
 void Move2Algebraic(Move* movement, char chess_move[])
 {
+	int ol, oc, dl, dc;	/* Coordenadas do movimento */
+	ol = movement->origin[0]; /* origin line */
+	oc = movement->origin[1]; /* origin column */
+	dl = movement->destiny[0]; /* destiny line */
+	dc = movement->destiny[1]; /* destiny column */
+
+	chess_move[0] = 'a' + oc;
+	chess_move[1] = '8' - ol;
+	chess_move[2] = '-';
+	chess_move[3] = 'a' + dc;
+	chess_move[4] = '8' - dl;
+	chess_move[5] = '\0';
 }
 
 /* Função: WhitePawnMovements

@@ -1324,13 +1324,65 @@ TEST(MovementTranslation, VariusMovements)
 	char chess_move[6];
 	Move* movement = (Move*) malloc(sizeof(Move));
 
+	/* Movimento: (0,0) para (1,1) */
 	movement->origin[0] = 0;
 	movement->origin[1] = 0;
 	movement->destiny[0] = 1;
 	movement->destiny[1] = 1;
+	/* Chamando ao função teste */
 	Move2Algebraic(movement, chess_move);
 
 	EXPECT_STREQ(chess_move, "a8-b7");
+
+	/* Movimento: (7,1) para (5,0) */
+	movement->origin[0] = 7;
+	movement->origin[1] = 1;
+	movement->destiny[0] = 5;
+	movement->destiny[1] = 0;
+	/* Chamando ao função teste */
+	Move2Algebraic(movement, chess_move);
+
+	EXPECT_STREQ(chess_move, "b1-a3");
+
+	/* Movimento: (7,7) para (0,0) */
+	movement->origin[0] = 7;
+	movement->origin[1] = 7;
+	movement->destiny[0] = 0;
+	movement->destiny[1] = 0;
+	/* Chamando ao função teste */
+	Move2Algebraic(movement, chess_move);
+
+	EXPECT_STREQ(chess_move, "h1-a8");
+
+	/* Movimento: (0,0) para (7,7) */
+	movement->origin[0] = 0;
+	movement->origin[1] = 0;
+	movement->destiny[0] = 7;
+	movement->destiny[1] = 7;
+	/* Chamando ao função teste */
+	Move2Algebraic(movement, chess_move);
+
+	EXPECT_STREQ(chess_move, "a8-h1");
+
+	/* Movimento: (6,2) para (3,5) */
+	movement->origin[0] = 6;
+	movement->origin[1] = 2;
+	movement->destiny[0] = 3;
+	movement->destiny[1] = 5;
+	/* Chamando ao função teste */
+	Move2Algebraic(movement, chess_move);
+
+	EXPECT_STREQ(chess_move, "c2-f5");
+
+	/* Movimento: (0,3) para (7,3) */
+	movement->origin[0] = 0;
+	movement->origin[1] = 3;
+	movement->destiny[0] = 7;
+	movement->destiny[1] = 3;
+	/* Chamando ao função teste */
+	Move2Algebraic(movement, chess_move);
+
+	EXPECT_STREQ(chess_move, "d8-d1");
 
 	free(movement);
 }
