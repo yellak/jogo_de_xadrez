@@ -1319,6 +1319,22 @@ TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
 	free(board);
 }
 
+TEST(MovementTranslation, VariusMovements)
+{
+	char chess_move[6];
+	Move* movement = (Move*) malloc(sizeof(Move));
+
+	movement->origin[0] = 0;
+	movement->origin[1] = 0;
+	movement->destiny[0] = 1;
+	movement->destiny[1] = 1;
+	Move2Algebraic(movement, chess_move);
+
+	EXPECT_STREQ(chess_move, "a8-b7");
+
+	free(movement);
+}
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

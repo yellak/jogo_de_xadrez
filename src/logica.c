@@ -163,6 +163,10 @@ Move* algebraic_translate(char chess_move[]){
 	return result;
 }
 
+void Move2Algebraic(Move* movement, char chess_move[])
+{
+}
+
 /* Função: WhitePawnMovements
 		Objetivo: Calcular todos os movimentos possíveis para um peão branco dada uma
 		determinada configuração de tabuleiro.

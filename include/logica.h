@@ -139,6 +139,6 @@ TBoard* VerifyCheck(TBoard* board, int color);
 
 ListOfMoves* VerifyCheckMate(TBoard* board, int color);
 
-
+void Move2Algebraic(Move* movement, char chess_move[]);
 
 #endif
