@@ -53,18 +53,18 @@ const int YOURCOLOR      = 24; /*!< Perguntar para o usuário qual cor ele prefe
 
 /* Constantes para modos de jogo */
 const int PVP      = 1; /*!< Player vs Player */
-const int PVE      = 2;
+const int PVE      = 2;	/*!< Player vs Environment */
 const int EXITGAME = 3;	/*!< Sair do jogo */
 
 /* Constantes para opção da escolha do tabuleiro */
-const int STD_BOARD   = 1;
-const int SAVED_BOARD = 2;
-const int NEW_BOARD   = 3;
-const int EXIT_GAME   = 4;
+const int STD_BOARD   = 1; /*!< Opção de tabuleiro padrão */
+const int SAVED_BOARD = 2; /*!< Opção de carregar tabuleiro salvo */
+const int NEW_BOARD   = 3; /*!< Opção de criar novo tabuleiro */
+const int EXIT_GAME   = 4; /*!< Opção de sair do jogo */
 
 /* Constantes para os tipos de janelas de atalhos */
-const int GAMING   = 0;
-const int CREATING = 1;
+const int GAMING   = 0;	/*!< Indica menu para modo de jogo */
+const int CREATING = 1;	/*!< Indica menu para mode de criação */
 
 /* Constantes que indicam de quem é a vez de jogar */
 //const int BLACKS_TURN = 0;
