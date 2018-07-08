@@ -1864,16 +1864,34 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 
 
 			board = VerifyCheck(board, aux_color);
-			if((board->WhiteCheck == CHECK) || (board->BlackCheck == CHECK))
+			if(aux_color == WHITE)
 				{
-					auxilary = VerifyCheckMate(board, aux_color);
-					if(auxilary == NULL)
+					if(board->WhiteCheck == CHECK)
 						{
-							mate = true;
+							auxilary = VerifyCheckMate(board, aux_color);
+							if(auxilary == NULL)
+								{
+									mate = true;
+								}
+							else
+								{
+									DeleteListOfMoves(auxilary);
+								}
 						}
-					else
+				}
+			else
+				{
+					if(board->BlackCheck == CHECK)
 						{
-							DeleteListOfMoves(auxilary);
+							auxilary = VerifyCheckMate(board, aux_color);
+							if(auxilary == NULL)
+								{
+									mate = true;
+								}
+							else
+								{
+									DeleteListOfMoves(auxilary);
+								}
 						}
 				}
 			
