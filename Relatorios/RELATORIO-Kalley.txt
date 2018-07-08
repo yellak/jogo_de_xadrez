@@ -1,0 +1,12 @@
+Data | Horas |     Tipo Tarefa     |                 Descrição
+----------------------------------------------------------------------------------------------------
+22/06| 5h    | Especificar mód/fun | Estrutura do projeto e especificaçã dos módulos
+24/07| 3h    | Projetar            | Criar tabuleiro do jogo
+27/07| 2h30m | Projetar, testes    | Carregar tabuleiro na GUI, função de alocar tabuleiro e testes
+30/07| 7h30m | Proj., real. testes | Funções de verificar sintaxe, melhoria da GUI
+01/07| 4h10m | Projetar            | GUI, iniciando opção de criar tabuleiro
+02/07| 9h20m | Proj., real. testes | Avanços na GUI; função de validar uma peça
+03/07| 6h    | Proj., real. testes | GUI, modo de criação de tabuleiro pronto
+05/07| 1h    | Projetar, rev. proj.| Comentários na interface e refatoração
+06/07| 6h30m | Proj., real. testes | GUI, mouse, verificar movimento na interface
+07/07| 3h15m | Proj., real. testes | GUI, xeque/xeque-mate, printar vencedor

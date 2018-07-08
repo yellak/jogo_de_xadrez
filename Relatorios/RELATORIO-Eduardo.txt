@@ -1,0 +1,51 @@
+Dia 22/06
+Tempo: 5 horas
+Tópico: Projetar
+Resumo = Discussão com o grupo sobre o aspecto geral do trabalho, como estruturas e módulos.
+
+Dia 28/06
+Tempo: 3.5 horas
+Tópico: Revisar Código do Módulo
+Resumo = Começar função que contabilizará os movimentos possíveis e arrumar erros acidentais em todo o projeto.
+
+Dia 29/06
+Tempo: 2 horas
+Tópico: Codificar e Testar Módulo + Revisar Módulo
+Resumo = Finalizados testes com as funções criadas no dia anterior e algumas estruturas sofreram alteração.
+
+Dia 30/06
+Tempo: 1 hora
+Tópico: Revisar Código do Módulo
+Resumo = Tentou-se melhorar ainda mais a função de movimentos possíveis. Infelizmente, não se obteve sucesso.
+
+Dia 01/07
+Tempo: 3 horas
+Tópico: Codificar e Testar Módulo + Projetar
+Resumo = Deu-se início a um aperfeiçoamento grande na manipulação da lista de movimentos possíveis. Na reunião aspectos mais gerais e finais do programa foram discutidos.
+
+Dia 02/07
+Tempo: 1.5 horas
+Tópico: Revisar Código do Módulo
+Resumo = Finalizou-se a confecção das funções responsáveis pelos movimentos possíveis.
+
+Dia 05/07
+Tempo: 1.5 horas
+Tópico: Revisar Código do Módulo
+Resumo = Terminou-se a construção de todos os movimentos básicos referentes a todas as peças.
+
+Dia 06/07
+Tempo: 9 horas
+Tópico: Codificar e Testar Módulo + Projetar
+Resumo = Começou-se a função de verificação da função de xeque junto com seus testes, e ocorreu outra reunião com o grupo sobre tópicos finais. Uma tentativa para melhorar o status do valgrind foi feita. Mais tarde, ocorreu um aperfeiçoamento da função de xeque para o xeque-mate.
+
+Dia 07/07
+Tempo: 1 hora
+Tópico: Revisar Código do Módulo
+Resumo = Encontrou-se o problema que deixava o jogo de xadrez pós-xeque (que foi alterado) impossível de ser jogado.
+
+Dia 08/07
+Tempo: 2 horas
+Tópico: Revisar Código do Módulo
+Resumo = Problemas com peões corrigidos, alterações em interpretações de xeque feitas com sucesso.
+
+

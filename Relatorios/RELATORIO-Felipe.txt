@@ -1,0 +1,13 @@
+22/06 | 5 Horas | Projetar                                  | Decisão do formato das estruturas utilizadas
+24/06 | 2 Horas | Estudar Aulas e Laboratórios relacionados | Estudando sobre a biblioteca ncurses
+24/06 | 1 Hora  | Codificar Módulo                          | Criando a função de iniciar o menu inicial
+27/06 | 1 Hora  | Revisar Código do Módulo                  | Função que cria a interface do tabuleiro refatorada e comentada
+29/06 | 3 Horas | Codificar e Testar Módulo                 | Criando funções de alocar uma árvore e um nó de árvore no módulo arv_decisoes 
+30/06 | 3 Horas | Codificar e Testar Módulo		    | Criando e testando funções de liberar uma árvore e adicionar um novo nó
+01/07 | 2 Horas | Projetar                                  | Reunião com o grupo para tomar as últimas decisões a respeito do código
+02/07 | 5 Horas | Codificar e Testar Módulo	            | Criação de 4 funções do módulo de entrada e saída e a função de busca na lista
+06/07 | 8 Horas | Codificar e Testar Módulo	            | Criação de 2 funções do módulo ia.c e dos seus respectivos testes
+06/07 | 6 Horas | Projetar                                  | Reunião com o grupo para decidir o funcionamento da função de xeque
+07/07 | 2 Horas | Revisar Código do Módulo                  | Função de ordenar a árvore de jogadas refatorada e corrigida
+07/07 | 3 Horas | Redigir casos de Teste		    | Novos casos de teste para a função SortTree
+08/07 | 2 Horas | Revisar Código do Módulo                  | Função SortTree refatorada para considerar o xeque 
