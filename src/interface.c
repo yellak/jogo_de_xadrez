@@ -620,6 +620,9 @@ TBoard* CreateNewBoard(void)
 	delwin(keywin);
 	delwin(helpwin);
 
+	board = VerifyCheck(board, WHITE);
+	board = VerifyCheck(board, BLACK);
+
 	return board;
 } /* CreateNewBoard() */
 
@@ -1120,10 +1123,10 @@ int verify_evolve_pawn(WINDOW* messages, TBoard* board)
 
 			if(whos == WHITE)
 				{
-					while(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece < '\\')
+					while(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece < BLANK)
 						{
 							piece = getch();
-							if(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece < '\\')
+							if(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece < BLANK)
 								{
 									print_message(messages, INVALID_PIECE);
 								}
@@ -1131,10 +1134,10 @@ int verify_evolve_pawn(WINDOW* messages, TBoard* board)
 				} /* if(whos == WHITE) */
 			else /* Peão preto */
 				{
-					while(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece > '\\')
+					while(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece > BLANK)
 						{
 							piece = getch();
-							if(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece > '\\')
+							if(!valid_piece(piece) || piece == B_KING || piece == W_KING || piece > BLANK)
 								{
 									print_message(messages, INVALID_PIECE);
 								}
@@ -1142,6 +1145,13 @@ int verify_evolve_pawn(WINDOW* messages, TBoard* board)
 				} /* Peão preto */
 				
 			board->Board[y_pos][x_pos] = piece;
+			board->Weight += GetValue(piece);
+			if(ColorPiece(piece) == WHITE){
+				board->Weight -= GetValue(piece);
+			}
+			else{
+				board->Weight -= GetValue(piece);
+			}
 		}
 
 	return found;
@@ -1364,6 +1374,12 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 	mousemask(BUTTON1_PRESSED, NULL);
 	keypad(stdscr, TRUE);
 
+	/* Verificando se o tabuleiro inicial já está com cheque */
+	board = VerifyCheck(board, BLACK);
+	if(board->BlackCheck == CHECK){
+		turn = BLACKS_TURN;
+	}
+
 	while(!finished)
 		{
 			/* Mostrando de quem é a vez de jogar */
@@ -1536,6 +1552,12 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 		turn = player;
 	}
 
+	/* Verificando se o tabuleiro inicial já está com cheque */
+	board = VerifyCheck(board, BLACK);
+	if(board->BlackCheck == CHECK){
+		turn = BLACKS_TURN;
+	}
+
 	/* Armazenando o tabuleiro anterior */
 	copy_boards(old_board, board);
 
@@ -1701,4 +1723,4 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					DeleteListOfMoves(possiblemoves);
 				}
 		} /* while(!finished) */
-}
+} /* play_pve() */
