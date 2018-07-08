@@ -14,6 +14,7 @@ WINDOW* MakeBoardWin(void)
 	return boardwin;
 }
 
+
 /*
  Função: Criar janela do eixo Y (MakeYaxisWin)
        Objetivo:
@@ -28,6 +29,7 @@ WINDOW* MakeYaxisWin(void)
 	return yaxis;
 }
 
+
 /*
  Função: Criar janela do eixo X (MakeXaxisWin)
        Objetivo:
@@ -41,6 +43,7 @@ WINDOW* MakeXaxisWin(void)
 	WINDOW* xaxis = newwin(1, XLIMIT*4 + 1, BOARDY + YLIMIT*2 + 1, BOARDX);
 	return xaxis;
 }
+
 
 /* 
  Função: Criar janela do menu de atalhos (MakeKeyWin)
@@ -57,6 +60,7 @@ WINDOW* MakeKeyWin(void)
 	return keywin;
 }
 
+
 /*
  Função: Criar a janela de mensagens (MakeMsgWin)
        Objetivo:
@@ -71,6 +75,7 @@ WINDOW* MakeMsgWin(void)
 	return messages;
 }
 
+
 /* 
  Função: Criar janela de ajuda (MakeHelpWin)
        Objetivo:
@@ -84,6 +89,7 @@ WINDOW* MakeHelpWin(void)
 	WINDOW* helpwin = newwin(YLIMIT*2 - 3, 42, BOARDY, BOARDX + 4*XLIMIT + 3);
 	return helpwin;
 }
+
 
 /* 
  Função: Traduzir coordenadas para coordenadas do tabuleiro em memória
@@ -141,6 +147,7 @@ void TranslateCoord(int yscreen, int xscreen, int* yboard, int* xboard)
 		}
 } /* TranslateCoord() */
 
+
 /*
  Função: Verificar o turno (verify_turn)
        Objetivo:
@@ -188,6 +195,7 @@ int verify_turn(TBoard* board, Move* movement, int turn){
 		}
 } /* verify_turn() */
 
+
 /*
  Função: Mudar a/o vez/turno (change_turn)
        Objetivo:
@@ -207,6 +215,7 @@ int change_turn(int turn){
 		return BLACKS_TURN;
 	}
 }
+
 
 /* 
    Função: Inicializar o tabuleiro
@@ -234,6 +243,7 @@ void InitBoard(WINDOW* boardwin, TBoard* board){
 		}
 	}
 } /* InitBoard */
+
 
 /*
   Função: Desenhar o tabuleiro
@@ -284,6 +294,7 @@ void DrawBoard(WINDOW* boardwin){
 	
 } /* DrawBoard */
 
+
 /* 
    Função: Desenhar eixos coordernados (DrawAxis)
          Objetivo:
@@ -318,6 +329,15 @@ void DrawAxis(WINDOW* yaxis, WINDOW* xaxis){
 
 } /* DrawAxis() */
 
+/* 
+ Função: Mostrar as dicas (GiveHint)
+       Objetivo:
+           Mostrar na tela as 5 melhores dicas de movimento para o Usuário
+
+       Parâmetros:
+          helpwin - Janela de ajuda
+          board   - Tabuleiro que será considerado para as dicas
+          turn    - Indica quem é o dono do turno e que vai receber as dicas */
 void GiveHint(WINDOW* helpwin, TBoard* board, int turn)
 {
 	int ol, oc, dl, dc;
@@ -356,6 +376,13 @@ void GiveHint(WINDOW* helpwin, TBoard* board, int turn)
 }
 
 
+/*
+ Função: Mostrar legenda das peças na janela de ajuda (HelpWinPVP)
+       Objetivo:
+           Mostrar legenda das peças do tabuleiro na janela de ajuda
+
+       Parâmetros:
+          helpwin - Janela de ajuda onde seram colocadas as legendas */
 void HelpWinPVP(WINDOW* helpwin)
 {
 	/* Destacando a janela */
@@ -383,6 +410,14 @@ void HelpWinPVP(WINDOW* helpwin)
 	wrefresh(helpwin);
 }
 
+
+/* 
+   Função: Inicializar a janela de ajuda do PVE
+         Objetivo:
+             Inicializar a janela de ajuda do PVE com o básico
+
+         Parâmetros:
+             helpwin - Janela de ajuda */
 void HelpWinPVE(WINDOW* helpwin)
 {
 	/* Destacando a janela */
@@ -392,6 +427,7 @@ void HelpWinPVE(WINDOW* helpwin)
 
 	wrefresh(helpwin);
 }
+
 
 /*
  Função: Inicializar a janela de ajuda
@@ -626,6 +662,7 @@ TBoard* CreateNewBoard(void)
 	return board;
 } /* CreateNewBoard() */
 
+
 /* 
    Função: CreateMenu
          Objetivo:
@@ -702,12 +739,14 @@ int CreateMenu(WINDOW* menuwin){
 	return highlight;
 } /* CreateMenu */
 
+
 /*
  Função: Criar menu de escolha de tabuleiro
        Objetivo:
-           Blah
+           Mostra o menu em o usuário escolhe que tipo de tabuleiro ele vai querer usar
        
        Saída:
+           board - Tabuleiro pronto que o usuário esolheu
 */
 TBoard* MenuGetBoard(void)
 {
@@ -811,6 +850,7 @@ TBoard* MenuGetBoard(void)
 	return board;
 } /* MenuGetBoard() */
 
+
 /* 
    Função: Inicializar janela de ajuda com as teclas (write_keys_help)
          Objetivo:
@@ -847,6 +887,7 @@ void write_keys_help(WINDOW* keywin, int wintype)
 	wrefresh(keywin);
 } /* write_keys_help() */
 
+
 /*
  Função: Limpar a janela de interação com o usuário (clear_keywin)
        Objetivo:
@@ -866,6 +907,7 @@ void clear_keywin(WINDOW* keywin){
 	wrefresh(keywin);
 }
 
+
 /*
   Função: Inicializa janela de mensagens (init_msg_win)
         Objetivo:
@@ -878,6 +920,7 @@ void init_msg_win(WINDOW* messages){
 	box(messages, 0, 0);
 	wrefresh(messages);
 }
+
 
 /*
  Função: Limpar janela de mensagens (clear_message)
@@ -896,6 +939,7 @@ void clear_message(WINDOW* messages){
 	}
 	wrefresh(messages);
 }
+
 
 /*
  Função: Imprimir mensagens (print_message)
@@ -994,6 +1038,22 @@ void print_message(WINDOW* messages, int msg)
 	wrefresh(messages);
 } /* print_message() */
 
+
+/* 
+ Função: Destacar peça (reverse_color_in_board)
+       Objetivo:
+           Destaca na interface a posição dada no tabuleiro 
+       
+       Parâmetros:
+           boardwin - Janela do tabuleiro
+           board    - Tabuleiro referência
+           line     - Posição Y a ser destacada (referente a board e não a tela)
+           column   - Posição X a ser destacada
+
+       Saída:
+          true  - Se tinha uma peça na posição dada
+          false - Se não tiha uma peça na posição dada
+*/
 int reverse_color_in_board(WINDOW* boardwin, TBoard* board, int line, int column)
 {
 	wmove(boardwin, (line * YOFFSET) + 1, (XOFFSET * column) + 2);
@@ -1010,6 +1070,19 @@ int reverse_color_in_board(WINDOW* boardwin, TBoard* board, int line, int column
 	return false;
 }
 
+
+/* 
+ Função: Obter o movimento do usuário (GetMovement)
+       Objetivo:
+           Obtém do usuário um movimento através da notação
+
+       Parâmetros:
+           keywin     - Janela onde está os atalhos
+           chess_move - String onde será colocada a jodada do jogador
+
+       Saída:
+           movement - Movimento traduzido do jogador para o tipo Move*
+*/
 Move* GetMovement(WINDOW* keywin, char chess_move[])
 {
 	Move* movement;
@@ -1029,6 +1102,14 @@ Move* GetMovement(WINDOW* keywin, char chess_move[])
 	return movement;
 }
 
+/* 
+ Função: Mostrar vencedor do jogo (print_winner)
+       Objetivo:
+           Mostra na tela quem é o jogador vencedor da partida
+       
+       Parâmetros:
+           helpwin - Janela de ajuda
+           who     - Indica quem foi o vencedor do jogo */
 void print_winner(WINDOW* helpwin, int who)
 {
 	/* Limpando a janela */
@@ -1047,6 +1128,15 @@ void print_winner(WINDOW* helpwin, int who)
 	wrefresh(helpwin);
 }
 
+
+/* 
+ Função: Mostrar a vez
+       Objetivo:
+           Mostra de quem é a vez de jogar na partida
+ 
+       Parâmetros:
+           helpwin - Janela de ajuda
+           turn    - Indica de quem é o turno (vez de jogar) */
 void print_turn(WINDOW* helpwin, int turn)
 {
 	/* Limpando a janela */
@@ -1066,6 +1156,18 @@ void print_turn(WINDOW* helpwin, int turn)
 	wrefresh(helpwin);
 }
 
+
+/* 
+ Função: Verifar salvamento
+       Objetivo:
+           Pergunta ao usuário se ele quer salvar o jogo
+
+       Parâmetros:
+           messages - Janela de mensagens
+
+       Saída:
+           true  - Se o usuário quiser salvar o jogo
+           false - Se o usuário não quiser salvar */
 int wanna_save(WINDOW* messages)
 {
 	int choice;
@@ -1083,6 +1185,21 @@ int wanna_save(WINDOW* messages)
 	}
 }
 
+
+/* 
+ Função: Verificar promoção do Peão 
+       Objetivo:
+         Verifica se existe algum peão para ser promovido
+         Ela também irá promover o peão de acordo com a escolha do jogador
+
+	   Parâmetros:
+         messages - Janela de mensagens
+         board    - Tabuleiro atual do jogo
+
+       Saída:
+         true  - Se tinha um peão para promover
+         false - Se não tinha um peão para promover
+        */
 int verify_evolve_pawn(WINDOW* messages, TBoard* board)
 {
 	int y_pos, x_pos, i;
@@ -1157,12 +1274,21 @@ int verify_evolve_pawn(WINDOW* messages, TBoard* board)
 	return found;
 }
 
+
 /* 
  Função: Mover a peça na interface gráfica
        Objetivo:
-           Mover a peça e fazer todas as verificações pela própria interface
+           Move a peça e faz todas as verificações pela própria interface
 
        Parâmetros:
+           boardwin - Janela do tabuleiro
+           messages - Janela de mensagens
+           board    - Tabuleiro a ser modificado
+           turn     - Indica de quem é a vez de jogar
+           movement - Movimento a ser feito
+
+      Saída:
+          turn - Indicando de quem é a vez de jogar
 */
 int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, Move* movement)
 {
@@ -1221,6 +1347,22 @@ int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, M
 	return turn;
 } /* UI_MOVE_PIECE */
 
+
+/* 
+ Função: Mover peça pelo mouse
+       Objetivo:
+           Move a peça através do mouse do usuário
+       
+       Parâmetros:
+           boardwin  - Janela do tabuleiro
+           messages  - Janela de mensagens
+           board     - Tabuleiro a ser modificado
+           turn      - Indica de quem é a vez de jogar agora
+           event     - Evento de mouse 
+           pastmoves - Lista de movimentos passados para o arquivo PGN
+
+       Saída:
+           turn - Indicando de quem é a vez de jogar agora */
 int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, MEVENT event, ListPastMoves* pastmoves)
 {
 	/* Movimento do jogador */
@@ -1510,6 +1652,17 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 		}  /* while(!finished) */
 } /* Modo PVP */
 
+
+/* 
+ Função: Jogar modo PVE
+       Objetivo:
+           Faz todo o processo do modo de jogo Jogador vs Computador
+           
+       Parâmetros:
+           boardwin - Janela do tabuleiro
+           keywin   - Janela onde estão dicas de atalho e região de interação com o teclado dele
+           messages - Janela de mensagens
+           board    - Tabuleiro que será utilizado */
 void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 {
 	int choice;	/* Escolha do usuário */

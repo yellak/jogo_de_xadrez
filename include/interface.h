@@ -196,6 +196,15 @@ void write_keys_help(WINDOW* keywin, int wintype);
 */
 void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board);
 
+
+/* Jogar PVE */
+/*! \fn void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
+        \brief Faz todo o processo do modo de jogo Jogador vs Computador
+
+         \param boardwin Janela do tabuleiro
+         \param keywin   Janela onde estão dicas de atalho e região de interação com o teclado dele
+         \param Janela de mensagens
+         \param Tabuleiro que será utilizado */
 void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board);
 
 /* Função para limpar a janelas de ajuda com atalhos */
@@ -298,24 +307,116 @@ int change_turn(int turn);
         \return false Se não é o turno da cor da peça a ser mexida */
 int verify_turn(TBoard* board, Move* movement, int turn);
 
+/* Mostrar as dicas na tela */
+/*! \fn void GiveHint(WINDOW* helpwin, TBoard* board, int turn)
+        \brief Mostra as dicas na tela do jogador
+
+        \param helpwin Janela de ajuda para o usuário
+        \param board   Tabuleiro que será considerado para as dicas
+        \param turn    Indica quem é o dono do turno e que vai receber as dicas */
+void GiveHint(WINDOW* helpwin, TBoard* board, int turn);
+
+/* Mostrar o turno (vez de jogar) */
+/*! \fn void print_turn(WINDOW* helpwin, int turn) 
+        \brief Mostra de quem é a vez de jogar na partida
+
+        \param helpwin Janela de ajuda
+        \param turn    Indica de quem é o turno (vez de jogar)*/
 void print_turn(WINDOW* helpwin, int turn);
 
+/* Verificar salvemento */
+/*! \fn int wanna_save(WINDOW* messages)
+        \brief Pergunta ao usuário se ele quer salvar o jogo
+
+        \param messages Janela de mensagens
+
+        \return true  Se o usuário quiser salvar o jogo
+        \return false Se o usuário não quiser salvar */
 int wanna_save(WINDOW* messages);
 
+/* Mostra o vencedor */
+/*! \fn void print_winner(WINDOW* helpwin, int who)
+        \brief Mostra na tela quem é o jogador vencedor da partida
+
+        \param helpwin Janela de ajuda
+        \param who     Indica quem foi o vencedor do jogo */
 void print_winner(WINDOW* helpwin, int who);
 
+/* Destaca uma peça na tela */
+/*! \fn int reverse_color_in_board(WINDOW* boardwin, TBoard* board, int line, int column)
+        \brief Destaca na interface a posição dada no tabuleiro 
+
+        \param boardwin Janela do tabuleiro
+        \param board    Tabuleiro referência
+        \param line     Posição Y a ser destacada (referente a board e não a tela)
+        \param column   Posição X a ser destacada
+
+        \return true  Se havia uma peça na posição dada 
+        \return false Se não tiha uma peça na posição dada*/
 int reverse_color_in_board(WINDOW* boardwin, TBoard* board, int line, int column);
 
+/* Verificar promoção do peão */
+/*! \fn int verify_evolve_pawn(WINDOW* messages, TBoard* board)
+        \brief Verifica se existe algum peão para ser promovido
+
+               Ela também irá promover o peão de acordo com a escolha do jogador
+
+        \param messages Janela de mensagens
+        \param board    Tabuleiro atual do jogo
+
+        \return true  Se tinha um peão para promover
+        \return false Se não tinha um peão para promover */
 int verify_evolve_pawn(WINDOW* messages, TBoard* board);
 
+/* Mover peça graficamente */
+/*! \fn int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, Move* movement)
+        \brief Move a peça e faz todas as verificações pela própria interface
+
+        \param boardwin Janela do tabuleiro
+        \param messages Janela de mensagens
+        \param board    Tabuleiro a ser modificado
+        \param turn     Indica de quem é a vez de jogar
+        \param movement Movimento a ser feito
+
+        \return turn Indicando de quem é a vez de jogar */
 int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, Move* movement);
 
+/* Mover peça pelo mouse */
+/*! \fn int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, MEVENT event, ListPastMoves* pastmoves) 
+        \brief Move a peça através do mouse do usuário
+
+        \param boadwin   Janela do tabuleiro
+        \param messages  Janela de mensagens
+        \param board     Tabuleiro a ser modificado
+        \param turn      Indica de quem é a vez de jogar agora
+        \param event     Evento de mouse 
+        \param pastmoves Lista de movimentos passados para o arquivo PGN
+
+        \return turn Indicando de quem é a vez de jogar agora*/
 int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, MEVENT event, ListPastMoves* pastmoves);
 
+/* Obter movimento do usuário */
+/*! \fn Move* GetMovement(WINDOW* keywin, char chess_move[])
+        \brief Obtém do usuário um movimento através da notação
+
+        \param keywin     Janela onde está os atalhos
+        \param chess_move String onde será colocada a jodada do jogador
+
+        \return movement Movimento traduzido do jogador para o tipo Move* */
 Move* GetMovement(WINDOW* keywin, char chess_move[]);
 
+/* Iniciar janela de ajuda do PVE */
+/*! \fn void HelpWinPVE(WINDOW* helpwin)
+        \brief Inicializa a janela de ajuda do PVE com o básico 
+
+        \param helpwin Janela de ajuda */
 void HelpWinPVE(WINDOW* helpwin);
 
+/* Mostrar legenda na tela de ajuda */
+/*! \fn void HelpWinPVP(WINDOW* helpwin) 
+        \brief Mostra legenda das peças na tela de ajuda no PVP
+
+        \param helpwin Janela de ajuda onde seram colocadas as legendas*/
 void HelpWinPVP(WINDOW* helpwin);
 	
 #endif
