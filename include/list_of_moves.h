@@ -41,11 +41,14 @@ typedef struct ListOfMoves{
 ListOfMoves* CreateListOfMoves(void);
 
 /* Inserir um movimento na lista. */
-/*! \fn int InsertMove(ListOfMoves* list, Move* play)
+/*! \fn int InsertMove(ListOfMoves* list, int originx, int originy, int destinyx, int destinyy)
 		\brief Insere um movimento na lista.
 		
 		\param list Ponteiro para uma lista de movimentos.
-		\param play Ponteiro para um movimento.
+		\param originx Inteiro com a coordenada x de origem.
+		\param originy Inteiro com a coordenada y de origem.
+		\param destinyx Inteiro com a coordenada x de destino.
+		\param destinyy Inteiro com a coordenada y de destino.
 		\return Retorna um inteiro indicando a falha ou sucesso da inserção.
 */
 int InsertMove(ListOfMoves* list, int originx, int originy, int destinyx, int destinyy);
@@ -61,11 +64,14 @@ int InsertMove(ListOfMoves* list, int originx, int originy, int destinyx, int de
 int DeleteListOfMoves(ListOfMoves* list);
 
 /* Busca um movimento na lista de movimentos *de forma sequencial */
-/*! \fn int SearchListOfMoves(ListOFMoves* list, int originx, int originy, int destinyx, int destinyy)
+/*! \fn int SearchListOfMoves(ListOfMoves* list, int originx, int originy, int destinyx, int destinyy)
 		\brief Busca um movimento na lista de movimentos
 
 		\param list uma lista de movimentos.
-		\param move O movimento a ser procurado
+		\param originx Inteiro com a coordenada x de origem.
+		\param originy Inteiro com a coordenada y de origem.
+		\param destinyx Inteiro com a coordenada x de destino.
+		\param destinyy Inteiro com a coordenada y de destino.
 		\return Retorna um inteiro indicando a falha ou sucesso da operação.
 */
 int SearchListOfMoves(ListOfMoves* list, int originx, int originy, int destinyx, int destinyy);
