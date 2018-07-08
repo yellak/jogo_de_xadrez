@@ -116,13 +116,7 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 			NodeTree* newnodechild = AlocateNodeTree(1, boardauxchild[j], &currentnodechild->play);
 			AddChildNode(newnode, newnodechild, j);			
 		}
-		
-		//free(boardauxchild);
-		//DeleteListOfMoves(AllMovesChild);
 	}
-
-
-	//DeleteListOfMoves(AllMoves);
 
 	return tree;
 }
