@@ -1863,6 +1863,7 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 			}
 
 
+			/* Verificando se o player não já deu mate */
 			board = VerifyCheck(board, aux_color);
 			if(aux_color == WHITE)
 				{
@@ -1871,7 +1872,7 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 							auxilary = VerifyCheckMate(board, aux_color);
 							if(auxilary == NULL)
 								{
-									mate = true;
+									mate = true; /* deu mate */
 								}
 							else
 								{
@@ -1886,7 +1887,7 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 							auxilary = VerifyCheckMate(board, aux_color);
 							if(auxilary == NULL)
 								{
-									mate = true;
+									mate = true; /* deu mate */
 								}
 							else
 								{
@@ -1897,6 +1898,9 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 			
 			if((turn == machine) && (mate == false))
 				{
+					board = VerifyCheck(board, WHITE);
+					board = VerifyCheck(board, BLACK);
+					
 					/* Fazendo o movimento do computador */
 					decisions = CreateMovesTree(board, turn);
 					SortTree(decisions, turn);
