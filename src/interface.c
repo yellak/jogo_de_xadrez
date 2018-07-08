@@ -318,6 +318,44 @@ void DrawAxis(WINDOW* yaxis, WINDOW* xaxis){
 
 } /* DrawAxis() */
 
+void GiveHint(WINDOW* helpwin, TBoard* board, int turn)
+{
+	int ol, oc, dl, dc;
+	Tree* decisions; /* Árvore decisões */
+	ListOfMoves* possiblemoves;	/* Lista com os melhores movimentos para o jogador */
+	NodeList* aux;
+	char chess_move[6];
+	int i; /* Contador */
+
+	/* Criando a lista de movimentos recomendados */
+	decisions = CreateMovesTree(board, turn);
+	SortTree(decisions, turn);
+	possiblemoves = Best_Plays(decisions, decisions->root->n_child);
+	aux = possiblemoves->first;
+
+	/* Limpando a área */
+	for(i = 1; i <=5; i++){
+		mvwprintw(helpwin, i + 2, 1, "         ");
+	}
+	wrefresh(helpwin);
+
+	/* Colocando as dicas */
+	for(i = 1; i <= 5; i++, aux = aux->next)
+		{
+			if(aux == NULL){
+				break;
+			}
+			Move2Algebraic(&aux->play, chess_move);
+			mvwprintw(helpwin, i + 2, 1, "%d. %s", i, chess_move);
+		}
+
+	FreeTreeNodes(decisions->root);
+	free(decisions);
+	DeleteListOfMoves(possiblemoves);
+	wrefresh(helpwin);
+}
+
+
 void HelpWinPVP(WINDOW* helpwin)
 {
 	/* Destacando a janela */
@@ -1173,7 +1211,7 @@ int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, M
 	return turn;
 } /* UI_MOVE_PIECE */
 
-int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, MEVENT event)
+int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, MEVENT event, ListPastMoves* pastmoves)
 {
 	/* Movimento do jogador */
 	Move* movement = (Move*) malloc(sizeof(Move));
@@ -1185,6 +1223,7 @@ int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, M
 	int boolean;
 	/* Tecla que o usuário apertou */
 	int choice;
+	char chess_move[6];
 	
 	/* Traduzindo as coordenadas de onde o usuário digitou */
 	TranslateCoord(event.y, event.x, &b_line, &b_column);
@@ -1233,6 +1272,10 @@ int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, M
 									/* Recria o tabuleiro com as novas posições */
 									InitBoard(boardwin, board);
 									wrefresh(boardwin); /* Recarrega o tabuleiro */
+
+									/* Colocando o movimento na lista para salvar o PGN */
+									Move2Algebraic(movement, chess_move);
+									AddListPM(pastmoves, chess_move);
 
 									/* Mudando a vez do jogador */
 									turn = change_turn(turn);
@@ -1412,11 +1455,14 @@ void play_pvp(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 				{
 					/* Salvando tabuleiro anterior */
 					copy_boards(old_board, board);
+
+					/* Salvando o movimento anterior */
+					old_turn = turn;
 					
 					if(getmouse(&event) == OK)
 						{
 							/* Fazendo o movimento para o mouse */
-							turn = UI_MOUSE_MOVE(boardwin, messages, board, turn, event);
+							turn = UI_MOUSE_MOVE(boardwin, messages, board, turn, event, pastmoves);
 						}
 				} /* else if(choice == KEY_MOUSE) */
 
@@ -1497,6 +1543,8 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 	mousemask(BUTTON1_PRESSED, NULL);
 	keypad(stdscr, TRUE);
 
+	choice = 'a';
+
 	while(!finished)
 		{
 			/* Mostrando de quem é a vez de jogar */
@@ -1540,19 +1588,25 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 							}
 					} /* if(board->Blac...) */
 				}
-			
-			/* Adquirindo tecla ou mouse do usuário */
-			choice = getch();
+
+			if(turn == player)
+				{
+					/* Atualizando as dicas para o jogador */
+					GiveHint(helpwin, board, turn);
+					
+					/* Adquirindo tecla ou mouse do usuário */
+					choice = getch();
+				}
 
 			if(choice == 'j')
-				{
+				{	
 					/* Guardando ponteiro para o tabuleiro anterior */
 					copy_boards(old_board, board);
 
 					/* Adquirindo o movimento do usuário pela notação */
 					movement = GetMovement(keywin, chess_move);
 
-					old_turn = turn; /* Pro caso do pgn, resolver ainda */
+					old_turn = turn; /* Para verificação se precisa guardar o movimento na lista */
 
 					/* Movendo a peça para a nova posição */
 					turn = UI_MOVE_PIECE(boardwin, messages, board, turn, movement);
@@ -1571,7 +1625,7 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					if(getmouse(&event) == OK)
 						{
 							/* Fazendo o movimento para o mouse */
-							turn = UI_MOUSE_MOVE(boardwin, messages, board, turn, event);
+							turn = UI_MOUSE_MOVE(boardwin, messages, board, turn, event, pastmoves);
 						}
 				} /* KEY_MOUSE */
 
@@ -1581,7 +1635,6 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					RemoveLastListPM(pastmoves);
 					/* Pegando o tabuleiro antigo */
 					copy_boards(board, old_board);
-					turn = change_turn(turn);
 					/* Refazendo tabuleiro na interface */
 					InitBoard(boardwin, board);
 					wrefresh(boardwin);
@@ -1627,10 +1680,25 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					dc = possiblemoves->first->play.destiny[1]; /* destiny column */
 					MovePiece(board, ol, oc, dl, dc);
 
+					if((dl == 0) && (board->Board[dl][dc] == W_PAWN)){
+							board->Board[dl][dc] = W_QUEEN;
+							board->Weight -= GetValue(W_PAWN);
+							board->Weight += GetValue(W_QUEEN);
+						}
+					else if((dl == 7) && (board->Board[dl][dc] == B_PAWN)){
+						board->Board[dl][dc] = B_QUEEN;
+						board->Weight -= GetValue(B_PAWN);
+						board->Weight += GetValue(B_QUEEN);
+					}
+
 					InitBoard(boardwin, board);
 					wrefresh(boardwin);
 
 					turn = change_turn(turn);
+
+					FreeTreeNodes(decisions->root);
+					free(decisions);
+					DeleteListOfMoves(possiblemoves);
 				}
 		} /* while(!finished) */
 }

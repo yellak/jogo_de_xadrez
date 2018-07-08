@@ -310,7 +310,7 @@ int verify_evolve_pawn(WINDOW* messages, TBoard* board);
 
 int UI_MOVE_PIECE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, Move* movement);
 
-int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, MEVENT event);
+int UI_MOUSE_MOVE(WINDOW* boardwin, WINDOW* messages, TBoard* board, int turn, MEVENT event, ListPastMoves* pastmoves);
 
 Move* GetMovement(WINDOW* keywin, char chess_move[]);
 
