@@ -1675,7 +1675,10 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 	MEVENT event; /* evento de mouse */
 	Tree* decisions;
 	ListOfMoves* possiblemoves;
+	ListOfMoves* auxilary;
 	int ol, oc, dl, dc; /* Para indicar para onde o pc vai mexer */
+	int aux_color;
+	int player_moved = false;
 
 	/* Variáveis para salvar o jogo */
 	char txtboard[] = "save/board.txt";
@@ -1774,7 +1777,9 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 				}
 
 			if(choice == 'j')
-				{	
+				{
+					player_moved = false;
+					
 					/* Guardando ponteiro para o tabuleiro anterior */
 					copy_boards(old_board, board);
 
@@ -1789,18 +1794,28 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					if(turn != old_turn)
 						{
 							AddListPM(pastmoves, chess_move);
+							player_moved = true;
 						}
 				} /* choice == j */
 
 			else if(choice == KEY_MOUSE)
 				{
+					player_moved = false;
+					
 					/* Guardando o tabuleiro anterior */
 					copy_boards(old_board, board);
+
+					old_turn = turn;
 
 					if(getmouse(&event) == OK)
 						{
 							/* Fazendo o movimento para o mouse */
 							turn = UI_MOUSE_MOVE(boardwin, messages, board, turn, event, pastmoves);
+						}
+
+					if(turn != old_turn)
+						{
+							player_moved = true;
 						}
 				} /* KEY_MOUSE */
 
@@ -1843,7 +1858,17 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 			/* Mostrando de quem é a vez de jogar */
 			print_turn(helpwin, turn);
 
-			if(turn == machine)
+			if(machine == WHITES_TURN){
+				aux_color = WHITE;
+			}
+			else{
+				aux_color = BLACK;
+			}
+			if(player_moved == true){
+				auxilary = VerifyCheckMate(board, aux_color);
+			}
+
+			if(turn == machine && auxilary != NULL)
 				{
 					/* Fazendo o movimento do computador */
 					decisions = CreateMovesTree(board, turn);
@@ -1875,5 +1900,11 @@ void play_pve(WINDOW* boardwin, WINDOW* keywin, WINDOW* messages, TBoard* board)
 					free(decisions);
 					DeleteListOfMoves(possiblemoves);
 				}
+
+			/* 
+			 * if(auxilary != NULL){
+			 * 	DeleteListOfMoves(auxilary);
+			 * }
+			 */
 		} /* while(!finished) */
 } /* play_pve() */
