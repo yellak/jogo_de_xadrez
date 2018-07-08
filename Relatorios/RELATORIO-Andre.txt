@@ -14,3 +14,5 @@ Data  |Horas Trabalhadas |Tipo Tarefa           |Descrição da Tarefa Realizada
 07/07 |0.5 horas         |Revisão de código     |Corrigir erros de acesso a áreas proibidas da memória no módulo de lógica.
 08/07 |0.5 horas         |Estudar aulas         |Estudar aula sobre modelagem física das estruturas de dados.
 08/07 |1 hora            |Fazer modelagens      |Fazer modelagens físicas e exemplos delas para as estrutras de dados do projeto.
+08/07 |0.5 horas         |Documentar com doxygen |Gerar documento no padrão doxygen.
+08/07 |1 hora            |Procura de bugs        |Procura de bugs em diversos módulos do programa.
