@@ -207,7 +207,8 @@ ListOfMoves* WhitePawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 	/* Caso andar 2 estando na posição inicial. */
 	if(WhatPiece(board, originx-2, originy) != OUT_OF_RANGE){
 		COLOR_POSITION = ColorPiece(board->Board[originx - 2][originy]);
-		if(originx == 6 && COLOR_POSITION == -1 && originx - 2 >= 0){
+		int COLOR_POSITION2 = ColorPiece(board->Board[originx - 1][originy]);
+		if(originx == 6 && COLOR_POSITION == -1 && originx - 2 >= 0 && COLOR_POSITION2 == -1){
 			InsertMove(AllMoves, originx, originy, originx - 2, originy);
 		}
 	}
@@ -230,20 +231,6 @@ ListOfMoves* WhitePawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 		COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy - 1]);
 		if(originx - 1 >= 0 && originy - 1 >= 0 && COLOR_POSITION == BLACK){
 			InsertMove(AllMoves, originx, originy, originx - 1, originy - 1);
-		}
-	}
-	/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
-	if(WhatPiece(board, originx+1, originy+1) != OUT_OF_RANGE){
-		COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy + 1]);
-		if(originx + 1 <= 7 && originy + 1 <= 7 && COLOR_POSITION == BLACK){
-			InsertMove(AllMoves, originx, originy, originx + 1, originy + 1);
-		}
-	}
-	/* Caso de eliminar peça sendo um peão na diagonal inferior esquerda. */
-	if(WhatPiece(board, originx+1, originy-1) != OUT_OF_RANGE){
-		COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy - 1]);
-		if(originx + 1 <= 7 && originy - 1 >= 0 && COLOR_POSITION == BLACK){
-			InsertMove(AllMoves, originx, originy, originx + 1, originy - 1);
 		}
 	}
 
@@ -278,7 +265,8 @@ ListOfMoves* BlackPawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 	/* Caso andar 2 estando na posição inicial. */
 	if(WhatPiece(board, originx+2, originy) != OUT_OF_RANGE){
 		COLOR_POSITION = ColorPiece(board->Board[originx + 2][originy]);
-		if(originx == 1 && COLOR_POSITION == -1 && originx + 2 <= 7){
+		int COLOR_POSITION2 = ColorPiece(board->Board[originx + 1][originy]);
+		if(originx == 1 && COLOR_POSITION == -1 && originx + 2 <= 7 && COLOR_POSITION2 == -1){
 			InsertMove(AllMoves, originx, originy, originx + 2, originy);
 		}
 	}
@@ -287,20 +275,6 @@ ListOfMoves* BlackPawnMovements(TBoard* board, ListOfMoves* AllMoves, int origin
 		COLOR_POSITION = ColorPiece(board->Board[originx + 1][originy]);
 		if(((originx == 1 && COLOR_POSITION == -1) || COLOR_POSITION == -1) && originx + 1 <= 7){
 			InsertMove(AllMoves, originx, originy, originx + 1, originy);
-		}
-	}
-	/* Caso de eliminar peça sendo um peão na diagonal superior direita. */
-	if(WhatPiece(board, originx-1, originy+1) != OUT_OF_RANGE){
-		COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy + 1]);
-		if(originx - 1 >= 0 && originy + 1 <= 7 && COLOR_POSITION == WHITE){
-			InsertMove(AllMoves, originx, originy, originx - 1, originy + 1);
-		}
-	}
-	/* Caso de eliminar peça sendo um peão na diagonal superior esquerda. */
-	if(WhatPiece(board, originx-1, originy-1) != OUT_OF_RANGE){
-		COLOR_POSITION = ColorPiece(board->Board[originx - 1][originy - 1]);
-		if(originx - 1 >= 0 && originy - 1 >= 0 && COLOR_POSITION == WHITE){
-			InsertMove(AllMoves, originx, originy, originx - 1, originy - 1);
 		}
 	}
 	/* Caso de eliminar peça sendo um peão na diagonal inferior direita. */
@@ -939,7 +913,24 @@ ListOfMoves* AnalyzePossibleMovementsBlack(TBoard *board){
 	return AllMoves;
 }
 
+/* Função: VerifyValidMovent 
+	Objetivo: Verifica se um movimento é valido para uma determinada configuração de tabuleiro.
 
+		board - Ponteiro para um tabuleiro.
+			Não deve ser nulo
+		AllMoves - Ponteiro para uma lista de movimentos.
+			Não deve ser nulo
+		originx - Inteiro representando a coordenada x da posição (x,y) a ser verificada.
+			Deve ser um valor entre 0 e 7.
+		originy - Inteiro representando a coordenada y da posição (x,y) a ser verificada.
+			Deve ser um valor entre 0 e 7.
+		destinyx - Inteiro representando a coordenada x da posição de destino (x,y) a ser verificada.
+			Deve ser um valor entre 0 e 7.
+		destinyy - Inteiro representando a coordenada y da posição de destubi (x,y) a ser verificada.
+			Deve ser um valor entre 0 e 7.			
+
+		Saída: Essa 
+*/
 int VerifyValidMovement(TBoard* board, int originx, int originy, int destinyx, int destinyy){
 	char piece;
 
@@ -1068,8 +1059,17 @@ TBoard* VerifyCheck(TBoard* board, int color){
 	return NULL;
 }
 
-/* Confirma um xeque mate retornando NULL, e em caso contrário 
-retorna uma lista de movimentos possíveis para sair do xeque */
+/* Função: VerifyCheckMate
+		Objetivo: Verificar se caso o rei esteja em xeque, se é xeque mate.
+
+		Parametros:
+			board - Ponteiro para um tabuleiro.
+					Não deve ser nulo
+			color - Cor do rei em questão.
+					Deve ser 1 ou 0.
+		Saída: Essa função retorna NULL em caso de xeque mate e uma lista de móvimentos para sair
+		do xeque em caso contrário.
+*/
 ListOfMoves* VerifyCheckMate(TBoard* board, int color){
 	int originx, originy, destinyx, destinyy;
 	if(board == NULL || (color != WHITE && color != BLACK)){
