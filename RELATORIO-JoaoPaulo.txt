@@ -7,6 +7,6 @@
 7/7   |3 horas  | Testes e funções de IA		    | BEst Plays e testes
 8/7   |0.66horas| Estudo de historietas e caso de uso       | Slides e aulas
 8/7   |1.5 horas| Confecção de historietas		    | Escrita e revisão
-8/7   |1.5 horas| Casos de uso				    | Escrita e revisão
-8/7   |1.5 horas| Diagramas dos Casos de uso		    | modelagem e decisões
+8/7   |2 horas  | Casos de uso				    | Escrita e revisão
+8/7   |3.5 horas| Diagramas dos Casos de uso		    | modelagem e decisões
 
