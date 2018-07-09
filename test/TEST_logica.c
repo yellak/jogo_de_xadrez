@@ -1457,7 +1457,7 @@ TEST(Test_VerifyCheck, Verify_ChangeWhiteCheck){
 	-É esperado quem em ambos os casos retorne NULL.
  */
 
-TEST(Test_VerifyCheckMate, Veirfy_Invalid_Entries){
+TEST(Test_VerifyCheckMate, Verify_Invalid_Entries){
 	TBoard* board = NULL;
 	TBoard* board2 = AlocateBoard();
 	StartEmptyBoard(board2);
