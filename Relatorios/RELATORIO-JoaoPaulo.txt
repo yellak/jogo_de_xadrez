@@ -9,4 +9,4 @@
 8/7   |1.5 horas| Confecção de historietas		    | Escrita e revisão
 8/7   |2 horas  | Casos de uso				    | Escrita e revisão
 8/7   |3.5 horas| Diagramas dos Casos de uso		    | modelagem e decisões
-8/7   |3 horas  | Refatoração final e testes gerais         | Testes de resultados para arrumar bugs finais
+8/7   |5 horas  | Refatoração final e testes gerais         | Testes de resultados para arrumar bugs finais
