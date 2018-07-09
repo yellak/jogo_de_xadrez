@@ -202,7 +202,7 @@ TEST(Test_SaveBoardFile, Verify_InvalidValues){
    	-O tabuleiro deve estar com suas componentes corretas
  */
 TEST(Test_RecoverBoardFromFile, Verify_Function){
-	char nome_arq[15] = "save/board.txt";
+	char nome_arq[15] = "board.txt";
 	TBoard board;
 
 	EXPECT_EQ(0, RecoverBoardFromFile(&board, nome_arq));
