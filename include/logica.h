@@ -165,7 +165,15 @@ TBoard* VerifyCheck(TBoard* board, int color);
 */
 ListOfMoves* VerifyCheckMate(TBoard* board, int color);
 
+/* Função de traduzir movimento para notação algébrica */
+/*! \fn void Move2Algebraic(Move* movement, char chess_move[])
+        \brief Traduz para notação algébrica a partir do movimento 
 
+        A partir do elemento de movimento a ele irá traduzí-lo para notação
+		algébrica
+
+        \param movement   Elemento de movimento a ser traduzido
+        \param chess_move String que será substituída pela nova notação */
 void Move2Algebraic(Move* movement, char chess_move[]);
 
 #endif

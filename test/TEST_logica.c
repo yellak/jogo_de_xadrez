@@ -8,7 +8,7 @@
    Procedimentos:
    - Verificar sintaxe para notações válidas e inválidas para tipo de peça
      fornecida 
-   - Verifica sintaxe para notações válidadas e inválidas para o tipo de
+   - Verifica sintaxe para notações válidas e inválidas para o tipo de
      movimento fornecido
    - Verificar validade para casos com letras
    - Verificar validade para casos com números
@@ -93,7 +93,14 @@ TEST(Algebraic_verification, Castling_or_winner)
 	EXPECT_EQ(false, verify_syntax_move(cas_or_winner));
 } /* Castling_or_winner */
 
-/* Teste para verificar a sintaxe dada para roque pelo lado da rainha */
+
+/* Teste para verificar a sintaxe dada para roque pelo lado da rainha
+   Procedimentos:
+   - Verificar uma sintaxe errada de roque pelo lado da rainha
+   - Verificar uma sintaxe correta de roque pelo lado da rainha
+
+   Resultados:
+   - Retorno true no caso da sintaxe está correta e false caso contrário */
 TEST(Algebraic_verification, Queenside_castling)
 {
 	char movement[6];
@@ -107,7 +114,13 @@ TEST(Algebraic_verification, Queenside_castling)
 	EXPECT_EQ(false, verify_syntax_move(movement));
 } /* Queenside_castling */
 
-/* Teste pra verificar a sintaxe para notação de empate */
+
+/* Teste para verificar a sintaxe para notação de empate
+   Procedimentos:
+   - Verificar a sintaxe para notação de empate
+
+   Resultados:
+   - Espera-se true para quando a notação é válida e false caso contrário */
 TEST(Algebraic_verification, Draw)
 {
 	char movement[8];
@@ -120,6 +133,7 @@ TEST(Algebraic_verification, Draw)
 	strcpy(movement, "1-1-1-1");
 	EXPECT_EQ(false, verify_syntax_move(movement));
 } /* Draw */
+
 
 /* Teste para verificar a validade da função de verificar sintaxe para casos em
    que a peça não é fornecida na notação
@@ -1443,7 +1457,7 @@ TEST(Test_VerifyCheck, Verify_ChangeWhiteCheck){
 	-É esperado quem em ambos os casos retorne NULL.
  */
 
-TEST(Test_VerifyCheckMate, Veirfy_Invalid_Entries){
+TEST(Test_VerifyCheckMate, Verify_Invalid_Entries){
 	TBoard* board = NULL;
 	TBoard* board2 = AlocateBoard();
 	StartEmptyBoard(board2);
@@ -1545,6 +1559,17 @@ TEST(Test_VerifyCheckMate, Verify_Not_CheckMate){
 
 }
 
+/* Teste para verificar a validade da função de traduzir um movimento para
+   notação algébrica
+
+   Procedimentos:
+   - Testar para movimentos em diagonal
+   - Testar para movimentos na mesma coluna
+   - Testar para movimentos de cavalo 
+
+   Resultados:
+   - Para cada caso de teste, espera-se que o resultado da função esteja de
+     acordo a notação algébrica */
 TEST(MovementTranslation, VariusMovements)
 {
 	char chess_move[6];
