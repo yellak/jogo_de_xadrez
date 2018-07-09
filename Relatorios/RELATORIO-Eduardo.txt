@@ -44,8 +44,8 @@ Tópico: Revisar Código do Módulo
 Resumo = Encontrou-se o problema que deixava o jogo de xadrez pós-xeque (que foi alterado) impossível de ser jogado.
 
 Dia 08/07
-Tempo: 2 horas
+Tempo: 4 horas
 Tópico: Revisar Código do Módulo
-Resumo = Problemas com peões corrigidos, alterações em interpretações de xeque feitas com sucesso.
+Resumo = Problemas com peões corrigidos, alterações em interpretações de xeque feitas com sucesso. Aperfeiçoar módulo no geral para a entrega do trabalho.
 
 
