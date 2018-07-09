@@ -57,6 +57,7 @@ Tree* CreateMovesTree(TBoard *board, int turn){
 			MovePiece(boardaux[i], currentnode->play.origin[0], currentnode->play.origin[1], currentnode->play.destiny[0], currentnode->play.destiny[1]);
 		}
 		
+		/* Caso a peça esteja em cheque, se torna prioridade sair disso */
 		else{
 			if(turn == WHITES_TURN){
 				boardaux[i]->Weight = -999;
@@ -164,12 +165,9 @@ int SortTree(Tree* tree, int turn){
 		   		for (j = 0; j < n-i-1; j++){
 		   			check1 = tree->root->child[k]->child[j]->board->BlackCheck;
 		   			check2 = tree->root->child[k]->child[j + 1]->board->BlackCheck;
-		   			check3 = tree->root->child[k]->child[j]->board->WhiteCheck;
-		   			check4 = tree->root->child[k]->child[j + 1]->board->WhiteCheck;
-
 
 		   			/* O fato de ter ou não xeque é levado em consideração para ordenar a árvore */
-		      		if(tree->root->child[k]->child[j]->board->Weight + CHECK_WEIGHT*check1 - CHECK_WEIGHT*check3 > tree->root->child[k]->child[j+1]->board->Weight + CHECK_WEIGHT*check2 - CHECK_WEIGHT*check4){
+		      		if(tree->root->child[k]->child[j]->board->Weight + CHECK_WEIGHT*check1 > tree->root->child[k]->child[j+1]->board->Weight + CHECK_WEIGHT*check2){
 		      			NodeTree* nodeaux = tree->root->child[k]->child[j];
 		      			tree->root->child[k]->child[j] = tree->root->child[k]->child[j + 1];
 		      			tree->root->child[k]->child[j + 1] = nodeaux;
@@ -183,10 +181,8 @@ int SortTree(Tree* tree, int turn){
 		   	for (j = 0; j < n_child-i-1; j++){
 		   		check1 = tree->root->child[j]->child[0]->board->BlackCheck;
 		   		check2 = tree->root->child[j + 1]->child[0]->board->BlackCheck;
-		   		check3 = tree->root->child[j]->child[0]->board->WhiteCheck;
-		   		check4 = tree->root->child[j + 1]->child[0]->board->WhiteCheck;
 
-		      	if(tree->root->child[j]->child[0]->board->Weight + CHECK_WEIGHT*check1 - CHECK_WEIGHT*check3 < tree->root->child[j + 1]->child[0]->board->Weight + CHECK_WEIGHT*check2 - CHECK_WEIGHT*check4){
+		      	if(tree->root->child[j]->child[0]->board->Weight + CHECK_WEIGHT*check1 < tree->root->child[j + 1]->child[0]->board->Weight + CHECK_WEIGHT*check2){
 		      		NodeTree* nodeaux = tree->root->child[j];
 		      		tree->root->child[j] = tree->root->child[j + 1];
 		      		tree->root->child[j + 1] = nodeaux;
@@ -206,12 +202,10 @@ int SortTree(Tree* tree, int turn){
 			for (i = 0; i < n; i++){     
 		   		for (j = 0; j < n-i-1; j++){
 		   			check1 = tree->root->child[k]->child[j]->board->WhiteCheck;
-		   			check2 = tree->root->child[k]->child[j + 1]->board->WhiteCheck;
-		   			check3 = tree->root->child[k]->child[j]->board->BlackCheck;
-		   			check4 = tree->root->child[k]->child[j + 1]->board->BlackCheck;	
+		   			check2 = tree->root->child[k]->child[j + 1]->board->WhiteCheck;	
 
 		   			/* O fato de ter ou não xeque é levado em consideração para ordenar a árvore */
-		      		if(tree->root->child[k]->child[j]->board->Weight - CHECK_WEIGHT*check1 + CHECK_WEIGHT*check3 < tree->root->child[k]->child[j+1]->board->Weight - CHECK_WEIGHT*check2 + CHECK_WEIGHT*check4){
+		      		if(tree->root->child[k]->child[j]->board->Weight - CHECK_WEIGHT*check1 < tree->root->child[k]->child[j+1]->board->Weight - CHECK_WEIGHT*check2){
 		      			NodeTree* nodeaux = tree->root->child[k]->child[j];
 		      			tree->root->child[k]->child[j] = tree->root->child[k]->child[j + 1];
 		      			tree->root->child[k]->child[j + 1] = nodeaux;
@@ -225,10 +219,8 @@ int SortTree(Tree* tree, int turn){
 		   	for (j = 0; j < n_child-i-1; j++){
 		   		check1 = tree->root->child[j]->child[0]->board->WhiteCheck;
 		   		check2 = tree->root->child[j + 1]->child[0]->board->WhiteCheck;
-		   		check3 = tree->root->child[j]->child[0]->board->BlackCheck;
-		   		check4 = tree->root->child[j + 1]->child[0]->board->BlackCheck;
 
-		      	if(tree->root->child[j]->child[0]->board->Weight - CHECK_WEIGHT*check1 + CHECK_WEIGHT*check3 > tree->root->child[j + 1]->child[0]->board->Weight - CHECK_WEIGHT*check2 + CHECK_WEIGHT*check4){
+		      	if(tree->root->child[j]->child[0]->board->Weight - CHECK_WEIGHT*check1 > tree->root->child[j + 1]->child[0]->board->Weight - CHECK_WEIGHT*check2){
 		      		NodeTree* nodeaux = tree->root->child[j];
 		      		tree->root->child[j] = tree->root->child[j + 1];
 		      		tree->root->child[j + 1] = nodeaux;

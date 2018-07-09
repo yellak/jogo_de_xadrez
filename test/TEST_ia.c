@@ -309,10 +309,12 @@ TEST(TEST_Best_Plays, VerifyListCreation){
 	FreeTreeNodes(tree->root);
 	free(tree);
 	free(board);
-
 }
+
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }
+
+
 
