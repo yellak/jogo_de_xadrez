@@ -10,3 +10,4 @@ Data | Horas |     Tipo Tarefa     |                 Descrição
 05/07| 1h    | Projetar, rev. proj.| Comentários na interface e refatoração
 06/07| 6h30m | Proj., real. testes | GUI, mouse, verificar movimento na interface
 07/07| 3h15m | Proj., real. testes | GUI, xeque/xeque-mate, printar vencedor
+08/08|10h20m | Proj., real. testes | GUI, modo PVE terminado, correção de vários erros, refatoração
