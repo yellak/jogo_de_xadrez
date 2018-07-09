@@ -1,0 +1,82 @@
+Function '_Z15VerifyCheckMateP5boardi'
+Lines executed:100.00% of 46
+No branches
+No calls
+
+Function '_Z11VerifyCheckP5boardi'
+Lines executed:96.67% of 30
+No branches
+No calls
+
+Function '_Z19VerifyValidMovementP5boardiiii'
+Lines executed:100.00% of 40
+No branches
+No calls
+
+Function '_Z29AnalyzePossibleMovementsBlackP5board'
+Lines executed:100.00% of 20
+No branches
+No calls
+
+Function '_Z29AnalyzePossibleMovementsWhiteP5board'
+Lines executed:100.00% of 20
+No branches
+No calls
+
+Function '_Z13KingMovementsP5boardP11ListOfMovesii'
+Lines executed:100.00% of 48
+No branches
+No calls
+
+Function '_Z14QueenMovementsP5boardP11ListOfMovesii'
+Lines executed:100.00% of 97
+No branches
+No calls
+
+Function '_Z15BishopMovementsP5boardP11ListOfMovesii'
+Lines executed:100.00% of 53
+No branches
+No calls
+
+Function '_Z14TowerMovementsP5boardP11ListOfMovesii'
+Lines executed:100.00% of 53
+No branches
+No calls
+
+Function '_Z14HorseMovementsP5boardP11ListOfMovesii'
+Lines executed:100.00% of 38
+No branches
+No calls
+
+Function '_Z18BlackPawnMovementsP5boardP11ListOfMovesii'
+Lines executed:100.00% of 21
+No branches
+No calls
+
+Function '_Z18WhitePawnMovementsP5boardP11ListOfMovesii'
+Lines executed:100.00% of 21
+No branches
+No calls
+
+Function '_Z14Move2AlgebraicP4MovePc'
+Lines executed:100.00% of 12
+No branches
+No calls
+
+Function '_Z19algebraic_translatePc'
+Lines executed:76.47% of 17
+No branches
+No calls
+
+Function '_Z18verify_syntax_movePc'
+Lines executed:100.00% of 43
+No branches
+No calls
+
+File 'logica.c'
+Lines executed:99.11% of 559
+Branches executed:100.00% of 652
+Taken at least once:90.80% of 652
+Calls executed:100.00% of 221
+Creating 'logica.c.gcov'
+

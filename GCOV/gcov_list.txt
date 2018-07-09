@@ -1,0 +1,27 @@
+Function '_Z17SearchListOfMovesP11ListOfMovesiiii'
+Lines executed:100.00% of 10
+No branches
+No calls
+
+Function '_Z17DeleteListOfMovesP11ListOfMoves'
+Lines executed:100.00% of 10
+No branches
+No calls
+
+Function '_Z10InsertMoveP11ListOfMovesiiii'
+Lines executed:100.00% of 16
+No branches
+No calls
+
+Function '_Z17CreateListOfMovesv'
+Lines executed:100.00% of 7
+No branches
+No calls
+
+File 'list_of_moves.c'
+Lines executed:100.00% of 43
+Branches executed:100.00% of 20
+Taken at least once:100.00% of 20
+No calls
+Creating 'list_of_moves.c.gcov'
+

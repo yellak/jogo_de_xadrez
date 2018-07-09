@@ -1,0 +1,47 @@
+Function '_Z23RecoverMoveListFromFileP14list_past_movePc'
+Lines executed:100.00% of 11
+No branches
+No calls
+
+Function '_Z11SavePGNFileP14list_past_movePc'
+Lines executed:100.00% of 12
+No branches
+No calls
+
+Function '_Z20RecoverBoardFromFileP5boardPc'
+Lines executed:100.00% of 11
+No branches
+No calls
+
+Function '_Z13SaveBoardFileP5boardPc'
+Lines executed:100.00% of 10
+No branches
+No calls
+
+Function '_Z10FreeListPMP14list_past_move'
+Lines executed:100.00% of 10
+No branches
+No calls
+
+Function '_Z16RemoveLastListPMP14list_past_move'
+Lines executed:100.00% of 12
+No branches
+No calls
+
+Function '_Z9AddListPMP14list_past_movePc'
+Lines executed:90.91% of 11
+No branches
+No calls
+
+Function '_Z11StartListPMv'
+Lines executed:100.00% of 8
+No branches
+No calls
+
+File 'in-out.c'
+Lines executed:98.82% of 85
+Branches executed:100.00% of 47
+Taken at least once:89.36% of 47
+Calls executed:94.44% of 18
+Creating 'in-out.c.gcov'
+

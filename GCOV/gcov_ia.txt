@@ -1,0 +1,22 @@
+Function '_Z10Best_PlaysP4Treei'
+Lines executed:85.71% of 7
+No branches
+No calls
+
+Function '_Z8SortTreeP4Treei'
+Lines executed:100.00% of 51
+No branches
+No calls
+
+Function '_Z15CreateMovesTreeP5boardi'
+Lines executed:100.00% of 50
+No branches
+No calls
+
+File 'ia.c'
+Lines executed:99.07% of 108
+Branches executed:100.00% of 98
+Taken at least once:90.82% of 98
+Calls executed:96.55% of 29
+Creating 'ia.c.gcov'
+

@@ -1,0 +1,27 @@
+Function '_Z13FreeTreeNodesP8NodeTree'
+Lines executed:100.00% of 9
+No branches
+No calls
+
+Function '_Z12AddChildNodeP8NodeTreeS0_i'
+Lines executed:85.71% of 7
+No branches
+No calls
+
+Function '_Z15AlocateNodeTreeiP5boardP4Move'
+Lines executed:91.67% of 12
+No branches
+No calls
+
+Function '_Z11AlocateTreev'
+Lines executed:100.00% of 3
+No branches
+No calls
+
+File 'arv_decisoes.c'
+Lines executed:93.55% of 31
+Branches executed:100.00% of 16
+Taken at least once:87.50% of 16
+Calls executed:100.00% of 1
+Creating 'arv_decisoes.c.gcov'
+

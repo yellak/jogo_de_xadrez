@@ -47,3 +47,5 @@ Os PDFs com as documentações estão disponíveis na pasta PDFs. Os arquivos pr
 - doxygen.pdf - Roteiro gerado pelo doxygen
 
 Os relátorios individuais de cada integrante estão disóníveis na pasta Relatorios
+
+Os logs do GCOV estão disponíveis na pasta GCOV.

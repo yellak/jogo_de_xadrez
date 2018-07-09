@@ -1,0 +1,77 @@
+Function '_Z11HaveMinimunP5board'
+Lines executed:100.00% of 18
+No branches
+No calls
+
+Function '_Z11valid_piecec'
+Lines executed:100.00% of 14
+No branches
+No calls
+
+Function '_Z11copy_boardsP5boardS0_'
+Lines executed:100.00% of 10
+No branches
+No calls
+
+Function '_Z9MovePieceP5boardiiii'
+Lines executed:100.00% of 23
+No branches
+No calls
+
+Function '_Z11ChangePieceP5boardcii'
+Lines executed:100.00% of 10
+No branches
+No calls
+
+Function '_Z10ValidBoardP5board'
+Lines executed:100.00% of 78
+No branches
+No calls
+
+Function '_Z11InsertPieceP5boardcii'
+Lines executed:100.00% of 10
+No branches
+No calls
+
+Function '_Z11RemovePieceP5boardii'
+Lines executed:100.00% of 7
+No branches
+No calls
+
+Function '_Z8GetValuec'
+Lines executed:100.00% of 22
+No branches
+No calls
+
+Function '_Z9WhatPieceP5boardii'
+Lines executed:100.00% of 6
+No branches
+No calls
+
+Function '_Z10ColorPiecec'
+Lines executed:100.00% of 7
+No branches
+No calls
+
+Function '_Z18StartStandardBoardP5board'
+Lines executed:100.00% of 29
+No branches
+No calls
+
+Function '_Z15StartEmptyBoardP5board'
+Lines executed:100.00% of 10
+No branches
+No calls
+
+Function '_Z12AlocateBoardv'
+Lines executed:100.00% of 6
+No branches
+No calls
+
+File 'tabuleiro.c'
+Lines executed:100.00% of 250
+Branches executed:100.00% of 244
+Taken at least once:94.67% of 244
+Calls executed:100.00% of 16
+Creating 'tabuleiro.c.gcov'
+
