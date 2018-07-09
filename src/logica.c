@@ -121,6 +121,17 @@ int verify_syntax_move(char chess_move[])
 	return true;
 }
 
+/* 
+   Função: Traduzir para movimento a partir da notação
+         Objetivo:
+             A partir da notação algébrica de uma jogada, obter o movimento
+             correspondente
+
+         Parâmetros:
+             chess_move - string que contém a notação algébrica
+
+         Saída:
+             result - Elemento de movimento resultante */
 Move* algebraic_translate(char chess_move[]){
 	Move* result = (Move*) malloc(sizeof(Move));
 	char movement[6];
@@ -163,6 +174,16 @@ Move* algebraic_translate(char chess_move[]){
 	return result;
 }
 
+
+/* 
+ Função: Traduzir para notação algébrica a partir do movimento
+       Objetivo:
+           A partir do elemento de movimento a ele irá traduzí-lo para notação
+           algébrica
+
+       Parâmetros:
+           movement   - Elemento de movimento a ser traduzido
+           chess_move - String que será substituída pela nova notação */
 void Move2Algebraic(Move* movement, char chess_move[])
 {
 	int ol, oc, dl, dc;	/* Coordenadas do movimento */
