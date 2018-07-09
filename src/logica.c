@@ -441,6 +441,9 @@ ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, i
 		COLOR_POSITION = ColorPiece(board->Board[originx + k][originy]);
 		while(originx + k <= 7 && COLOR_POSITION != COLOR_PIECE){
 			COLOR_POSITION = ColorPiece(board->Board[originx + k][originy]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
 			InsertMove(AllMoves, originx, originy, originx + k, originy);
 			/* Para o loop caso tenha chegado na posição de uma peça adversária */
 			if(COLOR_POSITION == OPPOSITE_COLOR){
@@ -454,6 +457,9 @@ ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, i
 		COLOR_POSITION = ColorPiece(board->Board[originx - k][originy]);
 		while(originx - k >= 0 && COLOR_POSITION != COLOR_PIECE){
 			COLOR_POSITION = ColorPiece(board->Board[originx - k][originy]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
 			InsertMove(AllMoves, originx, originy, originx - k, originy);
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -466,6 +472,9 @@ ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, i
 		COLOR_POSITION = ColorPiece(board->Board[originx][originy + k]);
 		while(originy + k <= 7 && COLOR_POSITION != COLOR_PIECE){
 			COLOR_POSITION = ColorPiece(board->Board[originx][originy + k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
 			InsertMove(AllMoves, originx, originy, originx, originy + k);
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -478,6 +487,9 @@ ListOfMoves* TowerMovements(TBoard *board, ListOfMoves* AllMoves, int originx, i
 		COLOR_POSITION = ColorPiece(board->Board[originx][originy - k]);
 		while(originy - k >= 0 && COLOR_POSITION != COLOR_PIECE){
 			COLOR_POSITION = ColorPiece(board->Board[originx][originy - k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
 			InsertMove(AllMoves, originx, originy, originx, originy - k);				
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -529,8 +541,11 @@ ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, 
 	if(WhatPiece(board, originx+k, originy+k) != OUT_OF_RANGE){
 		COLOR_POSITION = ColorPiece(board->Board[originx + k][originy + k]);
 		while(originx + k <= 7 && originy + k <= 7 && COLOR_POSITION != COLOR_PIECE){
-			InsertMove(AllMoves, originx, originy, originx + k, originy + k);
 			COLOR_POSITION = ColorPiece(board->Board[originx + k][originy + k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
+			InsertMove(AllMoves, originx, originy, originx + k, originy + k);
 			/* Para o loop caso tenha chegado na posição de uma peça adversária */
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -543,8 +558,11 @@ ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, 
 	if(WhatPiece(board, originx-k, originy-k) != OUT_OF_RANGE){
 		COLOR_POSITION = ColorPiece(board->Board[originx - k][originy - k]);
 		while(originx - k >= 0 && originy - k >= 0 && COLOR_POSITION != COLOR_PIECE){
-			InsertMove(AllMoves, originx, originy, originx - k, originy - k);
 			COLOR_POSITION = ColorPiece(board->Board[originx - k][originy - k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
+			InsertMove(AllMoves, originx, originy, originx - k, originy - k);
 			/* Para o loop caso tenha chegado na posição de uma peça adversária */
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -557,8 +575,11 @@ ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, 
 	if(WhatPiece(board, originx+k, originy-k) != OUT_OF_RANGE){
 		COLOR_POSITION = ColorPiece(board->Board[originx + k][originy - k]);
 		while(originx + k <= 7 && originy - k >= 0 && COLOR_POSITION != COLOR_PIECE){
-			InsertMove(AllMoves, originx, originy, originx + k, originy - k);
 			COLOR_POSITION = ColorPiece(board->Board[originx + k][originy - k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
+			InsertMove(AllMoves, originx, originy, originx + k, originy - k);
 			/* Para o loop caso tenha chegado na posição de uma peça adversária */
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -571,8 +592,11 @@ ListOfMoves* BishopMovements(TBoard* board, ListOfMoves* AllMoves, int originx, 
 	if(WhatPiece(board, originx-k, originy+k) != OUT_OF_RANGE){
 		COLOR_POSITION = ColorPiece(board->Board[originx - k][originy + k]);
 		while(originx - k >= 0 && originy + k <= 7 && COLOR_POSITION != COLOR_PIECE){
-			InsertMove(AllMoves, originx, originy, originx - k, originy + k);
 			COLOR_POSITION = ColorPiece(board->Board[originx - k][originy + k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
+			InsertMove(AllMoves, originx, originy, originx - k, originy + k);
 			/* Para o loop caso tenha chegado na posição de uma peça adversária */
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -625,6 +649,9 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 		COLOR_POSITION = ColorPiece(board->Board[originx + k][originy]);
 		while(originx + k <= 7 && COLOR_POSITION != COLOR_PIECE){
 			COLOR_POSITION = ColorPiece(board->Board[originx + k][originy]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
 			InsertMove(AllMoves, originx, originy, originx + k, originy);
 			/* Para o loop caso tenha chegado na posição de uma peça adversária */
 			if(COLOR_POSITION == OPPOSITE_COLOR){
@@ -638,6 +665,9 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 		COLOR_POSITION = ColorPiece(board->Board[originx - k][originy]);
 		while(originx - k >= 0 && COLOR_POSITION != COLOR_PIECE){
 			COLOR_POSITION = ColorPiece(board->Board[originx - k][originy]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
 			InsertMove(AllMoves, originx, originy, originx - k, originy);
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -650,6 +680,9 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 		COLOR_POSITION = ColorPiece(board->Board[originx][originy + k]);
 		while(originy + k <= 7 && COLOR_POSITION != COLOR_PIECE){
 			COLOR_POSITION = ColorPiece(board->Board[originx][originy + k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
 			InsertMove(AllMoves, originx, originy, originx, originy + k);
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -662,6 +695,9 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 		COLOR_POSITION = ColorPiece(board->Board[originx][originy - k]);
 		while(originy - k >= 0 && COLOR_POSITION != COLOR_PIECE){
 			COLOR_POSITION = ColorPiece(board->Board[originx][originy - k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
 			InsertMove(AllMoves, originx, originy, originx, originy - k);				
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -675,8 +711,11 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 	if(WhatPiece(board, originx+k, originy+k) != OUT_OF_RANGE){
 		COLOR_POSITION = ColorPiece(board->Board[originx + k][originy + k]);
 		while(originx + k <= 7 && originy + k <= 7 && COLOR_POSITION != COLOR_PIECE){
-			InsertMove(AllMoves, originx, originy, originx + k, originy + k);
 			COLOR_POSITION = ColorPiece(board->Board[originx + k][originy + k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
+			InsertMove(AllMoves, originx, originy, originx + k, originy + k);
 			/* Para o loop caso tenha chegado na posição de uma peça adversária */
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -689,8 +728,11 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 	if(WhatPiece(board, originx-k, originy-k) != OUT_OF_RANGE){
 		COLOR_POSITION = ColorPiece(board->Board[originx - k][originy - k]);
 		while(originx - k >= 0 && originy - k >= 0 && COLOR_POSITION != COLOR_PIECE){
-			InsertMove(AllMoves, originx, originy, originx - k, originy - k);
 			COLOR_POSITION = ColorPiece(board->Board[originx - k][originy - k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
+			InsertMove(AllMoves, originx, originy, originx - k, originy - k);
 			/* Para o loop caso tenha chegado na posição de uma peça adversária */
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -703,8 +745,11 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 	if(WhatPiece(board, originx+k, originy-k) != OUT_OF_RANGE){
 		COLOR_POSITION = ColorPiece(board->Board[originx + k][originy - k]);
 		while(originx + k <= 7 && originy - k >= 0 && COLOR_POSITION != COLOR_PIECE){
-			InsertMove(AllMoves, originx, originy, originx + k, originy - k);
 			COLOR_POSITION = ColorPiece(board->Board[originx + k][originy - k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
+			InsertMove(AllMoves, originx, originy, originx + k, originy - k);
 			/* Para o loop caso tenha chegado na posição de uma peça adversária */
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
@@ -717,8 +762,11 @@ ListOfMoves* QueenMovements(TBoard* board, ListOfMoves* AllMoves, int originx, i
 	if(WhatPiece(board, originx-k, originy+k) != OUT_OF_RANGE){
 		COLOR_POSITION = ColorPiece(board->Board[originx - k][originy + k]);
 		while(originx - k >= 0 && originy + k <= 7 && COLOR_POSITION != COLOR_PIECE){
-			InsertMove(AllMoves, originx, originy, originx - k, originy + k);
 			COLOR_POSITION = ColorPiece(board->Board[originx - k][originy + k]);
+			if(COLOR_PIECE == COLOR_POSITION){
+				break;
+			}
+			InsertMove(AllMoves, originx, originy, originx - k, originy + k);
 			/* Para o loop caso tenha chegado na posição de uma peça adversária */
 			if(COLOR_POSITION == OPPOSITE_COLOR){
 				break;
